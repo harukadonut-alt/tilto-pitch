@@ -1,0 +1,602 @@
+<meta charset="utf-8">
+<style>
+/* =============================================================
+   Tilto — 3案ピッチ v2（優勝作品級 / 演出マシマシ / 一時・非公開）
+   案① COMPOSE 組成 / 案② BLEED にじみ / 案③ TILT 1°起こす
+   共通の芯: カーソルで“場が1°傾く”＝ブランドの隠喩を全面に効かせる
+   ============================================================= */
+
+:root{
+  --coral:#f9573a;
+  --coral-2:#ff7a52;
+  --serif:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  --gothic:"Hiragino Kaku Gothic ProN","Yu Gothic",YuGothic,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,monospace;
+  --heavy:-apple-system,"Helvetica Neue","Arial Black",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+
+#app{
+  min-height:100vh; background:var(--bg); color:var(--fg);
+  font-family:var(--gothic); overflow-x:hidden; position:relative;
+  transition:background .7s ease,color .7s ease;
+  cursor:none;
+}
+@media (hover:none){ #app{cursor:auto} }
+
+/* パレット（案ごとに世界観を切替） */
+#app[data-variant="0"]{ --bg:#09090a; --fg:#efe7d6; --muted:#8b8274; --line:rgba(239,231,214,.14); --scrim:rgba(9,9,10,.6); --display:var(--serif); --glowA:rgba(249,87,58,.26); --glowB:rgba(120,60,200,.10); }
+#app[data-variant="1"]{ --bg:#09090a; --fg:#efe7d6; --muted:#8b8274; --line:rgba(239,231,214,.14); --scrim:rgba(9,9,10,.6);  --display:var(--serif); --glowA:rgba(249,87,58,.30); --glowB:rgba(120,60,200,.10); }
+#app[data-variant="2"]{ --bg:#efe7d7; --fg:#241f18; --muted:#8a8172; --line:rgba(36,31,24,.15); --scrim:rgba(239,231,215,.55); --display:var(--serif); --glowA:rgba(224,73,43,.18);  --glowB:rgba(200,140,60,.10); }
+#app[data-variant="3"]{ --bg:#0c0b10; --fg:#f3efe4; --muted:#817d95; --line:rgba(243,239,228,.16); --scrim:rgba(12,11,16,.55); --display:var(--heavy); --glowA:rgba(249,87,58,.34); --glowB:rgba(90,70,210,.18); }
+
+/* ---- 動く映像的な背景（漂う光のフォグ・canvas生成） ---- */
+.bg{ position:fixed; inset:0; z-index:0; width:100%; height:100%; pointer-events:none; }
+/* ---- 和紙の実テクスチャ（案②・生成した紙をJPEGで敷く） ---- */
+.paper{ position:absolute; top:0; left:0; width:100%; height:100vh; z-index:1; display:none; pointer-events:none;
+  background-size:cover; background-position:center; }
+#app[data-variant="2"] .paper{ display:block; }
+#app[data-variant="2"] .stagewrap{ mix-blend-mode:multiply; }  /* 墨が和紙の繊維に染み込む */
+/* ---- シネマ調ビネット（周辺減光で締める） ---- */
+.vignette{ position:absolute; top:0; left:0; width:100%; height:100vh; z-index:3; pointer-events:none; mix-blend-mode:multiply;
+  background:radial-gradient(120% 118% at 50% 42%, transparent 52%, rgba(0,0,0,.55) 100%); }
+#app[data-variant="2"] .vignette{ background:radial-gradient(120% 118% at 50% 44%, transparent 58%, rgba(70,45,20,.22) 100%); }
+
+/* ---- グレイン ---- */
+.grain{ position:fixed; inset:0; pointer-events:none; z-index:61; opacity:.5; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='150' height='150' filter='url(%23n)' opacity='0.5'/></svg>"); }
+
+/* ---- カスタム°カーソル ---- */
+.cur{ position:fixed; z-index:200; top:0; left:0; width:46px; height:46px; margin:-23px 0 0 -23px;
+  pointer-events:none; mix-blend-mode:difference; transition:width .25s,height .25s,margin .25s; }
+.cur svg{ width:100%; height:100%; display:block; }
+.cur circle{ fill:none; stroke:#fff; stroke-width:1.2; opacity:.9; }
+.cur__deg{ position:absolute; inset:0; display:grid; place-items:center; font-family:var(--mono); font-size:10px; color:#fff; letter-spacing:.02em; }
+.cur.is-cta{ width:70px; height:70px; margin:-35px 0 0 -35px; }
+@media (hover:none){ .cur{display:none} }
+
+/* ---- プリローダー ---- */
+.pre{ position:fixed; inset:0; z-index:300; background:#09090a; color:#efe7d6;
+  display:grid; place-content:center; gap:26px; justify-items:center;
+  transition:opacity .7s ease, visibility .7s; }
+.pre.is-done{ opacity:0; visibility:hidden; }
+.pre__mark{ font-family:var(--serif); font-weight:700; font-size:clamp(40px,8vw,86px); letter-spacing:.01em; opacity:0; transform:translateY(12px); animation:preIn .8s .1s forwards; }
+.pre__mark i{ color:var(--coral); font-style:normal; }
+@keyframes preIn{ to{opacity:1; transform:none} }
+.pre__bar{ width:min(48vw,320px); height:2px; background:rgba(239,231,214,.16); overflow:hidden; }
+.pre__bar i{ display:block; height:100%; width:0; background:var(--coral); }
+.pre__num{ font-family:var(--mono); font-size:12px; letter-spacing:.2em; color:#8b8274; font-variant-numeric:tabular-nums; }
+
+/* ---- ステージ ---- */
+.stagewrap{ position:absolute; top:0; left:0; width:100%; height:100vh; z-index:2; transform-origin:center;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+#stage{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+/* ============================================================ バー */
+.bar{ position:relative; z-index:40; display:flex; align-items:center; gap:24px; padding:22px clamp(20px,4vw,54px); }
+.brand{ display:flex; flex-direction:column; line-height:1; font-family:var(--display); }
+.brand b{ font-weight:700; font-size:25px; letter-spacing:.01em; }
+.brand b i{ color:var(--coral); font-style:normal; }
+.brand span{ font-family:var(--mono); font-size:10px; letter-spacing:.22em; color:var(--muted); margin-top:6px; text-transform:uppercase; }
+.tabs{ display:flex; gap:6px; margin:0 auto; }
+.tabs button{ font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--muted); background:transparent; cursor:none;
+  border:1px solid var(--line); border-radius:100px; padding:9px 15px; display:flex; align-items:center; gap:8px;
+  transition:color .3s,border-color .3s,background .3s; }
+.tabs button b{ font-family:var(--display); font-weight:700; font-size:13px; }
+.tabs button em{ font-style:normal; font-weight:600; }
+.tabs button:hover{ color:var(--fg); border-color:var(--muted); }
+.tabs button[aria-current="true"]{ color:var(--bg); background:var(--fg); border-color:var(--fg); }
+.tabs button[aria-current="true"] .idx{ color:var(--coral); }
+.cta{ font-family:var(--gothic); font-weight:700; font-size:14px; color:#fff; background:var(--coral); text-decoration:none;
+  padding:13px 24px; border-radius:100px; white-space:nowrap; cursor:none; position:relative; overflow:hidden;
+  box-shadow:0 10px 30px -8px var(--coral); transition:transform .15s, box-shadow .3s; }
+.cta::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg,transparent, rgba(255,255,255,.35), transparent);
+  transform:translateX(-120%); transition:transform .6s; }
+.cta:hover::after{ transform:translateX(120%); }
+.cta:focus-visible, .tabs button:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+
+/* ============================================================ FV */
+.fv{ position:relative; min-height:calc(100vh - 84px); display:flex; flex-direction:column; justify-content:flex-end;
+  padding:0 clamp(20px,4vw,54px) clamp(30px,5vh,64px); }
+.fv__inner{ position:relative; z-index:20; max-width:820px; transform-origin:left bottom;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+.tag{ font-family:var(--mono); font-size:11px; letter-spacing:.22em; color:var(--coral); text-transform:uppercase; margin:0 0 20px;
+  display:inline-flex; align-items:center; gap:10px; }
+.tag::before{ content:""; width:26px; height:1px; background:var(--coral); }
+.copy h1{ font-family:var(--display); font-weight:700; font-size:clamp(34px,6vw,74px); line-height:1.18; letter-spacing:.005em;
+  margin:0 0 22px; text-wrap:balance; text-shadow:0 4px 60px var(--scrim); }
+#app[data-variant="3"] .copy h1{ line-height:1.04; letter-spacing:-.015em; }
+.copy h1 .em{ color:var(--coral); }
+.sub{ font-size:clamp(14px,1.5vw,16.5px); line-height:1.95; opacity:.84; max-width:56ch; margin:0 0 30px; }
+.ctarow{ display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+.cta.big{ font-size:15px; padding:16px 30px; display:inline-flex; align-items:center; gap:10px; }
+.cta.big .arw{ transition:transform .3s; } .cta.big:hover .arw{ transform:translateX(4px); }
+.price{ font-family:var(--gothic); font-size:14px; opacity:.9; margin:0; }
+.price b{ font-family:var(--display); font-size:23px; color:var(--coral); font-weight:700; }
+.fv__inner::before{ content:""; position:absolute; z-index:-1; left:-46px; right:-46px; top:-34px; bottom:-46px;
+  background:radial-gradient(120% 150% at 18% 82%, var(--scrim) 0%, transparent 66%); pointer-events:none; }
+
+.hint{ position:absolute; z-index:20; right:clamp(20px,4vw,54px); bottom:clamp(30px,5vh,64px);
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--muted);
+  display:flex; align-items:center; gap:8px; margin:0; text-align:right; transition:opacity .5s; }
+.hint .dot{ width:6px; height:6px; border-radius:50%; background:var(--coral); animation:pulse 1.8s infinite; }
+@keyframes pulse{ 0%,100%{opacity:.3; transform:scale(.8)} 50%{opacity:1; transform:scale(1.15)} }
+.cue{ position:absolute; z-index:20; left:50%; bottom:16px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px;
+  font-family:var(--mono); font-size:9px; letter-spacing:.2em; color:var(--muted); }
+.cue i{ width:1px; height:34px; background:linear-gradient(var(--muted),transparent); animation:cue 1.8s ease-in-out infinite; transform-origin:top; }
+@keyframes cue{ 0%,100%{transform:scaleY(.4); opacity:.4} 50%{transform:scaleY(1); opacity:1} }
+.replay{ position:absolute; z-index:20; right:clamp(20px,4vw,54px); top:2px; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  color:var(--muted); background:transparent; border:1px solid var(--line); border-radius:100px; padding:8px 14px; cursor:none; display:none; transition:.3s; }
+.replay:hover{ color:var(--fg); border-color:var(--muted); }
+
+/* ============================================================ 案③ 組み上げ */
+.build{ position:absolute; inset:0; display:none; overflow:hidden; }
+#app[data-variant="3"] .build{ display:block; }
+.build__type{ position:absolute; z-index:2; left:clamp(20px,4vw,54px); top:15%; font-family:var(--heavy); font-weight:900;
+  text-transform:uppercase; line-height:.84; letter-spacing:-.03em; user-select:none; pointer-events:none; }
+.build__type .row{ display:block; font-size:clamp(46px,12.5vw,164px); }
+.build__type .blank{ color:transparent; -webkit-text-stroke:2px var(--muted); opacity:.5; }
+.build__type .arrow{ color:var(--coral); font-size:clamp(38px,9vw,120px); text-shadow:0 0 40px var(--coral); }
+.build__type .brand{ position:relative; color:var(--fg); opacity:.12; transform:translateY(10px);
+  transition:opacity .8s ease, transform .8s ease; }
+#app[data-variant="3"].built .build__type .brand{ opacity:1; transform:none; animation:glitch 2.4s .3s 1; }
+@keyframes glitch{ 0%,100%{clip-path:none; transform:none} 8%{transform:translateX(-3px)} 10%{transform:translateX(3px)} 12%{transform:none} 40%{clip-path:inset(0 0 62% 0)} 42%{clip-path:none} }
+.mock{ position:absolute; z-index:3; right:clamp(20px,5vw,72px); top:19%; width:min(42vw,480px); aspect-ratio:5/6; transform-origin:center;
+  transform:perspective(1400px) rotateY(-15deg) rotateX(5deg) rotateZ(-1deg); transition:transform 1.2s cubic-bezier(.2,.7,.2,1);
+  background:#141319; border:1px solid var(--line); border-radius:12px; box-shadow:0 50px 130px rgba(0,0,0,.6); display:flex; flex-direction:column; padding:5%; gap:4%; }
+#app[data-variant="3"].built .mock{ transform:perspective(1700px) rotateY(-5deg) rotateX(1deg) rotateZ(0deg); box-shadow:0 40px 120px -10px var(--glowA); }
+.mock__bar{ display:flex; align-items:center; justify-content:space-between; height:6%; }
+.mock__logo{ width:22%; height:60%; border:1px dashed var(--muted); border-radius:3px; transition:.6s; }
+.mock__nav{ width:40%; height:34%; border:1px dashed var(--muted); border-radius:3px; opacity:.7; transition:.6s; }
+.mock__hero{ position:relative; flex:1; border:1px dashed var(--muted); border-radius:7px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:7%; gap:9px; transition:.6s; }
+.mock__pattern{ position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .9s; }
+.mock__h{ position:relative; height:13%; width:78%; border:1px dashed var(--muted); border-radius:3px; transition:.6s; }
+.mock__h.short{ width:52%; } .mock__btn{ position:relative; height:12%; width:38%; border:1px dashed var(--muted); border-radius:100px; transition:.6s; }
+.mock__cards{ display:flex; gap:5%; height:20%; } .mock__cards i{ flex:1; border:1px dashed var(--muted); border-radius:6px; transition:.6s; }
+#app[data-variant="3"].built .mock__logo{ border:none; background:var(--coral); }
+#app[data-variant="3"].built .mock__nav{ border:none; background:rgba(243,239,228,.28); }
+#app[data-variant="3"].built .mock__hero{ border-style:solid; border-color:transparent; }
+#app[data-variant="3"].built .mock__pattern{ opacity:1; }
+#app[data-variant="3"].built .mock__h{ border:none; background:#f3efe4; box-shadow:0 0 24px rgba(243,239,228,.16); }
+#app[data-variant="3"].built .mock__h.short{ background:rgba(243,239,228,.6); }
+#app[data-variant="3"].built .mock__btn{ border:none; background:var(--coral); }
+#app[data-variant="3"].built .mock__cards i{ border:none; background:rgba(243,239,228,.14); }
+
+/* ============================================================ 案の意図 */
+.caption{ position:relative; z-index:40; border-top:1px solid var(--line); padding:22px clamp(20px,4vw,54px);
+  display:flex; gap:20px; align-items:baseline; flex-wrap:wrap; font-size:13px; line-height:1.7; }
+.caption .k{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--coral); text-transform:uppercase; white-space:nowrap; }
+.caption .t{ opacity:.86; max-width:74ch; }
+
+/* ============================================================ 00 解説（プレーン・演出なしの読み物） */
+.name{ position:relative; z-index:40; display:none; min-height:calc(100vh - 84px);
+  padding:clamp(40px,6vh,72px) clamp(20px,4vw,54px) clamp(60px,10vh,110px); background:var(--bg); }
+#app[data-variant="0"] .name{ display:block; }
+#app[data-variant="0"] .fv,
+#app[data-variant="0"] .caption,
+#app[data-variant="0"] .stagewrap,
+#app[data-variant="0"] .bg,
+#app[data-variant="0"] .vignette{ display:none; }
+/* プレーンな解説スタイル（読みやすさだけ・装飾なし） */
+.doc{ font-family:var(--gothic); }
+.doc__eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; margin:0 0 clamp(28px,5vh,48px); }
+.doc__h{ font-family:var(--gothic); font-weight:700; font-size:clamp(18px,2.1vw,24px); color:var(--fg); margin:clamp(40px,6vh,60px) 0 16px;
+  padding-bottom:12px; border-bottom:1px solid var(--line); max-width:900px; }
+.doc__h:first-of-type{ margin-top:0; }
+.doc__lead{ font-size:15px; line-height:1.95; opacity:.82; max-width:70ch; margin:0 0 20px; }
+.doc__dl{ margin:0; max-width:860px; display:grid; gap:18px; }
+.doc__dl dt{ font-family:var(--display); font-weight:700; font-size:18px; color:var(--fg); margin-bottom:6px; }
+.doc__dl dt::before{ content:"◆ "; color:var(--coral); font-size:12px; vertical-align:2px; }
+.doc__dl dd{ margin:0; font-size:14.5px; line-height:1.9; opacity:.82; max-width:66ch; }
+.doc b{ color:var(--fg); font-weight:700; }
+.doc__note{ font-size:14px; line-height:1.9; opacity:.8; max-width:70ch; margin:16px 0 0;
+  border-left:2px solid var(--coral); padding-left:16px; }
+.doc__ref{ font-size:12.5px; line-height:1.85; color:var(--muted); max-width:74ch; margin:16px 0 0; }
+.doc__cards{ list-style:none; margin:0; padding:0; max-width:900px; display:grid; gap:8px; }
+.doc__cards li{ padding:18px 0; border-top:1px solid var(--line); }
+.doc__cards li:last-child{ border-bottom:1px solid var(--line); }
+.doc__k{ font-family:var(--mono); font-size:13px; letter-spacing:.08em; color:var(--coral); display:block; margin-bottom:10px; }
+.doc__m{ font-size:14.5px; line-height:1.85; opacity:.9; max-width:70ch; margin:0 0 6px; }
+.doc__x{ font-size:13.5px; line-height:1.75; opacity:.72; max-width:70ch; margin:0; }
+/* 3案のイメージ図（写真は後から差し込み。今はプレースホルダ枠） */
+.doc__figs{ list-style:none; margin:0; padding:0; max-width:1040px; display:grid; gap:34px; }
+.doc__fig{ margin:0; }
+.doc__fig .ph{ aspect-ratio:16/10; border:1px dashed var(--line); border-radius:10px; display:grid; place-items:center;
+  background:rgba(239,231,214,.03); color:var(--muted); font-family:var(--mono); font-size:12px; letter-spacing:.05em; text-align:center; padding:20px; }
+.doc__fig img{ width:100%; border-radius:10px; display:block; border:1px solid var(--line); }
+.doc__fig figcaption{ margin-top:14px; }
+.doc__cap-k{ font-family:var(--mono); font-size:13px; letter-spacing:.08em; color:var(--coral); display:block; margin-bottom:9px; }
+.doc__cap-m{ font-size:14.5px; line-height:1.85; opacity:.9; max-width:70ch; margin:0 0 6px; }
+.doc__cap-m b{ color:var(--fg); }
+.doc__cap-x{ font-size:13.5px; line-height:1.75; opacity:.72; max-width:70ch; margin:0; }
+
+.foot{ position:relative; z-index:40; border-top:1px solid var(--line); padding:20px clamp(20px,4vw,54px);
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; }
+
+@media (max-width:820px){
+  .tabs{ order:3; width:100%; margin:12px 0 0; justify-content:center; flex-wrap:wrap; }
+  .bar{ flex-wrap:wrap; } .name__grid{ grid-template-columns:1fr; } .name__points{ grid-template-columns:1fr; }
+  .build__type{ top:20%; }
+}
+/* 狭い画面：案③のモック（メイン映像）は隠さず、縮めて上部に見せる */
+@media (max-width:1000px) and (min-width:521px){
+  .mock{ width:min(52vw,340px); right:clamp(12px,3vw,36px); top:14%; }
+  .build__type .row{ font-size:clamp(40px,10vw,120px); }
+}
+@media (max-width:520px){ /* スマホだけは重なるので非表示 */
+  .mock{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  .glow,.hint .dot,.cue i,.build__type .brand,.mock,.dg-line,.dg-arc,.name__points li{ animation:none !important; }
+  .stagewrap,.fv__inner{ transition:none !important; }
+}
+</style>
+
+<div id="app" data-variant="1">
+  <!-- プリローダー -->
+  <div class="pre" id="pre"><div class="pre__mark">Tilt<i>o°</i></div><div class="pre__bar"><i id="preBar"></i></div><div class="pre__num" id="preNum">00</div></div>
+
+  <!-- °カーソル -->
+  <div class="cur" id="cur"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="21"/></svg><span class="cur__deg" id="curDeg">+1°</span></div>
+
+  <canvas class="bg" id="bg" aria-hidden="true"></canvas>
+  <div class="paper" id="paper" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="stagewrap" id="stagewrap" aria-hidden="true">
+    <canvas id="stage"></canvas>
+    <div class="build">
+      <div class="build__type"><span class="row blank">BLANK</span><span class="row arrow">↓</span><span class="row brand">BRAND.</span></div>
+      <div class="mock">
+        <div class="mock__bar"><span class="mock__logo"></span><span class="mock__nav"></span></div>
+        <div class="mock__hero"><canvas class="mock__pattern"></canvas><div class="mock__h"></div><div class="mock__h short"></div><div class="mock__btn"></div></div>
+        <div class="mock__cards"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+
+  <header class="bar">
+    <div class="brand"><b>Tilt<i>o°</i></b><span>by Savor Flow</span></div>
+    <nav class="tabs" role="tablist" aria-label="解説と3案の切り替え">
+      <button role="tab" data-v="0"><span class="idx">00</span> <b>解説</b> <em>ABOUT</em></button>
+      <button role="tab" data-v="1" aria-current="true"><span class="idx">01</span> <b>組成</b> <em>COMPOSE</em></button>
+      <button role="tab" data-v="2"><span class="idx">02</span> <b>にじみ</b> <em>BLEED</em></button>
+      <button role="tab" data-v="3"><span class="idx">03</span> <b>起</b> <em>TILT</em></button>
+    </nav>
+    <a class="cta hd" data-cta href="#name">無料で相談する</a>
+  </header>
+
+  <main class="fv">
+    <button class="replay" id="replay">↻ もう一度見る</button>
+    <div class="fv__inner" id="tiltable">
+      <p class="tag" id="tag">RECRUITMENT SITE STUDIO</p>
+      <div class="copy">
+        <h1>まだ言葉になっていない魅力から、<br><span class="em">採用サイト</span>をつくる。</h1>
+        <p class="sub">構成も、原稿も、デザインも、決まっていなくて大丈夫。採用のプロとAIが、あなたの会社の“まだ言葉になっていない魅力”を、ブランドに組成します。</p>
+        <div class="ctarow">
+          <a class="cta big" data-cta href="#name">無料で相談する <span class="arw" aria-hidden="true">→</span></a>
+          <p class="price">月額<b>2.7</b>万円〜・初期費用0円・運用込み</p>
+        </div>
+      </div>
+    </div>
+    <p class="hint" id="hint"><span class="dot"></span>カーソルを動かす＝組成／押す＝空欄に戻す</p>
+    <div class="cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
+  </main>
+
+  <div class="caption">
+    <span class="k" id="capk">案① 組成 COMPOSE</span>
+    <span class="t" id="capt">散らばった数千の粒（＝まだ言葉になっていない魅力＝空欄）が、カーソルに導かれて Tilto° に組成される。押すと散り、離すと戻る。</span>
+  </div>
+
+  <!-- 00 解説（プレーン・デザイン演出なし／読み物） -->
+  <section class="name doc" id="name">
+    <p class="doc__eyebrow">00 — なぜ Tilto なのか（社内解説）</p>
+
+    <h2 class="doc__h">1. サービスの中身が、そのまま名前になっています</h2>
+    <p class="doc__lead">このサービスは、会社を別物に作り変えるものではありません。<b>いまある魅力を、正しい角度で見せ直す</b>だけ。原稿も構成もデザインも決まっていなくて大丈夫で、まだ言葉になっていない魅力を、こちらが引き出してブランドにします。<br>「大きく変えなくていい。ほんの少し、いい方向へ傾ける」——その姿勢が、そのまま名前になっています。</p>
+    <dl class="doc__dl">
+      <div>
+        <dt>Tilto（ティルト）＝ Tilt（傾ける）＋ To（〜へ）</dt>
+        <dd>「採用を、<b>1°いい方向へ傾ける</b>」。会社の軸はそのまま、角度だけを少し変えて正しく見せる。ロゴに添う <b>°</b> は、その1°です。</dd>
+      </div>
+    </dl>
+    <p class="doc__note">込めた気持ち：<b>変えるのは1°でいい</b>。その小さな傾きが、やがて大きな軌道の差になる——これは親ブランド <b>Savor Flow の「未来を1°傾ける」「わずかな変化が、やがて大きな軌道を描く」</b>と地続きです。さらに Savor Flow サイトの4番目にある空欄「Fill in the next Blanks...（次の空欄を埋める）」を、<b>この事業が埋める</b>という物語も重ねています。＝ <b>空欄 → ブランド</b>。</p>
+
+    <h2 class="doc__h">2. 名前の検討 ─ Tilto と Arcsec、2案を比べました</h2>
+    <p class="doc__lead">同じ「1°」の思想から、2つの名前を出して比較しました。</p>
+    <dl class="doc__dl">
+      <div>
+        <dt>Tilto（本命）— 温かさ・人間味</dt>
+        <dd>呼びやすく、<b>°</b> で「角度＝1°傾ける」の意味がひと目で伝わる。温かい紙 × コーラルの人間味＝ブランドの<b>表情</b>。中小の経営者・採用担当に、親しみと安心で近づける名前。</dd>
+      </div>
+      <div>
+        <dt>Arcsec（比較案）— 精密さ</dt>
+        <dd>arcsecond＝1°の1/3600（秒角）。1°を<b>さらに精密に刻む</b>計器的な硬さ。名前にすると専門的で少し冷たい。</dd>
+      </div>
+    </dl>
+    <p class="doc__note">→ 結論：<b>名前は Tilto</b>。Arcsec の精密さは名前ではなく、<b>デザインの設計思想として一滴だけ混ぜます</b>（1°の目盛り・モノスペースの注釈・きっちりした整列）。「表情は Tilto、設計思想は Arcsec」。<br><span class="doc__ref" style="margin-top:8px">※ 名前はかずさん最終承認・商標／ドメイン確認前のため、確定ではありません。</span></p>
+
+    <h2 class="doc__h">3. なぜこの配色（コーラル＝温かいオレンジ）なのか</h2>
+    <p class="doc__lead">アクセントは<b>コーラル1色</b>だけ。理由は3つです。</p>
+    <dl class="doc__dl">
+      <div>
+        <dt>① “AIが作った感”を、まず外す</dt>
+        <dd>AIっぽいサイトの筆頭が<b>「紫 → 青」の定番グラデ</b>。そこを踏むと一瞬で無個性になります。あえて避け、暖色に振ることで「人がつくった」体温を残します。</dd>
+      </div>
+      <div>
+        <dt>② 採用は、結局“人と人”</dt>
+        <dd>コーラルは<b>人肌に近い温かいオレンジ</b>。青系の「システム・効率」ではなく、<b>人の温度・前向きな熱</b>を出す色。採用というテーマに一番素直です。</dd>
+      </div>
+      <div>
+        <dt>③ 温かい紙 × 1色で、上品に</dt>
+        <dd>ベースは温かい紙色（クリーム）。<b>彩度で押さず、余白と1色のアクセント</b>で品を出します。多色でにぎやかすと、とたんに安っぽくなる——だから増やしません。</dd>
+      </div>
+    </dl>
+
+    <h2 class="doc__h">4. ファーストビューをどう考えたか</h2>
+    <p class="doc__lead">このサイトは<b>それ自体が制作物のサンプル</b>です。だからFVで「制作力」を一撃で見せます。ただし派手さで<b>「3秒で何のサービスか」を殺さない</b>——見出し・CTA・価格は演出と別レイヤーで常に読める設計にしています。<br>その上で「空欄 → ブランド」「1°傾ける」という<b>1つの芯</b>を、見せ方の違う3案にしました。下がその3案のイメージ図です。</p>
+
+    <h2 class="doc__h">5. FV 3案（イメージ図）</h2>
+    <ul class="doc__figs">
+      <li>
+        <figure class="doc__fig">
+          <!-- 写真が届いたら下の .ph を <img src="assets/pitch-01-compose.png" alt="案① 組成 COMPOSE のイメージ"> に差し替え -->
+          <div class="ph">01 組成 COMPOSE ｜ イメージ図（写真は後で差し込み）</div>
+          <figcaption>
+            <span class="doc__cap-k">01 ｜ 組成 COMPOSE ＜本命＞</span>
+            <p class="doc__cap-m"><b>意味</b>：散らばった無数の粒（＝まだ言葉になっていない魅力＝空欄）が、カーソルに導かれて <b>Tilto°</b> に集まる。「空欄→ブランド」を手で触れる体験にした、制作力を一撃で見せる案。</p>
+            <p class="doc__cap-x"><b>掛け合わせ</b>：文字を粒子で組む生成表現 × Tiltoの「組成」。</p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure class="doc__fig">
+          <div class="ph">02 にじみ BLEED ｜ イメージ図（写真は後で差し込み）</div>
+          <figcaption>
+            <span class="doc__cap-k">02 ｜ にじみ BLEED</span>
+            <p class="doc__cap-m"><b>意味</b>：まっさらな和紙に、コーラルの墨が一滴。にじみ、集まって <b>Tilto°</b> になる。AIの冷たさの逆＝手仕事の温かさと余白で信頼をつくる案。</p>
+            <p class="doc__cap-x"><b>掛け合わせ</b>：墨の流体 × 温かい和紙の質感 × コーラル1色。</p>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure class="doc__fig">
+          <div class="ph">03 起 TILT ｜ イメージ図（写真は後で差し込み）</div>
+          <figcaption>
+            <span class="doc__cap-k">03 ｜ 1°起こす TILT</span>
+            <p class="doc__cap-m"><b>意味</b>：枠だけの「空欄サイト」が1°起きて、<b>完成した採用サイト</b>になる。サービスの成果物そのものをFVで実演する、いちばん大胆な案。</p>
+            <p class="doc__cap-x"><b>掛け合わせ</b>：プロダクトLPのスクロール実演 × 大胆なマキシマル表現。</p>
+          </figcaption>
+        </figure>
+      </li>
+    </ul>
+
+    <h2 class="doc__h">6. 3案に共通する芯</h2>
+    <p class="doc__note">3案とも <b>「空欄 → ブランド（Blank to Brand）」</b> と <b>「軸を1°傾ける」</b> を、別々の見せ方で表現しています。アクセントは<b>コーラル1色</b>。見出し・CTA・価格は演出と別レイヤーで<b>常に読める</b>ようにし、「3秒で何のサービスか分かる」を殺していません。</p>
+    <p class="doc__ref">参照：かずさん共有の「AIらしくない」サイト群（画像／動画／外部ライブラリ0の生成表現）と、人間がAIを制御するクラフト志向のサイト。両者に共通する芯は「AIはツール、判断とクラフトは人間」。</p>
+  </section>
+
+  <footer class="foot">
+    <span>Tilto° — Recruitment Site Studio by Savor Flow</span>
+    <span>0 なぜ ／ 1 2 3 で3案切替 ・ 社内検討用（非公開）</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const app = document.getElementById('app');
+  const stage = document.getElementById('stage');
+  const ctx = stage.getContext('2d');
+  const wrap = document.getElementById('stagewrap');
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W=0,H=0,DPR=1;
+
+  const META = {
+    1:{ tag:'RECRUITMENT SITE STUDIO', hint:'<span class="dot"></span>カーソルを動かす＝組成／押す＝空欄に戻す',
+        capk:'案① 組成 COMPOSE', capt:'散らばった数千の粒（＝まだ言葉になっていない魅力＝空欄）が、カーソルに導かれて Tilto° に組成される。押すと散り、離すと戻る。押している間の乱流と、コーラルの火花・光のにじみで“制作力”を一撃で見せる案。', replay:false },
+    2:{ tag:'INK — 墨に、余白あり', hint:'<span class="dot"></span>触れる＝一滴／ドラッグ＝筆',
+        capk:'案② にじみ BLEED', capt:'まっさらな和紙に、コーラルの墨が一滴。にじみ、流れ、集まって Tilto° になる。AIの冷たさの逆——手仕事の温かさと余白で信頼をつくる案。', replay:true },
+    3:{ tag:'FROM BLANK TO BRAND', hint:'<span class="dot"></span>↻ もう一度見る で再生',
+        capk:'案③ 1°起こす TILT', capt:'枠だけの空欄サイトが1°傾いて置かれ、約3秒で自己再生——空欄が写真・見出し・CTAで満ちて“完成した採用サイト”になる。サービスの成果物そのものをFVで実演する、いちばん大胆な案。', replay:true }
+  };
+
+  function fit(){ DPR=Math.min(2,window.devicePixelRatio||1); const r=stage.getBoundingClientRect();
+    W=Math.max(1,r.width); H=Math.max(1,r.height); stage.width=Math.round(W*DPR); stage.height=Math.round(H*DPR); ctx.setTransform(DPR,0,0,DPR,0,0); }
+
+  function glyphPoints(step){
+    const off=document.createElement('canvas'); off.width=W; off.height=H; const o=off.getContext('2d');
+    const vh=Math.min(H,window.innerHeight||H); let fs=Math.min(vh*0.42,W*0.2);
+    const font=s=>`700 ${s}px "Hiragino Mincho ProN","Yu Mincho",serif`; o.font=font(fs);
+    const main='Tilto',deg='°'; let wm=o.measureText(main).width,wd=o.measureText(deg).width;
+    const targetW=Math.min(W*0.66,900); if(wm+wd>targetW){ fs*=targetW/(wm+wd); o.font=font(fs); wm=o.measureText(main).width; wd=o.measureText(deg).width; }
+    const startX=(W-(wm+wd))/2, baseY=vh*0.47; o.textBaseline='alphabetic'; o.textAlign='left';
+    const read=()=>{ const d=o.getImageData(0,0,W,H).data,pts=[]; for(let y=0;y<H;y+=step)for(let x=0;x<W;x+=step){ if(d[(y*W+x)*4+3]>128) pts.push([x,y]); } return pts; };
+    o.clearRect(0,0,W,H); o.fillStyle='#fff'; o.fillText(main,startX,baseY); const cream=read();
+    o.clearRect(0,0,W,H); o.fillStyle='#fff'; o.fillText(deg,startX+wm,baseY-fs*0.04); const coral=read();
+    return {cream,coral,cx:startX+(wm+wd)/2, cy:baseY-fs*0.34, fs};
+  }
+
+  // ============ 映像的フォグ背景 ＋ 和紙テクスチャ ============
+  const bg=document.getElementById('bg'), bx=bg.getContext('2d'), paper=document.getElementById('paper');
+  let bw=1,bh=1,blobs=[],bgPal=[],bgRaf=0,washiURL=null;
+  const PAL={ 0:[[249,87,58,.5],[120,60,200,.30],[255,150,90,.30],[80,40,160,.22],[249,87,58,.36]],
+    1:[[249,87,58,.55],[120,60,200,.30],[255,150,90,.32],[80,40,160,.22],[249,87,58,.4]],
+    2:[[224,120,60,.14],[200,150,80,.10],[224,120,60,.12]],
+    3:[[249,87,58,.5],[90,70,220,.34],[255,120,80,.3],[70,50,200,.26],[249,87,58,.4]] };
+  function bgFit(){ bw=Math.max(2,Math.ceil(innerWidth/6)); bh=Math.max(2,Math.ceil(innerHeight/6)); bg.width=bw; bg.height=bh; }
+  function bgInit(){ blobs=[]; for(let i=0;i<5;i++) blobs.push({ sp:0.12+Math.random()*0.22, ox:Math.random()*0.5-0.25, oy:Math.random()*0.5-0.25, rad:0.45+Math.random()*0.45, ci:i, ph:Math.random()*6.28 }); }
+  function bgFrame(ts){ const t=(ts||0)*0.001; bx.clearRect(0,0,bw,bh); bx.globalCompositeOperation='lighter';
+    for(const b of blobs){ const cx=(0.5+b.ox+Math.cos(t*b.sp+b.ph)*0.34)*bw, cy=(0.5+b.oy+Math.sin(t*b.sp*0.9+b.ph)*0.34)*bh;
+      const r=b.rad*Math.max(bw,bh), c=bgPal[b.ci%bgPal.length], g=bx.createRadialGradient(cx,cy,0,cx,cy,r);
+      g.addColorStop(0,`rgba(${c[0]},${c[1]},${c[2]},${c[3]})`); g.addColorStop(1,`rgba(${c[0]},${c[1]},${c[2]},0)`); bx.fillStyle=g; bx.fillRect(0,0,bw,bh); }
+    bx.globalCompositeOperation='source-over'; if(!REDUCED) bgRaf=requestAnimationFrame(bgFrame); }
+  function bgStart(){ bgFit(); bgInit(); cancelAnimationFrame(bgRaf); bgRaf=requestAnimationFrame(bgFrame); }
+  function bgSet(n){ bgPal=PAL[n]||PAL[1]; }
+  function makeWashi(){ const c=document.createElement('canvas'), w=Math.min(1500,Math.round(innerWidth)), h=Math.min(1100,Math.round(innerHeight)); c.width=w; c.height=h; const x=c.getContext('2d');
+    x.fillStyle='#efe7d7'; x.fillRect(0,0,w,h);
+    for(let i=0;i<120;i++){ const r=14+Math.random()*46,gx=Math.random()*w,gy=Math.random()*h,warm=Math.random()<0.5,g=x.createRadialGradient(gx,gy,0,gx,gy,r); g.addColorStop(0,warm?'rgba(206,184,142,0.05)':'rgba(255,251,242,0.05)'); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(gx-r,gy-r,r*2,r*2); }
+    for(let i=0;i<3000;i++){ const fx=Math.random()*w,fy=Math.random()*h,len=6+Math.random()*24,ang=Math.random()*Math.PI; x.strokeStyle='rgba('+(Math.random()<0.5?'150,130,95':'255,252,246')+','+(0.03+Math.random()*0.05).toFixed(3)+')'; x.lineWidth=Math.random()<0.2?1.2:0.6; x.beginPath(); x.moveTo(fx,fy); x.lineTo(fx+Math.cos(ang)*len,fy+Math.sin(ang)*len); x.stroke(); }
+    for(let i=0;i<340;i++){ x.fillStyle='rgba(120,95,60,'+(0.05+Math.random()*0.12).toFixed(3)+')'; x.fillRect(Math.random()*w,Math.random()*h,Math.random()<0.3?2:1,1); }
+    return c.toDataURL('image/jpeg',0.85); }
+  function setWashi(){ if(!washiURL) washiURL=makeWashi(); paper.style.backgroundImage=`url(${washiURL})`; }
+
+  // ============ 案① COMPOSE（ブルーム・乱流・浮遊粒でリッチ化） ============
+  const V1 = (() => {
+    let parts=[], motes=[], raf=0, running=false, goal=1, m=0, last=0, glow=null, cxy={cx:0,cy:0};
+    const mouse={x:-1e4,y:-1e4,down:false,vx:0,px:-1e4,py:-1e4};
+    function build(){
+      const step=Math.max(3,Math.round(W/380)); const g=glyphPoints(step); cxy={cx:g.cx,cy:g.cy};
+      let targets=g.cream.map(p=>({x:p[0],y:p[1],c:false})).concat(g.coral.map(p=>({x:p[0],y:p[1],c:true})));
+      const CAP=4600; if(targets.length>CAP){ const co=targets.filter(t=>t.c),cr=targets.filter(t=>!t.c),keep=Math.max(0,CAP-co.length);
+        for(let i=cr.length-1;i>0;i--){ const j=(Math.random()*i)|0; [cr[i],cr[j]]=[cr[j],cr[i]]; } targets=co.concat(cr.slice(0,keep)); }
+      parts=targets.map(t=>{ const a=Math.random()*6.283, rr=Math.max(W,H)*(0.5+Math.random()*0.5);
+        return { tx:t.x, ty:t.y, c:t.c, hx:g.cx+Math.cos(a)*rr, hy:g.cy+Math.sin(a)*rr, x:0,y:0, d:Math.random()*0.4, ph:Math.random()*6.28 }; });
+      motes=Array.from({length: Math.round(W*0.09)},()=>({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.6+0.3, s:Math.random()*0.3+0.05, ph:Math.random()*6.28 }));
+      // ブルーム用の放射グラデ
+      glow=ctx.createRadialGradient(g.cx,g.cy,0,g.cx,g.cy,g.fs*1.2);
+      glow.addColorStop(0,'rgba(249,87,58,0.16)'); glow.addColorStop(1,'rgba(249,87,58,0)');
+      m=REDUCED?1:0; goal=1;
+    }
+    function ease(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+    function frame(ts){ if(!running)return; const dt=Math.min(0.05,(ts-last)/1000||0.016); last=ts;
+      m+=(goal-m)*Math.min(1,dt*3.0); const t=ts*0.001;
+      mouse.vx=mouse.x-mouse.px; mouse.px=mouse.x; mouse.py=mouse.y;
+      ctx.clearRect(0,0,W,H);
+      // 呼吸するブルーム
+      ctx.fillStyle=glow; ctx.beginPath(); ctx.arc(cxy.cx,cxy.cy,W,0,6.283); ctx.fill();
+      // 奥行きの浮遊粒
+      ctx.fillStyle='rgba(239,231,214,0.10)';
+      for(const q of motes){ q.y-=q.s; if(q.y<-4)q.y=H+4; const tw=0.5+0.5*Math.sin(t*1.5+q.ph); ctx.globalAlpha=0.06+tw*0.12; ctx.fillRect(q.x,q.y,q.r,q.r); }
+      ctx.globalAlpha=1;
+      const R=150,R2=R*R;
+      for(let i=0;i<parts.length;i++){ const p=parts[i];
+        const local=Math.max(0,Math.min(1,(m-p.d)/(1-p.d||1))), e=ease(local);
+        let x=p.hx+(p.tx-p.hx)*e, y=p.hy+(p.ty-p.hy)*e;
+        // 定位後の微ゆらぎ（“生きている場”）
+        if(e>0.99){ x+=Math.sin(t*1.1+p.ph)*0.6; y+=Math.cos(t*1.3+p.ph)*0.6; }
+        const dx=x-mouse.x,dy=y-mouse.y,dd=dx*dx+dy*dy;
+        if(dd<R2){ const f=(1-Math.sqrt(dd)/R),inv=1/(Math.sqrt(dd)+.001); x+=dx*inv*f*34+mouse.vx*f*0.5; y+=dy*inv*f*34; }
+        if(p.c){ ctx.fillStyle='#ff7a52'; ctx.shadowColor='#f9573a'; ctx.shadowBlur=8; ctx.fillRect(x-1.4,y-1.4,2.8,2.8); ctx.shadowBlur=0; }
+        else{ ctx.fillStyle='#efe7d6'; ctx.fillRect(x-1,y-1,2,2); }
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    function wake(){ if(!running&&!REDUCED){ running=true; last=0; raf=requestAnimationFrame(frame); } }
+    function drawStatic(){ ctx.clearRect(0,0,W,H); for(const p of parts){ ctx.fillStyle=p.c?'#ff7a52':'#efe7d6'; ctx.fillRect(p.tx-1,p.ty-1,p.c?2.8:2,p.c?2.8:2);} }
+    function onMove(e){ const r=stage.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; wake(); }
+    function onLeave(){ mouse.x=-1e4; mouse.y=-1e4; }
+    function onDown(){ mouse.down=true; goal=0; wake(); }
+    function onUp(){ mouse.down=false; goal=1; wake(); }
+    return { start(){ fit(); build(); if(REDUCED){ drawStatic(); return; }
+        window.addEventListener('pointermove',onMove); window.addEventListener('pointerdown',onDown); window.addEventListener('pointerup',onUp); stage.addEventListener('pointerleave',onLeave); wake(); },
+      stop(){ running=false; cancelAnimationFrame(raf); window.removeEventListener('pointermove',onMove); window.removeEventListener('pointerdown',onDown); window.removeEventListener('pointerup',onUp); stage.removeEventListener('pointerleave',onLeave); ctx.clearRect(0,0,W,H); },
+      pause(){ running=false; cancelAnimationFrame(raf); }, resume(){ wake(); }, resize(){ fit(); build(); wake(); } };
+  })();
+
+  // ============ 案② BLEED ============
+  const V2 = (() => {
+    let gw,gh,cur,tmp,mask,small,sctx,raf=0,running=false,frames=0,seedT=110,settleCount=0,startT=0;
+    const mouse={x:-1e4,y:-1e4,down:false};
+    const SCALE=0.22,DIFF=0.09,THR=0.08,TARGET=1.4;
+    function build(){ gw=Math.max(2,Math.ceil(W*SCALE)); gh=Math.max(2,Math.ceil(H*SCALE));
+      cur=new Float32Array(gw*gh); tmp=new Float32Array(gw*gh); mask=new Uint8Array(gw*gh);
+      small=document.createElement('canvas'); small.width=gw; small.height=gh; sctx=small.getContext('2d');
+      const step=Math.max(2,Math.round(W/260)); const g=glyphPoints(step);
+      for(const p of g.cream.concat(g.coral)){ const gx=Math.floor(p[0]*SCALE),gy=Math.floor(p[1]*SCALE); if(gx>=0&&gy>=0&&gx<gw&&gy<gh) mask[gy*gw+gx]=1; }
+      frames=0; settleCount=0; }
+    function splat(gx,gy,r,amt){ for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++){ const px=gx+x,py=gy+y; if(px<0||py<0||px>=gw||py>=gh||x*x+y*y>r*r)continue; cur[py*gw+px]+=amt; } }
+    function step2(){ for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){ const i=y*gw+x,c=cur[i];
+        const l=x>0?cur[i-1]:c,r=x<gw-1?cur[i+1]:c,u=y>0?cur[i-gw]:c,d=y<gh-1?cur[i+gw]:c;
+        let v=c+DIFF*(l+r+u+d-4*c); if(!mask[i]) v*=0.9; tmp[i]=v<0?0:v; }
+      const t=cur; cur=tmp; tmp=t; const hold=TARGET*Math.min(1,(performance.now()-startT)/1600); // 時間基準＝フレームレート非依存で必ず1.6sで形成
+      for(let i=0;i<mask.length;i++){ if(mask[i]&&cur[i]<hold) cur[i]=hold; } frames++; }
+    function render(){ const img=sctx.createImageData(gw,gh),d=img.data;
+      for(let i=0;i<cur.length;i++){ const v=cur[i]; const a=v>THR?Math.min(0.96,(v-THR)*1.7):0; d[i*4]=224; d[i*4+1]=73; d[i*4+2]=43; d[i*4+3]=a*255; }
+      sctx.putImageData(img,0,0); ctx.clearRect(0,0,W,H); ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high'; ctx.drawImage(small,0,0,W,H); }
+    function frame(){ if(!running)return; step2(); render();
+      if(performance.now()-startT>2400&&!mouse.down&&mouse.x<-9999){ if(++settleCount>30){ running=false; cancelAnimationFrame(raf); return; } } else settleCount=0;
+      raf=requestAnimationFrame(frame); }
+    function wake(){ if(!running&&!REDUCED){ running=true; raf=requestAnimationFrame(frame); } }
+    function onMove(e){ const r=stage.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; splat(Math.floor(mouse.x*SCALE),Math.floor(mouse.y*SCALE),2,mouse.down?0.7:0.22); wake(); }
+    function onLeave(){ mouse.x=-1e4; mouse.y=-1e4; }
+    function onDown(e){ mouse.down=true; const r=stage.getBoundingClientRect(); splat(Math.floor((e.clientX-r.left)*SCALE),Math.floor((e.clientY-r.top)*SCALE),3,1.5); wake(); }
+    function onUp(){ mouse.down=false; }
+    return { start(){ fit(); build();
+        if(REDUCED){ startT=performance.now()-9999; for(let k=0;k<200;k++) step2(); render(); return; } // 動きを止める設定：完成形を静止表示
+        startT=performance.now(); render();  // 空の和紙から始め、1.6sかけて墨がにじみ出る＝メインアニメーション
+        window.addEventListener('pointermove',onMove); window.addEventListener('pointerdown',onDown); window.addEventListener('pointerup',onUp); stage.addEventListener('pointerleave',onLeave); wake(); },
+      stop(){ running=false; cancelAnimationFrame(raf); window.removeEventListener('pointermove',onMove); window.removeEventListener('pointerdown',onDown); window.removeEventListener('pointerup',onUp); stage.removeEventListener('pointerleave',onLeave); ctx.clearRect(0,0,W,H); },
+      replay(){ build(); startT=performance.now(); wake(); }, pause(){ running=false; cancelAnimationFrame(raf); }, resume(){ wake(); }, resize(){ fit(); build(); startT=performance.now(); wake(); } };
+  })();
+
+  // ============ 案③ TILT ============
+  const V3 = (() => {
+    let timers=[], running=false;
+    function pattern(){ const c=app.querySelector('.mock__pattern'); if(!c) return; const x=c.getContext('2d');
+      const r=c.getBoundingClientRect(); const dpr=Math.min(2,devicePixelRatio||1); c.width=Math.max(1,r.width*dpr); c.height=Math.max(1,r.height*dpr); x.scale(dpr,dpr);
+      const w=r.width,h=r.height; const grd=x.createLinearGradient(0,0,w,h); grd.addColorStop(0,'#1a1922'); grd.addColorStop(1,'#221a20'); x.fillStyle=grd; x.fillRect(0,0,w,h);
+      const gap=Math.max(7,w/26);
+      for(let gy=gap/2;gy<h;gy+=gap)for(let gx=gap/2;gx<w;gx+=gap){ const tt=gx/w; const rad=(0.55+0.95*Math.sin(tt*3.14159))*(gap*0.28);
+        x.beginPath(); x.arc(gx,gy,Math.max(0.6,rad),0,6.283); x.fillStyle=gx/w>0.6?'rgba(249,87,58,0.92)':'rgba(243,239,228,0.16)'; x.fill(); } }
+    function run(){ running=true; pattern(); app.classList.remove('built');
+      if(REDUCED){ app.classList.add('built'); return; } timers.push(setTimeout(()=>app.classList.add('built'),280)); }
+    return { start(){ run(); }, stop(){ running=false; timers.forEach(clearTimeout); timers=[]; },
+      replay(){ this.stop(); app.classList.remove('built'); timers.push(setTimeout(run,60)); }, pause(){}, resume(){}, resize(){ pattern(); } };
+  })();
+
+  const V={1:V1,2:V2,3:V3}; let currentN=1,current=null;
+  const tabs=[...app.querySelectorAll('.tabs button')];
+  const tag=document.getElementById('tag'), hint=document.getElementById('hint'), replay=document.getElementById('replay');
+  const capk=document.getElementById('capk'), capt=document.getElementById('capt');
+  function switchTo(n){ n=+n; if(n===currentN&&n!==0&&current)return;
+    if(current){ current.stop(); current=null; }
+    currentN=n; app.dataset.variant=n; bgSet(n); if(n===2) setWashi();
+    tabs.forEach(b=>b.setAttribute('aria-current',(+b.dataset.v===n)?'true':'false'));
+    if(n===0){ // 「なぜTilto」解説ビュー：canvasは止め、図解を再生
+      wrap.style.transform=''; tiltable.style.transform='';
+      const s=document.getElementById('name'); s.classList.remove('in'); void s.offsetWidth; s.classList.add('in');
+      return;
+    }
+    const m=META[n]; tag.textContent=m.tag; hint.innerHTML=m.hint; capk.textContent=m.capk; capt.textContent=m.capt; replay.style.display=m.replay?'inline-block':'none';
+    current=V[n]; current.start(); }
+  tabs.forEach(b=>b.addEventListener('click',()=>switchTo(b.dataset.v)));
+  replay.addEventListener('click',()=>{ if(current&&current.replay) current.replay(); });
+  window.addEventListener('keydown',e=>{ if(['0','1','2','3'].includes(e.key)) switchTo(e.key); });
+  let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{ bgFit(); if(current&&current.resize) current.resize(); if(currentN===2){ washiURL=null; setWashi(); } },200); });
+  document.addEventListener('visibilitychange',()=>{ if(!current)return; if(document.hidden) current.pause&&current.pause(); else current.resume&&current.resume(); });
+
+  // ---- °カーソル ＋ 場が1°傾く ----
+  const cur=document.getElementById('cur'), curDeg=document.getElementById('curDeg'), tiltable=document.getElementById('tiltable');
+  let cx=innerWidth/2, cy=innerHeight/2, tx=cx, ty=cy;
+  if(!REDUCED && matchMedia('(hover:hover)').matches){
+    window.addEventListener('pointermove',e=>{ tx=e.clientX; ty=e.clientY;
+      const nx=(e.clientX/innerWidth-0.5)*2; const deg=(nx*1).toFixed(1); curDeg.textContent=(nx>=0?'+':'')+deg+'°';
+      if(currentN===1||currentN===2){ wrap.style.transform=`scale(1.05) rotate(${(nx*1).toFixed(2)}deg)`; tiltable.style.transform=`rotate(${(nx*-0.4).toFixed(2)}deg)`; }
+      else { wrap.style.transform=''; tiltable.style.transform=''; }
+    }, {passive:true});
+    (function loop(){ cx+=(tx-cx)*0.2; cy+=(ty-cy)*0.2; cur.style.transform=`translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('[data-cta]').forEach(el=>{ el.addEventListener('pointerenter',()=>cur.classList.add('is-cta')); el.addEventListener('pointerleave',()=>cur.classList.remove('is-cta')); });
+  } else { cur.style.display='none'; }
+
+  // ---- 00セクションのスクロール演出 ----
+  const nameSec=document.getElementById('name');
+  new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ nameSec.classList.add('in'); } }); },{threshold:0.25}).observe(nameSec);
+
+  // ---- プリローダー → 起動 ----
+  // 各タブへのディープリンク（?tab=0..3 / #about / #00）で直接開ける
+  const qTab = (location.search.match(/[?&]tab=([0-3])/)||[])[1];
+  const initTab = qTab!=null ? +qTab : ((location.hash==='#about'||location.hash==='#00') ? 0 : 1);
+  function boot(){ fit(); bgStart(); switchTo(initTab); }
+  const pre=document.getElementById('pre'), preBar=document.getElementById('preBar'), preNum=document.getElementById('preNum');
+  if(REDUCED){ pre.classList.add('is-done'); boot(); }
+  else {
+    boot();
+    setTimeout(()=>pre.classList.add('is-done'), 2200); // rAFが止まる環境でも必ずプリローダーを外す
+    const t0=performance.now(), dur=1500;
+    (function tick(){ const e=Math.min(1,(performance.now()-t0)/dur); const p=Math.round(e*100);
+      preNum.textContent=String(p).padStart(2,'0'); preBar.style.width=(e*100)+'%';
+      if(e<1) requestAnimationFrame(tick); else setTimeout(()=>pre.classList.add('is-done'),180); })();
+  }
+})();
+</script>
