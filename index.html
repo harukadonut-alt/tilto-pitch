@@ -379,7 +379,7 @@
 
   <footer class="foot">
     <span>Tilto° — Recruitment Site Studio by Savor Flow</span>
-    <span>0 なぜ ／ 1 2 3 で3案切替 ・ 社内検討用（非公開）</span>
+    <span>0 解説 ／ 1 2 3 で3案切替 ・ 社内検討用</span>
   </footer>
 </div>
 
@@ -502,7 +502,7 @@
     function build(){ gw=Math.max(2,Math.ceil(W*SCALE)); gh=Math.max(2,Math.ceil(H*SCALE));
       cur=new Float32Array(gw*gh); tmp=new Float32Array(gw*gh); mask=new Uint8Array(gw*gh);
       small=document.createElement('canvas'); small.width=gw; small.height=gh; sctx=small.getContext('2d');
-      const step=Math.max(2,Math.round(W/260)); const g=glyphPoints(step);
+      const step=2; const g=glyphPoints(step);  // にじみグリッド(1マス≈4.5px)より必ず細かく標本する＝格子状の抜けを防ぐ
       for(const p of g.cream.concat(g.coral)){ const gx=Math.floor(p[0]*SCALE),gy=Math.floor(p[1]*SCALE); if(gx>=0&&gy>=0&&gx<gw&&gy<gh) mask[gy*gw+gx]=1; }
       frames=0; settleCount=0; }
     function splat(gx,gy,r,amt){ for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++){ const px=gx+x,py=gy+y; if(px<0||py<0||px>=gw||py>=gh||x*x+y*y>r*r)continue; cur[py*gw+px]+=amt; } }
@@ -510,10 +510,11 @@
         const l=x>0?cur[i-1]:c,r=x<gw-1?cur[i+1]:c,u=y>0?cur[i-gw]:c,d=y<gh-1?cur[i+gw]:c;
         let v=(c+DIFF*(l+r+u+d-4*c))*0.96; tmp[i]=v<0?0:v; } // 全セルを毎フレーム微減衰＝溶ける動きも作れる
       const t=cur; cur=tmp; tmp=t;
-      // form(2.4s)→保持(2s)→溶ける(1.2s)→間(0.4s) をループ＝常に「にじみ」が動いて見える
-      const e=(performance.now()-startT)%6000;
-      const f = REDUCED ? 1 : (e<2400 ? e/2400 : e<4400 ? 1 : e<5600 ? 1-(e-4400)/1200 : 0);
-      const hold=TARGET*Math.max(0,Math.min(1,f));
+      // 1.6sでにじみ出て、以後は消さずに保持（微かに呼吸）＝いつ見ても墨が在る
+      const e=performance.now()-startT;
+      const f  = REDUCED ? 1 : Math.min(1, e/1600);
+      const br = REDUCED ? 1 : 0.97+0.03*Math.sin(e*0.0012);
+      const hold=TARGET*Math.max(0,Math.min(1,f))*br;
       for(let i=0;i<mask.length;i++){ if(mask[i]&&cur[i]<hold) cur[i]=hold; } frames++; }
     function render(){ const img=sctx.createImageData(gw,gh),d=img.data;
       for(let i=0;i<cur.length;i++){ const v=cur[i]; const a=v>THR?Math.min(0.96,(v-THR)*1.7):0; d[i*4]=224; d[i*4+1]=73; d[i*4+2]=43; d[i*4+3]=a*255; }
