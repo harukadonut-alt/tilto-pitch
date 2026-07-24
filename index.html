@@ -508,15 +508,17 @@
     function splat(gx,gy,r,amt){ for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++){ const px=gx+x,py=gy+y; if(px<0||py<0||px>=gw||py>=gh||x*x+y*y>r*r)continue; cur[py*gw+px]+=amt; } }
     function step2(){ for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){ const i=y*gw+x,c=cur[i];
         const l=x>0?cur[i-1]:c,r=x<gw-1?cur[i+1]:c,u=y>0?cur[i-gw]:c,d=y<gh-1?cur[i+gw]:c;
-        let v=c+DIFF*(l+r+u+d-4*c); if(!mask[i]) v*=0.9; tmp[i]=v<0?0:v; }
-      const t=cur; cur=tmp; tmp=t; const hold=TARGET*Math.min(1,(performance.now()-startT)/1600); // 時間基準＝フレームレート非依存で必ず1.6sで形成
+        let v=(c+DIFF*(l+r+u+d-4*c))*0.96; tmp[i]=v<0?0:v; } // 全セルを毎フレーム微減衰＝溶ける動きも作れる
+      const t=cur; cur=tmp; tmp=t;
+      // form(2.4s)→保持(2s)→溶ける(1.2s)→間(0.4s) をループ＝常に「にじみ」が動いて見える
+      const e=(performance.now()-startT)%6000;
+      const f = REDUCED ? 1 : (e<2400 ? e/2400 : e<4400 ? 1 : e<5600 ? 1-(e-4400)/1200 : 0);
+      const hold=TARGET*Math.max(0,Math.min(1,f));
       for(let i=0;i<mask.length;i++){ if(mask[i]&&cur[i]<hold) cur[i]=hold; } frames++; }
     function render(){ const img=sctx.createImageData(gw,gh),d=img.data;
       for(let i=0;i<cur.length;i++){ const v=cur[i]; const a=v>THR?Math.min(0.96,(v-THR)*1.7):0; d[i*4]=224; d[i*4+1]=73; d[i*4+2]=43; d[i*4+3]=a*255; }
       sctx.putImageData(img,0,0); ctx.clearRect(0,0,W,H); ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high'; ctx.drawImage(small,0,0,W,H); }
-    function frame(){ if(!running)return; step2(); render();
-      if(performance.now()-startT>2400&&!mouse.down&&mouse.x<-9999){ if(++settleCount>30){ running=false; cancelAnimationFrame(raf); return; } } else settleCount=0;
-      raf=requestAnimationFrame(frame); }
+    function frame(){ if(!running)return; step2(); render(); raf=requestAnimationFrame(frame); } // にじみは止めずループ
     function wake(){ if(!running&&!REDUCED){ running=true; raf=requestAnimationFrame(frame); } }
     function onMove(e){ const r=stage.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; splat(Math.floor(mouse.x*SCALE),Math.floor(mouse.y*SCALE),2,mouse.down?0.7:0.22); wake(); }
     function onLeave(){ mouse.x=-1e4; mouse.y=-1e4; }
