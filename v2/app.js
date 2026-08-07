@@ -290,20 +290,40 @@
     splitChars(document.querySelector('.closing-body h2'));
   }
 
-  /* ---------- ショールーム: 右から左へ流れ続ける帯 ----------
-     隙間なくつなぐため、同じ並びをもう1組つくって2倍の幅にし、
-     トラック全体を -50% までずらす。複製は読み上げ・タブ移動から外す */
+  /* ---------- ショールーム: 右から左へ流れ続ける2行の帯 ----------
+     参考: TERASU の DEMO セクション。
+     1行あたり6枚を並べ、同じ並びをもう1組つないで -50% までずらす
+     （半分が画面幅より広くないと、折り返しで隙間が見えるため6枚必要）。
+     2行目は並び順を3枚ずらし、速度も変えて、同じ絵が縦に揃わないようにする。
+     複製は読み上げ・タブ移動から外す */
   function showroomMarquee() {
     const list = document.querySelector('.showroom-list');
     if (!list || list.dataset.marquee === 'ready') return;
     const originals = Array.from(list.children);
-    if (!originals.length) return;
-    originals.forEach((item) => {
-      const clone = item.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      clone.dataset.clone = 'true';
-      clone.tabIndex = -1;
-      list.appendChild(clone);
+    if (originals.length < 2) return;
+
+    const half = Math.ceil(originals.length / 2);
+    const rows = [originals, originals.slice(half).concat(originals.slice(0, half))];
+
+    list.textContent = '';
+    rows.forEach((items, rowIndex) => {
+      const row = document.createElement('div');
+      row.className = 'showroom-row';
+      row.dataset.row = String(rowIndex + 1);
+      items.forEach((item) => {
+        // 1行目は元の要素、2行目は複製（元は1つしか置けないため）
+        const node = rowIndex === 0 ? item : item.cloneNode(true);
+        if (rowIndex !== 0) node.dataset.rowClone = 'true';
+        row.appendChild(node);
+      });
+      Array.from(row.children).forEach((node) => {
+        const clone = node.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.dataset.clone = 'true';
+        clone.tabIndex = -1;
+        row.appendChild(clone);
+      });
+      list.appendChild(row);
     });
     list.dataset.marquee = 'ready';
   }
