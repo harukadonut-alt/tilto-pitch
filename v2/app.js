@@ -256,7 +256,62 @@
     });
   }
 
-  const boot = () => { scrollMotion(); inkCursor(); faqOrbit(); showroom(); siteViewer(); };
+  /* ---------- 文字ごとの出現（セリフのように1文字ずつ置かれる） ----------
+     読み上げには元の文をそのまま渡し、分割した文字は読ませない */
+  function splitChars(root) {
+    if (!root || root.classList.contains('is-split')) return;
+    const label = root.textContent.replace(/\s+/g, '');
+    const walk = (node) => {
+      Array.from(node.childNodes).forEach((n) => {
+        if (n.nodeType === Node.TEXT_NODE) {
+          const frag = document.createDocumentFragment();
+          Array.from(n.textContent).forEach((ch) => {
+            if (ch.trim() === '') { frag.appendChild(document.createTextNode(ch)); return; }
+            const span = document.createElement('span');
+            span.className = 'char-reveal';
+            span.setAttribute('aria-hidden', 'true');
+            span.textContent = ch;
+            frag.appendChild(span);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === Node.ELEMENT_NODE && n.tagName !== 'BR') {
+          walk(n);
+        }
+      });
+    };
+    walk(root);
+    root.querySelectorAll('.char-reveal').forEach((el, i) => el.style.setProperty('--i', i));
+    root.setAttribute('aria-label', label);
+    root.classList.add('is-split');
+  }
+
+  function speechReveal() {
+    splitChars(document.querySelector('#showroom .section-intro h2'));
+    splitChars(document.querySelector('.closing-body h2'));
+  }
+
+  /* ---------- ショールーム: 右から左へ流れ続ける帯 ----------
+     隙間なくつなぐため、同じ並びをもう1組つくって2倍の幅にし、
+     トラック全体を -50% までずらす。複製は読み上げ・タブ移動から外す */
+  function showroomMarquee() {
+    const list = document.querySelector('.showroom-list');
+    if (!list || list.dataset.marquee === 'ready') return;
+    const originals = Array.from(list.children);
+    if (!originals.length) return;
+    originals.forEach((item) => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.clone = 'true';
+      clone.tabIndex = -1;
+      list.appendChild(clone);
+    });
+    list.dataset.marquee = 'ready';
+  }
+
+  const boot = () => {
+    scrollMotion(); inkCursor(); faqOrbit();
+    speechReveal(); showroomMarquee(); showroom(); siteViewer();
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();

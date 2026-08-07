@@ -1998,3 +1998,184 @@ html.is-scroll-ready #expression .showroom-item[data-motion="showroom-drift"] {
   55%  { opacity: 1; scale: 1.06; letter-spacing: .02em; }
   100% { opacity: 1; scale: 1; letter-spacing: 0; }
 }
+
+/* ========================================================================
+   2026-08-07 社長レビュー（2巡目）
+   ======================================================================== */
+
+/* --- 文字ごとの出現（セリフのように1文字ずつ置かれる）------------------ */
+.is-split .char-reveal {
+  display: inline-block;
+  white-space: pre;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-split .char-reveal {
+    opacity: 0;
+    translate: 0 .26em;
+    filter: blur(3px);
+    transition:
+      opacity .5s ease,
+      translate .55s cubic-bezier(.2, .8, .25, 1),
+      filter .5s ease;
+    transition-delay: calc(var(--i, 0) * 42ms);
+  }
+  .section-intro.is-inview .is-split .char-reveal,
+  .closing.is-inview .is-split .char-reveal {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+/* --- 制作事例を右から左へ流し続ける ------------------------------------ */
+
+.showroom-marquee {
+  position: relative;
+  overflow: hidden;
+  margin-inline: -6vw;      /* セクションの余白いっぱいまで使って端で切る */
+  padding-block: 10px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+/* ベンダーは12カラムのグリッドで大きく組んでいる。横一列の帯に組み替える */
+#expression .showroom-list {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  gap: 26px;
+  padding-inline: 13px;
+  align-items: flex-start;
+  animation: showroom-marquee 64s linear infinite;
+}
+
+#expression .showroom-list:hover {
+  animation-play-state: paused;   /* 見たいカードで止められる */
+}
+
+#expression .showroom-item,
+#expression .showroom-item:nth-child(2n),
+#expression .showroom-item:nth-child(3) {
+  flex: 0 0 auto;
+  width: 310px;
+  margin: 0;
+  transform: none;
+  animation: none;              /* 上下のふわふわは帯の動きと二重になるのでやめる */
+}
+
+#expression .showroom-item[data-hidden="true"] {
+  display: none;                /* 絞り込んだときに帯の隙間を残さない */
+}
+
+/* 高さをコンパクトに。小さくなるとコピーは読めないので、
+   カードは「作品のサムネイル＋型番」に絞る */
+#expression .showroom-visual {
+  min-height: 196px;
+  border-width: 8px;
+  border-top-width: 24px;
+  box-shadow: 6px 10px 18px #32271a24;
+}
+
+#expression .showroom-visual::before {
+  top: -18px;
+  font-size: 6px;
+}
+
+#expression .showroom-title,
+#expression .showroom-tags {
+  display: none;
+}
+
+#expression .showroom-index {
+  font-size: 34px;
+  top: 6px;
+  right: 10px;
+}
+
+#expression .showroom-open {
+  bottom: -22px;
+  min-width: 0;
+  padding: 6px 0 5px;
+}
+
+@keyframes showroom-marquee {
+  from { translate: 0 0; }
+  to   { translate: -50% 0; }   /* 同じ並びを2組つないでいるので半分でひと回り */
+}
+
+@media (max-width: 900px) {
+  .showroom-marquee { margin-inline: -22px; }
+  #expression .showroom-item,
+  #expression .showroom-item:nth-child(2n),
+  #expression .showroom-item:nth-child(3) { width: 240px; }
+  #expression .showroom-visual { min-height: 152px; }
+}
+
+/* --- 「美しいだけでは、採用は動かない。」を写真の上でも読ませる --------- */
+/* 後ろを暗い写真が通るので、紙色の靄を1枚敷く */
+.decompose-sticky > header {
+  position: absolute;
+  padding: 26px 34px 30px;
+}
+
+.decompose-sticky > header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10px -30px -18px -34px;
+  background: radial-gradient(
+    62% 108% at 30% 50%,
+    rgba(250, 249, 246, .96) 0%,
+    rgba(250, 249, 246, .84) 46%,
+    rgba(250, 249, 246, 0) 100%
+  );
+}
+
+/* --- 「会社の魅力を言葉にし、〜」に帯を引く ---------------------------
+   蛍光ペンのように行ごとに帯がのびる。行ごとに引きたいので、
+   ブロックの背景ではなくインラインの背景 + box-decoration-break: clone */
+.tilto-build-fit > span {
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: .2em .55em;
+  background-image: linear-gradient(rgba(180, 101, 78, .17), rgba(180, 101, 78, .17));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tilto-build-fit > span {
+    background-size: 0% 100%;
+    transition: background-size .95s cubic-bezier(.2, .8, .2, 1) .45s;
+  }
+  .tilto-build.is-inview .tilto-build-fit > span { background-size: 100% 100%; }
+}
+
+/* --- 採用コンサルタントの注記を写真側へ寄せる ------------------------- */
+.team-note-consultant {
+  left: 21vw;
+}
+
+/* 引き出し線は注記から写真の手元へ引いているので、寄せた分だけ短くする */
+.team-note-consultant .team-note-lead {
+  transform-origin: left center;
+  scale: .62 1;
+}
+
+/* --- 料金：4つの注記を順番に ------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .price-notes li {
+    opacity: 0;
+    translate: 0 14px;
+    transition: opacity .6s ease, translate .6s cubic-bezier(.2, .7, .2, 1);
+  }
+  .pricing-editorial.is-inview .price-notes li { opacity: 1; translate: 0 0; }
+  .pricing-editorial.is-inview .price-notes li:nth-child(1) { transition-delay: .28s; }
+  .pricing-editorial.is-inview .price-notes li:nth-child(2) { transition-delay: .42s; }
+  .pricing-editorial.is-inview .price-notes li:nth-child(3) { transition-delay: .56s; }
+  .pricing-editorial.is-inview .price-notes li:nth-child(4) { transition-delay: .70s; }
+  .pricing-editorial.is-inview .price-consult { transition-delay: .86s; }
+}
