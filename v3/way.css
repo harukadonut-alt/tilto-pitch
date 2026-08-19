@@ -1,0 +1,283 @@
+/* site-v3 で足したCSSはここに書く。ベンダーCSS（assets/index-B4FxbBh9.css）は触らない。
+
+   ⚠️ このファイルはベンダーCSSより「前」に読まれる。
+   同じ強さのセレクタではベンダーに負けるので、既存クラスを上書きするときは
+   `#top .hero-copy` のように id を足して勝たせること。
+   新しいクラス名で書いている限りは問題ない。
+
+   読み込み順を入れ替えないこと。順序を変えると way.css 全体がベンダーより強くなり、
+   影響範囲が読めなくなる（site-v2 で同じ判断をしている）。 */
+
+/* BIMブロックが使う色。site-v2 の :root から必要な分だけ持ってきた */
+:root {
+  --tilto-coral-ink: #b4654e;
+  --tilto-ink: #1c1a17;
+}
+
+/* ===========================================================
+   BIM: BEHIND THE EXPRESSION — 設計図オービット
+   紙(トレペ)の上でワイヤーフレームの建築が組み上がる。
+   描画は bim.js（Canvas 2D・自前平行投影・ライブラリなし）。
+   スクロールで 平面図 → アクソメ にカメラが起き上がる。
+   =========================================================== */
+
+.bim-transition {
+  position: relative;
+  background: #fdfcf9;
+  border-top: 1px solid #d5d0c8;
+  border-bottom: 1px solid #d5d0c8;
+  height: 320vh;
+  min-height: 2100px;
+}
+
+.bim-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* min-height を積むと、短い画面で図面枠（凡例の帯）が画面外へ落ちる。
+     高さは 100vh のままにして、図面の面（.bim-stage）だけを縮める */
+  min-height: 560px;
+  /* 上は .scroll-progress（fixed・y=75〜77）を避ける。
+     詰めると見出しに進捗バーの線が刺さる */
+  padding: clamp(92px, 10vh, 116px) 5vw clamp(16px, 2.4vh, 26px);
+  overflow: hidden;
+}
+
+.bim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 26px;
+}
+
+.bim-head small {
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .2em;
+  color: var(--tilto-coral-ink);
+}
+
+.bim-head h2 {
+  margin: clamp(8px, 1.4vh, 14px) 0 0;
+  font: 500 clamp(26px, 2.5vw, 42px)/1.4 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  color: var(--tilto-ink);
+}
+
+.bim-lead {
+  margin: 0;
+  font: 400 12px/2 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .06em;
+  text-align: right;
+  color: #5c554b;
+}
+
+/* stage は「図とヘッダー/図面枠のあいだの余白」を確保するスペーサー。
+   キャンバス自体は sticky 全面に広がる（図がヘッダーの裏まで届く） */
+.bim-stage {
+  position: static;
+  flex: 1;
+  min-height: 0;
+  margin-top: clamp(6px, 1.4vh, 14px);
+}
+
+/* トレペの方眼。線は Canvas、面はここ */
+.bim-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(29, 27, 24, .035) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(90deg, rgba(29, 27, 24, .035) 0 1px, transparent 1px 64px);
+}
+
+.bim-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* 見出しと図面枠は図の上に乗る（図面枠は紙色で塗ってあるので下の線は透けない） */
+.bim-head,
+.bim-titleblock {
+  position: relative;
+  z-index: 2;
+}
+
+/* 図面枠（タイトルブロック）。凡例も枠の欄として入れる */
+.bim-titleblock {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #cfc8bc;
+  background: #fdfcf9;
+}
+
+.bim-cell {
+  display: grid;
+  place-items: center;
+  padding: 12px 18px;
+  border-left: 1px solid #cfc8bc;
+  font: 700 8px/1.5 Arial, sans-serif;
+  letter-spacing: .16em;
+  color: #6f675c;
+  white-space: nowrap;
+}
+
+.bim-dwg { border-left: 0; }
+
+.bim-view { min-width: 190px; }   /* 数字が動いても枠が揺れない */
+
+.bim-legend {
+  flex: 1;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bim-legend li {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-left: 1px solid #cfc8bc;
+}
+
+.bim-legend i {
+  font: 400 15px/1 Didot, Times New Roman, serif;
+  font-style: normal;
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend b {
+  font: 400 13px/1 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .06em;
+  white-space: nowrap;      /* 短い画面で「表現の設計」だけ折り返していた */
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend small {
+  font: 700 8px/1 Arial, sans-serif;
+  letter-spacing: .14em;
+  white-space: nowrap;
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend li.is-on i,
+.bim-legend li.is-on b { color: var(--tilto-ink); }
+.bim-legend li.is-on small { color: var(--tilto-coral-ink); }
+
+@media (max-width: 900px) {
+  .bim-transition {
+    height: auto;
+    min-height: 0;
+  }
+  .bim-sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding: 72px 22px 30px;
+    overflow: visible;
+  }
+  .bim-head { flex-direction: column; align-items: flex-start; }
+  .bim-lead { text-align: left; }
+  .bim-stage { height: 100vw; max-height: 470px; flex: none; margin-top: 12px; }
+  .bim-titleblock { flex-wrap: wrap; }
+  .bim-dwg, .bim-scale { display: none; }   /* 図面番号の遊びは狭い画面では畳む */
+  .bim-view { min-width: 0; width: 100%; border-left: 0; border-top: 1px solid #cfc8bc; }
+  .bim-legend { flex-wrap: wrap; }
+  .bim-legend li { flex: 1 1 50%; border-top: 1px solid #cfc8bc; }
+  .bim-legend li:nth-child(-n+2) { border-top: 0; }
+  .bim-legend li:nth-child(odd) { border-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bim-transition { height: auto; min-height: 0; }
+  .bim-sticky { position: relative; height: auto; min-height: 680px; padding-top: 92px; }
+  .bim-stage { min-height: 480px; }
+}
+
+@media (max-width: 480px) {
+  .bim-legend small { display: none; }
+  .bim-legend li { gap: 6px; padding: 9px 4px; }
+  .bim-legend b { font-size: 12px; }
+}
+
+
+/* ===========================================================
+   FUSION EXPERIENCE の「こんなサイトが出来上がります」
+   もともとの3枚はCSSで描いた擬似モックだった（実画像は写真枠だけ）。
+   実際のFV画像3点に差し替え、3つとも違う大きさで散らす。
+
+   ⚠️ 900px以下はベンダーが縦積みに組み替える。散らす配置はそこに持ち込まない。
+      way.css はベンダーより前に読まれるため、#fusion を足して勝たせている。
+   =========================================================== */
+
+/* --- 幅を問わず共通 --- */
+
+/* 擬似モックの装飾を落とす。実FVの上に乗ると邪魔になる */
+#fusion .fusion-output-photo::after,
+#fusion .fusion-output-illustration::before,
+#fusion .fusion-output-illustration::after,
+#fusion .fusion-output-words::before { content: none; }
+
+#fusion .fusion-output-illustration,
+#fusion .fusion-output-words { background: #fff; }
+
+/* FVは3:2。カードもその比にして、画像を切らずに見せる。
+   比を揃えないと、カードの高さだけ余って絵の下に白が残る */
+#fusion .fusion-output {
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+
+#fusion .fusion-output img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;          /* 写真枠にかかっていた彩度落としを外す */
+}
+
+/* 種別ラベル。下に来る絵の明暗が3枚とも違うので、地を敷いて読めるようにする
+   （白地のFVでは、もとの白文字が消えていた） */
+#fusion .fusion-output > b {
+  background: #171513;
+  color: #fff;
+  padding: 6px 8px;
+  bottom: 0;
+  right: 0;
+}
+
+/* --- 狭い画面: ベンダーの縦積みのまま、幅だけ3枚バラバラにする --- */
+@media (max-width: 900px) {
+  #fusion .fusion-output-photo        { width: 100%; margin-left: 0; }
+  #fusion .fusion-output-illustration { width: 76%; margin-left: auto; }
+  #fusion .fusion-output-words        { width: 58%; margin-left: 8%; }
+}
+
+/* --- 広い画面: 大きさを変えて散らす --- */
+@media (min-width: 901px) {
+  /* 大=写真 / 中=イラスト / 小=言葉。
+     写真の top は、左上に出る見出し（y 8〜62px）を避けるために空けている */
+  #fusion .fusion-output-photo        { width: 49%; inset: 11% auto auto 0; }
+  #fusion .fusion-output-illustration { width: 37%; inset: 6% 1% auto auto; }
+  #fusion .fusion-output-words        { width: 26%; inset: auto auto 1% 54%; }
+
+  /* 落ち着いた先の角度。動きは step4→5 のままにして、着地だけ差し替える */
+  #fusion[data-fusion-step="4"] .fusion-output-photo        { transform: translate(-1.5vw, -.6vh) scale(1.03) rotate(-3deg); }
+  #fusion[data-fusion-step="4"] .fusion-output-illustration { transform: translate(1.5vw, -.6vh) scale(1.03) rotate(4.2deg); }
+  #fusion[data-fusion-step="4"] .fusion-output-words        { transform: translate(0, .6vh) scale(1.03) rotate(-2.2deg); }
+
+  #fusion[data-fusion-step="5"] .fusion-output-photo        { transform: rotate(-2.2deg); }
+  #fusion[data-fusion-step="5"] .fusion-output-illustration { transform: rotate(3.2deg); }
+  #fusion[data-fusion-step="5"] .fusion-output-words        { transform: rotate(-1.4deg); }
+}
