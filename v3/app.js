@@ -328,6 +328,15 @@
     });
   }
 
+
+  /* ---------- 相談ページへの遷移（仮） ----------
+     #contact の締めボタン。<a> にするとベンダーの .contact-clear-main>button の
+     円形の意匠が全部剥がれるので、仮対応としてボタンのまま遷移させる。
+     パスは相対（サブパス配信の /v3/ でも解決させるため）。本実装でリンク化を検討。 */
+  document.querySelectorAll('[data-contact-trigger]').forEach((b) => {
+    b.addEventListener('click', () => { location.href = 'contact.html'; });
+  });
+
   const refreshMotion = scrollMotion();
   inkCursor();
   showroom(refreshMotion);
