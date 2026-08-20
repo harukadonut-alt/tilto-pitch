@@ -16,7 +16,7 @@
 
    v2 では、この2つを 3D 空間へ持ち上げた。モーション言語は「1°」のまま:
      ① 起き上がる … rotateX(-92deg) で床に倒れた状態から、1°弱を残して立つ
-     ② 奥行き     … 帯は3枚。Z位置・角度・速度を変えて視差をつくる
+     ② 止まらない背景 … 斜めのグリッドが約10px/秒で縦に流れ続ける（marketenterprise方式）
      ③ 止まらない … 立ったあとも、ごく遅い3Dの揺れが続く
      ④ 同じ癖     … --ease と --step を全モーションで共有する
    ============================================================ */
@@ -81,45 +81,40 @@ a{color:inherit;text-decoration:none}
 @keyframes curtain{to{opacity:0;visibility:hidden;transform:translateY(-102%) rotate(-1.5deg)}}
 
 /* ============================================================
-   ② FV — 3枚の帯が別々の奥行きで流れ続ける
+   ② FV — 斜めに倒した写真グリッドが、縦にごくゆっくり流れ続ける
    ============================================================ */
 .fv{position:relative;min-height:100svh;display:grid;align-content:center;
   padding:clamp(70px,9vh,120px) 5vw;overflow:hidden;
   perspective:1400px;perspective-origin:58% 46%}
 
-/* 帯を置く3D空間。スクロール量で全体がゆっくり起き上がる（--sc は JS が入れる） */
-.stage{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;
-  display:grid;align-content:center;gap:clamp(10px,1.6vw,22px);pointer-events:none;
-  transform:rotateX(calc(6deg + var(--sc,0) * 10deg)) rotateY(calc(-7deg + var(--sc,0) * 6deg));
-  opacity:0;animation:fadeIn 1s var(--ease) 2.6s both}
+/* --- 背景: 斜めに倒したグリッドを、縦にごくゆっくり流す ---
+   marketenterprise.co.jp/recruit/ を実測して写した仕組み:
+   ・列を縦に流す（列ごとに上下逆）
+   ・グリッド全体を rotate(-30deg)（.slide__body の matrix から逆算）
+   ・速度は 1000s / 移動量200% ＝ 約10px/秒。ほとんど止まって見える遅さ
+   継ぎ目は、同じ塊を2つ積んで -50% まで動かす標準形で作っている（検算しやすい） */
+.mosaic{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;
+  opacity:0;animation:fadeIn 1.2s var(--ease) 2.6s both}
 @keyframes fadeIn{to{opacity:1}}
 
-.rail{overflow:hidden;transform-style:preserve-3d}
-/* 3枚それぞれ Z位置・角度・速度が違う＝視差が出る */
-.rail-1{transform:translateZ(-260px) rotateY(4deg)  skewY(-3.5deg);opacity:.5}
-.rail-2{transform:translateZ(-40px)  rotateY(-3deg) skewY(-3.5deg)}
-.rail-3{transform:translateZ(160px)  rotateY(6deg)  skewY(-3.5deg);opacity:.9}
+.mosaic-grid{position:absolute;top:50%;left:50%;
+  width:210vw;height:210vh;   /* 回してもビューポートを覆いきる大きさ */
+  transform:translate(-50%,-50%) rotate(-27deg);
+  display:flex;gap:clamp(10px,1.1vw,18px)}
 
-.rail-track{display:flex;width:max-content;will-change:transform}
-.rail-1 .rail-track{animation:slideL 64s linear infinite}
-.rail-2 .rail-track{animation:slideR 44s linear infinite}
-.rail-3 .rail-track{animation:slideL 30s linear infinite}
-@keyframes slideL{to{transform:translateX(-50%)}}
-@keyframes slideR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.mcol{flex:1;min-width:0;overflow:hidden}
+.mtrack{display:flex;flex-direction:column;will-change:transform}
+/* 同じ塊が2つ積んであるので、-50%（＝塊1つぶん）でぴったり元の絵に戻る */
+.mcol-up   .mtrack{animation:colUp   var(--dur,200s) linear infinite}
+.mcol-down .mtrack{animation:colDown var(--dur,200s) linear infinite}
+@keyframes colUp  {from{transform:translateY(0)}     to{transform:translateY(-50%)}}
+@keyframes colDown{from{transform:translateY(-50%)}  to{transform:translateY(0)}}
 
-.rail-group{display:flex;align-items:center;gap:clamp(12px,1.8vw,24px);
-  padding-right:clamp(12px,1.8vw,24px);transform-style:preserve-3d}
-.rail-card{flex:none;width:clamp(190px,20vw,300px);aspect-ratio:3/2;overflow:hidden;
-  border:1px solid var(--black);background:var(--white);
-  box-shadow:0 18px 40px rgba(17,16,15,.14)}
-/* 1枚ずつ角度を散らす。平らな板が並んでいる感じを消す */
-.rail-card:nth-child(3n)  {transform:rotateY(-9deg) rotateX(3deg)}
-.rail-card:nth-child(3n+1){transform:rotateY(7deg)  rotateX(-2deg)}
-.rail-card img{width:100%;height:100%;object-fit:cover;display:block}
-.rail-word{flex:none;font:500 clamp(22px,3vw,50px)/1 var(--serif);letter-spacing:-.03em;
-  white-space:nowrap;color:#c9c3b8;transform:rotateY(-12deg)}
-.rail-word.is-coral{color:var(--coral)}
-.rail-word.is-blue{color:var(--blue)}
+.mgroup{display:flex;flex-direction:column;gap:clamp(10px,1.1vw,18px);flex:none}
+.mtile{aspect-ratio:3/2;overflow:hidden;background:var(--white);
+  border:1px solid rgba(17,16,15,.14);flex:none}
+.mtile img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.92)}
 
 /* 帯はコピーの後ろも通る。3D空間の外に平らなスクリムを敷いて読ませる */
 .fv-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -233,16 +228,17 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
   /* 狭い画面はコピーが中央に来るので、真ん中を厚く。帯は上下の隙間で見せる */
   .fv-scrim{background:linear-gradient(180deg,rgba(244,242,236,.4) 0 8%,
             rgba(244,242,236,.95) 28% 72%,rgba(244,242,236,.4) 92% 100%)}
-  .rail-card{width:clamp(140px,42vw,210px)}
+  .mtile{border-width:1px}
   .fv-facts a{padding:11px 14px;font-size:12px}
-  .stage{transform:rotateX(4deg)}
+  .mosaic-grid{width:260vw;height:230vh}
 }
 
 /* 動きを減らす設定では、止めて最終形だけ見せる */
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .opening{display:none}
-  .stage{opacity:1;transform:none}
+  .mosaic{opacity:1}
+  .mtrack{animation:none}
   html.js-motion .reveal{opacity:1;transform:none;animation:none}
 }
 </style>
@@ -260,62 +256,7 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
 
 <!-- ② FV -->
 <section class="fv">
-  <div class="stage" aria-hidden="true">
-    <div class="rail rail-1"><div class="rail-track">
-      <div class="rail-group">
-        <span class="rail-word">写真で</span>
-        <div class="rail-card"><img src="images/showroom-medical-01.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-blue">動画で</span>
-        <div class="rail-card"><img src="images/showroom-logistics-04.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">余白で</span>
-        <div class="rail-card"><img src="images/showroom-food-03.webp" alt="" loading="lazy"/></div>
-      </div>
-      <div class="rail-group">
-        <span class="rail-word">写真で</span>
-        <div class="rail-card"><img src="images/showroom-medical-01.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-blue">動画で</span>
-        <div class="rail-card"><img src="images/showroom-logistics-04.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">余白で</span>
-        <div class="rail-card"><img src="images/showroom-food-03.webp" alt="" loading="lazy"/></div>
-      </div>
-    </div></div>
-
-    <div class="rail rail-2"><div class="rail-track">
-      <div class="rail-group">
-        <div class="rail-card"><img src="images/showroom-construction-04.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-coral">イラストで</span>
-        <div class="rail-card"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">言葉で</span>
-        <div class="rail-card"><img src="images/showroom-it-02.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">温度で</span>
-      </div>
-      <div class="rail-group">
-        <div class="rail-card"><img src="images/showroom-construction-04.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-coral">イラストで</span>
-        <div class="rail-card"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">言葉で</span>
-        <div class="rail-card"><img src="images/showroom-it-02.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">温度で</span>
-      </div>
-    </div></div>
-
-    <div class="rail rail-3"><div class="rail-track">
-      <div class="rail-group">
-        <div class="rail-card"><img src="images/showroom-entertainment-02.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-coral">色で</span>
-        <div class="rail-card"><img src="images/showroom-construction-05.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">手ざわりで</span>
-        <div class="rail-card"><img src="images/showroom-food-01.webp" alt="" loading="lazy"/></div>
-      </div>
-      <div class="rail-group">
-        <div class="rail-card"><img src="images/showroom-entertainment-02.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word is-coral">色で</span>
-        <div class="rail-card"><img src="images/showroom-construction-05.webp" alt="" loading="lazy"/></div>
-        <span class="rail-word">手ざわりで</span>
-        <div class="rail-card"><img src="images/showroom-food-01.webp" alt="" loading="lazy"/></div>
-      </div>
-    </div></div>
-  </div>
+  <div class="mosaic" aria-hidden="true"><div class="mosaic-grid"><div class="mcol mcol-up" style="--dur:188s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-01.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-01.webp" alt="" loading="lazy"/></div></div></div></div><div class="mcol mcol-down" style="--dur:199s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-food-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-03.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-food-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-03.webp" alt="" loading="lazy"/></div></div></div></div><div class="mcol mcol-up" style="--dur:210s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-care-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-04.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-care-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-04.webp" alt="" loading="lazy"/></div></div></div></div><div class="mcol mcol-down" style="--dur:221s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-it-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-06.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-06.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-03.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-it-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-06.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-06.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-03.webp" alt="" loading="lazy"/></div></div></div></div><div class="mcol mcol-up" style="--dur:232s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-care-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-02.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-care-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-entertainment-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-medical-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-food-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-02.webp" alt="" loading="lazy"/></div></div></div></div><div class="mcol mcol-down" style="--dur:243s"><div class="mtrack"><div class="mgroup"><div class="mtile"><img src="images/showroom-care-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-care-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div></div><div class="mgroup"><div class="mtile"><img src="images/showroom-care-03.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-care-04.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-logistics-01.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-construction-05.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-it-02.webp" alt="" loading="lazy"/></div><div class="mtile"><img src="images/showroom-care-05.webp" alt="" loading="lazy"/></div></div></div></div></div></div>
 
   <div class="fv-scrim" aria-hidden="true"></div>
 
@@ -389,15 +330,16 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
 
   if (reduced) return;
 
-  /* --- スクロールで3D空間がゆっくり起き上がる（--sc を stage に配る） --- */
-  const stage = document.querySelector('.stage');
+  /* --- スクロールすると背景グリッドがゆっくり奥へ引く（--sc） --- */
+  const grid = document.querySelector('.mosaic-grid');
   const fv = document.querySelector('.fv');
   let frame = 0;
   const onScroll = () => {
     frame = 0;
     const r = fv.getBoundingClientRect();
     const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
-    stage.style.setProperty('--sc', p.toFixed(3));
+    grid.style.transform =
+      `translate(-50%,-50%) rotate(${(-27 + p * 4).toFixed(2)}deg) scale(${(1 + p * 0.07).toFixed(3)})`;
   };
   addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(onScroll); }, { passive: true });
   onScroll();
@@ -421,7 +363,7 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
   /* 開幕は1回だけ。戻ってきたときに毎回は見せない */
   if (sessionStorage.getItem('tilto-opened')) {
     document.querySelector('.opening')?.remove();
-    document.querySelectorAll('.fv-kicker,.fv h1 .c,.fv-facts a,.stage,.fv-scroll')
+    document.querySelectorAll('.fv-kicker,.fv h1 .c,.fv-facts a,.mosaic,.fv-scroll')
       .forEach((el) => { el.style.animationDelay = '0s'; });
   } else {
     sessionStorage.setItem('tilto-opened', '1');
