@@ -50,7 +50,9 @@
 
         if (kind === 'fusion-story') {
           const fp = clamp(-rect.top / Math.max(1, rect.height - vh));
-          const step = [0.1, 0.24, 0.37, 0.45, 0.78].filter((t) => fp >= t).length;
+          /* 山場(step3=墨と数式)を長く見せる。元は0.37〜0.45で8%しかなく一瞬で流れた。
+             0.35〜0.58(23%)に広げ、後続も少し後ろへ（元: 0.37, 0.45, 0.78） */
+          const step = [0.1, 0.24, 0.35, 0.58, 0.8].filter((t) => fp >= t).length;
           set('--fusion-progress', fp.toFixed(4));
           el.dataset.fusionStep = String(step);
         }
