@@ -264,13 +264,42 @@
   #fusion .fusion-output-words        { width: 58%; margin-left: 8%; }
 }
 
-/* --- 広い画面: 大きさを変えて散らす --- */
+/* --- 広い画面: 3枚を中央にぎゅっと重ねる（散らすのをやめた・2026-08-20） --- */
 @media (min-width: 901px) {
-  /* 大=写真 / 中=イラスト / 小=言葉。
-     写真の top は、左上に出る見出し（y 8〜62px）を避けるために空けている */
-  #fusion .fusion-output-photo        { width: 49%; inset: 11% auto auto 0; }
-  #fusion .fusion-output-illustration { width: 37%; inset: 6% 1% auto auto; }
-  #fusion .fusion-output-words        { width: 26%; inset: auto auto 1% 54%; }
+  /* 大=写真 / 中=イラスト / 小=言葉。互いに1割前後を重ねて中央にまとめ、
+     その真上に白帯の見出し（下のルール）をセリフとして載せる */
+  #fusion .fusion-output-photo        { width: 46%; inset: 13% auto auto 12%; }
+  #fusion .fusion-output-illustration { width: 36%; inset: 6% 14% auto auto; }
+  #fusion .fusion-output-words        { width: 26%; inset: auto auto 5% 37%; }
+
+  /* 見出しを左上から中央へ。字幕のように白帯で読ませる。
+     出現のopacityはベンダーのstep制御のまま（transformはここが勝つので
+     ベンダーのtranslateY(18px)は効かなくなる＝フェードだけになる）。
+     pointer-events:none でカードのホバー・クリックは下に通す */
+  #fusion .fusion-expression-heading {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    pointer-events: none;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    text-align: center;
+    max-width: min(78%, 760px);
+    background: #fff;
+    padding: clamp(18px, 2.2vw, 32px) clamp(28px, 3.4vw, 54px);
+    box-shadow: 0 18px 60px rgba(23, 21, 19, .16);
+  }
+
+  /* 写真のラベルは右下だと、重ねた言葉カードの下に隠れる。写真だけ左下へ */
+  #fusion .fusion-output-photo > b { right: auto; left: 0; }
+
+  #fusion .fusion-expression-heading strong {
+    font-size: clamp(24px, 2.6vw, 42px);
+    letter-spacing: -.03em;
+    line-height: 1.4;
+  }
 
   /* 落ち着いた先の角度。動きは step4→5 のままにして、着地だけ差し替える */
   #fusion[data-fusion-step="4"] .fusion-output-photo        { transform: translate(-1.5vw, -.6vh) scale(1.03) rotate(-3deg); }
@@ -525,8 +554,8 @@
   gap: .35em;
   background: #171513;
   color: #f5f1ea;
-  padding: clamp(16px, 2.2vw, 32px) clamp(26px, 3.8vw, 56px);
-  font: 500 clamp(30px, 5vw, 78px)/1.2 Yu Mincho, Hiragino Mincho ProN, serif;
+  padding: clamp(18px, 2.4vw, 38px) clamp(30px, 4.4vw, 66px);
+  font: 500 clamp(34px, 6.5vw, 102px)/1.2 Yu Mincho, Hiragino Mincho ProN, serif;
   letter-spacing: .04em;
   white-space: nowrap;
 }
@@ -551,5 +580,5 @@
 }
 
 @media (max-width: 900px) {
-  #fusion .fusion-ink-impact > span { font-size: clamp(22px, 7.5vw, 34px); }
+  #fusion .fusion-ink-impact > span { font-size: clamp(26px, 9vw, 42px); }
 }
