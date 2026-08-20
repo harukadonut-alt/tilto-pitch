@@ -219,28 +219,28 @@
    実際のFV画像3点に差し替え、3つとも違う大きさで散らす。
 
    ⚠️ 900px以下はベンダーが縦積みに組み替える。散らす配置はそこに持ち込まない。
-      way.css はベンダーより前に読まれるため、#fusion を足して勝たせている。
+      way.css はベンダーより前に読まれるため、#process を足して勝たせている。
    =========================================================== */
 
 /* --- 幅を問わず共通 --- */
 
 /* 擬似モックの装飾を落とす。実FVの上に乗ると邪魔になる */
-#fusion .fusion-output-photo::after,
-#fusion .fusion-output-illustration::before,
-#fusion .fusion-output-illustration::after,
-#fusion .fusion-output-words::before { content: none; }
+#process .fusion-output-photo::after,
+#process .fusion-output-illustration::before,
+#process .fusion-output-illustration::after,
+#process .fusion-output-words::before { content: none; }
 
-#fusion .fusion-output-illustration,
-#fusion .fusion-output-words { background: #fff; }
+#process .fusion-output-illustration,
+#process .fusion-output-words { background: #fff; }
 
 /* FVは3:2。カードもその比にして、画像を切らずに見せる。
    比を揃えないと、カードの高さだけ余って絵の下に白が残る */
-#fusion .fusion-output {
+#process .fusion-output {
   height: auto;
   aspect-ratio: 3 / 2;
 }
 
-#fusion .fusion-output img {
+#process .fusion-output img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -249,7 +249,7 @@
 
 /* 種別ラベル。下に来る絵の明暗が3枚とも違うので、地を敷いて読めるようにする
    （白地のFVでは、もとの白文字が消えていた） */
-#fusion .fusion-output > b {
+#process .fusion-output > b {
   background: #171513;
   color: #fff;
   padding: 6px 8px;
@@ -259,24 +259,24 @@
 
 /* --- 狭い画面: ベンダーの縦積みのまま、幅だけ3枚バラバラにする --- */
 @media (max-width: 900px) {
-  #fusion .fusion-output-photo        { width: 100%; margin-left: 0; }
-  #fusion .fusion-output-illustration { width: 76%; margin-left: auto; }
-  #fusion .fusion-output-words        { width: 58%; margin-left: 8%; }
+  #process .fusion-output-photo        { width: 100%; margin-left: 0; }
+  #process .fusion-output-illustration { width: 76%; margin-left: auto; }
+  #process .fusion-output-words        { width: 58%; margin-left: 8%; }
 }
 
 /* --- 広い画面: 3枚を中央にぎゅっと重ねる（散らすのをやめた・2026-08-20） --- */
 @media (min-width: 901px) {
   /* 大=写真 / 中=イラスト / 小=言葉。互いに1割前後を重ねて中央にまとめ、
      その真上に白帯の見出し（下のルール）をセリフとして載せる */
-  #fusion .fusion-output-photo        { width: 46%; inset: 13% auto auto 12%; }
-  #fusion .fusion-output-illustration { width: 36%; inset: 6% 14% auto auto; }
-  #fusion .fusion-output-words        { width: 26%; inset: auto auto 5% 37%; }
+  #process .fusion-output-photo        { width: 46%; inset: 13% auto auto 12%; }
+  #process .fusion-output-illustration { width: 36%; inset: 6% 14% auto auto; }
+  #process .fusion-output-words        { width: 26%; inset: auto auto 5% 37%; }
 
   /* 見出しを左上から中央へ。字幕のように白帯で読ませる。
      出現のopacityはベンダーのstep制御のまま（transformはここが勝つので
      ベンダーのtranslateY(18px)は効かなくなる＝フェードだけになる）。
      pointer-events:none でカードのホバー・クリックは下に通す */
-  #fusion .fusion-expression-heading {
+  #process .fusion-expression-heading {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -293,22 +293,22 @@
   }
 
   /* 写真のラベルは右下だと、重ねた言葉カードの下に隠れる。写真だけ左下へ */
-  #fusion .fusion-output-photo > b { right: auto; left: 0; }
+  #process .fusion-output-photo > b { right: auto; left: 0; }
 
-  #fusion .fusion-expression-heading strong {
+  #process .fusion-expression-heading strong {
     font-size: clamp(24px, 2.6vw, 42px);
     letter-spacing: -.03em;
     line-height: 1.4;
   }
 
   /* 落ち着いた先の角度。動きは step4→5 のままにして、着地だけ差し替える */
-  #fusion[data-fusion-step="4"] .fusion-output-photo        { transform: translate(-1.5vw, -.6vh) scale(1.03) rotate(-3deg); }
-  #fusion[data-fusion-step="4"] .fusion-output-illustration { transform: translate(1.5vw, -.6vh) scale(1.03) rotate(4.2deg); }
-  #fusion[data-fusion-step="4"] .fusion-output-words        { transform: translate(0, .6vh) scale(1.03) rotate(-2.2deg); }
+  #process[data-fusion-step="4"] .fusion-output-photo        { transform: translate(-1.5vw, -.6vh) scale(1.03) rotate(-3deg); }
+  #process[data-fusion-step="4"] .fusion-output-illustration { transform: translate(1.5vw, -.6vh) scale(1.03) rotate(4.2deg); }
+  #process[data-fusion-step="4"] .fusion-output-words        { transform: translate(0, .6vh) scale(1.03) rotate(-2.2deg); }
 
-  #fusion[data-fusion-step="5"] .fusion-output-photo        { transform: rotate(-2.2deg); }
-  #fusion[data-fusion-step="5"] .fusion-output-illustration { transform: rotate(3.2deg); }
-  #fusion[data-fusion-step="5"] .fusion-output-words        { transform: rotate(-1.4deg); }
+  #process[data-fusion-step="5"] .fusion-output-photo        { transform: rotate(-2.2deg); }
+  #process[data-fusion-step="5"] .fusion-output-illustration { transform: rotate(3.2deg); }
+  #process[data-fusion-step="5"] .fusion-output-words        { transform: rotate(-1.4deg); }
 }
 
 /* フッターのプライバシーポリシーリンク（→ 運営元 Savor Flow のポリシーへ外部リンク）。
@@ -522,7 +522,7 @@
    実績と誤認されると商談で事故るので、ショールーム見出し下・FUSION・
    ライトボックスの3箇所で「架空のサンプル」だと言う。
    ショールーム見出し下はベンダーの .showroom .section-intro p がそのまま効く */
-#fusion .fusion-expression-heading small {
+#process .fusion-expression-heading small {
   display: block;
   margin-top: 12px;
   font: 500 10px/1.7 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
@@ -548,7 +548,7 @@
    墨ごと step4-5 で薄まる（opacity .12）ので、カードと交代する動きは元のまま。
    =========================================================== */
 
-#fusion .fusion-ink-impact > span {
+#process .fusion-ink-impact > span {
   display: flex;
   align-items: baseline;
   gap: .35em;
@@ -560,25 +560,285 @@
   white-space: nowrap;
 }
 
-#fusion .fusion-formula b {
+#process .fusion-formula b {
   color: #c8664e;
   font: 400 .8em/1 "Times New Roman", serif;
   margin: 0 .15em;
 }
 
-#fusion .fusion-formula i {
+#process .fusion-formula i {
   color: #d8ff47;
   font-style: normal;
   font-weight: 500;
 }
 
 /* 3枚のラベルが答えなので、7pxの英字前提から日本語が読める大きさへ */
-#fusion .fusion-output > b {
+#process .fusion-output > b {
   font: 700 12px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
   letter-spacing: .1em;
   padding: 8px 11px;
 }
 
 @media (max-width: 900px) {
-  #fusion .fusion-ink-impact > span { font-size: clamp(26px, 9vw, 42px); }
+  #process .fusion-ink-impact > span { font-size: clamp(26px, 9vw, 42px); }
+}
+
+/* ===========================================================
+   v4 Phase1（2026-08-21・かずさんレビュー採用分）
+   FVの直後に「Tilto°とは」「解決するお悩み」を新設した分のスタイル。
+   配色・書体は現行の器（紙 #f5f1ea / 墨 #1b1917 / コーラル #b45d45 /
+   ライム #d8ff47 / 明朝見出し / Arial 9px .19em の小ラベル）から動かさない。
+   ポップ化は会議後なので、ここでは新しい色を作らない。
+   =========================================================== */
+
+/* --- 共通: セクションの小ラベル（ベンダーの faq-clear-head>p と同じ語彙） --- */
+.about-clear-head > p,
+.worries-problem header > p {
+  margin: 0 0 42px;
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .19em;
+}
+
+.about-clear-head > p span,
+.worries-problem header > p span { color: #b45d45; margin-right: 17px; }
+
+/* --- 02 ABOUT TILTO° --- */
+.about-clear {
+  position: relative;
+  padding: clamp(72px, 7vw, 108px) 5vw;
+  background: #f5f1ea;
+  color: #1b1917;
+  border-top: 1px solid #d5d0c8;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 80px);
+}
+
+.about-clear-head h2 {
+  margin: 0;
+  font: 500 clamp(30px, 3.5vw, 54px)/1.5 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: -.045em;
+}
+
+.about-clear-body { display: grid; gap: 22px; max-width: 34em; padding-top: clamp(6px, 1.4vw, 18px); }
+
+.about-clear-body p {
+  margin: 0;
+  font: 500 clamp(13px, 1.02vw, 15px)/2.15 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  color: #4a443c;
+}
+
+.about-clear-body b { color: #1b1917; font-weight: 500; }
+
+.about-clear-body a {
+  color: #b45d45;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- 03 WHY TILTO°: 悩み（墨の面）→ 答え（紙の面）の明暗対比 --- */
+.worries { position: relative; }
+
+.worries-problem {
+  background: #1b1917;
+  color: #f5f1ea;
+  padding: clamp(72px, 7vw, 108px) 5vw clamp(60px, 6vw, 92px);
+}
+
+.worries-problem header > p { color: #a9a299; }
+
+.worries-problem h2 {
+  margin: 0 0 clamp(38px, 4.4vw, 64px);
+  font: 500 clamp(38px, 5vw, 78px)/1.28 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: -.06em;
+}
+
+.worries-voices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #3a352f;      /* gap を罫線に見せる */
+  border: 1px solid #3a352f;
+}
+
+.worries-voices li {
+  background: #1b1917;
+  padding: clamp(22px, 2.4vw, 34px) clamp(20px, 2.2vw, 32px);
+  font: 500 clamp(14px, 1.15vw, 18px)/1.8 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  color: #cfc9c0;
+}
+
+.worries-voices li::before { content: "「"; color: #b45d45; }
+.worries-voices li::after  { content: "」"; color: #b45d45; }
+
+.worries-answer {
+  background: #f5f1ea;
+  color: #1b1917;
+  padding: clamp(46px, 5vw, 76px) 5vw clamp(72px, 7vw, 108px);
+}
+
+.worries-answer-lead {
+  margin: 0 0 clamp(28px, 3.2vw, 46px);
+  font: 500 clamp(20px, 2.2vw, 34px)/1.5 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: -.03em;
+}
+
+.worries-answer-lead i {
+  color: #b45d45;
+  font-style: normal;
+  margin-right: .5em;
+}
+
+/* 4枚の並び順＝訴求の優先順位（デザイン性→価格→スピード→伴走）。並べ替えない */
+.worries-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #d5d0c8;
+  border: 1px solid #d5d0c8;
+}
+
+.worries-cards li {
+  background: #f5f1ea;
+  padding: clamp(26px, 2.8vw, 40px) clamp(20px, 2.2vw, 30px) clamp(30px, 3vw, 42px);
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.worries-cards span {
+  font: 400 15px/1 Didot, "Times New Roman", serif;
+  color: #b45d45;
+}
+
+.worries-cards b {
+  font: 500 clamp(17px, 1.5vw, 23px)/1.5 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: -.02em;
+}
+
+.worries-cards b small { font-size: 10px; color: #6f675c; margin-left: 2px; }
+
+/* ゲートB（最短1週間が提案か納品か未確定）の目印。会議で決まったら
+   この <em> ごと消す。way.css を grep すればすぐ見つかる */
+.worries-cards b em {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 6px;
+  background: #b45d45;
+  color: #f5f1ea;
+  font: 700 8px/1 Arial, sans-serif;
+  font-style: normal;
+  letter-spacing: .1em;
+  vertical-align: middle;
+}
+
+.worries-cards p {
+  margin: 0;
+  font: 500 12px/2 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  color: #5c554b;
+}
+
+@media (max-width: 900px) {
+  .about-clear { grid-template-columns: 1fr; gap: 30px; padding: 64px 22px; }
+  .about-clear-head > p,
+  .worries-problem header > p { margin-bottom: 30px; }
+  .about-clear-head h2 { font-size: clamp(26px, 7.4vw, 36px); }
+  .worries-problem { padding: 64px 22px 52px; }
+  .worries-problem h2 { font-size: clamp(30px, 8.6vw, 44px); margin-bottom: 34px; }
+  .worries-voices { grid-template-columns: 1fr; }
+  .worries-answer { padding: 40px 22px 64px; }
+  .worries-cards { grid-template-columns: 1fr; }
+}
+
+/* --- FVの実証帯を押せるようにする（T7）。
+       .hero-proof>div はベンダー側なので id を足して勝たせる --- */
+#top .hero-proof > div { position: relative; }
+
+#top .hero-proof-link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* リンク名はスクリーンリーダー用。見た目は帯そのものがボタン */
+#top .hero-proof-link span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+#top .hero-proof > div:has(.hero-proof-link:hover),
+#top .hero-proof > div:has(.hero-proof-link:focus-visible) { background: #ffffff4d; }
+
+#top .hero-proof-link:focus-visible { outline: 2px solid #b45d45; outline-offset: -4px; }
+
+/* --- 04 PROCESS（旧 FUSION EXPERIENCE）の STEP 表示 -----------------
+   演出そのもの（漂う言葉・墨・数式・白帯・3枚）は触らず、
+   各ビートが制作フローのどの段階かを言葉で置くだけ。 */
+
+/* STEP 01: 漂う言葉のビート（中央メッセージの頭） */
+#process .fusion-step-tag {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border: 1px solid #b45d45;
+  color: #b45d45;
+  font: 700 9px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  font-style: normal;
+  letter-spacing: .12em;
+}
+
+/* STEP 02: 墨と数式のビート。地が墨で不定形なので、チップで敷いて読ませる */
+#process .fusion-step-tag-ink {
+  position: absolute;
+  top: calc(50% + clamp(64px, 7vw, 104px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  margin: 0;
+  border-color: #171513;
+  background: #171513;
+  color: #d8ff47;
+  white-space: nowrap;
+}
+
+/* 白帯の小書き。STEP 03→04 の橋渡しの一行だけ目立たせる */
+#process .fusion-expression-heading small i {
+  display: block;
+  margin-bottom: 6px;
+  color: #b45d45;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* 進行レールは英字7px前提だった。STEP名（日本語）を入れたので少し上げる */
+#process .fusion-journey-progress {
+  font: 700 9px/1.5 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .1em;
+}
+
+@media (max-width: 900px) {
+  #process .fusion-step-tag-ink {
+    position: static;
+    transform: none;
+    display: block;
+    width: fit-content;
+    margin: 18px auto 0;
+    white-space: normal;
+  }
 }
