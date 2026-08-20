@@ -21,12 +21,12 @@ body{
 }
 a{color:inherit;text-decoration:none}
 
-.bar{display:flex;justify-content:space-between;align-items:center;padding:26px 5vw;
+.bar{display:flex;justify-content:space-between;align-items:center;height:82px;padding:0 2.35vw;
   border-bottom:1px solid var(--line)}
-.brand{font:900 26px/1 Arial,sans-serif;letter-spacing:-.08em}
-.brand span{color:var(--coral)}
-.back{font:700 11px/1 Arial,sans-serif;letter-spacing:.14em;border:1px solid var(--line);
-  padding:12px 16px;transition:all .2s}
+.brand{font:500 clamp(34px,2.65vw,43px)/1 Didot,"Bodoni 72","Times New Roman",serif;letter-spacing:-.045em}
+.brand span{color:inherit;font-size:.65em;vertical-align:top;margin-left:2px}
+.back{font:500 12px/1 "Yu Mincho","Hiragino Mincho ProN",serif;letter-spacing:.04em;min-width:122px;text-align:center;border:1px solid var(--line);
+  padding:14px 17px;transition:all .2s}
 .back:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
 
 .demo-note{display:block;text-align:center;padding:9px 14px;
@@ -34,15 +34,17 @@ a{color:inherit;text-decoration:none}
   color:#b9b2a6;border-bottom:1px solid var(--line)}
 .demo-note b{color:var(--lime);font-weight:700}
 
-.wrap{max-width:1180px;margin:0 auto;padding:clamp(48px,7vh,84px) 5vw 90px;
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(72px,7vw,108px) 7vw clamp(70px,7vw,108px);
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:start}
 
 .intro .label{display:flex;align-items:center;gap:10px;
-  font:700 10px/1 Arial,sans-serif;letter-spacing:.2em;color:var(--coral)}
+  font:700 9px/1 Arial,sans-serif;letter-spacing:.19em;color:var(--coral)}
 .intro .label i{width:8px;height:8px;border-radius:50%;background:var(--coral)}
-.intro h1{margin:26px 0 0;font:500 clamp(30px,3.4vw,46px)/1.5 var(--serif);letter-spacing:.03em}
+/* 見出し。列幅が453px（wrapのpaddingはmax-width内数）なので、
+   「まとまっていなくて、」10文字が1行に収まる上限は46px */
+.intro h1{margin:26px 0 0;font:500 clamp(32px,3.2vw,46px)/1.5 var(--serif);letter-spacing:-.035em}
 .intro h1 em{font-style:normal;color:var(--lime)}
-.intro>p{margin:22px 0 0;max-width:34em;font-size:13px;line-height:2.1;color:#cfc9bd}
+.intro>p{margin:22px 0 0;max-width:34em;font:400 13px/26px var(--serif);letter-spacing:.03em;color:rgba(245,241,234,.78)}
 
 .steps{margin:44px 0 0;border-top:1px solid var(--line)}
 .steps li{display:grid;grid-template-columns:52px 130px 1fr;gap:14px;align-items:baseline;
@@ -77,7 +79,7 @@ textarea{min-height:120px;resize:vertical}
 
 .send{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;
   margin-top:6px;padding:18px 20px;cursor:pointer;border:1px solid var(--ink);
-  background:var(--ink);color:var(--paper);font:700 14px/1 var(--gothic);letter-spacing:.06em;
+  background:var(--ink);color:var(--paper);font:500 14px/1 "Yu Mincho","Hiragino Mincho ProN",serif;letter-spacing:.04em;
   transition:all .2s}
 .send b{color:var(--lime);font:400 22px/1 "Times New Roman",serif}
 .send:hover{background:var(--coral);border-color:var(--coral)}
@@ -95,10 +97,13 @@ footer a:hover{color:var(--paper)}
 
 footer{padding:34px 5vw;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:center;
-  font:700 9px/1 Arial,sans-serif;letter-spacing:.16em;color:#7c766b}
+  font:700 8px/1 Arial,sans-serif;letter-spacing:.08em;color:#f5f1ea8c}
 
 @media (max-width:900px){
-  .wrap{grid-template-columns:1fr;padding-top:40px}
+  .bar{height:66px;padding:0 18px}
+  .brand{font-size:30px}
+  .back{min-width:0;padding:11px 13px;font-size:10px}
+  .wrap{grid-template-columns:1fr;padding:64px 22px 80px}
   .steps li{grid-template-columns:40px 1fr;grid-template-rows:auto auto}
   .steps p{grid-column:2}
   .card{transform:none;box-shadow:10px 12px 0 rgba(0,0,0,.35)}
