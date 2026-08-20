@@ -488,3 +488,22 @@
   margin-top: 16px;
   padding-bottom: 0;
 }
+
+/* 架空作例の注記（ペルソナレビュー課題#2）。
+   実績と誤認されると商談で事故るので、ショールーム見出し下・FUSION・
+   ライトボックスの3箇所で「架空のサンプル」だと言う。
+   ショールーム見出し下はベンダーの .showroom .section-intro p がそのまま効く */
+#fusion .fusion-expression-heading small {
+  display: block;
+  margin-top: 12px;
+  font: 500 10px/1.7 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .06em;
+  color: #8a8275;
+}
+
+/* メタ帯は flex space-between なので、間に入れると番号・注記・業種の3点配置になる */
+.showroom-lightbox-meta small {
+  font: 500 9px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .08em;
+  color: #c8c0b5;
+}

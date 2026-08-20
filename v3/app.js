@@ -244,7 +244,7 @@
       lightbox.setAttribute('aria-modal', 'true');
       lightbox.setAttribute('aria-label', `${item.category}の表現事例`);
       lightbox.innerHTML = `<div class="showroom-lightbox-inner">
-<div class="showroom-lightbox-meta"><span></span><b></b></div>
+<div class="showroom-lightbox-meta"><span></span><small>表現サンプル（架空企業）</small><b></b></div>
 <img alt=""><button type="button" aria-label="事例を閉じる">CLOSE ×</button></div>`;
       lightbox.querySelector('.showroom-lightbox-meta span').textContent = item.no;
       lightbox.querySelector('.showroom-lightbox-meta b').textContent = item.category;
