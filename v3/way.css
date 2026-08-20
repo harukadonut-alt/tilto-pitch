@@ -281,3 +281,8 @@
   #fusion[data-fusion-step="5"] .fusion-output-illustration { transform: rotate(3.2deg); }
   #fusion[data-fusion-step="5"] .fusion-output-words        { transform: rotate(-1.4deg); }
 }
+
+/* フッターのプライバシーポリシーリンク（→ 運営元 Savor Flow のポリシーへ外部リンク）。
+   ベンダーはフッターの a を装飾しないので、下線だけ足せば馴染む */
+.contact-clear-bottom small a { text-decoration: underline; text-underline-offset: 3px; }
+.contact-clear-bottom small a:hover { color: #f5f1ea; }

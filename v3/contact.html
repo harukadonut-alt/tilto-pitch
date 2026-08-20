@@ -83,6 +83,9 @@ textarea{min-height:120px;resize:vertical}
 .send:hover{background:var(--coral);border-color:var(--coral)}
 .send:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
 .card small.note{display:block;margin-top:14px;font-size:10px;line-height:1.8;color:#8a8275}
+.card small.note a{color:var(--coral);text-decoration:underline;text-underline-offset:2px}
+footer a{text-decoration:underline;text-underline-offset:3px}
+footer a:hover{color:var(--paper)}
 
 /* 送信デモの結果パネル */
 .sent{display:none;border:1px solid var(--ink);background:#fff;padding:22px;margin-top:20px}
@@ -157,7 +160,7 @@ footer{padding:34px 5vw;border-top:1px solid var(--line);
         <textarea id="memo" name="memo" placeholder="断片のままで大丈夫です。&#10;例：応募が来ない／若い人に届いてほしい／何から手をつければいいか分からない"></textarea>
       </div>
       <button class="send" type="submit"><span>無料相談を申し込む</span><b>↗</b></button>
-      <small class="note">送信しても契約にはなりません。面談のご案内をお送りするだけです。</small>
+      <small class="note">送信しても契約にはなりません。面談のご案内をお送りするだけです。<br/>いただいた個人情報は、運営元 株式会社Savor Flow の<a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>に従って取り扱います。</small>
     </form>
     <div class="sent" id="sent" role="status">
       <b>（プレビュー）まだ送信先がありません。</b>
@@ -169,6 +172,7 @@ footer{padding:34px 5vw;border-top:1px solid var(--line);
 
 <footer>
   <span>TILTO° — RECRUITING SITE STUDIO</span>
+  <a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>
   <span>© 2026 TILTO°</span>
 </footer>
 
