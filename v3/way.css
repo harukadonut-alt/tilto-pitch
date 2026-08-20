@@ -507,3 +507,6 @@
   letter-spacing: .08em;
   color: #c8c0b5;
 }
+
+/* FAQ回答内のリンク（料金へ）。a{color:inherit}のままだとリンクに見えない */
+.faq-clear-list p a { color: #b45d45; text-decoration: underline; text-underline-offset: 3px; }

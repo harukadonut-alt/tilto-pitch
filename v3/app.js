@@ -276,7 +276,7 @@
         btn.dataset.cursorLabel = 'VIEW';
         btn.setAttribute('aria-label', `${item.category}の表現事例を大きく見る`);
         btn.innerHTML = `<div class="showroom-meta"><span></span><b></b></div>
-<div class="showroom-visual"><img loading="lazy" alt=""><span class="showroom-view">この表現を見る <i>↗</i></span></div>`;
+<div class="showroom-visual"><img loading="lazy" alt=""><span class="showroom-view">大きく見る <i>＋</i></span></div>`;
         btn.querySelector('.showroom-meta span').textContent = item.no;
         btn.querySelector('.showroom-meta b').textContent = item.category;
         const img = btn.querySelector('img');
