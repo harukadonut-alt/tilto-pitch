@@ -510,3 +510,46 @@
 
 /* FAQ回答内のリンク（料金へ）。a{color:inherit}のままだとリンクに見えない */
 .faq-clear-list p a { color: #b45d45; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ===========================================================
+   FUSION: 墨の山場（step3）に出す数式「建設業 × ？？？」。
+   ？？？の答えが、次のstepで出る3枚（×写真/×イラスト/×言葉）。
+   ベンダーの .fusion-ink-impact>span（FEELING→FORMの小チップ）を
+   id で上書きして、大きな数式チップにする。
+   墨ごと step4-5 で薄まる（opacity .12）ので、カードと交代する動きは元のまま。
+   =========================================================== */
+
+#fusion .fusion-ink-impact > span {
+  display: flex;
+  align-items: baseline;
+  gap: .35em;
+  background: #171513;
+  color: #f5f1ea;
+  padding: clamp(14px, 1.8vw, 24px) clamp(22px, 3vw, 42px);
+  font: 500 clamp(26px, 3.6vw, 54px)/1.2 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+#fusion .fusion-formula b {
+  color: #c8664e;
+  font: 400 .8em/1 "Times New Roman", serif;
+  margin: 0 .15em;
+}
+
+#fusion .fusion-formula i {
+  color: #d8ff47;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* 3枚のラベルが答えなので、7pxの英字前提から日本語が読める大きさへ */
+#fusion .fusion-output > b {
+  font: 700 12px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .1em;
+  padding: 8px 11px;
+}
+
+@media (max-width: 900px) {
+  #fusion .fusion-ink-impact > span { font-size: clamp(20px, 6vw, 30px); }
+}
