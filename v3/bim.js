@@ -426,7 +426,8 @@
     const top = W < 760
       ? head.offsetTop + head.offsetHeight + 6
       : head.offsetTop + head.offsetHeight * 0.55;
-    const bot = tblock.offsetTop - 6;
+    /* 図面枠（.bim-titleblock）は 2026-08-21 に削除。無いときは下端まで使う */
+    const bot = tblock ? tblock.offsetTop - 6 : Hh - 6;
     cy = (top + bot) / 2;
     fw = W * 0.95;
     fh = Math.max(220, bot - top);

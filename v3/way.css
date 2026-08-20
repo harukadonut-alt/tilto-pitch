@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* min-height を積むと、短い画面で図面枠（凡例の帯）が画面外へ落ちる。
+  /* min-height を積むと、短い画面で図が画面外へ落ちる。
      高さは 100vh のままにして、図面の面（.bim-stage）だけを縮める */
   min-height: 560px;
   /* 上は .scroll-progress（fixed・y=75〜77）を避ける。
@@ -73,7 +73,7 @@
   color: #5c554b;
 }
 
-/* stage は「図とヘッダー/図面枠のあいだの余白」を確保するスペーサー。
+/* stage は「図とヘッダーのあいだの余白」を確保するスペーサー。
    キャンバス自体は sticky 全面に広がる（図がヘッダーの裏まで届く） */
 .bim-stage {
   position: static;
@@ -101,80 +101,11 @@
   height: 100%;
 }
 
-/* 見出しと図面枠は図の上に乗る（図面枠は紙色で塗ってあるので下の線は透けない） */
-.bim-head,
-.bim-titleblock {
+/* 見出しは図の上に乗る */
+.bim-head {
   position: relative;
   z-index: 2;
 }
-
-/* 図面枠（タイトルブロック）。凡例も枠の欄として入れる */
-.bim-titleblock {
-  display: flex;
-  align-items: stretch;
-  border: 1px solid #cfc8bc;
-  background: #fdfcf9;
-}
-
-.bim-cell {
-  display: grid;
-  place-items: center;
-  padding: 12px 18px;
-  border-left: 1px solid #cfc8bc;
-  font: 700 8px/1.5 Arial, sans-serif;
-  letter-spacing: .16em;
-  color: #6f675c;
-  white-space: nowrap;
-}
-
-.bim-dwg { border-left: 0; }
-
-.bim-view { min-width: 190px; }   /* 数字が動いても枠が揺れない */
-
-.bim-legend {
-  flex: 1;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.bim-legend li {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 8px;
-  border-left: 1px solid #cfc8bc;
-}
-
-.bim-legend i {
-  font: 400 15px/1 Didot, Times New Roman, serif;
-  font-style: normal;
-  color: #b5aca0;
-  transition: color .4s;
-}
-
-.bim-legend b {
-  font: 400 13px/1 Yu Mincho, Hiragino Mincho ProN, serif;
-  letter-spacing: .06em;
-  white-space: nowrap;      /* 短い画面で「表現の設計」だけ折り返していた */
-  color: #b5aca0;
-  transition: color .4s;
-}
-
-.bim-legend small {
-  font: 700 8px/1 Arial, sans-serif;
-  letter-spacing: .14em;
-  white-space: nowrap;
-  color: #b5aca0;
-  transition: color .4s;
-}
-
-.bim-legend li.is-on i,
-.bim-legend li.is-on b { color: var(--tilto-ink); }
-.bim-legend li.is-on small { color: var(--tilto-coral-ink); }
 
 @media (max-width: 900px) {
   .bim-transition {
@@ -191,25 +122,12 @@
   .bim-head { flex-direction: column; align-items: flex-start; }
   .bim-lead { text-align: left; }
   .bim-stage { height: 100vw; max-height: 470px; flex: none; margin-top: 12px; }
-  .bim-titleblock { flex-wrap: wrap; }
-  .bim-dwg, .bim-scale { display: none; }   /* 図面番号の遊びは狭い画面では畳む */
-  .bim-view { min-width: 0; width: 100%; border-left: 0; border-top: 1px solid #cfc8bc; }
-  .bim-legend { flex-wrap: wrap; }
-  .bim-legend li { flex: 1 1 50%; border-top: 1px solid #cfc8bc; }
-  .bim-legend li:nth-child(-n+2) { border-top: 0; }
-  .bim-legend li:nth-child(odd) { border-left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bim-transition { height: auto; min-height: 0; }
   .bim-sticky { position: relative; height: auto; min-height: 680px; padding-top: 92px; }
   .bim-stage { min-height: 480px; }
-}
-
-@media (max-width: 480px) {
-  .bim-legend small { display: none; }
-  .bim-legend li { gap: 6px; padding: 9px 4px; }
-  .bim-legend b { font-size: 12px; }
 }
 
 
