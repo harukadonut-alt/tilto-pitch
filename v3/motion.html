@@ -220,6 +220,89 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
 .legend li i{font:400 17px/1 "Times New Roman",serif;font-style:normal;color:var(--coral)}
 .legend code{font:700 11px/1.7 var(--mono);background:var(--paper);padding:2px 6px;border:1px solid var(--line)}
 
+
+/* ============================================================
+   見出しの出し方 3案（打ち合わせ用の比較）
+   大きさ・書体・字間は3案とも同一。変えているのは出方だけ。
+   ============================================================ */
+.sec-headings{background:var(--white)}
+.sec-lead{margin-top:18px;max-width:38em;font:500 13px/2.1 var(--serif);letter-spacing:.04em;color:#5c554b}
+.sec-lead b{color:var(--black);font-weight:500}
+
+.hcases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+  margin-top:clamp(34px,4vw,60px)}
+.hcase{background:var(--white);display:grid;grid-template-columns:minmax(220px,300px) 1fr;
+  gap:clamp(20px,3vw,52px);padding:clamp(28px,3.2vw,48px)}
+.hcase-meta{display:grid;gap:10px;align-content:start}
+.hcase-no{font:700 9px/1 var(--mono);letter-spacing:.2em;color:var(--coral)}
+.hcase-meta b{font:500 clamp(16px,1.5vw,21px)/1.5 var(--serif);letter-spacing:-.02em}
+.hcase-meta small{font:700 9px/1.6 var(--mono);letter-spacing:.1em;color:#8b857c}
+.hcase-meta p{font:500 12px/2 var(--serif);letter-spacing:.04em;color:#5c554b}
+.hcase-replay{justify-self:start;margin-top:6px;cursor:pointer;
+  border:1px solid var(--black);background:var(--paper);color:var(--black);
+  padding:10px 14px;font:700 10px/1 var(--gothic);letter-spacing:.08em;
+  transition:transform .3s var(--ease),background .2s,color .2s}
+.hcase-replay:hover{transform:rotate(-1.5deg) translateY(-2px);background:var(--black);color:var(--paper)}
+.hcase-replay:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+
+.hcase-stage{display:grid;align-content:center;min-height:clamp(150px,17vw,230px);
+  padding-left:clamp(0px,1.5vw,24px);border-left:1px solid var(--line);perspective:900px}
+
+/* 3案で共通の見出し体裁。ここを揃えているのが今回の要点 */
+.demo{font:500 clamp(26px,3.6vw,54px)/1.5 var(--serif);letter-spacing:-.05em;
+  transform-style:preserve-3d}
+.demo .ln{display:block;position:relative}
+.demo .tx{display:inline-block}
+.demo .ch{display:inline-block}
+
+/* --- 案1: 1文字ずつ回って出る（to-inc型）--------------------
+   元は character キーフレーム: 20%{opacity:0} 100%{rotateY(0) translateX(0) scale(1)} */
+html.js-motion .demo-1 .ch{opacity:0}
+html.js-motion .demo-1.is-playing .ch{
+  animation:hChar .9s var(--ease) both;animation-delay:calc(var(--i) * 46ms)}
+@keyframes hChar{
+  0%  {opacity:0;transform:rotateY(-88deg) translateX(-.45em) scale(.72)}
+  20% {opacity:0}
+  100%{opacity:1;transform:rotateY(0deg)   translateX(0)      scale(1)}
+}
+
+/* --- 案2: 斜めの帯が走った跡に出る（givee型）----------------
+   givee の署名は skewY(-20deg) の斜め。ここでは帯を走らせる */
+html.js-motion .demo-2 .ln{overflow:hidden}
+html.js-motion .demo-2 .tx{opacity:0}
+html.js-motion .demo-2 .ln::after{content:"";position:absolute;inset:-25% -12%;
+  background:var(--coral);transform:skewX(-14deg) translateX(-130%)}
+html.js-motion .demo-2.is-playing .ln::after{
+  animation:hBand .95s var(--ease) both;animation-delay:calc(var(--i) * 150ms)}
+html.js-motion .demo-2.is-playing .tx{
+  animation:hBandText .01s linear both;animation-delay:calc(var(--i) * 150ms + 400ms)}
+@keyframes hBand{
+  0%  {transform:skewX(-14deg) translateX(-130%)}
+  45% {transform:skewX(-14deg) translateX(0)}
+  100%{transform:skewX(-14deg) translateX(130%)}
+}
+@keyframes hBandText{to{opacity:1}}
+
+/* --- 案3: 行ごとに下からせり上がる（marketenterprise型）-----
+   実物は .line{overflow:hidden} > .titleeffect{translateY} の行マスク。
+   イージングも先方のヘッダーで使われている値をそのまま借りた */
+html.js-motion .demo-3 .ln{overflow:hidden}
+html.js-motion .demo-3 .tx{transform:translateY(108%)}
+html.js-motion .demo-3.is-playing .tx{
+  animation:hRise 1.05s cubic-bezier(.43,.05,.17,1) both;
+  animation-delay:calc(var(--i) * 130ms)}
+@keyframes hRise{to{transform:translateY(0)}}
+
+/* 演出が動かない環境でも読めるようにする保険 */
+html.js-motion .demo.is-shown .ch,
+html.js-motion .demo.is-shown .tx{animation:none;opacity:1;transform:none}
+html.js-motion .demo.is-shown .ln::after{display:none}
+
+@media (max-width:900px){
+  .hcase{grid-template-columns:1fr;gap:22px;padding:26px 22px}
+  .hcase-stage{border-left:0;border-top:1px solid var(--line);padding:22px 0 0;min-height:120px}
+}
+
 .foot{padding:40px 5vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;
   flex-wrap:wrap;gap:14px;font:700 9px/1.8 var(--mono);letter-spacing:.14em;color:#8b857c}
 
@@ -275,9 +358,12 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
   <span class="fv-scroll">SCROLL</span>
 </section>
 
+<!-- 見出しの出し方 3案 -->
+<section class="sec sec-headings" id="headings"><p class="sec-label reveal">02 / HEADING — 見出しの出し方 3案</p><h2 class="reveal" style="--i:1">どの出し方で、サイト全体を揃えるか。</h2><p class="sec-lead reveal" style="--i:2">大きさ・書体・字間は3案とも同じにしてあります。違うのは<b>出方だけ</b>。画面に入ると再生され、ボタンで何度でも見返せます。</p><div class="hcases"><article class="hcase"><div class="hcase-meta"><span class="hcase-no">見出し案 1</span><b>1文字ずつ、回って出る</b><small>参考: to-inc.co.jp</small><p>文字が横に回りながら現れます。連番でずれるので、読むリズムがそのまま動きになります。にぎやか。</p><button type="button" class="hcase-replay" data-case="1">もう一度見る</button></div><div class="hcase-stage"><h3 class="demo demo-1" data-case="1"><span class="ln"><span class="tx"><span class="ch" style="--i:0">そ</span><span class="ch" style="--i:1">の</span><span class="ch" style="--i:2">「</span><span class="ch" style="--i:3">な</span><span class="ch" style="--i:4">ん</span><span class="ch" style="--i:5">と</span><span class="ch" style="--i:6">な</span><span class="ch" style="--i:7">く</span><span class="ch" style="--i:8">」</span><span class="ch" style="--i:9">か</span><span class="ch" style="--i:10">ら</span><span class="ch" style="--i:11">、</span></span></span><span class="ln"><span class="tx"><span class="ch" style="--i:12">つ</span><span class="ch" style="--i:13">く</span><span class="ch" style="--i:14">り</span><span class="ch" style="--i:15">ま</span><span class="ch" style="--i:16">す</span><span class="ch" style="--i:17">。</span></span></span></h3></div></article><article class="hcase"><div class="hcase-meta"><span class="hcase-no">見出し案 2</span><b>斜めの帯が走って、あらわれる</b><small>参考: givee.co.jp</small><p>色の帯が斜めに走り抜けた跡に文字が残ります。1行ぶんで完結するので、切れ味が出ます。</p><button type="button" class="hcase-replay" data-case="2">もう一度見る</button></div><div class="hcase-stage"><h3 class="demo demo-2" data-case="2"><span class="ln" style="--i:0"><span class="tx">その「なんとなく」から、</span></span><span class="ln" style="--i:1"><span class="tx">つくります。</span></span></h3></div></article><article class="hcase"><div class="hcase-meta"><span class="hcase-no">見出し案 3</span><b>行ごとに、下からせり上がる</b><small>参考: marketenterprise.co.jp</small><p>行の下端でマスクして、下からゆっくり出します。落ち着きが出て、長い見出しでも読みやすい。</p><button type="button" class="hcase-replay" data-case="3">もう一度見る</button></div><div class="hcase-stage"><h3 class="demo demo-3" data-case="3"><span class="ln" style="--i:0"><span class="tx">その「なんとなく」から、</span></span><span class="ln" style="--i:1"><span class="tx">つくります。</span></span></h3></div></article></div></section>
+
 <!-- ③ 同じ癖が続く -->
 <section class="sec" id="works">
-  <p class="sec-label reveal">01 / ONE MOTION</p>
+  <p class="sec-label reveal">03 / ONE MOTION</p>
   <h2 class="reveal" style="--i:1">同じ動きが、最後まで続く。</h2>
   <div class="cards">
     <article class="reveal tilt" style="--i:2"><span>01</span><b>起き上がる</b><p>床に倒れた状態（<code>rotateX(-92deg)</code>）から立ち上がり、1°弱だけ傾きを残します。見出しは1文字ずつ、連番で。</p></article>
@@ -298,7 +384,7 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
 </section>
 
 <section class="sec sec-dark" id="price">
-  <p class="sec-label reveal">02 / SAME MOTION, DARK GROUND</p>
+  <p class="sec-label reveal">04 / SAME MOTION, DARK GROUND</p>
   <h2 class="reveal" style="--i:1">地の色が変わっても、<br/>癖は変えない。</h2>
   <div class="cards">
     <article class="reveal tilt" style="--i:2"><span>01</span><b>採用支援セット</b><p>月額27,000円（税別）・初期費用0円。採用支援向けの基本セクションを制作・運用します。</p></article>
@@ -357,6 +443,32 @@ html.js-motion .reveal.is-shown{animation:none;opacity:1;transform:none}
     card.addEventListener('pointerleave', () => {
       card.style.setProperty('--ry', '0deg');
       card.style.setProperty('--rx', '0deg');
+    });
+  });
+
+
+  /* --- 見出し3案: 画面に入ったら再生。ボタンで何度でも見返せる --- */
+  const demos = document.querySelectorAll('.demo');
+  const play = (el) => {
+    el.classList.remove('is-playing');
+    void el.offsetWidth;            // リフローを挟まないと再生し直せない
+    el.classList.add('is-playing');
+  };
+  if (!reduced && 'IntersectionObserver' in window) {
+    const dio = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { play(e.target); dio.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -20% 0px' });
+    demos.forEach((el) => dio.observe(el));
+    /* 保険: IOが来ない環境では、演出ごと降ろして中身だけ見せる */
+    setTimeout(() => demos.forEach((el) => {
+      if (!el.classList.contains('is-playing')) el.classList.add('is-shown');
+    }), 3000);
+  }
+  document.querySelectorAll('.hcase-replay').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const el = document.querySelector(`.demo-${btn.dataset.case}`);
+      el.classList.remove('is-shown');
+      play(el);
     });
   });
 
