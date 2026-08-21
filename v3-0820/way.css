@@ -1,0 +1,584 @@
+/* site-v3 で足したCSSはここに書く。ベンダーCSS（assets/index-B4FxbBh9.css）は触らない。
+
+   ⚠️ このファイルはベンダーCSSより「前」に読まれる。
+   同じ強さのセレクタではベンダーに負けるので、既存クラスを上書きするときは
+   `#top .hero-copy` のように id を足して勝たせること。
+   新しいクラス名で書いている限りは問題ない。
+
+   読み込み順を入れ替えないこと。順序を変えると way.css 全体がベンダーより強くなり、
+   影響範囲が読めなくなる（site-v2 で同じ判断をしている）。 */
+
+/* BIMブロックが使う色。site-v2 の :root から必要な分だけ持ってきた */
+:root {
+  --tilto-coral-ink: #b4654e;
+  --tilto-ink: #1c1a17;
+}
+
+/* ===========================================================
+   BIM: BEHIND THE EXPRESSION — 設計図オービット
+   紙(トレペ)の上でワイヤーフレームの建築が組み上がる。
+   描画は bim.js（Canvas 2D・自前平行投影・ライブラリなし）。
+   スクロールで 平面図 → アクソメ にカメラが起き上がる。
+   =========================================================== */
+
+.bim-transition {
+  position: relative;
+  background: #fdfcf9;
+  border-top: 1px solid #d5d0c8;
+  border-bottom: 1px solid #d5d0c8;
+  height: 320vh;
+  min-height: 2100px;
+}
+
+.bim-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* min-height を積むと、短い画面で図面枠（凡例の帯）が画面外へ落ちる。
+     高さは 100vh のままにして、図面の面（.bim-stage）だけを縮める */
+  min-height: 560px;
+  /* 上は .scroll-progress（fixed・y=75〜77）を避ける。
+     詰めると見出しに進捗バーの線が刺さる */
+  padding: clamp(92px, 10vh, 116px) 5vw clamp(16px, 2.4vh, 26px);
+  overflow: hidden;
+}
+
+.bim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 26px;
+}
+
+.bim-head small {
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .2em;
+  color: var(--tilto-coral-ink);
+}
+
+.bim-head h2 {
+  margin: clamp(8px, 1.4vh, 14px) 0 0;
+  font: 500 clamp(26px, 2.5vw, 42px)/1.4 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  color: var(--tilto-ink);
+}
+
+.bim-lead {
+  margin: 0;
+  font: 400 12px/2 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .06em;
+  text-align: right;
+  color: #5c554b;
+}
+
+/* stage は「図とヘッダー/図面枠のあいだの余白」を確保するスペーサー。
+   キャンバス自体は sticky 全面に広がる（図がヘッダーの裏まで届く） */
+.bim-stage {
+  position: static;
+  flex: 1;
+  min-height: 0;
+  margin-top: clamp(6px, 1.4vh, 14px);
+}
+
+/* トレペの方眼。線は Canvas、面はここ */
+.bim-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(29, 27, 24, .035) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(90deg, rgba(29, 27, 24, .035) 0 1px, transparent 1px 64px);
+}
+
+.bim-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* 見出しと図面枠は図の上に乗る（図面枠は紙色で塗ってあるので下の線は透けない） */
+.bim-head,
+.bim-titleblock {
+  position: relative;
+  z-index: 2;
+}
+
+/* 図面枠（タイトルブロック）。凡例も枠の欄として入れる */
+.bim-titleblock {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #cfc8bc;
+  background: #fdfcf9;
+}
+
+.bim-cell {
+  display: grid;
+  place-items: center;
+  padding: 12px 18px;
+  border-left: 1px solid #cfc8bc;
+  font: 700 8px/1.5 Arial, sans-serif;
+  letter-spacing: .16em;
+  color: #6f675c;
+  white-space: nowrap;
+}
+
+.bim-dwg { border-left: 0; }
+
+.bim-view { min-width: 190px; }   /* 数字が動いても枠が揺れない */
+
+.bim-legend {
+  flex: 1;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bim-legend li {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-left: 1px solid #cfc8bc;
+}
+
+.bim-legend i {
+  font: 400 15px/1 Didot, Times New Roman, serif;
+  font-style: normal;
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend b {
+  font: 400 13px/1 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .06em;
+  white-space: nowrap;      /* 短い画面で「表現の設計」だけ折り返していた */
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend small {
+  font: 700 8px/1 Arial, sans-serif;
+  letter-spacing: .14em;
+  white-space: nowrap;
+  color: #b5aca0;
+  transition: color .4s;
+}
+
+.bim-legend li.is-on i,
+.bim-legend li.is-on b { color: var(--tilto-ink); }
+.bim-legend li.is-on small { color: var(--tilto-coral-ink); }
+
+@media (max-width: 900px) {
+  .bim-transition {
+    height: auto;
+    min-height: 0;
+  }
+  .bim-sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding: 72px 22px 30px;
+    overflow: visible;
+  }
+  .bim-head { flex-direction: column; align-items: flex-start; }
+  .bim-lead { text-align: left; }
+  .bim-stage { height: 100vw; max-height: 470px; flex: none; margin-top: 12px; }
+  .bim-titleblock { flex-wrap: wrap; }
+  .bim-dwg, .bim-scale { display: none; }   /* 図面番号の遊びは狭い画面では畳む */
+  .bim-view { min-width: 0; width: 100%; border-left: 0; border-top: 1px solid #cfc8bc; }
+  .bim-legend { flex-wrap: wrap; }
+  .bim-legend li { flex: 1 1 50%; border-top: 1px solid #cfc8bc; }
+  .bim-legend li:nth-child(-n+2) { border-top: 0; }
+  .bim-legend li:nth-child(odd) { border-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bim-transition { height: auto; min-height: 0; }
+  .bim-sticky { position: relative; height: auto; min-height: 680px; padding-top: 92px; }
+  .bim-stage { min-height: 480px; }
+}
+
+@media (max-width: 480px) {
+  .bim-legend small { display: none; }
+  .bim-legend li { gap: 6px; padding: 9px 4px; }
+  .bim-legend b { font-size: 12px; }
+}
+
+
+/* ===========================================================
+   FUSION EXPERIENCE の「こんなサイトが出来上がります」
+   もともとの3枚はCSSで描いた擬似モックだった（実画像は写真枠だけ）。
+   実際のFV画像3点に差し替え、3つとも違う大きさで散らす。
+
+   ⚠️ 900px以下はベンダーが縦積みに組み替える。散らす配置はそこに持ち込まない。
+      way.css はベンダーより前に読まれるため、#fusion を足して勝たせている。
+   =========================================================== */
+
+/* --- 幅を問わず共通 --- */
+
+/* 擬似モックの装飾を落とす。実FVの上に乗ると邪魔になる */
+#fusion .fusion-output-photo::after,
+#fusion .fusion-output-illustration::before,
+#fusion .fusion-output-illustration::after,
+#fusion .fusion-output-words::before { content: none; }
+
+#fusion .fusion-output-illustration,
+#fusion .fusion-output-words { background: #fff; }
+
+/* FVは3:2。カードもその比にして、画像を切らずに見せる。
+   比を揃えないと、カードの高さだけ余って絵の下に白が残る */
+#fusion .fusion-output {
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+
+#fusion .fusion-output img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;          /* 写真枠にかかっていた彩度落としを外す */
+}
+
+/* 種別ラベル。下に来る絵の明暗が3枚とも違うので、地を敷いて読めるようにする
+   （白地のFVでは、もとの白文字が消えていた） */
+#fusion .fusion-output > b {
+  background: #171513;
+  color: #fff;
+  padding: 6px 8px;
+  bottom: 0;
+  right: 0;
+}
+
+/* --- 狭い画面: ベンダーの縦積みのまま、幅だけ3枚バラバラにする --- */
+@media (max-width: 900px) {
+  #fusion .fusion-output-photo        { width: 100%; margin-left: 0; }
+  #fusion .fusion-output-illustration { width: 76%; margin-left: auto; }
+  #fusion .fusion-output-words        { width: 58%; margin-left: 8%; }
+}
+
+/* --- 広い画面: 3枚を中央にぎゅっと重ねる（散らすのをやめた・2026-08-20） --- */
+@media (min-width: 901px) {
+  /* 大=写真 / 中=イラスト / 小=言葉。互いに1割前後を重ねて中央にまとめ、
+     その真上に白帯の見出し（下のルール）をセリフとして載せる */
+  #fusion .fusion-output-photo        { width: 46%; inset: 13% auto auto 12%; }
+  #fusion .fusion-output-illustration { width: 36%; inset: 6% 14% auto auto; }
+  #fusion .fusion-output-words        { width: 26%; inset: auto auto 5% 37%; }
+
+  /* 見出しを左上から中央へ。字幕のように白帯で読ませる。
+     出現のopacityはベンダーのstep制御のまま（transformはここが勝つので
+     ベンダーのtranslateY(18px)は効かなくなる＝フェードだけになる）。
+     pointer-events:none でカードのホバー・クリックは下に通す */
+  #fusion .fusion-expression-heading {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    pointer-events: none;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    text-align: center;
+    max-width: min(78%, 760px);
+    background: #fff;
+    padding: clamp(18px, 2.2vw, 32px) clamp(28px, 3.4vw, 54px);
+    box-shadow: 0 18px 60px rgba(23, 21, 19, .16);
+  }
+
+  /* 写真のラベルは右下だと、重ねた言葉カードの下に隠れる。写真だけ左下へ */
+  #fusion .fusion-output-photo > b { right: auto; left: 0; }
+
+  #fusion .fusion-expression-heading strong {
+    font-size: clamp(24px, 2.6vw, 42px);
+    letter-spacing: -.03em;
+    line-height: 1.4;
+  }
+
+  /* 落ち着いた先の角度。動きは step4→5 のままにして、着地だけ差し替える */
+  #fusion[data-fusion-step="4"] .fusion-output-photo        { transform: translate(-1.5vw, -.6vh) scale(1.03) rotate(-3deg); }
+  #fusion[data-fusion-step="4"] .fusion-output-illustration { transform: translate(1.5vw, -.6vh) scale(1.03) rotate(4.2deg); }
+  #fusion[data-fusion-step="4"] .fusion-output-words        { transform: translate(0, .6vh) scale(1.03) rotate(-2.2deg); }
+
+  #fusion[data-fusion-step="5"] .fusion-output-photo        { transform: rotate(-2.2deg); }
+  #fusion[data-fusion-step="5"] .fusion-output-illustration { transform: rotate(3.2deg); }
+  #fusion[data-fusion-step="5"] .fusion-output-words        { transform: rotate(-1.4deg); }
+}
+
+/* フッターのプライバシーポリシーリンク（→ 運営元 Savor Flow のポリシーへ外部リンク）。
+   ベンダーはフッターの a を装飾しないので、下線だけ足せば馴染む */
+.contact-clear-bottom small a { text-decoration: underline; text-underline-offset: 3px; }
+.contact-clear-bottom small a:hover { color: #f5f1ea; }
+
+/* ===========================================================
+   09 PRICE — 実プランに差し替えた分のスタイル。
+   元の .price-clear-numbers（数字2つ＋＋）は使わず、プラン2枚＋共通条件＋
+   セクション追加＋CTAの構成にした。意匠は元セクションの語彙
+   （Times数字・ライム・罫線#6d665e・Arialラベル）をそのまま使う。
+   演出は0（SITE-PLAN「料金は完全静止」）。
+   =========================================================== */
+
+#pricing .plan-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: clamp(46px, 5vw, 72px);
+  border-top: 1px solid #6d665e;
+}
+
+#pricing .plan-card {
+  padding: clamp(34px, 3.6vw, 52px) clamp(24px, 3vw, 48px) clamp(30px, 3vw, 44px) 0;
+}
+
+#pricing .plan-card + .plan-card {
+  border-left: 1px solid #6d665e;
+  padding-left: clamp(24px, 3vw, 48px);
+  padding-right: 0;
+}
+
+#pricing .plan-card header small {
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .19em;
+  color: #b45d45;
+}
+
+#pricing .plan-card h3 {
+  margin: 14px 0 0;
+  font: 500 clamp(22px, 2.2vw, 32px)/1.4 Yu Mincho, serif;
+  letter-spacing: -.02em;
+}
+
+#pricing .plan-card header p {
+  margin: 10px 0 0;
+  font: 500 12px/1.9 Yu Mincho, serif;
+  color: #aaa39a;
+}
+
+#pricing .plan-card dl {
+  display: flex;
+  gap: clamp(28px, 3.4vw, 56px);
+  margin: clamp(24px, 2.6vw, 38px) 0 0;
+}
+
+#pricing .plan-card dt {
+  font: 700 10px/1 Arial, sans-serif;
+  letter-spacing: .13em;
+  color: #c2bbb2;
+}
+
+#pricing .plan-card dd {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 14px 0 0;
+}
+
+#pricing .plan-card dd strong {
+  font: 400 clamp(38px, 3.8vw, 60px)/.85 Times New Roman, serif;
+  letter-spacing: -.05em;
+}
+
+#pricing .plan-card-main dd strong { color: #d8ff47; }   /* 推しプランの数字だけライム */
+
+#pricing .plan-card dd b { font: 500 15px/1 Yu Mincho, serif; }
+
+#pricing .plan-card dd small {
+  display: block;
+  margin-top: 6px;
+  font: 500 8px/1 Arial, sans-serif;
+  color: #aaa39a;
+}
+
+/* 共通条件。price-clear-foot の ●リストと同じ語彙 */
+#pricing .plan-terms {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px clamp(20px, 2.6vw, 40px);
+  margin: 0;
+  padding: clamp(20px, 2.2vw, 30px) 0;
+  border-top: 1px solid #6d665e;
+  list-style: none;
+  font: 700 9px/1.7 Arial, sans-serif;
+  letter-spacing: .08em;
+  color: #d8d2c9;
+}
+
+#pricing .plan-terms li::before { content: "●"; color: #b45d45; margin-right: 8px; }
+
+/* セクション追加 */
+#pricing .plan-addon {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 12px clamp(28px, 3.4vw, 56px);
+  padding: clamp(22px, 2.4vw, 34px) 0;
+  border-top: 1px solid #6d665e;
+  border-bottom: 1px solid #6d665e;
+}
+
+#pricing .plan-addon dl { display: flex; align-items: baseline; gap: 18px; margin: 0; }
+
+#pricing .plan-addon dt {
+  font: 700 10px/1 Arial, sans-serif;
+  letter-spacing: .13em;
+  color: #c2bbb2;
+}
+
+#pricing .plan-addon dd { display: flex; align-items: baseline; gap: 8px; margin: 0; }
+
+#pricing .plan-addon dd strong {
+  font: 400 clamp(24px, 2.2vw, 34px)/1 Times New Roman, serif;
+  letter-spacing: -.04em;
+}
+
+#pricing .plan-addon dd b { font: 500 13px/1 Yu Mincho, serif; }
+
+#pricing .plan-addon dd small { font: 500 8px/1 Arial, sans-serif; color: #aaa39a; margin-left: 4px; }
+
+#pricing .plan-addon > p {
+  margin: 0;
+  font: 500 12px/1.9 Yu Mincho, serif;
+  color: #aaa39a;
+}
+
+/* CTA行。元の price-clear-foot の見た目を横組みで */
+#pricing .plan-foot {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  margin-top: clamp(30px, 3.4vw, 48px);
+}
+
+#pricing .plan-foot > p {
+  margin: 0;
+  font: 500 clamp(15px, 1.45vw, 22px)/1.6 Yu Mincho, serif;
+  color: #e4ddd4;
+}
+
+#pricing .plan-foot a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding: 25px 28px;
+  background: #d8ff47;
+  color: #1b1917;
+  font: 700 10px/1 Arial, sans-serif;
+  letter-spacing: .08em;
+}
+
+#pricing .plan-foot a span { color: #b45d45; font-size: 19px; }
+
+#pricing .plan-foot ul {
+  display: flex;
+  gap: clamp(18px, 2.5vw, 38px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 700 8px/1 Arial, sans-serif;
+  letter-spacing: .08em;
+  color: #d8d2c9;
+}
+
+#pricing .plan-foot li::before { content: "●"; color: #b45d45; margin-right: 8px; }
+
+@media (max-width: 900px) {
+  #pricing .plan-grid { grid-template-columns: 1fr; margin-top: 42px; }
+  #pricing .plan-card { padding: 30px 0 26px; }
+  #pricing .plan-card + .plan-card { border-left: 0; border-top: 1px solid #6d665e; padding-left: 0; }
+  #pricing .plan-addon { grid-template-columns: 1fr; }
+  #pricing .plan-addon dl { flex-direction: column; gap: 12px; }
+  #pricing .plan-addon dt { white-space: nowrap; }
+  #pricing .plan-addon dd { flex-wrap: wrap; row-gap: 4px; }
+  #pricing .plan-addon dd strong { font-size: 24px; white-space: nowrap; }
+  #pricing .plan-foot { grid-template-columns: 1fr; align-items: start; gap: 20px; }
+  #pricing .plan-foot a { width: 100%; }
+  #pricing .plan-foot ul { flex-wrap: wrap; }
+}
+
+/* 見出しの補足文。ベンダーの .price-clear-head>strong は右列に置く設計だが、
+   h2 が nowrap で右列まで伸びるので重なる。全幅で見出しの下に落とす */
+#pricing .price-clear-head > strong {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  padding-bottom: 0;
+}
+
+/* 架空作例の注記（ペルソナレビュー課題#2）。
+   実績と誤認されると商談で事故るので、ショールーム見出し下・FUSION・
+   ライトボックスの3箇所で「架空のサンプル」だと言う。
+   ショールーム見出し下はベンダーの .showroom .section-intro p がそのまま効く */
+#fusion .fusion-expression-heading small {
+  display: block;
+  margin-top: 12px;
+  font: 500 10px/1.7 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .06em;
+  color: #8a8275;
+}
+
+/* メタ帯は flex space-between なので、間に入れると番号・注記・業種の3点配置になる */
+.showroom-lightbox-meta small {
+  font: 500 9px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .08em;
+  color: #c8c0b5;
+}
+
+/* FAQ回答内のリンク（料金へ）。a{color:inherit}のままだとリンクに見えない */
+.faq-clear-list p a { color: #b45d45; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ===========================================================
+   FUSION: 墨の山場（step3）に出す数式「建設業 × ？？？」。
+   ？？？の答えが、次のstepで出る3枚（×写真/×イラスト/×言葉）。
+   ベンダーの .fusion-ink-impact>span（FEELING→FORMの小チップ）を
+   id で上書きして、大きな数式チップにする。
+   墨ごと step4-5 で薄まる（opacity .12）ので、カードと交代する動きは元のまま。
+   =========================================================== */
+
+#fusion .fusion-ink-impact > span {
+  display: flex;
+  align-items: baseline;
+  gap: .35em;
+  background: #171513;
+  color: #f5f1ea;
+  padding: clamp(18px, 2.4vw, 38px) clamp(30px, 4.4vw, 66px);
+  font: 500 clamp(34px, 6.5vw, 102px)/1.2 Yu Mincho, Hiragino Mincho ProN, serif;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+#fusion .fusion-formula b {
+  color: #c8664e;
+  font: 400 .8em/1 "Times New Roman", serif;
+  margin: 0 .15em;
+}
+
+#fusion .fusion-formula i {
+  color: #d8ff47;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* 3枚のラベルが答えなので、7pxの英字前提から日本語が読める大きさへ */
+#fusion .fusion-output > b {
+  font: 700 12px/1 Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+  letter-spacing: .1em;
+  padding: 8px 11px;
+}
+
+@media (max-width: 900px) {
+  #fusion .fusion-ink-impact > span { font-size: clamp(26px, 9vw, 42px); }
+}

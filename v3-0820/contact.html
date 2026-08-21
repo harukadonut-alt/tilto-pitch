@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="ja"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>【v3-0820】無料相談｜Tilto°</title>
+<meta name="description" content="採用サイトの無料相談。まとまっていなくて大丈夫です。採用のお悩みと、今あるイメージを聞かせてください。"/>
+<link rel="icon" href="favicon.svg"/>
+<style>
+/* 器は本編の #contact（contact-clear）と同じ文法:
+   暗地 #1b1917 × 紙 #f5f1ea × コーラル #b45d45 × ライム #d8ff47。
+   見出しは明朝、ラベルは Arial の小さな大文字。 */
+:root{
+  --ink:#1b1917; --paper:#f5f1ea; --coral:#b45d45; --lime:#d8ff47;
+  --line:#3a362f; --serif:"Yu Mincho","Hiragino Mincho ProN",serif;
+  --gothic:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100svh;color:var(--paper);font-family:var(--gothic);letter-spacing:.025em;
+  background:radial-gradient(circle at 78% 20%,#242414 0,#1b1917 34%,#151412 78%);
+}
+a{color:inherit;text-decoration:none}
+
+.bar{display:flex;justify-content:space-between;align-items:center;height:82px;padding:0 2.35vw;
+  border-bottom:1px solid var(--line)}
+.brand{font:500 clamp(34px,2.65vw,43px)/1 Didot,"Bodoni 72","Times New Roman",serif;letter-spacing:-.045em}
+.brand span{color:inherit;font-size:.65em;vertical-align:top;margin-left:2px}
+.back{font:500 12px/1 "Yu Mincho","Hiragino Mincho ProN",serif;letter-spacing:.04em;min-width:122px;text-align:center;border:1px solid var(--line);
+  padding:14px 17px;transition:all .2s}
+.back:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+
+.demo-note{display:block;text-align:center;padding:9px 14px;
+  font:700 10px/1.6 Arial,sans-serif;letter-spacing:.12em;
+  color:#b9b2a6;border-bottom:1px solid var(--line)}
+.demo-note b{color:var(--lime);font-weight:700}
+
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(72px,7vw,108px) 7vw clamp(70px,7vw,108px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:start}
+
+.intro .label{display:flex;align-items:center;gap:10px;
+  font:700 9px/1 Arial,sans-serif;letter-spacing:.19em;color:var(--coral)}
+.intro .label i{width:8px;height:8px;border-radius:50%;background:var(--coral)}
+/* 見出し。列幅が453px（wrapのpaddingはmax-width内数）なので、
+   「まとまっていなくて、」10文字が1行に収まる上限は46px */
+.intro h1{margin:26px 0 0;font:500 clamp(32px,3.2vw,46px)/1.5 var(--serif);letter-spacing:-.035em}
+.intro h1 em{font-style:normal;color:var(--lime)}
+.intro>p{margin:22px 0 0;max-width:34em;font:400 13px/26px var(--serif);letter-spacing:.03em;color:rgba(245,241,234,.78)}
+
+.steps{margin:44px 0 0;border-top:1px solid var(--line)}
+.steps li{display:grid;grid-template-columns:52px 130px 1fr;gap:14px;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--line);list-style:none}
+.steps span{font:400 15px/1 Didot,"Times New Roman",serif;color:var(--coral)}
+.steps b{font:500 15px/1.6 var(--serif)}
+.steps p{font-size:11px;line-height:1.9;color:#b9b2a6}
+.steps small{font:700 8px/1 Arial,sans-serif;letter-spacing:.12em;color:#7c766b}
+
+/* フォームは紙のカード。本編で作例カードが紙で浮くのと同じ扱い */
+.card{background:var(--paper);color:var(--ink);border:1px solid var(--ink);
+  box-shadow:14px 16px 0 rgba(0,0,0,.35);padding:clamp(26px,3vw,44px);transform:rotate(-.4deg)}
+.card h2{font:500 21px/1.5 var(--serif);letter-spacing:.02em}
+.card>p{margin:8px 0 26px;font-size:11.5px;line-height:1.9;color:#5c554b}
+
+.field{margin-bottom:20px}
+.field>label{display:block;margin-bottom:8px;
+  font:700 10px/1 Arial,sans-serif;letter-spacing:.16em;color:#6f675c}
+.field>label b{color:var(--coral);margin-left:6px;font-weight:700}
+input[type=text],input[type=email],textarea{
+  width:100%;padding:13px 14px;font:400 14px/1.7 var(--gothic);letter-spacing:.02em;
+  color:var(--ink);background:#fff;border:1px solid #c9c2b4;border-radius:0;appearance:none}
+input:focus,textarea:focus{outline:2px solid var(--coral);outline-offset:-1px;border-color:var(--coral)}
+textarea{min-height:120px;resize:vertical}
+
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topics label{display:flex;align-items:center;gap:8px;cursor:pointer;
+  border:1px solid #c9c2b4;padding:10px 13px;font-size:12px;font-weight:700;
+  background:#fff;transition:all .15s;user-select:none}
+.topics input{accent-color:var(--coral);width:14px;height:14px;margin:0}
+.topics label:has(input:checked){border-color:var(--ink);background:var(--lime)}
+
+.send{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;
+  margin-top:6px;padding:18px 20px;cursor:pointer;border:1px solid var(--ink);
+  background:var(--ink);color:var(--paper);font:500 14px/1 "Yu Mincho","Hiragino Mincho ProN",serif;letter-spacing:.04em;
+  transition:all .2s}
+.send b{color:var(--lime);font:400 22px/1 "Times New Roman",serif}
+.send:hover{background:var(--coral);border-color:var(--coral)}
+.send:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.card small.note{display:block;margin-top:14px;font-size:10px;line-height:1.8;color:#8a8275}
+.card small.note a{color:var(--coral);text-decoration:underline;text-underline-offset:2px}
+footer a{text-decoration:underline;text-underline-offset:3px}
+footer a:hover{color:var(--paper)}
+
+/* 送信デモの結果パネル */
+.sent{display:none;border:1px solid var(--ink);background:#fff;padding:22px;margin-top:20px}
+.sent.is-on{display:block}
+.sent b{display:block;font:500 16px/1.6 var(--serif)}
+.sent p{margin-top:8px;font-size:11.5px;line-height:1.9;color:#5c554b}
+
+footer{padding:34px 5vw;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  font:700 8px/1 Arial,sans-serif;letter-spacing:.08em;color:#f5f1ea8c}
+
+@media (max-width:900px){
+  .bar{height:66px;padding:0 18px}
+  .brand{font-size:30px}
+  .back{min-width:0;padding:11px 13px;font-size:10px}
+  .wrap{grid-template-columns:1fr;padding:64px 22px 80px}
+  .steps li{grid-template-columns:40px 1fr;grid-template-rows:auto auto}
+  .steps p{grid-column:2}
+  .card{transform:none;box-shadow:10px 12px 0 rgba(0,0,0,.35)}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head><body>
+
+<small class="demo-note"><b>PREVIEW</b>　このページは準備中です。送信はまだどこにも届きません。</small>
+
+<header class="bar">
+  <a class="brand" href="index.html">Tilto<span>°</span></a>
+  <a class="back" href="index.html">← サイトに戻る</a>
+</header>
+
+<main class="wrap">
+  <section class="intro" aria-labelledby="t">
+    <p class="label"><i></i>CONTACT / FREE CONSULTATION</p>
+    <h1 id="t">まとまっていなくて、<br/><em>大丈夫です。</em></h1>
+    <p>「若い人に届いてほしい」「うちらしさが出せていない」——
+      そんな断片のままで構いません。採用のお悩みと、いま頭にあるイメージを
+      そのまま聞かせてください。言葉になっていない部分を一緒にひらくところから、
+      Tilto°の仕事は始まります。</p>
+
+    <ol class="steps" aria-label="相談の流れ">
+      <li><span>01</span><b>フォームを送る</b><p>3分ほどで書けます。空欄があっても送れます。</p></li>
+      <li><span>02</span><b>日程のご連絡</b><p>メールで面談の候補日をお送りします。<small>（目安は調整中）</small></p></li>
+      <li><span>03</span><b>オンラインで相談</b><p>30分・売り込みはしません。合わなければ断っていただいて大丈夫です。</p></li>
+    </ol>
+  </section>
+
+  <section class="card" aria-labelledby="f">
+    <h2 id="f">無料相談を申し込む</h2>
+    <p>いただいた内容は相談の準備にだけ使います。</p>
+    <form id="consult" novalidate>
+      <div class="field">
+        <label for="company">会社名・団体名</label>
+        <input type="text" id="company" name="company" autocomplete="organization" placeholder="株式会社◯◯"/>
+      </div>
+      <div class="field">
+        <label for="name">お名前<b>必須</b></label>
+        <input type="text" id="name" name="name" required autocomplete="name" placeholder="山田 太郎"/>
+      </div>
+      <div class="field">
+        <label for="email">メールアドレス<b>必須</b></label>
+        <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@example.com"/>
+      </div>
+      <div class="field">
+        <label>ご相談の内容（あてはまるもの全部）</label>
+        <div class="topics">
+          <label><input type="checkbox" name="topic" value="new"/>採用サイトを新しく作りたい</label>
+          <label><input type="checkbox" name="topic" value="renew"/>今の採用サイトを直したい</label>
+          <label><input type="checkbox" name="topic" value="vague"/>まだ、ぼんやりしている</label>
+          <label><input type="checkbox" name="topic" value="other"/>その他</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="memo">いま思っていること</label>
+        <textarea id="memo" name="memo" placeholder="断片のままで大丈夫です。&#10;例：応募が来ない／若い人に届いてほしい／何から手をつければいいか分からない"></textarea>
+      </div>
+      <button class="send" type="submit"><span>無料相談を申し込む</span><b>↗</b></button>
+      <small class="note">送信しても契約にはなりません。面談のご案内をお送りするだけです。<br/>いただいた個人情報は、運営元 株式会社Savor Flow の<a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>に従って取り扱います。</small>
+    </form>
+    <div class="sent" id="sent" role="status">
+      <b>（プレビュー）まだ送信先がありません。</b>
+      <p>本実装では、ここで送信完了のご案内が表示されます。
+         送信先（フォームサービス／メール）は現在準備中です。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>TILTO° — RECRUITING SITE STUDIO</span>
+  <span>運営：<a href="https://savorflow.co.jp/" target="_blank" rel="noopener">株式会社Savor Flow</a>　/　<a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></span>
+  <span>© 2026 TILTO°</span>
+</footer>
+
+<script>
+/* 仮ページ: 送信先が決まるまでは、送信の代わりに案内を出す。
+   本実装ではこの submit ハンドラを、フォームサービスへのPOSTか
+   action属性つきの素のformに差し替える。 */
+document.getElementById('consult').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.reportValidity()) return;
+  document.getElementById('sent').classList.add('is-on');
+  document.getElementById('sent').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+</script>
+</body></html>
