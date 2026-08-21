@@ -92,6 +92,15 @@ body{overflow-x:hidden}
   content:"";position:absolute;inset:auto 0 0 0;height:14%;z-index:2;pointer-events:none;
   background:linear-gradient(180deg,transparent,rgba(246,243,237,.6))}
 
+/* 900px以下ではベールを両方とも切る。
+   縦積みになるとコピーは上へ移り、ループは横幅いっぱいの独立した枠になるので、
+   隠すべき境目がそもそも無い。残すと左3分の1と下端が白く抜けるだけになる
+   （下端は黒い料金帯と接するので、紙色のぼかしはむしろ濁る） */
+@media (max-width:900px){
+  #top .hero-loop::after,
+  #top .hero-loop::before{display:none}
+}
+
 /* ⚠️ ヒーローの高さはベンダーのまま触らない。
    2026-08-21に一度 .hero-lead を 600〜780px へ広げたが、
    その分 .hero-bottom-row（= 100svh から引き算で決まる）が痩せて
