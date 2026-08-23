@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.2a62fdb6.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.0e93241e.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -523,7 +523,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.2a62fdb6.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.0e93241e.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -558,7 +558,8 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         /* ⚠️ px指定なので画面幅が変わっても字間は一定。
            em（-.05em＝43.5px時に-2.18px）から社長の指定値に変えた */
         letter-spacing: -1.15px;
-        margin: 16px 0 0;
+        /* ⚠️ 縦圧縮の詰め量は行間で変わる。SPは 1.3em × 2行 × .187 ＝ .486em */
+        margin: 16px 0 -.486em;
         padding-left: 5.6vw;
         font-size: 11.6vw;
         line-height: 1.3
@@ -790,7 +791,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.2a62fdb6.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.0e93241e.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -970,7 +971,21 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.2a62fdb6.js が load 後にDOMを足す） --- */
+/* 「採用サイトの、新しい持ち方。」を縦に潰す（2026-08-24、独自性のため）。
+   **縦横比を×1.23** ＝ 幅はそのままで高さを 1/1.23（.8130）にする。
+
+   ⚠️ `transform` ではなく**単体プロパティ `scale`** を使う。
+      このページは transform を別用途で使う箇所が多く、取り合いを避けるため。
+   ⚠️ 見た目が縮んでも**箱の高さは元のまま**なので、余った分を負のmarginで詰める。
+      余り ＝ (1 - .813) × 行間 × 行数 ＝ .187 × 1.15em × 2行 ＝ .43em
+      （行間・行数が変わったら、この値も計算し直すこと） */
+#top h1 {
+    scale: 1 .8130;
+    transform-origin: 50% 0;
+    margin-bottom: -.43em
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.0e93241e.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
