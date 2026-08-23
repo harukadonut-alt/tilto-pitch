@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.557b894c.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.8d9910c1.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -206,10 +206,19 @@ html.no-intro .ribbon-cast-shadow-scene {
     color: var(--charcoal)
 }
 
-/* ボードの PRIMARY BUTTON がコーラル塗り＋白文字。行動色はコーラルで統一する */
+/* ボードの PRIMARY BUTTON がコーラル塗り＋白文字。行動色はコーラルで統一する。
+   hoverは色反転（地と文字を入れ替える）。白地の上でも輪郭が消えないよう、
+   反転時だけ同色の枠線を内側に敷く */
 .site-nav .header-cta {
     color: #fff;
-    background: var(--coral)
+    background: var(--coral);
+    transition: background .22s ease, color .22s ease, box-shadow .22s ease
+}
+
+.site-nav .header-cta:hover {
+    color: var(--coral);
+    background: #fff;
+    box-shadow: inset 0 0 0 1.5px var(--coral)
 }
 
 /* --- 見出しの帯めくり（givee.co.jp の動きを、この配色で） ---
@@ -411,30 +420,35 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 .pricing-cta-main {
     background: var(--charcoal);
     border-bottom: 0;
-    padding: 0 1.5cqw
+    padding: 0 1.5cqw;
+    transition: background .22s ease, color .22s ease
+}
+
+.pricing-cta-main:hover {
+    color: var(--charcoal);
+    background: #fff
 }
 
 .pricing-cta-sub {
     color: #fff;
     border: 1px solid #ffffff8c;
-    padding: 0 1.5cqw
+    padding: 0 1.5cqw;
+    transition: background .22s ease, color .22s ease, border-color .22s ease
 }
 
-.header-cta:hover, .pricing-cta:hover {
+/* ベンダーの `.pricing-cta:hover { box-shadow: 白の内枠 }` を打ち消す（反転と混ざるため） */
+.pricing-cta:hover {
     box-shadow: none
 }
 
-.pricing-cta:hover .pricing-cta-main {
-    box-shadow: inset 0 0 0 2px #ffffff5c
-}
-
-.pricing-cta:hover .pricing-cta-sub {
+/* 副CTAは「コーラル地に白」の反転＝白地にコーラル */
+.pricing-cta-sub:hover {
+    color: var(--coral);
+    background: #fff;
     border-color: #fff
 }
 
-.header-cta:hover {
-    box-shadow: inset 0 0 0 2px #ffffffa8
-}
+
 
 .site-nav a:focus-visible, .site-nav button:focus-visible, .pricing-cta:focus-visible {
     outline: 3px solid var(--coral-deep)
