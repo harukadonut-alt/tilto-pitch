@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.8bf9b2e9.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.8bf9b2e9.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.8f552f75.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.8f552f75.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -70,22 +70,22 @@ var r = e(t(), 1),
     }],
     s = [{
         x: .575,
-        y: .38
+        y: .35
     }, {
         x: .625,
-        y: .42
+        y: .35
     }, {
         x: .675,
-        y: .424
+        y: .352
     }, {
         x: .72,
-        y: .422
+        y: .36
     }, {
         x: .765,
-        y: .415
+        y: .375
     }, {
         x: .82,
-        y: .402
+        y: .392
     }, {
         x: .91,
         y: .35
@@ -304,7 +304,7 @@ function h(e) {
     let t = a.upper.foldFrontX,
         n = .5091,
         r = .575,
-        i = .38;
+        i = .35;
     if (e <= t)
         return n;
     if (e < r) {
@@ -524,7 +524,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     //    本当にピントを外すには、ミップの粗い段を明示的に引く（第3引数のバイアス）。
                     // 範囲は実測。社長の指定（画面x 0〜0.32）は v_uv.x の 0.68〜0.90 にあたる。
                     float lowerLeftBlur = (1.0 - u_upper) * smoothstep(0.66, 0.88, v_uv.x);
-                    vec4 defocused = texture(u_texture, frontUv, 4.2 * lowerLeftBlur);
+                    vec4 defocused = texture(u_texture, frontUv, 3.0 * lowerLeftBlur);
                     vec4 frontTexel = mix(sharpFront,
                       mix(softFront, defocused, 0.70), lowerLeftBlur * 0.95);
                     vec4 backTexel = texture(u_texture, backUv);
