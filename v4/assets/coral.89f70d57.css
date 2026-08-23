@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.2f8db628.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.89f70d57.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -567,16 +567,33 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         pointer-events: none
     }
 
-    /* ハンバーガーの当たり判定（見た目は ::before/::after が描く） */
-    .site-nav .header-cta {
+    /* ハンバーガーの当たり判定（見た目は ::before/::after が描く）。
+       🔴 hover/focus/activeを全部殺す。殺さないと、PC用の色反転
+          （白地＋コーラルの内枠）が三本線の上に出る。スマホはタップ後に
+          :hover が残るので、白い箱が居座って見える（2026-08-24に発覚） */
+    .site-nav .header-cta,
+    .site-nav .header-cta:hover,
+    .site-nav .header-cta:focus,
+    .site-nav .header-cta:focus-visible,
+    .site-nav .header-cta:active {
+        color: #0000;
         text-indent: -9999px;
         background: none;
         border: 0;
+        outline: 0;
         box-shadow: none;
         width: 44px;
         height: 26px;
         padding: 0;
         overflow: hidden
+    }
+
+    /* 🔴 開くメニューがまだ無いので、押しても飛ばさない。
+       以前は #contact（＝「無料で相談する」）へ飛ばしていたが、
+       SPではそのCTAが最初の画面に見えているため、353pxだけ
+       中途半端にスクロールするだけの意味のない動きになっていた */
+    .site-nav .header-cta {
+        pointer-events: none
     }
 
     .brand {
@@ -819,7 +836,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 }
 
 
-/* --- InkCursor（v3から移植。assets/cursor.2f8db628.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.89f70d57.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
