@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.302dc23d.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.729b0053.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -188,6 +188,14 @@ html.no-intro .ribbon-cast-shadow-scene {
 @keyframes introFade {
       0% { opacity: 1 }
     100% { opacity: 0 }
+}
+
+/* SPだけ「つくって終わりにしない。」で改行する。
+   ⚠️ 幅の調整では折れない（2行目が18文字あるので、1行目を12文字で折る幅だと
+      2行目が3行に割れる）。<br> をSSRのHTMLとJSXの両方に入れて、
+      PCでは display:none で無効にしている */
+.lead-br {
+    display: none
 }
 
 /* --- 地 --- */
@@ -476,6 +484,19 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
    ⚠️ 影用のcanvasはSPでは切る（画面が小さく効果が薄いわりにGPUを食う）。
    ============================================================ */
 @media (max-width: 700px) {
+    /* 🔴 ベンダーの `body { overflow:hidden }` がスクロールを殺す。
+       PCは中身が画面ぴったりなので無害だったが、SPは縦に伸びるので閉じ込められる。
+       `.hero-canvas` の overflow:hidden も、下の料金カードまで切ってしまう */
+    html,
+    body {
+        /* 🔴 縦は出す（ベンダーの overflow:hidden がスクロールを殺していた）が、
+           横は切る。帯が175vwあるので、切らないとページが横に広がり、
+           中身が左に寄って見える（2026-08-24にこれで踏んだ） */
+        overflow-x: hidden;
+        overflow-y: visible;
+        height: auto
+    }
+
     .site-shell {
         height: auto;
         min-height: 100svh;
@@ -488,7 +509,9 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         flex-direction: column;
         width: 100%;
         height: auto;
-        display: flex
+        display: flex;
+        overflow-x: hidden;
+        overflow-y: visible
     }
 
     /* ヘッダー: ロゴだけ。ナビは行き先がまだ無く、ハンバーガーは実体が無いので置かない */
@@ -500,8 +523,60 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    .site-nav {
+    /* ナビの行き先はまだ無いので、リンク3つとヘッダーCTAは隠す。
+       代わりに ::after でハンバーガーを描く（DOMは足せないため）。
+       ⚠️ 飾りにはしない。`.site-nav` 自体を CTA への実リンクにはできないので、
+          押せる見た目のまま「押すと料金帯のCTAへ飛ぶ」ようにヘッダーCTAだけ
+          透明にして重ねてある */
+    .site-nav a:not(.header-cta),
+    .site-nav button {
         display: none
+    }
+
+    .site-nav {
+        align-items: center;
+        height: 26px;
+        position: relative;
+        display: flex
+    }
+
+    .site-nav::after {
+        content: "";
+        color: var(--charcoal);
+        border-top: 2px solid;
+        border-bottom: 2px solid;
+        width: 34px;
+        height: 12px;
+        display: block;
+        position: absolute;
+        top: 7px;
+        right: 0;
+        pointer-events: none
+    }
+
+    /* 中央の線 */
+    .site-nav::before {
+        content: "";
+        background: var(--charcoal);
+        width: 34px;
+        height: 2px;
+        display: block;
+        position: absolute;
+        top: 12px;
+        right: 0;
+        pointer-events: none
+    }
+
+    /* ハンバーガーの当たり判定（見た目は ::before/::after が描く） */
+    .site-nav .header-cta {
+        text-indent: -9999px;
+        background: none;
+        border: 0;
+        box-shadow: none;
+        width: 44px;
+        height: 26px;
+        padding: 0;
+        overflow: hidden
     }
 
     .brand {
@@ -518,11 +593,10 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         text-align: center
     }
 
+    /* モックに無いので出さない。見出しの前に小さな英字が挟まると、
+       スマホの狭い幅では主役（見出し）に入るまでが遠くなる */
     .eyebrow {
-        justify-content: center;
-        gap: 8px;
-        height: auto;
-        font-size: 10px
+        display: none
     }
 
     #top h1 {
@@ -533,11 +607,22 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         line-height: 1.3
     }
 
+    /* 「つくって終わりにしない。」で必ず改行する。
+       ⚠️ DOMを足せない（React）ので <br> は入れられない。
+          `max-width` で成り行き折り返しにすると端末幅で崩れるため、
+          句点のうしろに改行の機会を作る手が要る。
+          → 全体を inline-block の2段組にはできないので、
+            「幅を文の前半にぴたり合わせる」= 21文字ぶんの幅にして確実に折る */
     .lead {
         white-space: normal;
-        margin: 14px auto 0;
-        font-size: 14px;
-        line-height: 1.85
+        text-align: center;
+        margin: 16px auto 0;
+        font-size: 14.5px;
+        line-height: 1.9
+    }
+
+    .lead-br {
+        display: inline
     }
 
     /* モックではチップは黒い箱ではなく素のテキスト */
@@ -557,12 +642,13 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 
     /* CTA2本: コピーの下 */
+    /* モックより広すぎたので絞る。見出しの実測幅とそろえる */
     .pricing-cta {
         order: 2;
         flex-direction: column;
-        gap: 12px;
-        width: calc(100% - 44px);
-        margin: 24px auto 6px;
+        gap: 11px;
+        width: min(78%, 300px);
+        margin: 26px auto 6px;
         padding: 0;
         display: flex
     }
@@ -571,9 +657,9 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     .pricing-cta-sub {
         border-radius: 8px;
         justify-content: space-between;
-        min-height: 56px;
-        padding: 0 22px;
-        font-size: 16px
+        min-height: 52px;
+        padding: 0 18px;
+        font-size: 15px
     }
 
     .pricing-cta-main b,
@@ -593,13 +679,16 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 
     /* 帯: 全幅より大きく描いて左右をトリミング */
+    /* 帯の絵は右側に寄っているので、箱を左へずらして左の余白を消す。
+       ⚠️ 175vw の箱を -37.5vw に置くと左右が均等（＝絵は右寄りに見える）。
+          -52vw まで送ると絵の左端が画面の左に着く */
     .ribbon-scene {
         position: relative;
         inset: auto;
         order: 3;
         width: 175vw;
         height: 98.6vw;
-        margin: 10px 0 0 -37.5vw
+        margin: 10px 0 0 -52vw
     }
 
     .ribbon-cast-shadow-scene {
@@ -701,7 +790,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 }
 
 
-/* --- InkCursor（v3から移植。assets/cursor.302dc23d.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.729b0053.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;

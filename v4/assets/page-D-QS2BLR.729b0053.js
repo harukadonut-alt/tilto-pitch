@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.302dc23d.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.302dc23d.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.729b0053.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.729b0053.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -972,9 +972,11 @@ function x() {
                         className: `accent`,
                         children: `新しい持ち方。`
                     })]
-                }), (0, i.jsx)(`p`, {
+                }), (0, i.jsxs)(`p`, {
                     className: `lead`,
-                    children: `つくって終わりにしない。月額で持ち、育てつづける採用サイト。`
+                    children: [`つくって終わりにしない。`, (0, i.jsx)(`br`, {
+                        className: `lead-br`
+                    }), `月額で持ち、育てつづける採用サイト。`]
                 }), (0, i.jsxs)(`p`, {
                     className: `service-chip`,
                     children: [`採用コンサルタント `, (0, i.jsx)(`b`, {
