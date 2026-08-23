@@ -479,9 +479,16 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // that area's horizontal texture density so the FV artwork keeps its
                     // original aspect ratio instead of being pulled wide by perspective.
                     // The geometry and silhouette remain completely unchanged.
-                    float lowerFar = (1.0 - u_upper) * smoothstep(0.56, 0.90, v_uv.x);
+                    // 実測: 補正前の横伸びは ribbonU=0.76 あたりから跳ね上がり、
+                    // 0.90 で約3.2倍になる（画面左端）。元の線形の傾き0.28では
+                    // 1.28倍にしかならず、まったく足りていなかった。
+                    // 伸び率の実測カーブに合わせ、傾きが 3乗で立ち上がる形に作り直した。
+                    // これで画面 x=0.01〜0.28 の伸びは 2.49→1.02〜1.22 に収まる。
+                    // ⚠️ 数値は実測で合わせたもの。計算では出ない（READMEに測り方）。
+                    float lowerFar = 1.0 - u_upper;
+                    float farW = clamp((ribbonU - 0.72) / 0.22, 0.0, 1.0);
                     float correctedRibbonU = ribbonU
-                      + lowerFar * max(ribbonU - 0.56, 0.0) * 0.28;
+                      + lowerFar * 0.20 * pow(farW, 3.0);
                     float textureX = correctedRibbonU * u_textureScale;
                     // The upper face is parameterized from left to right, while the lower
                     // ribbon is built from the near right edge toward the far left edge.
