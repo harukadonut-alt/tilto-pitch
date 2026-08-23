@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.0415d3c0.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.d85721b4.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -123,52 +123,73 @@
     filter: drop-shadow(3px 6px 4px #1113171c) drop-shadow(10px 17px 12px #11131729) drop-shadow(27px 43px 44px #11131736)
 }
 
-/* --- 料金帯 --- */
+/* --- 料金帯：コーラルの地に白抜き --- */
+/* ⚠️ ほんの少しだけ透ける（.93）。帯は z-index:3、料金帯は 6 なので、
+   真下を流れる帯がうっすら見える。1.0にすると板に見え、下げすぎると文字が読めない */
 .pricing-strip {
-    background: #fffffff2;
-    border-top: 1px solid var(--gray-300)
+    background: rgba(255, 77, 79, .93);
+    border-top: 0
 }
 
 .price-card {
-    border-left: 1px solid var(--gray-300)
+    border-left: 1px solid #ffffff40
 }
 
 .price-label {
-    color: var(--charcoal)
+    color: #ffffffe6
 }
 
 .price-value {
-    color: var(--coral)
+    color: #fff
 }
 
 .price-value small {
-    color: var(--gray-600)
+    color: #ffffffcc
 }
 
 .price-value--ink {
-    color: var(--charcoal)
+    color: #fff
 }
 
 .price-note {
-    color: var(--gray-600)
+    color: #ffffffe6
 }
 
-/* 実際の主CTAはこの大きい枠。ヘッダーの小さいCTAと同じ行動なので、
-   同じコーラルにして序列を合わせる（小さい方だけ赤いと序列が逆転する） */
+/* 地がコーラルになったので、CTAはコーラルでは沈む。
+   主CTA＝黒ベタ／副CTA＝白の輪郭、で序列をつける */
 .pricing-cta {
     color: #fff;
-    background: linear-gradient(135deg, var(--coral) 0%, var(--coral-deep) 100%)
+    background: 0 0;
+    grid-template-rows: 1fr 1fr;
+    gap: .75cqw;
+    padding: 1.15cqw 1.7cqw
 }
 
 .pricing-cta-main {
-    border-bottom: 1px solid #ffffff45
+    background: var(--charcoal);
+    border-bottom: 0;
+    padding: 0 1.5cqw
 }
 
 .pricing-cta-sub {
-    color: #ffffffd6
+    color: #fff;
+    border: 1px solid #ffffff8c;
+    padding: 0 1.5cqw
 }
 
 .header-cta:hover, .pricing-cta:hover {
+    box-shadow: none
+}
+
+.pricing-cta:hover .pricing-cta-main {
+    box-shadow: inset 0 0 0 2px #ffffff5c
+}
+
+.pricing-cta:hover .pricing-cta-sub {
+    border-color: #fff
+}
+
+.header-cta:hover {
     box-shadow: inset 0 0 0 2px #ffffffa8
 }
 

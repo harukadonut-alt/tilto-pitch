@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0415d3c0.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0415d3c0.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d85721b4.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d85721b4.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -515,14 +515,14 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // Japanese type remains readable instead of appearing 180° rotated.
                     // 🔴 上段と下段で、アトラスの別の区画を使う。
                     //    同じアトラスを両方が読んでいたので、上下に同じ絵が並ぶことがあった。
-                    //    上段は13枚のうち1〜7、下段は8〜13。区画をまたがないので絶対に重ならない。
+                    //    上段は14枚のうち1〜7、下段は8〜14。区画をまたがないので絶対に重ならない。
                     //    向きが逆（下段は 1.0 - textureX）なうえ周期も違うので、
                     //    ずらすだけでは必ずどこかで一致する。区画を分けるのが唯一確実。
                     // ⚠️ 区画内のループは bandSpan * fract(x / bandSpan + offset)。
                     //    1周期でちょうど区画1つ分進むので継ぎ目が出ない。
                     //    単純な mod だと u_offset の巻き戻りで絵が飛ぶ。
-                    float bandLo   = u_upper > 0.5 ? 0.0 : 7.0 / 13.0;
-                    float bandSpan = u_upper > 0.5 ? 7.0 / 13.0 : 6.0 / 13.0;
+                    float bandLo   = u_upper > 0.5 ? 0.0 : 7.0 / 14.0;
+                    float bandSpan = 7.0 / 14.0;
                     float frontX = u_upper > 0.5
                       ? bandLo + bandSpan * fract(textureX / bandSpan + u_offset)
                       : bandLo + bandSpan * fract((1.0 - textureX) / bandSpan - u_offset);
@@ -722,7 +722,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             i.generateMipmap(i.TEXTURE_2D),
             K = !0
         },
-        q.src = `images/film-atlas.315ad40c.webp`;
+        q.src = `images/film-atlas.236ee7cf.webp`;
         let J = 0,
             Y = 0,
             X = 0,
