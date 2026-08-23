@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.ca67feae.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.2407711e.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -50,8 +50,8 @@
    ⚠️ パネルの箱は横160%（`inset: 0 -30%`）。斜めに逃げるとき、
       横に動いたぶんで画面端が抜けないようにするため。
    ============================================================ */
-.hero-canvas::before,
-.hero-canvas::after {
+.site-shell::before,
+.site-shell::after {
     content: "";
     z-index: 20;
     background: var(--coral);
@@ -60,40 +60,46 @@
             mask-repeat: no-repeat;
     -webkit-mask-size: 100% 100%;
             mask-size: 100% 100%;
-    position: absolute;
+    /* 🔴 fixed＝画面基準。.hero-canvas の中に置くと、枠の overflow:hidden で
+       退場の途中に変な位置で切られる。横長画面でFVが画面より狭いときに
+       左右の数pxを覆えない問題も、これで一緒に消える */
+    position: fixed;
     inset: 0 -30%;
     will-change: transform
 }
 
-.hero-canvas::before {
+.site-shell::before {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
-    animation: introTop 3s both
+    animation: introTop 3.3s both
 }
 
-.hero-canvas::after {
+.site-shell::after {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
-    animation: introBottom 3s both
+    animation: introBottom 3.3s both
 }
 
 /* 15%(0.22s)まで静止 → 28%(0.42s)で髪の毛ほどの切れ込み
    → 52%(0.78s)でS字が見える → 100%(1.5s)で斜めに退場。
    最後だけ上品に減速させたいので、区間ごとにイージングを変えている。 */
+/* 退場は 1.72〜2.51秒。横の移動は 15% に抑えてある。
+   ⚠️ 24% まで動かすと、面の横余白（±30%）を食いつぶして
+      画面の左に面の直線の縁が入ってくる。15% なら最悪でも -15% で安全 */
 @keyframes introTop {
       0%,
-     45% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
-     58% { transform: translate(9%, -48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
-     72%,
-    100% { transform: translate(24%, -122%) }
+     52% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     63% { transform: translate(6%, -48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     76%,
+    100% { transform: translate(15%, -122%) }
 }
 
 @keyframes introBottom {
       0%,
-     45% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
-     58% { transform: translate(-9%, 48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
-     72%,
-    100% { transform: translate(-24%, 122%) }
+     52% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     63% { transform: translate(-6%, 48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     76%,
+    100% { transform: translate(-15%, 122%) }
 }
 
 /* 帯は「アップで中央」から「今の位置へ右にずれる」。
@@ -105,20 +111,20 @@
       イントロが終わった瞬間に跳ねない。 */
 @keyframes introRibbon {
       0%,
-     45% { scale: 1.55; translate: -7% 2.5%; rotate: -.8deg }
-     83%,
+     52% { scale: 1.55; translate: -7% 2.5%; rotate: -.8deg }
+     88%,
     100% { scale: 1;    translate: 0 0;      rotate: 0deg }
 }
 
 .ribbon-scene,
 .ribbon-cast-shadow-scene {
-    animation: introRibbon 3s cubic-bezier(.22, 1, .36, 1) both
+    animation: introRibbon 3.3s cubic-bezier(.22, 1, .36, 1) both
 }
 
 /* 中央の Tilto°。onionion のように、まず名前だけを見せる。
    ⚠️ DOMは足せない（React が hydrate する）ので、`.site-shell` の擬似要素に
       `content` で置いている。書体はヘッダーのロゴと同じ Didot。 */
-.site-shell::after {
+body::after {
     content: "Tilto\B0";
     z-index: 21;
     color: #fff;
@@ -130,30 +136,33 @@
     display: grid;
     position: fixed;
     inset: 0;
-    animation: introLogo 3s both
+    animation: introLogo 3.3s both
 }
 
-/* 3秒中: 出るのに0.54秒、1.35秒まで見せて、1.6秒で消える
-   （2026-08-24、社長の指示で「出」と「間」をゆっくりに） */
+/* 3.3秒中: 0.3秒はコーラル一色（ロゴなし）→ 0.85秒かけてゆっくり出る →
+   1.72秒まで見せる → 2.0秒で消える（2026-08-24、社長の指示で2回ゆっくりに）。
+   字間の旅は .38em→.24em に縮めた。大きく動くと「演出」に、
+   小さく動くと「上品」に寄る */
 @keyframes introLogo {
-      0% { opacity: 0; letter-spacing: .38em; animation-timing-function: cubic-bezier(.22, 1, .36, 1) }
-     18% { opacity: 1; letter-spacing: -.03em }
-     45% { opacity: 1; letter-spacing: -.03em; animation-timing-function: cubic-bezier(.4, 0, .3, 1) }
-     53%,
+      0%,
+      9% { opacity: 0; letter-spacing: .24em; animation-timing-function: cubic-bezier(.16, .6, .2, 1) }
+     35% { opacity: 1; letter-spacing: -.03em }
+     52% { opacity: 1; letter-spacing: -.03em; animation-timing-function: cubic-bezier(.4, 0, .3, 1) }
+     60%,
     100% { opacity: 0; letter-spacing: -.05em }
 }
 
 /* 終わったら描画からも完全に外す */
-html.intro-done .hero-canvas::before,
-html.intro-done .hero-canvas::after,
-html.intro-done .site-shell::after {
+html.intro-done .site-shell::before,
+html.intro-done .site-shell::after,
+html.intro-done body::after {
     display: none
 }
 
 /* ?intro=0 で無効化（開発中の確認用） */
-html.no-intro .hero-canvas::before,
-html.no-intro .hero-canvas::after,
-html.no-intro .site-shell::after {
+html.no-intro .site-shell::before,
+html.no-intro .site-shell::after,
+html.no-intro body::after {
     content: none
 }
 
@@ -164,12 +173,9 @@ html.no-intro .ribbon-cast-shadow-scene {
 
 /* 動きを減らす設定のときは、切れ込みも拡大もやらず、コーラルを短くフェードするだけ */
 @media (prefers-reduced-motion: reduce) {
-    .hero-canvas::before,
-    .hero-canvas::after {
-        animation: introFade .35s ease-out both
-    }
-
-    .site-shell::after {
+    .site-shell::before,
+    .site-shell::after,
+    body::after {
         animation: introFade .35s ease-out both
     }
 
@@ -260,14 +266,14 @@ html.no-intro .ribbon-cast-shadow-scene {
     animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
 }
 
-#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: 2.40s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: 2.51s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: 2.62s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: 2.73s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: 2.50s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: 2.61s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: 2.72s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: 2.83s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: 2.80s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: 2.91s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: 3.02s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: 3.13s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: 2.90s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: 3.01s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: 3.12s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: 3.23s }
 
 @media (prefers-reduced-motion: reduce) {
     #top h1 span .hl-band { animation: none }
@@ -521,10 +527,10 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
     #top h1 {
         white-space: normal;
-        letter-spacing: -.06em;
-        margin: 14px 0 0;
-        font-size: 10.4vw;
-        line-height: 1.22
+        letter-spacing: -.05em;
+        margin: 16px 0 0;
+        font-size: 11.6vw;
+        line-height: 1.3
     }
 
     .lead {
@@ -534,10 +540,15 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         line-height: 1.85
     }
 
+    /* モックではチップは黒い箱ではなく素のテキスト */
     .service-chip {
-        margin: 16px auto 0;
-        font-size: 13px;
-        padding: 10px 14px
+        color: var(--charcoal);
+        letter-spacing: .04em;
+        background: none;
+        margin: 18px auto 0;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 700
     }
 
     /* 料金の器をばらして並び替える */
@@ -570,10 +581,15 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         font-size: 18px
     }
 
-    /* 明るい地の上なので、副CTAは黒の輪郭に */
+    /* モックどおり: 主CTAはコーラル、副CTAは明るい地に黒の輪郭 */
+    .pricing-cta-main {
+        background: var(--coral)
+    }
+
     .pricing-cta-sub {
         color: var(--charcoal);
-        border: 1.5px solid #11131759
+        background: #fff;
+        border: 1.5px solid #11131766
     }
 
     /* 帯: 全幅より大きく描いて左右をトリミング */
@@ -581,27 +597,36 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         position: relative;
         inset: auto;
         order: 3;
-        width: 150vw;
-        height: 84.5vw;
-        margin: 30px 0 0 -25vw
+        width: 175vw;
+        height: 98.6vw;
+        margin: 10px 0 0 -37.5vw
     }
 
     .ribbon-cast-shadow-scene {
         display: none
     }
 
-    /* SCROLL の文字（.pricing-strip の擬似要素。contents でも箱として出る） */
+    /* SCROLL（.pricing-strip の擬似要素。contents でも箱として出る）
+       ::before＝コーラルの山型（∨）、::after＝文字。orderで帯の直後に並べる */
     .pricing-strip::before {
-        content: "SCROLL";
-        color: #5a626f;
-        letter-spacing: .34em;
-        text-align: center;
-        border-top: 1.5px solid var(--coral);
+        content: "";
+        border-right: 2px solid var(--coral);
+        border-bottom: 2px solid var(--coral);
+        transform: rotate(45deg);
         order: 4;
-        width: 46px;
-        margin: 10px auto 30px;
-        padding-top: 10px;
-        font-size: 10px;
+        width: 11px;
+        height: 11px;
+        margin: 6px auto 2px
+    }
+
+    .pricing-strip::after {
+        content: "SCROLL";
+        color: var(--charcoal);
+        letter-spacing: .3em;
+        text-align: center;
+        order: 4;
+        margin: 6px auto 26px;
+        font-size: 11px;
         font-weight: 700
     }
 
@@ -665,14 +690,12 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 
     /* イントロ: 縦長ページに切れ込み演出は合わないので、ロゴ→フェードだけに */
-    .hero-canvas::before,
-    .hero-canvas::after {
-        animation: introFade .6s ease-out 1.5s both;
-        position: fixed;
-        inset: 0
+    .site-shell::before,
+    .site-shell::after {
+        animation: introFade .6s ease-out 1.9s both
     }
 
-    .site-shell::after {
+    body::after {
         font-size: 44px
     }
 }
