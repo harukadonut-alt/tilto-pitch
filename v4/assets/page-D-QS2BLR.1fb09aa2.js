@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6f3f7a14.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6f3f7a14.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.1fb09aa2.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.1fb09aa2.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -521,8 +521,11 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // ⚠️ 区画内のループは bandSpan * fract(x / bandSpan + offset)。
                     //    1周期でちょうど区画1つ分進むので継ぎ目が出ない。
                     //    単純な mod だと u_offset の巻き戻りで絵が飛ぶ。
-                    float bandLo   = u_upper > 0.5 ? 0.0 : 7.0 / 15.0;
-                    float bandSpan = u_upper > 0.5 ? 7.0 / 15.0 : 8.0 / 15.0;
+                    // 🔴 境目は「枚数の比」ではなく「実寸の比」。
+                    //    16:9の素材は幅を広く取っているので、アトラスの1枚ずつ幅が違う。
+                    //    この値は docs/build-film-atlas.py が出力する（枚数や素材を変えたら差し替え）。
+                    float bandLo   = u_upper > 0.5 ? 0.0 : 0.45552;
+                    float bandSpan = u_upper > 0.5 ? 0.45552 : 0.54448;
                     float frontX = u_upper > 0.5
                       ? bandLo + bandSpan * fract(textureX / bandSpan + u_offset)
                       : bandLo + bandSpan * fract((1.0 - textureX) / bandSpan - u_offset);
@@ -722,7 +725,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             i.generateMipmap(i.TEXTURE_2D),
             K = !0
         },
-        q.src = `images/film-atlas.932306dd.webp`;
+        q.src = `images/film-atlas.6a4bbbaa.webp`;
         let J = 0,
             Y = 0,
             X = 0,

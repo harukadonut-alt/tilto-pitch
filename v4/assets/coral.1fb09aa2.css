@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.6f3f7a14.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.1fb09aa2.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -305,7 +305,25 @@ html.no-intro .ribbon-cast-shadow-scene {
 }
 
 .pricing-strip {
-    height: 23%
+    height: 23%;
+    /* CTAの列を広げる（ボタンの見た目の幅で +20%）。
+       列は 20.3% → 23.28%。他の3列は 0.9626倍して合計100%を保つ。
+       ⚠️ CTA列の中には左右のpadding（1.7cqw + 3.88cqw）があるので、
+          列を20%広げるとボタンは27%広くなる。ボタン基準で逆算した値がこれ */
+    grid-template-columns: 31.14% 22.67% 22.91% 23.28%
+}
+
+/* 数字だけ少し大きく。単位（円〜・社1設計）と注記はそのまま */
+.price-value strong {
+    font-size: 4.62cqw
+}
+
+.price-value--ink strong {
+    font-size: 4.92cqw
+}
+
+.price-value {
+    height: 6.1cqw
 }
 
 /* ⚠️ ほんの少しだけ透ける（.93）。帯は z-index:3、料金帯は 6 なので、
