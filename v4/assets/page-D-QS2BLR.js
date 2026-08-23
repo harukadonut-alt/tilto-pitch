@@ -543,8 +543,14 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // A broad, feathered lustre over the upper-front panel highlighted in
                     // the reference. It follows the cloth surface, but remains gentle
                     // enough that the FV artwork and black type retain their contrast.
-                    float glossX = (v_uv.x - 0.627) / 0.105;
-                    float glossY = (v_uv.y - 0.215) / 0.27;
+                    // 🔴 UVの半径を揃えても丸くならない。帯は「長くて細い」ので、
+                    //   v_uv.x の1目盛と v_uv.y の1目盛では画面上の長さがまるで違う。
+                    //   前は 0.105 / 0.27 で、画面では 323×145px＝横に2.2倍のびた帯になり、
+                    //   さらに中心が上端(v=0)に近くて切られるので「長方形」に見えていた。
+                    //   実測で釣り合わせた値が下の 0.0250 / 0.22（縦横比1.05＝ほぼ真円）。
+                    //   ⚠️ 計算では出ない。マスクだけ描いて外接矩形を測ること（README参照）。
+                    float glossX = (v_uv.x - 0.627) / 0.0250;
+                    float glossY = (v_uv.y - 0.330) / 0.22;
                     float glossFace = u_upper * (1.0 - backBlend);
                     float glossFall = exp(-(glossX * glossX + glossY * glossY));
                     float upperSoftGloss = glossFall * glossFace * 0.35;
