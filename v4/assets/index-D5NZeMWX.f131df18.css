@@ -352,10 +352,13 @@ button, a {
 
 .hero-canvas {
     /* 帯まわりを下げる量。「採用コンサルタント × AI × Web制作」と下段帯が
-       近すぎたため（2026-08-23）。基準キャンバス1674pxで 0.6cqw ＝ 10px。
+       近すぎたため（2026-08-23）。基準キャンバス1674pxで 1.2cqw ＝ 20px。
        ⚠️ px直書きにしないこと。FV全体は画面幅で伸縮するので、下げ幅だけ
           固定pxにすると小さい画面で相対的に大きくズレる */
-    --ribbon-drop: 0.6cqw;
+    --ribbon-drop: 1.2cqw;
+    /* 上段帯だけ右へずらす量。基準キャンバス1674pxで 0.6cqw ＝ 10px。
+       ⚠️ 影用のcanvasにも同じクラスが付くので、これ1つで実体と影が揃って動く */
+    --upper-shift: 0.6cqw;
     aspect-ratio: 1674/943;
     isolation: isolate;
     perspective: 1450px;
@@ -582,7 +585,8 @@ button, a {
 
 .webgl-film--upper {
     z-index: 1;
-    filter:drop-shadow(4px 6px 4px #1d161221)drop-shadow(11px 15px 10px #1d16122e)drop-shadow(30px 40px 40px #1d16123b)
+    filter:drop-shadow(4px 6px 4px #1d161221)drop-shadow(11px 15px 10px #1d16122e)drop-shadow(30px 40px 40px #1d16123b);
+    transform: translateX(var(--upper-shift))
 }
 
 .webgl-film--lower {
