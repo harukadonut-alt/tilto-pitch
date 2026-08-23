@@ -352,10 +352,12 @@ button, a {
 
 .hero-canvas {
     /* 帯まわりを下げる量。「採用コンサルタント × AI × Web制作」と下段帯が
-       近すぎたため（2026-08-23）。基準キャンバス1674pxで 1.2cqw ＝ 20px。
+       近すぎたため（2026-08-23）。基準キャンバス1674pxで 1.8cqw ＝ 30px。
        ⚠️ px直書きにしないこと。FV全体は画面幅で伸縮するので、下げ幅だけ
           固定pxにすると小さい画面で相対的に大きくズレる */
-    --ribbon-drop: 1.2cqw;
+    --ribbon-drop: 1.8cqw;
+    /* 上下の帯ごと右へずらす量。基準キャンバス1674pxで 0.6cqw ＝ 10px */
+    --ribbon-shift-x: 0.6cqw;
     /* 上段帯だけ右へずらす量。基準キャンバス1674pxで 0.6cqw ＝ 10px。
        ⚠️ 影用のcanvasにも同じクラスが付くので、これ1つで実体と影が揃って動く */
     --upper-shift: 0.6cqw;
@@ -392,7 +394,7 @@ button, a {
             mask-image: linear-gradient(152deg, #000 0%, #000000d9 32%, #00000080 66%, #0000002e 100%);
     mix-blend-mode: multiply;
     overflow: visible;
-    transform:translate(1.3cqw, calc(1.65cqw + var(--ribbon-drop)))scale(1.006)
+    transform:translate(calc(1.3cqw + var(--ribbon-shift-x)), calc(1.65cqw + var(--ribbon-drop)))scale(1.006)
 }
 
 .ribbon-cast-shadow-scene .webgl-film {
@@ -579,7 +581,7 @@ button, a {
     --scene-ry: 0deg;
     z-index: 3;
     transform-style: preserve-3d;
-    transform: translateY(var(--ribbon-drop)) rotateX(var(--scene-rx)) rotateY(var(--scene-ry));
+    transform: translate(var(--ribbon-shift-x), var(--ribbon-drop)) rotateX(var(--scene-rx)) rotateY(var(--scene-ry));
     pointer-events: none;
     transition: transform .7s cubic-bezier(.22, 1, .36, 1);
     overflow:visible

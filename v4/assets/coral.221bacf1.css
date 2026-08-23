@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.8fba0704.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.221bacf1.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -174,6 +174,19 @@
 }
 
 /* --- 料金帯：コーラルの地に白抜き --- */
+/* 左右の余白をそろえる。「01 月額」の左とCTAの右を同じ 3.88cqw に。
+   3.88% は `.hero-copy` の left と同じ値なので、見出し「採用サイトの、」と
+   「01 月額」が縦に揃う。
+   ⚠️ ベンダーは1枚目だけ padding-left:7.3cqw（=109px）、CTAの右は 1.7cqw（=25px）で
+      左右が4倍以上ずれていた */
+.price-card:first-child {
+    padding-left: 3.88cqw
+}
+
+.pricing-strip {
+    height: 23%
+}
+
 /* ⚠️ ほんの少しだけ透ける（.93）。帯は z-index:3、料金帯は 6 なので、
    真下を流れる帯がうっすら見える。1.0にすると板に見え、下げすぎると文字が読めない */
 .pricing-strip {
@@ -212,7 +225,7 @@
     background: 0 0;
     grid-template-rows: 1fr 1fr;
     gap: .75cqw;
-    padding: 1.15cqw 1.7cqw
+    padding: 1.15cqw 3.88cqw 1.15cqw 1.7cqw
 }
 
 .pricing-cta-main {
