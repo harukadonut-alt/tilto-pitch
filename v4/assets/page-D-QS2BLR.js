@@ -486,9 +486,9 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // これで画面 x=0.01〜0.28 の伸びは 2.49→1.02〜1.22 に収まる。
                     // ⚠️ 数値は実測で合わせたもの。計算では出ない（READMEに測り方）。
                     float lowerFar = 1.0 - u_upper;
-                    float farW = clamp((ribbonU - 0.72) / 0.22, 0.0, 1.0);
+                    float farW = clamp((ribbonU - 0.69) / 0.24, 0.0, 1.0);
                     float correctedRibbonU = ribbonU
-                      + lowerFar * 0.20 * pow(farW, 3.0);
+                      + lowerFar * 0.299 * pow(farW, 3.0);
                     float textureX = correctedRibbonU * u_textureScale;
                     // The upper face is parameterized from left to right, while the lower
                     // ribbon is built from the near right edge toward the far left edge.
