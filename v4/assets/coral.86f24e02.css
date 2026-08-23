@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.d85721b4.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.86f24e02.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -58,6 +58,56 @@
 .site-nav .header-cta {
     color: #fff;
     background: var(--coral)
+}
+
+/* --- 見出しの帯めくり（givee.co.jp の動きを、この配色で） ---
+   givee は「色の違う帯を4枚重ねて、1枚ずつ右へ抜き、最後に文字が出る」作り。
+   実測: 各1秒 / 0.1秒ずらし / cubic-bezier(.19,1,.22,1) / 右端へ幅を詰める。
+   ここでは givee の 白・青・橙・黄 を、この配色の4色に置き換えている。
+
+   🔴 既定は scaleX(0)（＝帯なし）。アニメが動かない環境でも文字が隠れないため。
+      `both` で待機中だけ scaleX(1) になり、文字を覆う。
+   ⚠️ 一番上（DOMの最後）が最初に抜ける。色は
+      淡い→鮮やか→深い→黒 の順に現れ、最後に文字が出る。
+   ⚠️ 行は `white-space:nowrap` の block なので、帯は行の箱にぴったり合う。
+      文字が少しはみ出るぶんだけ inset を負にして覆いきる。 */
+#top h1 span {
+    position: relative
+}
+
+.hl-band {
+    pointer-events: none;
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
+    position: absolute;
+    inset: -.06em -.02em
+}
+
+.hl-band:nth-child(4) { background: var(--blush) }
+.hl-band:nth-child(3) { background: var(--coral) }
+.hl-band:nth-child(2) { background: var(--coral-deep) }
+.hl-band:nth-child(1) { background: var(--charcoal) }
+
+@keyframes hlWipe {
+    from { transform: scaleX(1) }
+    to   { transform: scaleX(0) }
+}
+
+#top h1 span .hl-band {
+    animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
+}
+
+#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: .30s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: .41s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: .52s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: .63s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: .40s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: .51s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: .62s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: .73s }
+
+@media (prefers-reduced-motion: reduce) {
+    #top h1 span .hl-band { animation: none }
 }
 
 /* --- 左のコピー --- */
