@@ -517,8 +517,16 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     softFront += texture(u_texture, vec2(fract(frontUv.x + 0.0028), clamp(frontUv.y + 0.0035, 0.0, 1.0))) * 0.18;
                     softFront += texture(u_texture, vec2(fract(frontUv.x - 0.0055), clamp(frontUv.y + 0.0060, 0.0, 1.0))) * 0.12;
                     softFront += texture(u_texture, vec2(fract(frontUv.x + 0.0055), clamp(frontUv.y - 0.0060, 0.0, 1.0))) * 0.12;
-                    float lowerLeftBlur = (1.0 - u_upper) * smoothstep(0.80, 1.0, v_uv.x) * 0.72;
-                    vec4 frontTexel = mix(sharpFront, softFront, lowerLeftBlur);
+                    // 下段の左奥をピンボケさせる（奥行きの表現）。
+                    // 🔴 上の softFront は「テクセル単位」のにじみなので、左奥のように
+                    //    画像が強く縮んでいる場所では**画面上ほとんど効かない**
+                    //    （テクスチャは LINEAR_MIPMAP_LINEAR で、縮小はきれいに縮むだけ）。
+                    //    本当にピントを外すには、ミップの粗い段を明示的に引く（第3引数のバイアス）。
+                    // 範囲は実測。社長の指定（画面x 0〜0.32）は v_uv.x の 0.68〜0.90 にあたる。
+                    float lowerLeftBlur = (1.0 - u_upper) * smoothstep(0.66, 0.88, v_uv.x);
+                    vec4 defocused = texture(u_texture, frontUv, 4.2 * lowerLeftBlur);
+                    vec4 frontTexel = mix(sharpFront,
+                      mix(softFront, defocused, 0.70), lowerLeftBlur * 0.95);
                     vec4 backTexel = texture(u_texture, backUv);
                     float backBlend = smoothstep(0.24, 0.76, v_back);
                     vec4 texel = mix(frontTexel, backTexel, backBlend);
