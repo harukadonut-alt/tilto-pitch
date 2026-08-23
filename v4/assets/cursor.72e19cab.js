@@ -4,7 +4,18 @@
 
    🔴 このページは React が hydrate するので、DOMは load 後に追加する
      （SSRに書き足すと hydration に拾われる恐れがある。後から足せば React の管理外）。
-   ⚠️ タッチ端末・動きを減らす設定では何もしない（v3と同じ）。 */
+
+   🔴 重さ対策（2026-08-24）。v3をそのまま移すと、v4では目に見えて重くなる。
+      v4のFVは **合計10.7メガピクセルのWebGL canvas**（実体2枚＋影2枚）で、
+      difference合成はその背後を毎回読み直させる。v3の背景より桁違いに高い。
+      対策は「合成の回数を減らす」こと:
+        ① DOMへの書き込みを **1フレームに1回** にまとめる。
+           pointermove はマウスによって毎秒120〜1000回来るが、
+           画面は60回しか更新されない。素直に書くと合成が最大10倍走る
+        ② クラスは **変化したときだけ** 書く。同じ値の書き込みでも
+           スタイルの再計算は走ってしまう
+        ③ 動きが止まったら rAF を止める（v3と同じ）
+   ⚠️ タッチ端末・動きを減らす設定では何もしない（v3と同じ）。SPは対象外。 */
 (() => {
   const HOVERABLE = "a, button, summary, input, textarea, select, [role='button']";
   const CTA = '.header-cta, .pricing-cta, .pricing-cta-main, .pricing-cta-sub';
@@ -27,22 +38,39 @@
     const big = wrap.querySelector('.ink-cursor__ball--big');
     const small = wrap.querySelector('.ink-cursor__ball--small');
 
-    let cx = 0, cy = 0, ux = 0, uy = 0, frame = 0, started = false;
+    /* cx,cy = 実際のカーソル位置（イベントで随時更新。DOMは触らない）
+       ux,uy = 大きい丸の位置（毎フレーム 0.2 ずつ寄る。v3と同じ係数） */
+    let cx = 0, cy = 0, ux = 0, uy = 0;
+    let frame = 0, started = false;
+    let visible = false, hovering = false, onCta = false;
+    let wantHover = false, wantCta = false;
 
-    const follow = () => {
+    /* ② 同じ値なら書かない。redundantな書き込みでもスタイル再計算は走る */
+    const setClass = (el, name, on, cur) => {
+      if (on !== cur) el.classList.toggle(name, on);
+      return on;
+    };
+
+    /* ① DOMへの書き込みはここ（1フレームに1回）だけ */
+    const draw = () => {
       ux += (cx - ux) * 0.2;
       uy += (cy - uy) * 0.2;
       big.style.transform = `translate3d(${ux - 15}px, ${uy - 15}px, 0)`;
+      small.style.transform = `translate3d(${cx - 5}px, ${cy - 5}px, 0)`;
+
+      if (!visible) {
+        big.classList.add('is-visible');
+        small.classList.add('is-visible');
+        visible = true;
+      }
+      hovering = setClass(big, 'is-hovering', wantHover, hovering);
+      onCta = setClass(big, 'is-cta', wantCta, onCta);
+
+      /* ③ 大きい丸が追いついたら止める。止まっているあいだ合成は走らない */
       frame =
         Math.abs(cx - ux) > 0.08 || Math.abs(cy - uy) > 0.08
-          ? window.requestAnimationFrame(follow)
+          ? window.requestAnimationFrame(draw)
           : 0;
-    };
-
-    const hover = (target) => {
-      const hit = target instanceof Element ? target.closest(HOVERABLE) : null;
-      big.classList.toggle('is-hovering', !!hit);
-      big.classList.toggle('is-cta', !!(hit && hit.closest(CTA)));
     };
 
     const move = (e) => {
@@ -53,16 +81,20 @@
         uy = cy;
         started = true;
       }
-      big.classList.add('is-visible');
-      small.classList.add('is-visible');
-      small.style.transform = `translate3d(${cx - 5}px, ${cy - 5}px, 0)`;
-      hover(e.target);
-      if (!frame) frame = window.requestAnimationFrame(follow);
+      const hit = e.target instanceof Element ? e.target.closest(HOVERABLE) : null;
+      wantHover = !!hit;
+      wantCta = !!(hit && hit.closest(CTA));
+      if (!frame) frame = window.requestAnimationFrame(draw);
     };
 
     const leave = () => {
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+        frame = 0;
+      }
       big.classList.remove('is-visible', 'is-hovering', 'is-cta', 'is-pressed');
       small.classList.remove('is-visible');
+      visible = hovering = onCta = false;
     };
 
     document.documentElement.classList.add('has-ink-cursor');
