@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.8d9910c1.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.8d9910c1.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.ca67feae.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.ca67feae.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -931,16 +931,16 @@ function x() {
                     "aria-label": `メインナビゲーション`,
                     children: [(0, i.jsx)(`a`, {
                         href: `#headline`,
-                        children: `見出し3案`
+                        children: `サービス概要`
                     }), (0, i.jsx)(`button`, {
                         type: `button`,
                         "aria-pressed": !e,
                         "aria-label": e ? `3Dリボンの動きを停止` : `3Dリボンの動きを再生`,
                         onClick: () => t(e => !e),
-                        children: e ? `モーション` : `再生する`
+                        children: e ? `カタログ` : `再生する`
                     }), (0, i.jsx)(`a`, {
                         href: `#style`,
-                        children: `同じ轍`
+                        children: `成果にこだわる`
                     }), (0, i.jsxs)(`a`, {
                         className: `header-cta`,
                         href: `#contact`,
