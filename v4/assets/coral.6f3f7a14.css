@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.221bacf1.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.6f3f7a14.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -28,6 +28,127 @@
     --gray-400: #c3c9d2;
     --gray-600: #5a626f;
     --charcoal: #111317
+}
+
+/* ============================================================
+   イントロ「TILTED SLIT OPEN」（2026-08-24）
+
+   全面コーラル → 約11°傾いた細い切れ込み → その奥に動いているWebGL FV
+   → S字に大きく開く → 現在のFVへそのまま接続。約1.5秒。
+
+   🔴 **既存のFV／WebGLには一切触らない。** 上に色面を被せるだけ。
+      下のWebGLは最初から動き続けているので、終わったところで
+      止まったり跳ねたりしない（ループ速度も変えていない）。
+   🔴 **DOMを足していない。** `.hero-canvas` の ::before / ::after の2枚だけ。
+      このページは React が hydrate するので、要素を足すと消される恐れがある。
+      擬似要素なら React の管理外で安全。
+   ⚠️ S字は SVGマスクのデータURI。`mask-size: 100% 100%` と
+      `preserveAspectRatio="none"` で画面幅に追従する（pxを書かないので伸縮に強い）。
+   ⚠️ 2枚は同じ曲線を共有しているので、動かす前は隙間ゼロで画面を覆う。
+      離すほど曲線が見えてきて、細い線 → 大きなS字 に変わって見える。
+      パスを補間するより滑らかで、60fpsを保ちやすい。
+   ⚠️ パネルの箱は横160%（`inset: 0 -30%`）。斜めに逃げるとき、
+      横に動いたぶんで画面端が抜けないようにするため。
+   ============================================================ */
+.hero-canvas::before,
+.hero-canvas::after {
+    content: "";
+    z-index: 20;
+    background: var(--coral);
+    pointer-events: none;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+    position: absolute;
+    inset: 0 -30%;
+    will-change: transform
+}
+
+.hero-canvas::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
+    animation: introTop 1.5s both
+}
+
+.hero-canvas::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
+    animation: introBottom 1.5s both
+}
+
+/* 15%(0.22s)まで静止 → 28%(0.42s)で髪の毛ほどの切れ込み
+   → 52%(0.78s)でS字が見える → 100%(1.5s)で斜めに退場。
+   最後だけ上品に減速させたいので、区間ごとにイージングを変えている。 */
+@keyframes introTop {
+      0% { transform: none;                     animation-timing-function: linear }
+     15% { transform: none;                     animation-timing-function: cubic-bezier(.33, 0, .2, 1) }
+     28% { transform: translate(.05%, -.13%);   animation-timing-function: cubic-bezier(.4, 0, .25, 1) }
+     52% { transform: translate(.9%, -2.6%);    animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     78% { transform: translate(10%, -52%);     animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+    100% { transform: translate(24%, -122%) }
+}
+
+@keyframes introBottom {
+      0% { transform: none;                     animation-timing-function: linear }
+     15% { transform: none;                     animation-timing-function: cubic-bezier(.33, 0, .2, 1) }
+     28% { transform: translate(-.05%, .13%);   animation-timing-function: cubic-bezier(.4, 0, .25, 1) }
+     52% { transform: translate(-.9%, 2.6%);    animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     78% { transform: translate(-10%, 52%);     animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+    100% { transform: translate(-24%, 122%) }
+}
+
+/* 切れ目の奥のフィルムは、最初だけ少し大きく（＝カメラに近く）。
+   ⚠️ `transform` ではなく **単体の `scale` / `rotate` プロパティ**を使う。
+      `.ribbon-scene` の `transform` は JS が --scene-rx/ry で触るので、
+      そこへ書き込むと取り合いになる。単体プロパティなら合成されるだけで安全。
+   ⚠️ 92%（1.38秒）で通常サイズに着地させ、最後まで固定。
+      イントロが終わった瞬間に位置が跳ねない。 */
+@keyframes introZoom {
+      0%,
+     30% { scale: 1.17; rotate: -.5deg }
+     92%,
+    100% { scale: 1;    rotate: 0deg }
+}
+
+.ribbon-scene,
+.ribbon-cast-shadow-scene {
+    animation: introZoom 1.5s cubic-bezier(.22, 1, .36, 1) both
+}
+
+/* 終わったら描画からも完全に外す */
+html.intro-done .hero-canvas::before,
+html.intro-done .hero-canvas::after {
+    display: none
+}
+
+/* ?intro=0 で無効化（開発中の確認用） */
+html.no-intro .hero-canvas::before,
+html.no-intro .hero-canvas::after {
+    content: none
+}
+
+html.no-intro .ribbon-scene,
+html.no-intro .ribbon-cast-shadow-scene {
+    animation: none
+}
+
+/* 動きを減らす設定のときは、切れ込みも拡大もやらず、コーラルを短くフェードするだけ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-canvas::before,
+    .hero-canvas::after {
+        animation: introFade .35s ease-out both
+    }
+
+    .ribbon-scene,
+    .ribbon-cast-shadow-scene {
+        animation: none
+    }
+}
+
+@keyframes introFade {
+      0% { opacity: 1 }
+    100% { opacity: 0 }
 }
 
 /* --- 地 --- */
