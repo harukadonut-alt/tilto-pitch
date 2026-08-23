@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.f131df18.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.f131df18.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.6b4941c3.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.6b4941c3.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -433,6 +433,13 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
         // ⚠️ 差をつけすぎると「2本の別のもの」に見えて1本のフィルム感が壊れる（5〜10%まで）。
         // ⚠️ 影用のcanvasも同じ kind で作られるので、ここを直せば影も一緒に揃う。
         let tiltoLoopMs = t === `upper` ? 34e3 : 31.5e3;
+        // hover中は少し減速する（速くしない）。読みたいときに読みやすく、
+        // 「鑑賞させる」方向に振るため。通常の80%。
+        // ⚠️ 1.0→0.8 を即座に切り替えると速度に段がつく。毎フレーム寄せて約0.45秒でなじませる。
+        // ⚠️ 帯は pointer-events:none なので、hoverはFVの枠（.hero-canvas）で見る。
+        //    4つのcanvasが同じ枠を見るので、実体と影が揃って減速する。
+        let tiltoHero = e.closest(`.hero-canvas`),
+            tiltoSpeed = 1;
         let p = y(i, i.VERTEX_SHADER, `#version 300 es
                   in vec3 a_position;
                   in vec2 a_uv;
@@ -600,6 +607,17 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                       * smoothstep(0.22, 0.30, v_uv.x)
                       * smoothstep(0.66, 0.57, v_uv.x);
                     color *= 1.0 - castOnLower * 0.50;
+                    // 帯の厚み（紙の小口）。
+                    // 上下の縁のごく細い帯を「絵」ではなく「紙の色」にして、
+                    // そのすぐ内側に細い影を入れる。この2枚重ねで、面ではなく
+                    // 「厚みのあるシート」に見える。
+                    // ⚠️ 幅を広げると額縁に見える。0.014（帯幅の1.4%＝上段で約4px）が限度。
+                    float rim = clamp(smoothstep(0.014, 0.0, v_uv.y)
+                                    + smoothstep(0.014, 0.0, 1.0 - v_uv.y), 0.0, 1.0);
+                    float rimInner = clamp(smoothstep(0.032, 0.014, v_uv.y)
+                                         + smoothstep(0.032, 0.014, 1.0 - v_uv.y), 0.0, 1.0);
+                    color *= 1.0 - rimInner * (1.0 - rim) * 0.15;
+                    color = mix(color, vec3(0.93, 0.921, 0.902), rim * 0.78);
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
@@ -821,7 +839,8 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             re = e => {
                 let r = Math.min(e - Q, 40);
                 Q = e,
-                f.current && !ne.matches && (Z = (Z - r / tiltoLoopMs + 1) % 1),
+                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .8 : 1) - tiltoSpeed) * Math.min(1, r / 450),
+                f.current && !ne.matches && (Z = (Z - r * tiltoSpeed / tiltoLoopMs + 1) % 1),
                 i.clearColor(0, 0, 0, 0),
                 i.clear(i.COLOR_BUFFER_BIT | i.DEPTH_BUFFER_BIT),
                 K && (i.enable(i.DEPTH_TEST), i.depthFunc(i.LEQUAL), i.enable(i.BLEND), i.blendFunc(i.SRC_ALPHA, i.ONE_MINUS_SRC_ALPHA), i.useProgram(x), i.bindBuffer(i.ARRAY_BUFFER, N), i.enableVertexAttribArray(S), i.vertexAttribPointer(S, 3, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ARRAY_BUFFER, P), i.enableVertexAttribArray(C), i.vertexAttribPointer(C, 2, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ARRAY_BUFFER, F), i.enableVertexAttribArray(w), i.vertexAttribPointer(w, 1, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ARRAY_BUFFER, I), i.enableVertexAttribArray(T), i.vertexAttribPointer(T, 1, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ARRAY_BUFFER, L), i.enableVertexAttribArray(E), i.vertexAttribPointer(E, 1, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ARRAY_BUFFER, R), i.enableVertexAttribArray(D), i.vertexAttribPointer(D, 3, i.FLOAT, !1, 0, 0), i.bindBuffer(i.ELEMENT_ARRAY_BUFFER, z), i.activeTexture(i.TEXTURE0), i.bindTexture(i.TEXTURE_2D, B), i.uniform1i(te, 0), i.uniform1f(O, Z), i.uniform1f(k, .035 + Math.sin(e / 2700) * .014), i.uniform1f(A, e / 1e3), i.uniform1f(j, +(t === `upper`)), i.uniform1f(ee, +!!n), i.uniform1f(M, t === `upper` ? a.upper.textureScale : a.lower.textureScale), i.drawElements(i.TRIANGLES, G.length, i.UNSIGNED_SHORT, 0)),
