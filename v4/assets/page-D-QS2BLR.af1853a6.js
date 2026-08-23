@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.212be8f3.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.212be8f3.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.af1853a6.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.af1853a6.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -527,7 +527,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     //    本当にピントを外すには、ミップの粗い段を明示的に引く（第3引数のバイアス）。
                     // 範囲は実測。社長の指定（画面x 0〜0.32）は v_uv.x の 0.68〜0.90 にあたる。
                     float lowerLeftBlur = (1.0 - u_upper) * smoothstep(0.66, 0.88, v_uv.x);
-                    vec4 defocused = texture(u_texture, frontUv, 3.0 * lowerLeftBlur);
+                    vec4 defocused = texture(u_texture, frontUv, 2.5 * lowerLeftBlur);
                     vec4 frontTexel = mix(sharpFront,
                       mix(softFront, defocused, 0.70), lowerLeftBlur * 0.95);
                     vec4 backTexel = texture(u_texture, backUv);
@@ -572,17 +572,17 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     //   さらに中心が上端(v=0)に近くて切られるので「長方形」に見えていた。
                     //   実測で釣り合わせた値が下の 0.0250 / 0.22（縦横比1.05＝ほぼ真円）。
                     //   ⚠️ 計算では出ない。マスクだけ描いて外接矩形を測ること（README参照）。
-                    float glossX = (v_uv.x - 0.627) / 0.0150;
-                    float glossY = (v_uv.y - 0.330) / 0.132;
+                    float glossX = (v_uv.x - 0.627) / 0.02239;
+                    float glossY = (v_uv.y - 0.265) / 0.1970;
                     float glossFace = u_upper * (1.0 - backBlend);
                     float glossFall = exp(-(glossX * glossX + glossY * glossY));
-                    float upperSoftGloss = glossFall * glossFace * 0.35;
+                    float upperSoftGloss = glossFall * glossFace * 0.26;
                     color = mix(color, vec3(1.0, 0.988, 0.970), upperSoftGloss);
                     // mix は白より明るくできないので、明るいFV画像の上では芯だけでは読めない。
                     // 芯のすぐ外側をわずかに沈めて局所コントラストを作り、
                     // 下の絵が明るくても暗くても「光の帯」として見えるようにする。
                     float glossShoulder = max(0.0, exp(-(glossX * glossX + glossY * glossY) * 0.30) - glossFall);
-                    color *= 1.0 - glossShoulder * glossFace * 0.11;
+                    color *= 1.0 - glossShoulder * glossFace * 0.08;
                     // 折り返しの陰。実測で、表面の折り目は v_uv.x ≒ 0.541
                     //（screen x=0.36 で u=0.541、そこから左は帯が無い＝裏へ回る位置）。
                     // 光は左上手前から来るので、折り目に近づくほど面が光から背き、暗くなる。

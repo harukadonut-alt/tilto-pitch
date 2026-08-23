@@ -375,7 +375,7 @@ button, a {
     pointer-events: none;
     transform-origin: 50% 44%;
     filter: blur(1.35cqw);
-    opacity: .62;
+    opacity: .42;
     mix-blend-mode: multiply;
     overflow: visible;
     transform:translate(1.3cqw, 1.65cqw)scale(1.006)
