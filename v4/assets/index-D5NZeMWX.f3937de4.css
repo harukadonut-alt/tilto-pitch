@@ -359,6 +359,8 @@ button, a {
     /* 上段帯だけ右へずらす量。基準キャンバス1674pxで 0.6cqw ＝ 10px。
        ⚠️ 影用のcanvasにも同じクラスが付くので、これ1つで実体と影が揃って動く */
     --upper-shift: 0.6cqw;
+    /* 下段帯だけをさらに下げる量。基準キャンバス1674pxで 0.3cqw ＝ 5px */
+    --lower-drop: 0.3cqw;
     aspect-ratio: 1674/943;
     isolation: isolate;
     perspective: 1450px;
@@ -383,7 +385,11 @@ button, a {
     pointer-events: none;
     transform-origin: 50% 44%;
     filter: blur(1.35cqw);
-    opacity: .42;
+    /* 薄く、かつ一様にしない。光は左上手前から来るので、
+       影は右下へ落ちるほど遠く＝薄くなる。均一な影は「板」に見える */
+    opacity: .32;
+    -webkit-mask-image: linear-gradient(152deg, #000 0%, #000000d9 32%, #00000080 66%, #0000002e 100%);
+            mask-image: linear-gradient(152deg, #000 0%, #000000d9 32%, #00000080 66%, #0000002e 100%);
     mix-blend-mode: multiply;
     overflow: visible;
     transform:translate(1.3cqw, calc(1.65cqw + var(--ribbon-drop)))scale(1.006)
@@ -591,7 +597,8 @@ button, a {
 
 .webgl-film--lower {
     z-index: 2;
-    filter:drop-shadow(3px 6px 4px #1d16121c)drop-shadow(10px 17px 12px #1d161229)drop-shadow(27px 43px 44px #1d161236)
+    filter:drop-shadow(3px 6px 4px #1d16121c)drop-shadow(10px 17px 12px #1d161229)drop-shadow(27px 43px 44px #1d161236);
+    transform: translateY(var(--lower-drop))
 }
 
 .ribbon-glow {

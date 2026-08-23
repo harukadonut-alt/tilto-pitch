@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.6b4941c3.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.f3937de4.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -31,8 +31,12 @@
 }
 
 /* --- 地 --- */
+/* 🔴 hero-canvas は 1674:943 を保つので、横長で背の低い画面では
+   **画面幅より狭くなり、左右に数pxの地が残る**（1500x840で片側4px）。
+   そこが白いままだと「下段帯が右端で切れている」ように見える。
+   shell の地を hero と同じ組み合わせにして、切れ目を消す。 */
 .site-shell {
-    background: radial-gradient(circle at 45% 25%, #fff 0, #0000 42%), var(--paper)
+    background: radial-gradient(circle at 52% 31%, #ffffffee, #0000 33%), radial-gradient(circle at 7% 23%, #ffe6e880, #0000 26%), linear-gradient(115deg, #fff 0%, #fbfcfd 47%, var(--gray-100) 100%)
 }
 
 /* 元は3段の温かいベージュ。純白→ごく薄いクールグレーに置き換え、
