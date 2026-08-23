@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.335b0e5d.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.335b0e5d.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.a5bbe44a.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.a5bbe44a.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -434,7 +434,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
         // ⚠️ 影用のcanvasも同じ kind で作られるので、ここを直せば影も一緒に揃う。
         let tiltoLoopMs = t === `upper` ? 34e3 : 31.5e3;
         // hover中は減速する（速くしない）。読みたいときに読みやすく、
-        // 「鑑賞させる」方向に振るため。通常の65%。
+        // 「鑑賞させる」方向に振るため。通常の50%。
         // 🔴 最初 80% にしたが、社長は「遅くなった感じがしない」。
         //    元の速度が約10px/秒しかないので、20%減＝2px/秒の差は知覚できない。
         //    速度そのものより「減速していく動き」が見える必要があるので、
@@ -834,7 +834,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             re = e => {
                 let r = Math.min(e - Q, 40);
                 Q = e,
-                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .65 : 1) - tiltoSpeed) * Math.min(1, r / 340),
+                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .5 : 1) - tiltoSpeed) * Math.min(1, r / 340),
                 f.current && !ne.matches && (Z = (Z - r * tiltoSpeed / tiltoLoopMs + 1) % 1),
                 i.clearColor(0, 0, 0, 0),
                 i.clear(i.COLOR_BUFFER_BIT | i.DEPTH_BUFFER_BIT),
