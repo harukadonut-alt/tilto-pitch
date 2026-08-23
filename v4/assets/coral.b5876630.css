@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.8a165a13.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.b5876630.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -523,7 +523,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.8a165a13.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.b5876630.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -551,12 +551,13 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 
     /* ⚠️ 行末が「、」「。」なので、中央揃えだと**左に寄って見える**。
-       約物の幅（半角ぶん）を打ち消す量だけ右へ送る（2026-08-24、社長の指摘） */
+       約物の幅（半角ぶん）を打ち消す量だけ右へ送る（2026-08-24、社長の指摘）。
+       3.2vw では足りず 5.6vw まで送った（＝375px幅で21px） */
     #top h1 {
         white-space: normal;
         letter-spacing: -.05em;
         margin: 16px 0 0;
-        padding-left: 3.2vw;
+        padding-left: 5.6vw;
         font-size: 11.6vw;
         line-height: 1.3
     }
@@ -659,14 +660,15 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     /* 帯: 全幅より大きく描いて左右をトリミング */
     /* 帯の絵は右側に寄っているので、箱を左へずらして左の余白を消す。
        ⚠️ 175vw の箱を -37.5vw に置くと左右が均等（＝絵は右寄りに見える）。
-          -52vw まで送ると絵の左端が画面の左に着く */
+          -52vw で絵の左端が画面の左に着き、-64vw でさらに食い込ませている
+          （2026-08-24、社長の「もう少しさらに左に」） */
     .ribbon-scene {
         position: relative;
         inset: auto;
         order: 3;
         width: 175vw;
         height: 98.6vw;
-        margin: 10px 0 0 -52vw
+        margin: 10px 0 0 -64vw
     }
 
     .ribbon-cast-shadow-scene {
@@ -675,6 +677,11 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
     /* SCROLL（.pricing-strip の擬似要素。contents でも箱として出る）
        ::before＝コーラルの山型（∨）、::after＝文字。orderで帯の直後に並べる */
+    /* 山型（∨）。ゆっくり上下に揺れて「下へ」を示す。
+       ⚠️ `transform` は rotate(45deg) を持っているので、揺れは
+          **単体プロパティ `translate`** で足す（取り合いにならない）。
+       ⚠️ margin-top は「帯の下端から山型の上端まで＝実測25px」になる値。
+          帯の絵は下側に透明な余白を持つので、箱どおりだと空きすぎる */
     .pricing-strip::before {
         content: "";
         border-right: 2px solid var(--coral);
@@ -683,9 +690,19 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         order: 4;
         width: 11px;
         height: 11px;
-        /* 帯の下に空きすぎていたので上の余白を半分に（社長の指摘）。
-           帯の絵は下側に透明な余白を持つので、実測より詰めて見える */
-        margin: -26px auto 2px
+        margin: -37px auto 2px;
+        animation: scrollNudge 1.9s ease-in-out infinite
+    }
+
+    @keyframes scrollNudge {
+          0%,
+         72%,
+        100% { translate: 0 0 }
+         28% { translate: 0 7px }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pricing-strip::before { animation: none }
     }
 
     .pricing-strip::after {
@@ -771,7 +788,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.8a165a13.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.b5876630.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -951,7 +968,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.8a165a13.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.b5876630.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
