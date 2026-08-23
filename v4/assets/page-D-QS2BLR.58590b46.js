@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3bce550b.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3bce550b.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.58590b46.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.58590b46.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -804,11 +804,11 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                                 O = t * .018 * D,
                                 k = g + O + Math.sin(t * Math.PI) * .0012,
                                 A = _ + t * v + T + x * (1 - Math.abs(t) * .32);
-                            // 右への平行移動はここ（クリップ座標。0.024 = 画面幅の1.2%）。
+                            // 右への平行移動はここ（クリップ座標。0.030 = 画面幅の1.5%）。
                             // 🔴 CSSのtranslateXでcanvasごと動かすと、canvasの左端で
                             //    絵が切れて画面の左に隙間が出る（2026-08-24に発覚）。
                             //    中身をずらせばcanvasは動かないので切れない。
-                            return [k * 2 - 1 + .024, 1 - A * 2, y - S + E]
+                            return [k * 2 - 1 + .030, 1 - A * 2, y - S + E]
                         }
                         let i = v(r, e);
                         Math.max(0, Math.min(1, (i.z + .68) / 1.52));
@@ -831,8 +831,8 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                             A = Math.sin(e * Math.PI * 2.7 + f * .72) * .004,
                             j = f * Math.tan(a.lower.tiltDegrees * Math.PI / 180) * .45,
                             M = -i.z * .42 - x * a.lower.foregroundDepth - k + A + s + j;
-                        // 下段の右ずらし（0.012 = 画面幅の0.6%）。理由は上段と同じ
-                        return [w * 2 - 1 + .012, 1 - O * 2, M]
+                        // 下段の右ずらし（0.018 = 画面幅の0.9%）。理由は上段と同じ
+                        return [w * 2 - 1 + .018, 1 - O * 2, M]
                     },
                     g = [],
                     _ = [];
