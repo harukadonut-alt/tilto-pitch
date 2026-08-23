@@ -578,6 +578,17 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // 裏へ回った側（backBlend）はさらに沈めて、折り返しの厚みを出す。
                     float foldShade = exp(-pow((v_uv.x - 0.541) / 0.030, 2.0)) * u_upper;
                     color *= 1.0 - foldShade * (0.26 + backBlend * 0.20);
+                    // 上段が下段に落とす影。
+                    // 🔴 CSSの .ribbon-cast-shadow-scene は「背景に落ちる影」で、
+                    //    下段canvas(z-index:2)の下に敷かれているため下段の上には出ない。
+                    //    帯の上に落ちる影は、下段のシェーダで直接描くしかない。
+                    // 範囲は実測。下段の上辺は v_uv.y=0。参考画像で指定された帯
+                    //（画面x 0.43〜0.86）は v_uv.x の 0.26〜0.59 にあたる。
+                    float castOnLower = (1.0 - u_upper)
+                      * smoothstep(0.25, 0.0, v_uv.y)
+                      * smoothstep(0.22, 0.30, v_uv.x)
+                      * smoothstep(0.66, 0.57, v_uv.x);
+                    color *= 1.0 - castOnLower * 0.50;
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
