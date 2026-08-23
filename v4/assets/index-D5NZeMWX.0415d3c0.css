@@ -359,8 +359,8 @@ button, a {
     /* 上段帯だけ右へずらす量。基準キャンバス1674pxで 0.6cqw ＝ 10px。
        ⚠️ 影用のcanvasにも同じクラスが付くので、これ1つで実体と影が揃って動く */
     --upper-shift: 0.6cqw;
-    /* 下段帯だけをさらに下げる量。基準キャンバス1674pxで 0.3cqw ＝ 5px */
-    --lower-drop: 0.3cqw;
+    /* 下段帯だけをさらに下げる量。基準キャンバス1674pxで 0.6cqw ＝ 10px */
+    --lower-drop: 0.6cqw;
     aspect-ratio: 1674/943;
     isolation: isolate;
     perspective: 1450px;

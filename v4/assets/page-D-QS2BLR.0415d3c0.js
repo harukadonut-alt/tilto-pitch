@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.2a8f2342.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.2a8f2342.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.0415d3c0.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.0415d3c0.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -513,14 +513,24 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // ribbon is built from the near right edge toward the far left edge.
                     // Reverse both lower texture axes so every FV stays upright and its
                     // Japanese type remains readable instead of appearing 180° rotated.
+                    // 🔴 上段と下段で、アトラスの別の区画を使う。
+                    //    同じアトラスを両方が読んでいたので、上下に同じ絵が並ぶことがあった。
+                    //    上段は13枚のうち1〜7、下段は8〜13。区画をまたがないので絶対に重ならない。
+                    //    向きが逆（下段は 1.0 - textureX）なうえ周期も違うので、
+                    //    ずらすだけでは必ずどこかで一致する。区画を分けるのが唯一確実。
+                    // ⚠️ 区画内のループは bandSpan * fract(x / bandSpan + offset)。
+                    //    1周期でちょうど区画1つ分進むので継ぎ目が出ない。
+                    //    単純な mod だと u_offset の巻き戻りで絵が飛ぶ。
+                    float bandLo   = u_upper > 0.5 ? 0.0 : 7.0 / 13.0;
+                    float bandSpan = u_upper > 0.5 ? 7.0 / 13.0 : 6.0 / 13.0;
                     float frontX = u_upper > 0.5
-                      ? textureX + u_offset
-                      : 1.0 - textureX - u_offset;
+                      ? bandLo + bandSpan * fract(textureX / bandSpan + u_offset)
+                      : bandLo + bandSpan * fract((1.0 - textureX) / bandSpan - u_offset);
                     // v=0 is the visible top edge for both meshes. Keeping the same Y axis
                     // prevents the lower FV artwork from being vertically reflected.
                     float imageY = v_uv.y;
-                    vec2 frontUv = vec2(fract(frontX), imageY);
-                    vec2 backUv = vec2(fract(1.0 - textureX - u_offset), imageY);
+                    vec2 frontUv = vec2(frontX, imageY);
+                    vec2 backUv = vec2(bandLo + bandSpan * fract((1.0 - textureX) / bandSpan - u_offset), imageY);
                     vec4 sharpFront = texture(u_texture, frontUv);
                     // A restrained four-neighbour unsharp mask restores the original FV
                     // artwork after WebGL interpolation, without changing its UV layout.
