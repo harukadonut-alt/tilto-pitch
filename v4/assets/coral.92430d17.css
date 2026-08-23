@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.8389092b.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.92430d17.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -199,20 +199,20 @@ html.no-intro .ribbon-cast-shadow-scene {
 }
 
 /* 「採用サイトの、新しい持ち方。」を縦に潰す（2026-08-24、独自性のため）。
-   **縦横比を×1.2** ＝ 幅はそのままで高さを 1/1.2（.8333）にする。
+   **縦横比を×1.18** ＝ 幅はそのままで高さを 1/1.18（.8475）にする。
 
    ⚠️ `transform` ではなく**単体プロパティ `scale`** を使う。
       このページは transform を別用途で使う箇所が多く、取り合いを避けるため。
    ⚠️ 行間はベンダーの 1.15 → 1.24 に広げてある。
       縦に潰すと行の間も一緒に詰まるので、その分を戻す狙い。
    ⚠️ 見た目が縮んでも**箱の高さは元のまま**なので、余った分を負のmarginで詰める。
-      余り ＝ (1 - .8333) × 行間 × 行数 ＝ .1667 × 1.24em × 2行 ＝ .413em
+      余り ＝ (1 - .8475) × 行間 × 行数 ＝ .1525 × 1.24em × 2行 ＝ .378em
       （行間・行数が変わったら、この値も計算し直すこと） */
 #top h1 {
-    scale: 1 .8333;
+    scale: 1 .8475;
     transform-origin: 50% 0;
     line-height: 1.24;
-    margin-bottom: -.413em
+    margin-bottom: -.378em
 }
 
 /* --- 地 --- */
@@ -393,7 +393,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
        列は 20.3% → 23.28%。他の3列は 0.9626倍して合計100%を保つ。
        ⚠️ CTA列の中には左右のpadding（1.7cqw + 3.88cqw）があるので、
           列を20%広げるとボタンは27%広くなる。ボタン基準で逆算した値がこれ */
-    grid-template-columns: 31.14% 22.67% 22.91% 23.28%
+    grid-template-columns: 30.07% 21.89% 22.12% 25.92%
 }
 
 /* 数字だけ少し大きく。単位（円〜・社1設計）と注記はそのまま */
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.8389092b.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.92430d17.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -575,8 +575,8 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         /* ⚠️ px指定なので画面幅が変わっても字間は一定。
            em（-.05em＝43.5px時に-2.18px）から社長の指定値に変えた */
         letter-spacing: -1.15px;
-        /* ⚠️ 縦圧縮の詰め量は行間で変わる。SPは 1.40em × 2行 × .1667 ＝ .467em */
-        margin: 16px 0 -.467em;
+        /* ⚠️ 縦圧縮の詰め量は行間で変わる。SPは 1.40em × 2行 × .1525 ＝ .427em */
+        margin: 16px 0 -.427em;
         padding-left: 5.6vw;
         font-size: 11.6vw;
         line-height: 1.4
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.8389092b.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.92430d17.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -988,7 +988,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.8389092b.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.92430d17.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
@@ -1086,3 +1086,49 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         display: none
     }
 }
+
+/* PCのとき帯を5%縮小（2026-08-24、社長の指示）。
+   🔴 `scale` ではやらない。イントロの introRibbon が `scale` を動かすので
+      取り合いになり、終わりで 1 に戻されて縮小が消える。
+   `.ribbon-scene` は `position:absolute; inset:0` なので、箱を 2.5% ずつ
+   内側へ寄せれば 95% になる。canvasはその大きさで描き直されるため、
+   拡大縮小より絵が綺麗に出る。
+   ⚠️ SPは箱の作りが違う（relative + 175vw）ので、PCだけに当てる */
+@media (min-width: 701px) {
+    .ribbon-scene,
+    .ribbon-cast-shadow-scene {
+        /* ⚠️ ベンダーが `width:100%; height:100%` を明示しているので、
+           inset だけでは縮まない。幅と高さも95%にして、insetで中央へ寄せる */
+        width: 95%;
+        height: 95%;
+        inset: 2.5%
+    }
+}
+
+
+/* SPのとき、メインコピーが出そろってから帯が現れる（2026-08-24、社長の指示）。
+   見出しの帯めくりは 2.80s から始まり、最後の1本が 3.23s + .9s ＝ 4.13s で終わる。
+   その終わりぎわ 3.9s から帯を立ち上げる。
+   ⚠️ `html:not(.no-intro)` で書く。`?intro=0` のときに帯が3.9秒消えたままに
+      なるのを防ぐため（打ち消しの規則を後ろに置く手だと、SPのメディアクエリの
+      ほうが後にあって勝ってしまう） */
+@media (max-width: 700px) {
+    html:not(.no-intro) .ribbon-scene,
+    html:not(.no-intro) .ribbon-cast-shadow-scene {
+        animation: spRibbonIn .95s cubic-bezier(.22, 1, .36, 1) 3.9s both
+    }
+}
+
+@keyframes spRibbonIn {
+      0% { opacity: 0; translate: 0 7% }
+    100% { opacity: 1; translate: 0 0 }
+}
+
+/* 動きを減らす設定のときは待たせない */
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+    html:not(.no-intro) .ribbon-scene,
+    html:not(.no-intro) .ribbon-cast-shadow-scene {
+        animation: none
+    }
+}
+
