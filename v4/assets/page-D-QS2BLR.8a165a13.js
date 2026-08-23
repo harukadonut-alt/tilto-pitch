@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.89f70d57.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.89f70d57.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.8a165a13.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.8a165a13.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -966,11 +966,40 @@ function x() {
                     }), `TILTO°`]
                 }), (0, i.jsxs)(`h1`, {
                     id: `headline`,
-                    children: [(0, i.jsx)(`span`, {
-                        children: `採用サイトの、`
-                    }), (0, i.jsx)(`span`, {
+                    /* 🔴 見出しの帯めくり用の <i>。SSRのHTMLとここの両方に無いと
+                       hydrationが食い違い、Reactがページ全体を作り直す。
+                       作り直されると帯が消えてモーションが死に、
+                       load後に足したDOM（メニュー等）も巻き添えで消える
+                       （2026-08-24に発覚） */
+                    children: [(0, i.jsxs)(`span`, {
+                        children: [`採用サイトの、`, (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        })]
+                    }), (0, i.jsxs)(`span`, {
                         className: `accent`,
-                        children: `新しい持ち方。`
+                        children: [`新しい持ち方。`, (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        }), (0, i.jsx)(`i`, {
+                            className: `hl-band`,
+                            "aria-hidden": `true`
+                        })]
                     })]
                 }), (0, i.jsxs)(`p`, {
                     className: `lead`,

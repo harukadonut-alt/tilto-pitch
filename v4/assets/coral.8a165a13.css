@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.89f70d57.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.8a165a13.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -523,77 +523,11 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* ナビの行き先はまだ無いので、リンク3つとヘッダーCTAは隠す。
-       代わりに ::after でハンバーガーを描く（DOMは足せないため）。
-       ⚠️ 飾りにはしない。`.site-nav` 自体を CTA への実リンクにはできないので、
-          押せる見た目のまま「押すと料金帯のCTAへ飛ぶ」ようにヘッダーCTAだけ
-          透明にして重ねてある */
-    .site-nav a:not(.header-cta),
-    .site-nav button {
-        display: none
-    }
-
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.8a165a13.js が別に作る。
+       🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
+          （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
-        align-items: center;
-        height: 26px;
-        position: relative;
-        display: flex
-    }
-
-    .site-nav::after {
-        content: "";
-        color: var(--charcoal);
-        border-top: 2px solid;
-        border-bottom: 2px solid;
-        width: 34px;
-        height: 12px;
-        display: block;
-        position: absolute;
-        top: 7px;
-        right: 0;
-        pointer-events: none
-    }
-
-    /* 中央の線 */
-    .site-nav::before {
-        content: "";
-        background: var(--charcoal);
-        width: 34px;
-        height: 2px;
-        display: block;
-        position: absolute;
-        top: 12px;
-        right: 0;
-        pointer-events: none
-    }
-
-    /* ハンバーガーの当たり判定（見た目は ::before/::after が描く）。
-       🔴 hover/focus/activeを全部殺す。殺さないと、PC用の色反転
-          （白地＋コーラルの内枠）が三本線の上に出る。スマホはタップ後に
-          :hover が残るので、白い箱が居座って見える（2026-08-24に発覚） */
-    .site-nav .header-cta,
-    .site-nav .header-cta:hover,
-    .site-nav .header-cta:focus,
-    .site-nav .header-cta:focus-visible,
-    .site-nav .header-cta:active {
-        color: #0000;
-        text-indent: -9999px;
-        background: none;
-        border: 0;
-        outline: 0;
-        box-shadow: none;
-        width: 44px;
-        height: 26px;
-        padding: 0;
-        overflow: hidden
-    }
-
-    /* 🔴 開くメニューがまだ無いので、押しても飛ばさない。
-       以前は #contact（＝「無料で相談する」）へ飛ばしていたが、
-       SPではそのCTAが最初の画面に見えているため、353pxだけ
-       中途半端にスクロールするだけの意味のない動きになっていた */
-    .site-nav .header-cta {
-        pointer-events: none
+        display: none
     }
 
     .brand {
@@ -836,7 +770,188 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 }
 
 
-/* --- InkCursor（v3から移植。assets/cursor.89f70d57.js が load 後にDOMを足す） --- */
+/* ============================================================
+   SPのメニュー（2026-08-24）。DOMは sp-menu.8a165a13.js が load 後に足す。
+   ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
+   ============================================================ */
+.sp-menu-toggle,
+.sp-menu {
+    display: none
+}
+
+@media (max-width: 700px) {
+    /* --- 三本線のボタン --- */
+    .sp-menu-toggle {
+        z-index: 32;
+        background: none;
+        border: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7px;
+        width: 44px;
+        height: 30px;
+        padding: 0;
+        display: flex;
+        /* ⚠️ ヘッダーの子ではなく body 直下（Reactに消されないため）なので、
+           画面基準で置く。ヘッダーのロゴと高さをそろえてある */
+        position: fixed;
+        top: 16px;
+        right: 20px
+    }
+
+    .sp-menu-toggle i {
+        background: var(--charcoal);
+        width: 34px;
+        height: 2px;
+        margin-left: auto;
+        display: block;
+        transition: transform .34s cubic-bezier(.2, .8, .2, 1),
+                    opacity .2s ease,
+                    background-color .34s ease
+    }
+
+    /* 開いているあいだは地がコーラルなので、線は白に。
+       上下の線を中央へ寄せてXにし、真ん中は消す */
+    html.sp-menu-open .sp-menu-toggle i {
+        background: #fff
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:first-child {
+        transform: translateY(9px) rotate(45deg)
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:nth-child(2) {
+        opacity: 0
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:last-child {
+        transform: translateY(-9px) rotate(-45deg)
+    }
+
+    /* --- 開くパネル --- */
+    .sp-menu {
+        z-index: 31;
+        background: var(--coral);
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 30px;
+        display: flex;
+        position: fixed;
+        inset: 0;
+        opacity: 0;
+        transform: translateY(-14px);
+        transition: opacity .34s ease, transform .34s cubic-bezier(.2, .8, .2, 1);
+        pointer-events: none
+    }
+
+    html.sp-menu-open .sp-menu {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto
+    }
+
+    .sp-menu__nav {
+        flex-direction: column;
+        display: flex
+    }
+
+    .sp-menu__nav a {
+        color: #fff;
+        border-bottom: 1px solid #ffffff45;
+        align-items: baseline;
+        gap: 16px;
+        padding: 22px 2px;
+        font-size: 21px;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        /* 1つずつ遅れて出す。開いたときだけ動かす */
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .3s ease, transform .3s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .sp-menu__nav a b {
+        color: #ffffffa8;
+        letter-spacing: .1em;
+        font-family: Didot, "Bodoni 72", Times New Roman, serif;
+        font-size: 13px;
+        font-weight: 500
+    }
+
+    html.sp-menu-open .sp-menu__nav a { opacity: 1; transform: none }
+    html.sp-menu-open .sp-menu__nav a:nth-child(1) { transition-delay: .10s }
+    html.sp-menu-open .sp-menu__nav a:nth-child(2) { transition-delay: .16s }
+    html.sp-menu-open .sp-menu__nav a:nth-child(3) { transition-delay: .22s }
+
+    /* 白抜きのCTA。地がコーラルなので、反転で最も目立つ */
+    .sp-menu__cta {
+        color: var(--coral);
+        background: #fff;
+        border-radius: 8px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        min-height: 56px;
+        margin: 34px 0 0;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .3s ease, transform .3s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    html.sp-menu-open .sp-menu__cta {
+        opacity: 1;
+        transform: none;
+        transition-delay: .3s
+    }
+
+    /* 開いているあいだは後ろを動かさない */
+    html.sp-menu-open,
+    html.sp-menu-open body {
+        overflow: hidden
+    }
+
+    /* パネル内のロゴ。ヘッダーのロゴはパネルの下に隠れる（重なり文脈の都合）ので、
+       同じ位置に白いロゴを置いて、開いてもロゴが消えないようにする */
+    .sp-menu__brand {
+        color: #fff;
+        letter-spacing: -.045em;
+        font-family: Didot, "Bodoni 72", Times New Roman, serif;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        position: absolute;
+        top: 18px;
+        left: 20px
+    }
+
+    /* ⚠️ ベンダーCSSの `.brand sup` は position:absolute を持つが、
+       ここは別クラスなので効かない。素の <sup> は行の上へ飛び出すので、
+       baseline 基準に戻してから持ち上げる */
+    .sp-menu__brand sup {
+        vertical-align: baseline;
+        margin-left: .06em;
+        font-size: .62em;
+        position: relative;
+        top: -.62em
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sp-menu,
+    .sp-menu__nav a,
+    .sp-menu__cta,
+    .sp-menu-toggle i {
+        transition-duration: .01ms
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.8a165a13.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
