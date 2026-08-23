@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.e4083b8a.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.8389092b.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.e4083b8a.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.8389092b.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.e4083b8a.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.8389092b.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -988,7 +988,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.e4083b8a.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.8389092b.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
@@ -1030,6 +1030,37 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 .ink-cursor__ball--big svg {
     transform-origin: 50%;
     transition: transform .28s cubic-bezier(.2, .78, .18, 1)
+}
+
+/* 丸の中の文字（VIEW / TALK / STOP …）。v3の値をそのまま踏襲。
+   ⚠️ この :after は**丸のdivに付く**ので、svgの拡大（2.1〜3.35倍）とは
+      別に動く。だから丸が開いても文字は7pxのまま読める大きさで出る。
+   ⚠️ 黒文字なのは difference 合成のため。白い丸は背景を反転させるが、
+      黒(0,0,0)は背景をそのまま通すので、文字だけ「抜けて」見える。 */
+.ink-cursor__ball--big::after {
+    content: attr(data-label);
+    color: #000;
+    letter-spacing: .08em;
+    opacity: 0;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    font: 900 7px/1 Arial, sans-serif;
+    transition: opacity .18s, transform .28s cubic-bezier(.2, .78, .18, 1);
+    display: grid;
+    position: absolute;
+    inset: 0;
+    transform: scale(.45)
+}
+
+/* 文字があるときだけ出す（空なら出さない） */
+.ink-cursor__ball--big.is-hovering:not([data-label=""])::after {
+    opacity: 1;
+    transform: scale(1)
+}
+
+.ink-cursor__ball--big.is-pressed::after {
+    transform: scale(.82)
 }
 
 /* リンクの上でひらき、CTAの上ではもっと大きく（v3は一律3.35。差をつけるのがv4の変更点） */

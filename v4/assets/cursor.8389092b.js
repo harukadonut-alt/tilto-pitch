@@ -20,6 +20,20 @@
   const HOVERABLE = "a, button, summary, input, textarea, select, [role='button']";
   const CTA = '.header-cta, .pricing-cta, .pricing-cta-main, .pricing-cta-sub';
 
+  /* 丸の中に出す文字（v3と同じ趣向）。
+     ⚠️ v3は `data-cursor-label` 属性をHTMLに書いていたが、v4は React が
+        hydrate するので**SSRのHTMLとJSXの両方**を直さないと壊れる。
+        ここでセレクタから引くことにして、DOMには一切触らない。 */
+  const labelFor = (el) => {
+    if (el.closest('.pricing-cta-sub')) return 'VIEW';   // 表現事例を見る
+    if (el.closest('.header-cta, .pricing-cta')) return 'TALK';  // 無料で相談する
+    if (el.matches('.site-nav button'))                  // 帯の停止/再生
+      return el.getAttribute('aria-pressed') === 'true' ? 'PLAY' : 'STOP';
+    if (el.closest('.brand')) return 'TOP';
+    if (el.closest('.site-nav')) return 'VIEW';
+    return '';
+  };
+
   function start() {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -42,8 +56,8 @@
        ux,uy = 大きい丸の位置（毎フレーム 0.2 ずつ寄る。v3と同じ係数） */
     let cx = 0, cy = 0, ux = 0, uy = 0;
     let frame = 0, started = false;
-    let visible = false, hovering = false, onCta = false;
-    let wantHover = false, wantCta = false;
+    let visible = false, hovering = false, onCta = false, shownLabel = '';
+    let wantHover = false, wantCta = false, wantLabel = '';
 
     /* ② 同じ値なら書かない。redundantな書き込みでもスタイル再計算は走る */
     const setClass = (el, name, on, cur) => {
@@ -65,6 +79,10 @@
       }
       hovering = setClass(big, 'is-hovering', wantHover, hovering);
       onCta = setClass(big, 'is-cta', wantCta, onCta);
+      if (wantLabel !== shownLabel) {
+        big.dataset.label = wantLabel;
+        shownLabel = wantLabel;
+      }
 
       /* ③ 大きい丸が追いついたら止める。止まっているあいだ合成は走らない */
       frame =
@@ -84,6 +102,7 @@
       const hit = e.target instanceof Element ? e.target.closest(HOVERABLE) : null;
       wantHover = !!hit;
       wantCta = !!(hit && hit.closest(CTA));
+      wantLabel = hit ? labelFor(hit) : '';
       if (!frame) frame = window.requestAnimationFrame(draw);
     };
 
@@ -94,7 +113,9 @@
       }
       big.classList.remove('is-visible', 'is-hovering', 'is-cta', 'is-pressed');
       small.classList.remove('is-visible');
+      big.dataset.label = '';
       visible = hovering = onCta = false;
+      shownLabel = '';
     };
 
     document.documentElement.classList.add('has-ink-cursor');
