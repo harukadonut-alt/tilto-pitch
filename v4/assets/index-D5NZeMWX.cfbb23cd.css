@@ -351,6 +351,11 @@ button, a {
 }
 
 .hero-canvas {
+    /* 帯まわりを下げる量。「採用コンサルタント × AI × Web制作」と下段帯が
+       近すぎたため（2026-08-23）。基準キャンバス1674pxで 0.6cqw ＝ 10px。
+       ⚠️ px直書きにしないこと。FV全体は画面幅で伸縮するので、下げ幅だけ
+          固定pxにすると小さい画面で相対的に大きくズレる */
+    --ribbon-drop: 0.6cqw;
     aspect-ratio: 1674/943;
     isolation: isolate;
     perspective: 1450px;
@@ -378,7 +383,7 @@ button, a {
     opacity: .42;
     mix-blend-mode: multiply;
     overflow: visible;
-    transform:translate(1.3cqw, 1.65cqw)scale(1.006)
+    transform:translate(1.3cqw, calc(1.65cqw + var(--ribbon-drop)))scale(1.006)
 }
 
 .ribbon-cast-shadow-scene .webgl-film {
@@ -556,7 +561,7 @@ button, a {
     --scene-ry: 0deg;
     z-index: 3;
     transform-style: preserve-3d;
-    transform: rotateX(var(--scene-rx)) rotateY(var(--scene-ry));
+    transform: translateY(var(--ribbon-drop)) rotateX(var(--scene-rx)) rotateY(var(--scene-ry));
     pointer-events: none;
     transition: transform .7s cubic-bezier(.22, 1, .36, 1);
     overflow:visible
