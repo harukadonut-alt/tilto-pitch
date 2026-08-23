@@ -1,0 +1,173 @@
+/* ============================================================
+   Tilto° v4 FV — 配色の次案「Coral Red × Pure White」
+   2026-08-23 / 社長のカラー提案ボード（Coral Red #FF4D4F / Blush Pink #FFE6E8 /
+   Pure White #FFFFFF / Light Gray #F2F4F7 / Deep Charcoal #111317）を当てたもの。
+
+   🔴 帯（WebGLの上段・下段リボンとFV画像）には一切触っていない。
+      社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
+      ここで変えるのは **CSSで塗っている面と文字だけ**。
+
+   ⚠️ このファイルは index-D5NZeMWX.css の **後ろに** 読む。
+      自前のレイアウト部分は @layer の外に書かれているので、
+      同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
+
+   ⚠️ 元の配色は温かいオフホワイト＋墨。影も茶系（#1d1612）だった。
+      地を純白にすると茶系の影が黄ばんで見えるので、影も寒色（#111317）へ寄せている。
+      「色を替える」は地・文字・影の3点セットで、どれか1つだと濁る。
+   ============================================================ */
+
+:root {
+    --paper: #fff;
+    --ink: #111317;
+
+    --coral: #ff4d4f;
+    --coral-deep: #e23c3f;
+    --blush: #ffe6e8;
+    --gray-100: #f2f4f7;
+    --gray-300: #e5e9f0;
+    --gray-400: #c3c9d2;
+    --gray-600: #5a626f;
+    --charcoal: #111317
+}
+
+/* --- 地 --- */
+.site-shell {
+    background: radial-gradient(circle at 45% 25%, #fff 0, #0000 42%), var(--paper)
+}
+
+/* 元は3段の温かいベージュ。純白→ごく薄いクールグレーに置き換え、
+   左上にだけ Blush Pink を薄く差して、白だけの平板さを避けている */
+.hero-canvas {
+    background: radial-gradient(circle at 52% 31%, #ffffffee, #0000 33%), radial-gradient(circle at 7% 23%, #ffe6e880, #0000 26%), linear-gradient(115deg, #fff 0%, #fbfcfd 47%, var(--gray-100) 100%)
+}
+
+/* --- ヘッダー --- */
+.brand {
+    color: var(--charcoal)
+}
+
+.site-nav a, .site-nav button {
+    color: var(--charcoal)
+}
+
+/* ボードの PRIMARY BUTTON がコーラル塗り＋白文字。行動色はコーラルで統一する */
+.site-nav .header-cta {
+    color: #fff;
+    background: var(--coral)
+}
+
+/* --- 左のコピー --- */
+.eyebrow {
+    color: var(--gray-600)
+}
+
+.eyebrow-line {
+    background: var(--coral)
+}
+
+.eyebrow-dash {
+    background: var(--gray-400)
+}
+
+.hero-copy h1 {
+    color: var(--charcoal)
+}
+
+.hero-copy h1 .accent {
+    color: var(--coral)
+}
+
+.service-chip {
+    color: #fff;
+    background: var(--charcoal)
+}
+
+.service-chip b {
+    color: var(--coral)
+}
+
+/* --- 赤いリボン（SVG。WebGLの帯ではない） ---
+   元は茶寄りの赤（#8d2c20→#bd5238）。コーラルの階調に置き換える。
+   stop-color は presentation attribute なので、CSSから上書きできる */
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(1) {
+    stop-color: var(--coral-deep)
+}
+
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(2) {
+    stop-color: var(--coral)
+}
+
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(3) {
+    stop-color: #ff8a7d
+}
+
+.upper-red-ribbon {
+    filter: drop-shadow(0 2px 3px #ff4d4f1f)
+}
+
+/* --- 帯の影だけ寒色へ（帯そのものは無変更） ---
+   元の #1d1612xx は茶。純白の地では黄ばんで見える。濃さ（アルファ）は元のまま */
+.webgl-film {
+    filter: drop-shadow(4px 6px 4px #1113171f) drop-shadow(12px 16px 11px #1113172b) drop-shadow(32px 42px 42px #11131736)
+}
+
+.webgl-film--upper {
+    filter: drop-shadow(4px 6px 4px #11131721) drop-shadow(11px 15px 10px #1113172e) drop-shadow(30px 40px 40px #1113173b)
+}
+
+.webgl-film--lower {
+    filter: drop-shadow(3px 6px 4px #1113171c) drop-shadow(10px 17px 12px #11131729) drop-shadow(27px 43px 44px #11131736)
+}
+
+/* --- 料金帯 --- */
+.pricing-strip {
+    background: #fffffff2;
+    border-top: 1px solid var(--gray-300)
+}
+
+.price-card {
+    border-left: 1px solid var(--gray-300)
+}
+
+.price-label {
+    color: var(--charcoal)
+}
+
+.price-value {
+    color: var(--coral)
+}
+
+.price-value small {
+    color: var(--gray-600)
+}
+
+.price-value--ink {
+    color: var(--charcoal)
+}
+
+.price-note {
+    color: var(--gray-600)
+}
+
+/* 実際の主CTAはこの大きい枠。ヘッダーの小さいCTAと同じ行動なので、
+   同じコーラルにして序列を合わせる（小さい方だけ赤いと序列が逆転する） */
+.pricing-cta {
+    color: #fff;
+    background: linear-gradient(135deg, var(--coral) 0%, var(--coral-deep) 100%)
+}
+
+.pricing-cta-main {
+    border-bottom: 1px solid #ffffff45
+}
+
+.pricing-cta-sub {
+    color: #ffffffd6
+}
+
+.header-cta:hover, .pricing-cta:hover {
+    box-shadow: inset 0 0 0 2px #ffffffa8
+}
+
+.site-nav a:focus-visible, .site-nav button:focus-visible, .pricing-cta:focus-visible {
+    outline: 3px solid var(--coral-deep)
+}
