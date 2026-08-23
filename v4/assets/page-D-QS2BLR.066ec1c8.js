@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.8aa08bbb.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.8aa08bbb.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.066ec1c8.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.066ec1c8.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -433,9 +433,13 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
         // ⚠️ 差をつけすぎると「2本の別のもの」に見えて1本のフィルム感が壊れる（5〜10%まで）。
         // ⚠️ 影用のcanvasも同じ kind で作られるので、ここを直せば影も一緒に揃う。
         let tiltoLoopMs = t === `upper` ? 34e3 : 31.5e3;
-        // hover中は少し減速する（速くしない）。読みたいときに読みやすく、
-        // 「鑑賞させる」方向に振るため。通常の80%。
-        // ⚠️ 1.0→0.8 を即座に切り替えると速度に段がつく。毎フレーム寄せて約0.45秒でなじませる。
+        // hover中は減速する（速くしない）。読みたいときに読みやすく、
+        // 「鑑賞させる」方向に振るため。通常の65%。
+        // 🔴 最初 80% にしたが、社長は「遅くなった感じがしない」。
+        //    元の速度が約10px/秒しかないので、20%減＝2px/秒の差は知覚できない。
+        //    速度そのものより「減速していく動き」が見える必要があるので、
+        //    落差を大きく（0.65）し、なじませる時間はむしろ短く（0.34秒）した。
+        // ⚠️ 即座に切り替えると段がつくので、0にはしない。
         // ⚠️ 帯は pointer-events:none なので、hoverはFVの枠（.hero-canvas）で見る。
         //    4つのcanvasが同じ枠を見るので、実体と影が揃って減速する。
         let tiltoHero = e.closest(`.hero-canvas`),
@@ -828,7 +832,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             re = e => {
                 let r = Math.min(e - Q, 40);
                 Q = e,
-                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .8 : 1) - tiltoSpeed) * Math.min(1, r / 450),
+                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .65 : 1) - tiltoSpeed) * Math.min(1, r / 340),
                 f.current && !ne.matches && (Z = (Z - r * tiltoSpeed / tiltoLoopMs + 1) % 1),
                 i.clearColor(0, 0, 0, 0),
                 i.clear(i.COLOR_BUFFER_BIT | i.DEPTH_BUFFER_BIT),
