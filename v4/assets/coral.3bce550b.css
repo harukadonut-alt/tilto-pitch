@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.92430d17.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.3bce550b.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.92430d17.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.3bce550b.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.92430d17.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.3bce550b.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -988,7 +988,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.92430d17.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.3bce550b.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
@@ -1098,10 +1098,14 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     .ribbon-scene,
     .ribbon-cast-shadow-scene {
         /* ⚠️ ベンダーが `width:100%; height:100%` を明示しているので、
-           inset だけでは縮まない。幅と高さも95%にして、insetで中央へ寄せる */
-        width: 95%;
-        height: 95%;
-        inset: 2.5%
+           inset だけでは縮まない。高さも明示して縮める。
+           🔴 **横は端まで伸ばす（100%）。** 98%にすると左右に地が見えてしまう
+              （2026-08-24、社長の指摘。95%のときは片側36pxも空いていた）。
+              帯の絵はもともと画面の外まで続いているので、横は切らないのが正しい。
+              結果として絵は横に2%だけ伸びるが、曲面の抽象画なので見て分からない */
+        width: 100%;
+        height: 98%;
+        inset: 1% 0
     }
 }
 
