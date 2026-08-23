@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0288966e.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0288966e.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2a8f2342.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2a8f2342.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -442,7 +442,12 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
         // ⚠️ 即座に切り替えると段がつくので、0にはしない。
         // ⚠️ 帯は pointer-events:none なので、hoverはFVの枠（.hero-canvas）で見る。
         //    4つのcanvasが同じ枠を見るので、実体と影が揃って減速する。
+        // 🔴 .hero-canvas は画面いっぱいなので、これだけで判定すると
+        //    料金帯やコピーの上でも「hover中」になり、**実質ずっと減速したまま**になる。
+        //    帯の上に居るときだけ減速し、そこから外れたら戻す。
         let tiltoHero = e.closest(`.hero-canvas`),
+            tiltoSkip = tiltoHero ? [...tiltoHero.querySelectorAll(`.pricing-strip, .hero-copy, .site-header`)] : [],
+            tiltoOver = () => !!tiltoHero && tiltoHero.matches(`:hover`) && !tiltoSkip.some(x => x.matches(`:hover`)),
             tiltoSpeed = 1;
         let p = y(i, i.VERTEX_SHADER, `#version 300 es
                   in vec3 a_position;
@@ -613,6 +618,9 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                       * smoothstep(0.295, 0.325, v_uv.x)
                       * smoothstep(0.66, 0.57, v_uv.x);
                     color *= 1.0 - castOnLower * 0.50;
+                    // 左奥はピントが外れるだけでなく、少し沈める。
+                    // 明るいままだと「ボケた」ではなく「かすんだ」に見えて、奥行きが出ない。
+                    color *= 1.0 - lowerLeftBlur * 0.20;
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
@@ -834,7 +842,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
             re = e => {
                 let r = Math.min(e - Q, 40);
                 Q = e,
-                tiltoSpeed += ((tiltoHero && tiltoHero.matches(`:hover`) ? .5 : 1) - tiltoSpeed) * Math.min(1, r / 340),
+                tiltoSpeed += ((tiltoOver() ? .5 : 1) - tiltoSpeed) * Math.min(1, r / 340),
                 f.current && !ne.matches && (Z = (Z - r * tiltoSpeed / tiltoLoopMs + 1) % 1),
                 i.clearColor(0, 0, 0, 0),
                 i.clear(i.COLOR_BUFFER_BIT | i.DEPTH_BUFFER_BIT),
