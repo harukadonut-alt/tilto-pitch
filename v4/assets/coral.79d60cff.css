@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.38113c97.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.79d60cff.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.38113c97.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.79d60cff.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.38113c97.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.79d60cff.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -990,14 +990,16 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 /* 「採用コンサルタント × AI × Web制作」の黒帯を少し低く（2026-08-24、社長の指示）。
    上下の余白だけ詰める。左右と文字の大きさはそのまま。
-   高さ 44px → 37px（基準1440px幅のとき）。
+   高さ 44px → 30px（基準1440px幅のとき）。
+   ⚠️ 単位は cqw のまま。FV全体が cqw で組まれているので、px固定にすると
+      画面幅を変えたときにここだけ比率が崩れる。
    ⚠️ SPではこのチップは黒帯ではなく素のテキストなので、この指定は当たらない */
 .service-chip {
-    padding-top: .48cqw;
-    padding-bottom: .51cqw
+    padding-top: .29cqw;
+    padding-bottom: .31cqw
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.38113c97.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.79d60cff.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
