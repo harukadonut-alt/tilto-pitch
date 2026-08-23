@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.a3acea02.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.a3acea02.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.557b894c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.557b894c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -445,7 +445,10 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
         // 🔴 .hero-canvas は画面いっぱいなので、これだけで判定すると
         //    料金帯やコピーの上でも「hover中」になり、**実質ずっと減速したまま**になる。
         //    帯の上に居るときだけ減速し、そこから外れたら戻す。
-        let tiltoHero = e.closest(`.hero-canvas`),
+        // 🔴 resize関数（$）の中では `let n = getBoundingClientRect()` が
+        //    影フラグの n（shadowOnly）を隠す。ここで別名に捕まえておく
+        let tiltoShadow = n,
+            tiltoHero = e.closest(`.hero-canvas`),
             tiltoSkip = tiltoHero ? [...tiltoHero.querySelectorAll(`.pricing-strip, .hero-copy, .site-header`)] : [],
             tiltoOver = () => !!tiltoHero && tiltoHero.matches(`:hover`) && !tiltoSkip.some(x => x.matches(`:hover`)),
             tiltoSpeed = 1;
@@ -737,7 +740,11 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     s = Math.min(window.devicePixelRatio || 1, 2.5);
                 Y = n.width,
                 X = n.height;
-                let f = Math.min(4096, Math.max(2048, Y * s)) / Math.max(1, Y);
+                // 影用のcanvas（shadowOnly=n）は低解像度でよい。
+                // 描いた絵はCSSで blur(1.35cqw)≈20px ぼかされるので、
+                // 本体と同じ解像度（〜3000px幅）で描くのは丸ごと無駄。
+                // 実測でGPUの描画ピクセル数が約1/7になり、見た目は変わらない。
+                let f = (tiltoShadow ? Math.min(1280, Math.max(768, Y * .75)) : Math.min(4096, Math.max(2048, Y * s))) / Math.max(1, Y);
                 e.width = Math.max(1, Math.round(Y * f)),
                 e.height = Math.max(1, Math.round(X * f)),
                 i.viewport(0, 0, e.width, e.height);
@@ -797,7 +804,11 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                                 O = t * .018 * D,
                                 k = g + O + Math.sin(t * Math.PI) * .0012,
                                 A = _ + t * v + T + x * (1 - Math.abs(t) * .32);
-                            return [k * 2 - 1, 1 - A * 2, y - S + E]
+                            // 右への平行移動はここ（クリップ座標。0.024 = 画面幅の1.2%）。
+                            // 🔴 CSSのtranslateXでcanvasごと動かすと、canvasの左端で
+                            //    絵が切れて画面の左に隙間が出る（2026-08-24に発覚）。
+                            //    中身をずらせばcanvasは動かないので切れない。
+                            return [k * 2 - 1 + .024, 1 - A * 2, y - S + E]
                         }
                         let i = v(r, e);
                         Math.max(0, Math.min(1, (i.z + .68) / 1.52));
@@ -820,7 +831,8 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                             A = Math.sin(e * Math.PI * 2.7 + f * .72) * .004,
                             j = f * Math.tan(a.lower.tiltDegrees * Math.PI / 180) * .45,
                             M = -i.z * .42 - x * a.lower.foregroundDepth - k + A + s + j;
-                        return [w * 2 - 1, 1 - O * 2, M]
+                        // 下段の右ずらし（0.012 = 画面幅の0.6%）。理由は上段と同じ
+                        return [w * 2 - 1 + .012, 1 - O * 2, M]
                     },
                     g = [],
                     _ = [];
