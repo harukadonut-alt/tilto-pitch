@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.1fb09aa2.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.a3acea02.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -68,63 +68,90 @@
 .hero-canvas::before {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
-    animation: introTop 1.5s both
+    animation: introTop 2.3s both
 }
 
 .hero-canvas::after {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
             mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
-    animation: introBottom 1.5s both
+    animation: introBottom 2.3s both
 }
 
 /* 15%(0.22s)まで静止 → 28%(0.42s)で髪の毛ほどの切れ込み
    → 52%(0.78s)でS字が見える → 100%(1.5s)で斜めに退場。
    最後だけ上品に減速させたいので、区間ごとにイージングを変えている。 */
 @keyframes introTop {
-      0% { transform: none;                     animation-timing-function: linear }
-     15% { transform: none;                     animation-timing-function: cubic-bezier(.33, 0, .2, 1) }
-     28% { transform: translate(.05%, -.13%);   animation-timing-function: cubic-bezier(.4, 0, .25, 1) }
-     52% { transform: translate(.9%, -2.6%);    animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
-     78% { transform: translate(10%, -52%);     animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+      0%,
+     37% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     55% { transform: translate(9%, -48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     72%,
     100% { transform: translate(24%, -122%) }
 }
 
 @keyframes introBottom {
-      0% { transform: none;                     animation-timing-function: linear }
-     15% { transform: none;                     animation-timing-function: cubic-bezier(.33, 0, .2, 1) }
-     28% { transform: translate(-.05%, .13%);   animation-timing-function: cubic-bezier(.4, 0, .25, 1) }
-     52% { transform: translate(-.9%, 2.6%);    animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
-     78% { transform: translate(-10%, 52%);     animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+      0%,
+     37% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     55% { transform: translate(-9%, 48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     72%,
     100% { transform: translate(-24%, 122%) }
 }
 
-/* 切れ目の奥のフィルムは、最初だけ少し大きく（＝カメラに近く）。
-   ⚠️ `transform` ではなく **単体の `scale` / `rotate` プロパティ**を使う。
+/* 帯は「アップで中央」から「今の位置へ右にずれる」。
+   🔴 `transform` ではなく単体の `scale` / `translate` / `rotate` を使う。
       `.ribbon-scene` の `transform` は JS が --scene-rx/ry で触るので、
-      そこへ書き込むと取り合いになる。単体プロパティなら合成されるだけで安全。
-   ⚠️ 92%（1.38秒）で通常サイズに着地させ、最後まで固定。
-      イントロが終わった瞬間に位置が跳ねない。 */
-@keyframes introZoom {
+      そこへ書き込むと取り合いになる。単体プロパティなら合成されるだけ。
+      `translate: -7% …` は今の位置より左＝そこから右へ寄っていく。
+   ⚠️ 80%（1.84秒）で通常の位置・サイズに着地させ、そこから固定。
+      イントロが終わった瞬間に跳ねない。 */
+@keyframes introRibbon {
       0%,
-     30% { scale: 1.17; rotate: -.5deg }
-     92%,
-    100% { scale: 1;    rotate: 0deg }
+     37% { scale: 1.55; translate: -7% 2.5%; rotate: -.8deg }
+     80%,
+    100% { scale: 1;    translate: 0 0;      rotate: 0deg }
 }
 
 .ribbon-scene,
 .ribbon-cast-shadow-scene {
-    animation: introZoom 1.5s cubic-bezier(.22, 1, .36, 1) both
+    animation: introRibbon 2.3s cubic-bezier(.22, 1, .36, 1) both
+}
+
+/* 中央の Tilto°。onionion のように、まず名前だけを見せる。
+   ⚠️ DOMは足せない（React が hydrate する）ので、`.site-shell` の擬似要素に
+      `content` で置いている。書体はヘッダーのロゴと同じ Didot。 */
+.site-shell::after {
+    content: "Tilto\B0";
+    z-index: 21;
+    color: #fff;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(34px, 5vw, 92px);
+    font-weight: 500;
+    pointer-events: none;
+    place-items: center;
+    display: grid;
+    position: fixed;
+    inset: 0;
+    animation: introLogo 2.3s both
+}
+
+@keyframes introLogo {
+      0% { opacity: 0; letter-spacing: .38em; animation-timing-function: cubic-bezier(.22, 1, .36, 1) }
+     14% { opacity: 1; letter-spacing: -.03em }
+     32% { opacity: 1; letter-spacing: -.03em; animation-timing-function: cubic-bezier(.4, 0, .3, 1) }
+     42%,
+    100% { opacity: 0; letter-spacing: -.05em }
 }
 
 /* 終わったら描画からも完全に外す */
 html.intro-done .hero-canvas::before,
-html.intro-done .hero-canvas::after {
+html.intro-done .hero-canvas::after,
+html.intro-done .site-shell::after {
     display: none
 }
 
 /* ?intro=0 で無効化（開発中の確認用） */
 html.no-intro .hero-canvas::before,
-html.no-intro .hero-canvas::after {
+html.no-intro .hero-canvas::after,
+html.no-intro .site-shell::after {
     content: none
 }
 
@@ -137,6 +164,10 @@ html.no-intro .ribbon-cast-shadow-scene {
 @media (prefers-reduced-motion: reduce) {
     .hero-canvas::before,
     .hero-canvas::after {
+        animation: introFade .35s ease-out both
+    }
+
+    .site-shell::after {
         animation: introFade .35s ease-out both
     }
 
@@ -218,18 +249,28 @@ html.no-intro .ribbon-cast-shadow-scene {
     animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
 }
 
-#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: .30s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: .41s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: .52s }
-#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: .63s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: .40s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: .51s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: .62s }
-#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: .73s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: 1.75s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: 1.86s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: 1.97s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: 2.08s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: 1.85s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: 1.96s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: 2.07s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: 2.18s }
 
 @media (prefers-reduced-motion: reduce) {
     #top h1 span .hl-band { animation: none }
 }
+
+/* イントロを出さないときは、見出しもすぐ出す */
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: .30s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: .41s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: .52s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: .63s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: .40s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: .51s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: .62s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: .73s }
 
 /* --- 左のコピー --- */
 .eyebrow {
