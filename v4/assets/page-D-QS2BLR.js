@@ -561,8 +561,8 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     //   さらに中心が上端(v=0)に近くて切られるので「長方形」に見えていた。
                     //   実測で釣り合わせた値が下の 0.0250 / 0.22（縦横比1.05＝ほぼ真円）。
                     //   ⚠️ 計算では出ない。マスクだけ描いて外接矩形を測ること（README参照）。
-                    float glossX = (v_uv.x - 0.627) / 0.0250;
-                    float glossY = (v_uv.y - 0.330) / 0.22;
+                    float glossX = (v_uv.x - 0.627) / 0.0150;
+                    float glossY = (v_uv.y - 0.330) / 0.132;
                     float glossFace = u_upper * (1.0 - backBlend);
                     float glossFall = exp(-(glossX * glossX + glossY * glossY));
                     float upperSoftGloss = glossFall * glossFace * 0.35;
@@ -572,6 +572,12 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // 下の絵が明るくても暗くても「光の帯」として見えるようにする。
                     float glossShoulder = max(0.0, exp(-(glossX * glossX + glossY * glossY) * 0.30) - glossFall);
                     color *= 1.0 - glossShoulder * glossFace * 0.11;
+                    // 折り返しの陰。実測で、表面の折り目は v_uv.x ≒ 0.541
+                    //（screen x=0.36 で u=0.541、そこから左は帯が無い＝裏へ回る位置）。
+                    // 光は左上手前から来るので、折り目に近づくほど面が光から背き、暗くなる。
+                    // 裏へ回った側（backBlend）はさらに沈めて、折り返しの厚みを出す。
+                    float foldShade = exp(-pow((v_uv.x - 0.541) / 0.030, 2.0)) * u_upper;
+                    color *= 1.0 - foldShade * (0.26 + backBlend * 0.20);
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
