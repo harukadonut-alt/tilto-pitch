@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.72e19cab.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.2f8db628.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -599,10 +599,13 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         display: none
     }
 
+    /* ⚠️ 行末が「、」「。」なので、中央揃えだと**左に寄って見える**。
+       約物の幅（半角ぶん）を打ち消す量だけ右へ送る（2026-08-24、社長の指摘） */
     #top h1 {
         white-space: normal;
         letter-spacing: -.05em;
         margin: 16px 0 0;
+        padding-left: 3.2vw;
         font-size: 11.6vw;
         line-height: 1.3
     }
@@ -653,18 +656,42 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         display: flex
     }
 
+    /* モックに合わせる: 文字は中央、矢印だけ右端。字体はゴシック。
+       ⚠️ PCは明朝＋両端寄せのままなので、ここはSP限定 */
     .pricing-cta-main,
     .pricing-cta-sub {
         border-radius: 8px;
-        justify-content: space-between;
-        min-height: 52px;
+        justify-content: center;
+        font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+        font-weight: 600;
+        letter-spacing: .02em;
+        min-height: 54px;
         padding: 0 18px;
-        font-size: 15px
+        font-size: 15.5px;
+        position: relative
     }
 
     .pricing-cta-main b,
     .pricing-cta-sub b {
-        font-size: 18px
+        font-size: 17px;
+        font-weight: 400;
+        position: absolute;
+        right: 18px
+    }
+
+    /* 🔴 副CTAの矢印はSSRでは「↘」。SPでは主とそろえて右上向きにする。
+       文字そのものを差し替えられない（Reactが持っている）ので、
+       元の字を消して ::after で「↗」を描く */
+    .pricing-cta-sub b {
+        text-indent: -9999px;
+        overflow: hidden;
+        width: 1em
+    }
+
+    .pricing-cta-sub b::after {
+        content: "↗";
+        text-indent: 0;
+        float: left
     }
 
     /* モックどおり: 主CTAはコーラル、副CTAは明るい地に黒の輪郭 */
@@ -705,7 +732,9 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         order: 4;
         width: 11px;
         height: 11px;
-        margin: 6px auto 2px
+        /* 帯の下に空きすぎていたので上の余白を半分に（社長の指摘）。
+           帯の絵は下側に透明な余白を持つので、実測より詰めて見える */
+        margin: -26px auto 2px
     }
 
     .pricing-strip::after {
@@ -790,7 +819,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 }
 
 
-/* --- InkCursor（v3から移植。assets/cursor.72e19cab.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.2f8db628.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
