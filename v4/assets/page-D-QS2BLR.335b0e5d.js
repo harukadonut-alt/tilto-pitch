@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.066ec1c8.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.066ec1c8.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.335b0e5d.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.335b0e5d.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -604,11 +604,13 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // 🔴 CSSの .ribbon-cast-shadow-scene は「背景に落ちる影」で、
                     //    下段canvas(z-index:2)の下に敷かれているため下段の上には出ない。
                     //    帯の上に落ちる影は、下段のシェーダで直接描くしかない。
-                    // 範囲は実測。下段の上辺は v_uv.y=0。参考画像で指定された帯
-                    //（画面x 0.43〜0.86）は v_uv.x の 0.26〜0.59 にあたる。
+                    // 範囲は実測。下段の上辺は v_uv.y=0。
+                    // 🔴 右側（画面x 0.79〜）は下段が手前に出るので、そこに影は落ちない。
+                    //    下段の v_uv.x は右へ行くほど小さくなるので、u=0.295 で切っている
+                    //    （画面x≈0.795）。切り替えは 0.325→0.295 の短い区間で済ませる。
                     float castOnLower = (1.0 - u_upper)
                       * smoothstep(0.25, 0.0, v_uv.y)
-                      * smoothstep(0.22, 0.30, v_uv.x)
+                      * smoothstep(0.295, 0.325, v_uv.x)
                       * smoothstep(0.66, 0.57, v_uv.x);
                     color *= 1.0 - castOnLower * 0.50;
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
