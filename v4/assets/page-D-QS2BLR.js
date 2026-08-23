@@ -543,10 +543,10 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // A broad, feathered lustre over the upper-front panel highlighted in
                     // the reference. It follows the cloth surface, but remains gentle
                     // enough that the FV artwork and black type retain their contrast.
-                    float glossX = (v_uv.x - 0.655) / 0.135;
-                    float glossY = (v_uv.y - 0.235) / 0.30;
+                    float glossX = (v_uv.x - 0.627) / 0.105;
+                    float glossY = (v_uv.y - 0.215) / 0.27;
                     float upperSoftGloss = exp(-(glossX * glossX + glossY * glossY))
-                      * u_upper * (1.0 - backBlend) * 0.105;
+                      * u_upper * (1.0 - backBlend) * 0.17;
                     color = mix(color, vec3(1.0, 0.988, 0.970), upperSoftGloss);
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
