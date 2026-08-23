@@ -545,9 +545,15 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                     // enough that the FV artwork and black type retain their contrast.
                     float glossX = (v_uv.x - 0.627) / 0.105;
                     float glossY = (v_uv.y - 0.215) / 0.27;
-                    float upperSoftGloss = exp(-(glossX * glossX + glossY * glossY))
-                      * u_upper * (1.0 - backBlend) * 0.17;
+                    float glossFace = u_upper * (1.0 - backBlend);
+                    float glossFall = exp(-(glossX * glossX + glossY * glossY));
+                    float upperSoftGloss = glossFall * glossFace * 0.35;
                     color = mix(color, vec3(1.0, 0.988, 0.970), upperSoftGloss);
+                    // mix は白より明るくできないので、明るいFV画像の上では芯だけでは読めない。
+                    // 芯のすぐ外側をわずかに沈めて局所コントラストを作り、
+                    // 下の絵が明るくても暗くても「光の帯」として見えるようにする。
+                    float glossShoulder = max(0.0, exp(-(glossX * glossX + glossY * glossY) * 0.30) - glossFall);
+                    color *= 1.0 - glossShoulder * glossFace * 0.11;
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
