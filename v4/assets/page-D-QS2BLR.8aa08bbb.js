@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.f3937de4.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.f3937de4.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.8aa08bbb.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.8aa08bbb.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -607,17 +607,6 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
                       * smoothstep(0.22, 0.30, v_uv.x)
                       * smoothstep(0.66, 0.57, v_uv.x);
                     color *= 1.0 - castOnLower * 0.50;
-                    // 帯の厚み（紙の小口）。
-                    // 上下の縁のごく細い帯を「絵」ではなく「紙の色」にして、
-                    // そのすぐ内側に細い影を入れる。この2枚重ねで、面ではなく
-                    // 「厚みのあるシート」に見える。
-                    // ⚠️ 幅を広げると額縁に見える。0.014（帯幅の1.4%＝上段で約4px）が限度。
-                    float rim = clamp(smoothstep(0.014, 0.0, v_uv.y)
-                                    + smoothstep(0.014, 0.0, 1.0 - v_uv.y), 0.0, 1.0);
-                    float rimInner = clamp(smoothstep(0.032, 0.014, v_uv.y)
-                                         + smoothstep(0.032, 0.014, 1.0 - v_uv.y), 0.0, 1.0);
-                    color *= 1.0 - rimInner * (1.0 - rim) * 0.15;
-                    color = mix(color, vec3(0.93, 0.921, 0.902), rim * 0.78);
                     float crease = exp(-pow((v_uv.x - 0.50) / 0.018, 2.0)) * u_upper;
                     color *= 1.0 - crease * 0.085;
                     color += vec3(crease * 0.018);
