@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.79d60cff.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.79d60cff.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3f04f52f.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3f04f52f.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -898,9 +898,9 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
 function x() {
     let [e, t] = (0, r.useState)(!0),
         n = (0, r.useRef)(null);
-    return (0, i.jsx)(`main`, {
+    return (0, i.jsxs)(`main`, {
         className: `site-shell`,
-        children: (0, i.jsxs)(`section`, {
+        children: [(0, i.jsxs)(`section`, {
             className: `hero-canvas${e ? ` is-moving` : ` is-paused`}`,
             "aria-label": `Tilto 採用サイト制作サービス`,
             onPointerMove: e => {
@@ -930,7 +930,7 @@ function x() {
                     className: `site-nav`,
                     "aria-label": `メインナビゲーション`,
                     children: [(0, i.jsx)(`a`, {
-                        href: `#headline`,
+                        href: `#about`,
                         children: `サービス概要`
                     }), (0, i.jsx)(`button`, {
                         type: `button`,
@@ -939,7 +939,7 @@ function x() {
                         onClick: () => t(e => !e),
                         children: e ? `カタログ` : `再生する`
                     }), (0, i.jsx)(`a`, {
-                        href: `#style`,
+                        href: `#worries`,
                         children: `成果にこだわる`
                     }), (0, i.jsxs)(`a`, {
                         className: `header-cta`,
@@ -1145,7 +1145,78 @@ function x() {
                     })]
                 })]
             })]
+        }), (0, i.jsx)(`section`, {
+        id: `about`,
+        className: `about`,
+        "aria-labelledby": `about-title`,
+        children: (0, i.jsxs)(`div`, {
+            className: `sec-inner`,
+            children: [(0, i.jsxs)(`p`, {
+                className: `sec-label`,
+                children: [(0, i.jsx)(`i`, {
+                    className: `sec-dash`,
+                    "aria-hidden": `true`
+                }), `02 / ABOUT TILTO°`]
+            }), (0, i.jsxs)(`h2`, {
+                id: `about-title`,
+                className: `about-title`,
+                children: [`Tilto°は、採用サイトの`, (0, i.jsx)(`br`, {}), `「持ち方」を変えるサービスです。`]
+            }), (0, i.jsxs)(`div`, {
+                className: `about-body`,
+                children: [(0, i.jsxs)(`p`, {
+                    children: [`Tilto°は、採用マーケティングを行う`, (0, i.jsx)(`a`, {
+                        className: `about-link`,
+                        href: `https://savorflow.co.jp/`,
+                        target: `_blank`,
+                        rel: `noopener`,
+                        children: `株式会社Savor Flow`
+                    }), `が提供する、新しい採用ブランディングサービスです。`]
+                }), (0, i.jsx)(`p`, {
+                    children: `従来の採用サイトが抱えていた「高い」「時間がかかる」「成果につながるか分からない」という課題を、AIを制作プロセスに取り入れることで解消。`
+                }), (0, i.jsx)(`p`, {
+                    children: `経験豊富な採用コンサルタントとデザイナーが伴走し、企業ごとの特色や強みを活かしたオリジナルの採用サイトを、月額27,000円（税別）から制作・運用します。`
+                })]
+            })]
         })
+    }), (0, i.jsxs)(`section`, {
+        id: `worries`,
+        className: `worries`,
+        "aria-labelledby": `worries-title`,
+        children: [(0, i.jsx)(`div`, {
+            className: `worries-dark`,
+            children: (0, i.jsxs)(`div`, {
+                className: `sec-inner`,
+                children: [(0, i.jsxs)(`p`, {
+                    className: `sec-label sec-label--light`,
+                    children: [(0, i.jsx)(`i`, {
+                        className: `sec-dash`,
+                        "aria-hidden": `true`
+                    }), `03 / WORRIES`]
+                }), (0, i.jsx)(`h2`, {
+                    id: `worries-title`,
+                    className: `worries-title`,
+                    children: `採用サイトは、ハードルが高い。`
+                }), (0, i.jsx)(`ul`, {
+                    className: `worries-list`,
+                    children: [(0, i.jsx)(`li`, { children: `採用サイトに何十万円、何百万円もかけられない` }, 0), (0, i.jsx)(`li`, { children: `制作会社に頼むと完成まで何ヶ月もかかる` }, 1), (0, i.jsx)(`li`, { children: `どんなデザインにすればいいのか分からない` }, 2), (0, i.jsx)(`li`, { children: `せっかく作っても、本当に応募が増えるのか分からない` }, 3)]
+                })]
+            })
+        }), (0, i.jsx)(`div`, {
+            className: `worries-light`,
+            children: (0, i.jsxs)(`div`, {
+                className: `sec-inner`,
+                children: [(0, i.jsx)(`p`, {
+                    className: `worries-bridge`,
+                    children: (0, i.jsx)(`span`, {
+                        children: `Tilto°なら`
+                    })
+                }), (0, i.jsx)(`ol`, {
+                    className: `solve-list`,
+                    children: [(0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `01` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `オリジナルデザイン` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `自社の特色・強みを活かしたデザインを制作` })] }, 0), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `02` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `月額27,000円〜` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `初期投資を抑えて始められる` })] }, 1), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `03` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `最短1週間でご提案` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `30分程度のお打ち合わせから` })] }, 2), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `04` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `採用のプロが伴走` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `採用ブランディング・マーケティングの視点から設計` })] }, 3)]
+                })]
+            })
+        })]
+    })]
     })
 }
 export { x as default };

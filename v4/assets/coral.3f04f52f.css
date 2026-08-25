@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.79d60cff.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.3f04f52f.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.79d60cff.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.3f04f52f.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.79d60cff.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.3f04f52f.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -999,7 +999,276 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     padding-bottom: .31cqw
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.79d60cff.js が load 後にDOMを足す） --- */
+/* ============================================================
+   02 Tilto°とは / 03 私たちが解決するお悩み（2026-08-26）
+
+   🔴 **ここは `cqw` を使わない。** `container-type` を持つのは `.hero-canvas` だけで、
+      その外にあるこの2セクションには効く親が無い。`clamp()` と `vw` で組む。
+   ⚠️ 器の語彙を守る: 紙地・明朝の見出し・Arialの小ラベル・コーラルの短い罫。
+      新しい演出は足さない（出現アニメは土台を1種類に統一してから入れる）。
+   ============================================================ */
+
+/* 🔴 FVの下に中身が続くようになったので、ページを縦に伸ばせるようにする。
+   ベンダーは `body{overflow:hidden}` と `.site-shell{height:100svh;overflow:hidden}`
+   でFVを1画面に閉じ込めていた。横は帯がはみ出すので切ったままにする */
+html,
+body {
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: auto
+}
+
+.site-shell {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible
+}
+
+/* 🔴 `.site-shell` の子は**中身の幅に縮む**（素のdivを入れると幅0になる）。
+   ベンダーの `place-items: start center` の効果で、`display` を block にしても
+   直らなかった。節は全幅で敷きたいので、**節の側で伸ばす**のが確実 */
+.about,
+.worries {
+    justify-self: stretch;
+    width: 100%
+}
+
+/* --- 2つの節で共通の器 --- */
+.sec-inner {
+    width: min(1080px, 84vw);
+    margin-inline: auto
+}
+
+.sec-label {
+    color: var(--gray-600);
+    letter-spacing: .2em;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font: 700 clamp(9px, .78vw, 11px)/1 Arial, sans-serif;
+    display: flex
+}
+
+.sec-label--light {
+    color: #ffffff9e
+}
+
+.sec-dash {
+    background: var(--coral);
+    width: clamp(22px, 2.4vw, 34px);
+    height: 2px;
+    display: block
+}
+
+/* --- 02 Tilto°とは --- */
+.about {
+    background: var(--paper);
+    padding: clamp(78px, 9.5vw, 156px) 0 clamp(70px, 8.5vw, 140px)
+}
+
+.about-title {
+    color: #0a0a09;
+    letter-spacing: -.03em;
+    margin: clamp(26px, 2.6vw, 42px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(24px, 3.15vw, 46px);
+    font-weight: 600;
+    line-height: 1.62
+}
+
+.about-body {
+    border-top: 1px solid #d5d0c8;
+    max-width: 43em;
+    margin: clamp(34px, 3.4vw, 56px) 0 0;
+    padding-top: clamp(26px, 2.6vw, 42px)
+}
+
+.about-body p {
+    color: #2b2926;
+    margin: 0;
+    font-size: clamp(13.5px, 1.08vw, 16px);
+    line-height: 2.15
+}
+
+.about-body p + p {
+    margin-top: 1.45em
+}
+
+/* 社名リンク。下線は擬似要素で引いて、hoverで色が変わるだけにする */
+.about-link {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(var(--coral), var(--coral));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    padding-bottom: .12em;
+    transition: color .2s ease
+}
+
+.about-link:hover {
+    color: var(--coral)
+}
+
+/* --- 03 お悩み --- */
+/* 悩み＝墨の重い面、解決＝紙の明るい面。明暗の対比で「こう変わる」を出す */
+.worries-dark {
+    background: var(--charcoal);
+    padding: clamp(74px, 9vw, 148px) 0 clamp(74px, 9vw, 148px)
+}
+
+.worries-title {
+    color: #fff;
+    letter-spacing: -.03em;
+    margin: clamp(24px, 2.4vw, 38px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(25px, 3.5vw, 52px);
+    font-weight: 600;
+    line-height: 1.5
+}
+
+.worries-list {
+    border-top: 1px solid #ffffff26;
+    margin: clamp(34px, 3.4vw, 54px) 0 0;
+    padding: 0;
+    list-style: none
+}
+
+.worries-list li {
+    color: #ffffffd6;
+    border-bottom: 1px solid #ffffff26;
+    padding: clamp(17px, 1.7vw, 26px) 0 clamp(17px, 1.7vw, 26px) clamp(26px, 2.4vw, 38px);
+    font-size: clamp(13.5px, 1.22vw, 18px);
+    line-height: 1.75;
+    position: relative
+}
+
+/* 行頭の「×」。悩み＝いま塞がれていること、を示す */
+.worries-list li::before {
+    content: "×";
+    color: var(--coral);
+    font: 700 clamp(12px, 1.1vw, 16px)/1 Arial, sans-serif;
+    position: absolute;
+    top: calc(clamp(17px, 1.7vw, 26px) + .28em);
+    left: 0
+}
+
+.worries-light {
+    background: var(--paper);
+    padding: clamp(60px, 7vw, 116px) 0 clamp(80px, 9.5vw, 156px)
+}
+
+/* 「Tilto°なら」。左右に罫を伸ばして、面の切り替わりを受け止める */
+.worries-bridge {
+    align-items: center;
+    gap: clamp(14px, 1.6vw, 24px);
+    margin: 0 0 clamp(38px, 4vw, 62px);
+    display: flex
+}
+
+.worries-bridge span {
+    color: var(--coral);
+    letter-spacing: .04em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(17px, 1.85vw, 27px);
+    font-weight: 600
+}
+
+.worries-bridge::after {
+    content: "";
+    background: #d5d0c8;
+    flex: 1;
+    height: 1px
+}
+
+.solve-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(20px, 2.2vw, 36px);
+    margin: 0;
+    padding: 0;
+    display: grid;
+    list-style: none
+}
+
+.solve {
+    border-top: 2px solid var(--charcoal);
+    padding-top: clamp(16px, 1.6vw, 26px)
+}
+
+.solve-no {
+    color: var(--coral);
+    letter-spacing: .1em;
+    font: 700 clamp(10px, .82vw, 12px)/1 Arial, sans-serif;
+    display: block
+}
+
+.solve-title {
+    color: #0a0a09;
+    letter-spacing: -.02em;
+    margin: clamp(10px, 1vw, 16px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(16px, 1.62vw, 24px);
+    font-weight: 600;
+    line-height: 1.5
+}
+
+.solve-body {
+    color: #56534e;
+    margin: clamp(9px, .9vw, 14px) 0 0;
+    font-size: clamp(12px, 1vw, 14.5px);
+    line-height: 1.95
+}
+
+/* --- SP --- */
+@media (max-width: 700px) {
+    .sec-inner {
+        width: calc(100% - 44px)
+    }
+
+    .about {
+        padding: 64px 0 58px
+    }
+
+    .about-title {
+        font-size: 21px;
+        line-height: 1.72
+    }
+
+    .about-body {
+        margin-top: 28px;
+        padding-top: 24px
+    }
+
+    .about-body p {
+        font-size: 13.5px;
+        line-height: 2.05
+    }
+
+    .worries-dark {
+        padding: 60px 0
+    }
+
+    .worries-title {
+        font-size: 23px
+    }
+
+    .worries-light {
+        padding: 52px 0 66px
+    }
+
+    /* 4列は入らないので2列。1列にすると縦に間延びする */
+    .solve-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 26px 18px
+    }
+
+    .solve-title {
+        font-size: 15.5px
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.3f04f52f.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
