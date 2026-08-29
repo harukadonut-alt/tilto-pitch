@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.53f3a41f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.53f3a41f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.4600898c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.4600898c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -1300,43 +1300,45 @@ function x() {
         className: `plan`,
         "aria-labelledby": `plan-title`,
         children: (0, i.jsxs)(`div`, {
-            className: `sec-inner plan-split`,
+            className: `plan-inner`,
             children: [(0, i.jsxs)(`div`, {
-                className: `plan-col`,
+                className: `plan-left`,
                 children: [(0, i.jsxs)(`p`, {
-                    className: `sec-label`,
-                    children: [(0, i.jsx)(`i`, { className: `sec-dash`, "aria-hidden": `true` }), `07 / PRICE`]
+                    className: `sec-no`,
+                    children: [(0, i.jsx)(`b`, { children: `06` }),
+                        (0, i.jsx)(`span`, { children: `PRICE / FAQ` })]
                 }), (0, i.jsx)(`h2`, {
-                    id: `plan-title`, className: `col-title`, children: `必要なのは、ふたつだけ。`
-                }), (0, i.jsx)(`p`, {
-                    className: `col-lead`,
-                    children: `プランは2つ。どちらも月額27,000円で、公開後の運用まで含みます。`
-                }), (0, i.jsx)(`div`, {
-                    className: `plan-rows`,
-                    children: [(0, i.jsxs)(`article`, { className: `plan-row`, children: [(0, i.jsxs)(`div`, { className: `plan-row__head`, children: [(0, i.jsx)(`small`, { children: `PLAN 01` }), (0, i.jsx)(`h3`, { children: `採用支援セット` }), (0, i.jsx)(`p`, { children: `採用支援向け「基本セクション」の制作と、公開後の運用` })] }), (0, i.jsxs)(`dl`, { className: `plan-row__nums`, children: [(0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `月額` }), (0, i.jsxs)(`dd`, { children: [(0, i.jsx)(`strong`, { children: `27,000` }), (0, i.jsxs)(`b`, { children: [`円`, (0, i.jsx)(`small`, { children: `（税別）` })] })] })] }), (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `初期費用` }), (0, i.jsxs)(`dd`, { children: [(0, i.jsx)(`strong`, { children: `0` }), (0, i.jsx)(`b`, { children: `円` })] })] })] })] }, 0), (0, i.jsxs)(`article`, { className: `plan-row`, children: [(0, i.jsxs)(`div`, { className: `plan-row__head`, children: [(0, i.jsx)(`small`, { children: `PLAN 02` }), (0, i.jsx)(`h3`, { children: `サイト単体` }), (0, i.jsx)(`p`, { children: `コーポレートサイト・LPなど「基本セクション」の制作と、公開後の運用` })] }), (0, i.jsxs)(`dl`, { className: `plan-row__nums`, children: [(0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `月額` }), (0, i.jsxs)(`dd`, { children: [(0, i.jsx)(`strong`, { children: `27,000` }), (0, i.jsxs)(`b`, { children: [`円`, (0, i.jsx)(`small`, { children: `（税別）` })] })] })] }), (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `初期費用` }), (0, i.jsxs)(`dd`, { children: [(0, i.jsx)(`strong`, { children: `100,000` }), (0, i.jsx)(`b`, { children: `円` })] })] })] })] }, 1)]
-                }), (0, i.jsx)(`ul`, {
-                    className: `plan-terms`,
-                    "aria-label": `両プラン共通の条件`,
-                    children: [(0, i.jsx)(`li`, { children: `最低契約期間 6ヶ月` }, 0), (0, i.jsx)(`li`, { children: `デザイン修正 2回まで` }, 1), (0, i.jsx)(`li`, { children: `写真・テキスト差し替え 無制限` }, 2), (0, i.jsx)(`li`, { children: `12ヶ月継続でコードお渡し` }, 3)]
+                    id: `plan-title`, className: `sr-only`, children: `料金とよくある質問`
+                }), (0, i.jsxs)(`div`, {
+                    className: `plan-figs`,
+                    children: [(0, i.jsxs)(`div`, {
+                        className: `pfig`,
+                        children: [(0, i.jsx)(`span`, { className: `pfig-cap`, children: `月額` }),
+                            (0, i.jsx)(`strong`, { className: `pfig-num pfig-num--coral`, children: `27,000` }),
+                            (0, i.jsxs)(`span`, { className: `pfig-unit`, children: [`円`,
+                                (0, i.jsx)(`em`, { children: `/ MONTH` })] })]
+                    }), (0, i.jsxs)(`div`, {
+                        className: `pfig pfig--init`,
+                        children: [(0, i.jsx)(`span`, { className: `pfig-cap pfig-cap--top`, children: `初期費用` }),
+                            (0, i.jsx)(`strong`, { className: `pfig-num`, children: `0` }),
+                            (0, i.jsx)(`span`, { className: `pfig-unit`, children: `円` })]
+                    })]
                 }), (0, i.jsxs)(`p`, {
-                    className: `plan-addon`,
-                    children: [(0, i.jsx)(`b`, { children: `セクション追加` }),
-                        (0, i.jsx)(`strong`, { children: `20,000〜50,000` }),
-                        (0, i.jsx)(`span`, { children: `円/月（1セクション）` }),
-                        (0, i.jsx)(`em`, { children: `導入時も、あとからでも。デザインから実装・公開まで含みます。` })]
+                    className: `plan-note`,
+                    children: [`※表示価格は基本プランの月額料金です。`, (0, i.jsx)(`br`, {}),
+                        `※内容や更新範囲に応じてご案内します。`]
                 })]
             }), (0, i.jsxs)(`div`, {
                 className: `faq-col`,
                 id: `faq`,
                 "aria-labelledby": `faq-title`,
-                children: [(0, i.jsxs)(`p`, {
-                    className: `sec-label`,
-                    children: [(0, i.jsx)(`i`, { className: `sec-dash`, "aria-hidden": `true` }), `08 / FAQ`]
-                }), (0, i.jsx)(`h2`, {
-                    id: `faq-title`, className: `col-title`, children: `よくある質問`
+                children: [(0, i.jsx)(`p`, {
+                    className: `faq-head`, id: `faq-title`, children: `FAQ`
                 }), (0, i.jsx)(`div`, {
                     className: `faq-list`,
-                    children: [(0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`small`, { children: `Q.01` }), (0, i.jsx)(`strong`, { children: `まだイメージが固まっていなくても大丈夫？` }), (0, i.jsx)(`i`, { "aria-hidden": `true`, children: `＋` })] }), (0, i.jsx)(`p`, { children: `大丈夫です。「若い人に届いてほしい」「うちらしさが出せていない」——そんな断片のままお聞かせください。採用課題と会社の魅力を一緒に整理するところから始めます。` })] }, 0), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`small`, { children: `Q.02` }), (0, i.jsx)(`strong`, { children: `AIはどこで使いますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true`, children: `＋` })] }), (0, i.jsx)(`p`, { children: `コピー・構成・デザインの可能性を広げ、比較するために使います。方向を決め、品質を担保するのは人です。だから速いだけでなく、その会社にしかない表現に仕上がります。` })] }, 1), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`small`, { children: `Q.03` }), (0, i.jsx)(`strong`, { children: `原稿や写真もお願いできますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true`, children: `＋` })] }), (0, i.jsx)(`p`, { children: `はい。原稿制作に加え、必要に応じて撮影・映像・イラストの専門家を編成します。手元に素材が少ない状態からでも始められます。` })] }, 2), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`small`, { children: `Q.04` }), (0, i.jsx)(`strong`, { children: `公開までどれくらいかかりますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true`, children: `＋` })] }), (0, i.jsx)(`p`, { children: `ご提案は最短1週間です。公開までは内容や規模により2〜4か月が目安で、最初のご相談で進め方をご案内します。公開して終わりではなく、公開後の更新・改善まで同じチームが続けます。` })] }, 3), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`small`, { children: `Q.05` }), (0, i.jsx)(`strong`, { children: `料金はどうなっていますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true`, children: `＋` })] }), (0, i.jsx)(`p`, { children: `月額27,000円（税別）です。採用支援セットなら初期費用は0円。写真・テキストの差し替えは無制限で、最低契約期間は6ヶ月、12ヶ月ご継続でコードをお渡しします。` })] }, 4)]
+                    children: [(0, i.jsxs)(`details`, { open: true, children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`b`, { children: `Q.` }), (0, i.jsx)(`strong`, { children: `最低契約期間はありますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true` })] }), (0, i.jsxs)(`p`, { children: [(0, i.jsx)(`b`, { children: `A.` }), (0, i.jsx)(`span`, { children: `最低契約期間は6ヶ月です。6ヶ月以降は1ヶ月単位で契約更新が可能です。` })] })] }, 0), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`b`, { children: `Q.` }), (0, i.jsx)(`strong`, { children: `契約中の解約はどこまで対応してもらえますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true` })] }), (0, i.jsxs)(`p`, { children: [(0, i.jsx)(`b`, { children: `A.` }), (0, i.jsx)(`span`, { children: `最低契約期間の6ヶ月を過ぎたあとは、1ヶ月単位で更新・終了をお選びいただけます。` })] })] }, 1), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`b`, { children: `Q.` }), (0, i.jsx)(`strong`, { children: `原稿や写真がなくても大丈夫ですか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true` })] }), (0, i.jsxs)(`p`, { children: [(0, i.jsx)(`b`, { children: `A.` }), (0, i.jsx)(`span`, { children: `はい。原稿制作に加え、必要に応じて撮影・映像・イラストの専門家を編成します。手元に素材が少ない状態からでも始められます。` })] })] }, 2), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`b`, { children: `Q.` }), (0, i.jsx)(`strong`, { children: `公開までどれくらいかかりますか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true` })] }), (0, i.jsxs)(`p`, { children: [(0, i.jsx)(`b`, { children: `A.` }), (0, i.jsx)(`span`, { children: `ご提案は最短1週間です。公開までは内容や規模により2〜4か月が目安で、最初のご相談で進め方をご案内します。` })] })] }, 3), (0, i.jsxs)(`details`, { children: [(0, i.jsxs)(`summary`, { children: [(0, i.jsx)(`b`, { children: `Q.` }), (0, i.jsx)(`strong`, { children: `他の制作会社との違いは何ですか？` }), (0, i.jsx)(`i`, { "aria-hidden": `true` })] }), (0, i.jsxs)(`p`, { children: [(0, i.jsx)(`b`, { children: `A.` }), (0, i.jsx)(`span`, { children: `採用のプロとデザイナーが伴走し、AIを制作の過程に使って、1社ごとに全く違う表現をつくります。つくって終わりではなく、公開後の運用まで続けます。` })] })] }, 4)]
+                }), (0, i.jsx)(`p`, {
+                    className: `faq-more`, children: `and more…`
                 })]
             })]
         })
@@ -1344,39 +1346,44 @@ function x() {
         id: `contact`,
         className: `site-foot`,
         children: (0, i.jsxs)(`div`, {
-            className: `sec-inner`,
+            className: `foot-inner`,
             children: [(0, i.jsxs)(`p`, {
-                className: `sec-label sec-label--light`,
-                children: [(0, i.jsx)(`i`, { className: `sec-dash`, "aria-hidden": `true` }), `09 / CONTACT`]
-            }), (0, i.jsxs)(`h2`, {
-                className: `foot-title`,
-                children: [(0, i.jsx)(`small`, { children: `採用サイトのご相談はこちら。` }),
-                    `らしさを、`, (0, i.jsx)(`br`, {}), `採用の力に。`]
-            }), (0, i.jsxs)(`p`, {
-                className: `foot-lead`,
-                children: [`まとまっていなくて大丈夫です。`, (0, i.jsx)(`br`, {}),
-                    `採用のお悩みと、今あるイメージを聞かせてください。`]
-            }), (0, i.jsxs)(`a`, {
-                className: `foot-cta`,
-                href: `mailto:hello@tilto.jp`,
-                children: [`無料で相談する`, (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `↗` })]
+                className: `sec-no sec-no--light`,
+                children: [(0, i.jsx)(`b`, { children: `07` }),
+                    (0, i.jsx)(`span`, { children: `LET'S TALK` })]
+            }), (0, i.jsxs)(`div`, {
+                className: `foot-main`,
+                children: [(0, i.jsxs)(`h2`, {
+                    className: `foot-title`,
+                    children: [`らしさを、`, (0, i.jsx)(`br`, {}), `採用の力に。`]
+                }), (0, i.jsxs)(`a`, {
+                    className: `foot-cta`, href: `mailto:hello@tilto.jp`,
+                    children: [`まずは、話してみる。`,
+                        (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `⟶` })]
+                })]
             }), (0, i.jsxs)(`div`, {
                 className: `foot-bottom`,
                 children: [(0, i.jsxs)(`a`, {
                     className: `foot-brand`, href: `#top`,
                     children: [`Tilto`, (0, i.jsx)(`sup`, { children: `°` })]
-                }), (0, i.jsx)(`p`, { children: `RECRUITING SITE STUDIO` }),
-                    (0, i.jsxs)(`small`, {
-                        children: [`運営：`, (0, i.jsx)(`a`, {
+                }), (0, i.jsx)(`nav`, {
+                    className: `foot-nav`,
+                    "aria-label": `フッターナビゲーション`,
+                    children: [(0, i.jsx)(`a`, { href: `#about`, children: `SERVICE` }, 0), (0, i.jsx)(`a`, { href: `#expression`, children: `WORKS` }, 1), (0, i.jsx)(`a`, { href: `#pricing`, children: `PRICE` }, 2), (0, i.jsx)(`a`, { href: `#strategy`, children: `ABOUT` }, 3), (0, i.jsx)(`a`, { href: `#contact`, children: `CONTACT` }, 4)]
+                }), (0, i.jsxs)(`div`, {
+                    className: `foot-corp`,
+                    children: [(0, i.jsx)(`b`, {
+                        children: (0, i.jsx)(`a`, {
                             href: `https://savorflow.co.jp/`, target: `_blank`, rel: `noopener`,
                             children: `株式会社Savor Flow`
-                        }), (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `　/　` }),
-                            (0, i.jsx)(`a`, {
-                                href: `https://savorflow.co.jp/privacy`, target: `_blank`, rel: `noopener`,
-                                children: `プライバシーポリシー`
-                            }), (0, i.jsx)(`span`, { "aria-hidden": `true`, children: `　/　` }),
-                            `© 2026 TILTO°`]
+                        })
+                    }), (0, i.jsx)(`a`, {
+                        href: `https://savorflow.co.jp/privacy`, target: `_blank`, rel: `noopener`,
+                        children: `プライバシーポリシー`
                     })]
+                }), (0, i.jsx)(`small`, {
+                    className: `foot-copy`, children: `© 2026 TILTO° All Rights Reserved.`
+                })]
             })]
         })
     })]

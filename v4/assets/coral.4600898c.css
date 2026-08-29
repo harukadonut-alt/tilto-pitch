@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.53f3a41f.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.4600898c.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -538,7 +538,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.53f3a41f.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.4600898c.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -806,7 +806,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.53f3a41f.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.4600898c.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -1514,404 +1514,6 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 }
 
 /* ============================================================
-   07 料金 + 08 FAQ（1つの節） / 09 フッター（2026-08-26）
-
-   社長の指示「高さを取らずコンパクトに」。
-   🔴 いちばん効くのは **PCで料金とFAQを横並びにする**こと。
-      縦に積むと2画面ぶんになる。横に置けば1画面に収まる。
-   ⚠️ 料金は「大きなカード」ではなく**行**にする。カードは余白で背が伸びる。
-   ============================================================ */
-.plan,
-.site-foot {
-    justify-self: stretch;
-    width: auto
-}
-
-.plan {
-    background: var(--paper);
-    padding: clamp(72px, 8.5vw, 140px) 0 clamp(72px, 8.5vw, 140px)
-}
-
-.plan-split {
-    grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
-    gap: clamp(38px, 5vw, 86px);
-    display: grid
-}
-
-/* 🔴 グリッドの列は既定が `min-width: auto` ＝ 中身より狭くならない。
-   これがあると長い札や長い行が列を押し広げて、画面からはみ出す。
-   `min-width: 0` にして初めて、中で折り返す */
-.plan-col,
-.faq-col {
-    min-width: 0
-}
-
-.col-title {
-    color: #0a0a09;
-    letter-spacing: -.03em;
-    margin: clamp(18px, 1.8vw, 28px) 0 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(21px, 2.5vw, 36px);
-    font-weight: 600;
-    line-height: 1.5
-}
-
-.col-lead {
-    color: #56534e;
-    margin: clamp(10px, 1vw, 16px) 0 0;
-    font-size: clamp(12.5px, 1.02vw, 15px);
-    line-height: 1.9
-}
-
-/* --- プラン2つ。行で組む --- */
-.plan-rows {
-    border-top: 1px solid #d5d0c8;
-    margin: clamp(20px, 2vw, 32px) 0 0
-}
-
-.plan-row {
-    border-bottom: 1px solid #d5d0c8;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: clamp(14px, 1.6vw, 28px);
-    padding: clamp(15px, 1.5vw, 24px) 0;
-    display: flex
-}
-
-.plan-row__head small {
-    color: var(--coral);
-    letter-spacing: .12em;
-    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif;
-    display: block
-}
-
-.plan-row__head h3 {
-    color: #0a0a09;
-    letter-spacing: -.02em;
-    margin: 7px 0 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(15px, 1.35vw, 20px);
-    font-weight: 600
-}
-
-.plan-row__head p {
-    color: #7d7871;
-    max-width: 24em;
-    margin: 5px 0 0;
-    font-size: clamp(11px, .86vw, 12.5px);
-    line-height: 1.7
-}
-
-.plan-row__nums {
-    text-align: right;
-    flex-shrink: 0;
-    gap: clamp(12px, 1.4vw, 24px);
-    margin: 0;
-    display: flex
-}
-
-.plan-row__nums dt {
-    color: #a49c92;
-    letter-spacing: .1em;
-    margin: 0 0 3px;
-    font: 700 clamp(8.5px, .68vw, 10px)/1 Arial, sans-serif
-}
-
-.plan-row__nums dd {
-    color: #0a0a09;
-    white-space: nowrap;
-    align-items: baseline;
-    gap: 2px;
-    margin: 0;
-    display: flex
-}
-
-.plan-row__nums strong {
-    letter-spacing: -.02em;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(19px, 1.95vw, 29px);
-    font-weight: 600
-}
-
-.plan-row__nums b {
-    font-size: clamp(10px, .82vw, 12px);
-    font-weight: 600
-}
-
-.plan-row__nums small {
-    color: #a49c92;
-    margin-left: 2px;
-    font-size: .86em
-}
-
-/* --- 共通条件。行を詰めて並べる --- */
-.plan-terms {
-    flex-wrap: wrap;
-    gap: 6px 8px;
-    margin: clamp(16px, 1.6vw, 24px) 0 0;
-    padding: 0;
-    display: flex;
-    list-style: none
-}
-
-.plan-terms li {
-    color: #56534e;
-    background: #efece7;
-    border-radius: 2px;
-    /* ⚠️ 既定では縮んで文字が切れる。縮ませずに次の行へ送る */
-    flex-shrink: 0;
-    max-width: 100%;
-    padding: 5px 9px;
-    font-size: clamp(10.5px, .82vw, 12px)
-}
-
-/* --- セクション追加。1行で言い切る --- */
-.plan-addon {
-    color: #56534e;
-    border-top: 1px solid #d5d0c8;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 8px;
-    margin: clamp(16px, 1.6vw, 24px) 0 0;
-    padding-top: clamp(13px, 1.3vw, 20px);
-    font-size: clamp(11px, .86vw, 12.5px);
-    display: flex
-}
-
-.plan-addon b {
-    color: #0a0a09;
-    font-size: clamp(11.5px, .92vw, 13.5px)
-}
-
-.plan-addon strong {
-    color: #0a0a09;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(15px, 1.35vw, 20px);
-    font-weight: 600
-}
-
-.plan-addon em {
-    color: #7d7871;
-    flex-basis: 100%;
-    font-size: clamp(10.5px, .82vw, 12px);
-    font-style: normal;
-    line-height: 1.7
-}
-
-/* --- FAQ。閉じているぶんには背が伸びない --- */
-.faq-list {
-    border-top: 1px solid #d5d0c8;
-    margin: clamp(20px, 2vw, 32px) 0 0
-}
-
-.faq-list details {
-    border-bottom: 1px solid #d5d0c8
-}
-
-.faq-list summary {
-    cursor: pointer;
-    align-items: baseline;
-    gap: clamp(9px, 1vw, 15px);
-    padding: clamp(13px, 1.3vw, 20px) 0;
-    list-style: none;
-    display: flex
-}
-
-.faq-list summary::-webkit-details-marker {
-    display: none
-}
-
-.faq-list summary small {
-    color: var(--coral);
-    flex-shrink: 0;
-    letter-spacing: .08em;
-    font: 700 clamp(9px, .74vw, 11px)/1.6 Arial, sans-serif
-}
-
-.faq-list summary strong {
-    color: #0a0a09;
-    flex: 1;
-    font-size: clamp(12.5px, 1.02vw, 15px);
-    font-weight: 600;
-    line-height: 1.6
-}
-
-.faq-list summary i {
-    color: var(--coral);
-    flex-shrink: 0;
-    font-style: normal;
-    font-size: clamp(12px, .95vw, 14px);
-    transition: rotate .28s cubic-bezier(.2, .8, .2, 1)
-}
-
-.faq-list details[open] summary i {
-    rotate: 45deg
-}
-
-.faq-list details p {
-    color: #56534e;
-    margin: 0 0 clamp(14px, 1.4vw, 21px);
-    padding-left: calc(clamp(9px, 1vw, 15px) + 2.4em);
-    font-size: clamp(11.5px, .92vw, 13.5px);
-    line-height: 1.95
-}
-
-/* --- 09 フッター --- */
-.site-foot {
-    background: var(--charcoal);
-    padding: clamp(72px, 8.5vw, 138px) 0 clamp(30px, 3vw, 48px)
-}
-
-.foot-title {
-    color: #fff;
-    letter-spacing: -.03em;
-    margin: clamp(20px, 2vw, 32px) 0 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(26px, 3.6vw, 54px);
-    font-weight: 600;
-    line-height: 1.42
-}
-
-.foot-title small {
-    color: #ffffff8f;
-    letter-spacing: .01em;
-    margin: 0 0 clamp(12px, 1.2vw, 18px);
-    font-size: clamp(11.5px, .92vw, 13.5px);
-    font-weight: 400;
-    display: block
-}
-
-.foot-lead {
-    color: #ffffffc4;
-    margin: clamp(18px, 1.8vw, 28px) 0 0;
-    font-size: clamp(12.5px, 1.02vw, 15px);
-    line-height: 1.95
-}
-
-.foot-cta {
-    color: var(--charcoal);
-    background: #fff;
-    border-radius: 8px;
-    justify-content: space-between;
-    align-items: center;
-    gap: clamp(24px, 3vw, 56px);
-    width: max-content;
-    min-height: clamp(52px, 4.6vw, 68px);
-    margin: clamp(26px, 2.8vw, 44px) 0 0;
-    padding: 0 clamp(22px, 2.2vw, 34px);
-    font-size: clamp(13.5px, 1.08vw, 16px);
-    font-weight: 700;
-    text-decoration: none;
-    display: flex;
-    transition: background .22s ease, color .22s ease
-}
-
-/* 地が墨なので、反転先はコーラル */
-.foot-cta:hover {
-    color: #fff;
-    background: var(--coral)
-}
-
-.foot-bottom {
-    border-top: 1px solid #ffffff26;
-    align-items: baseline;
-    gap: clamp(10px, 1.4vw, 22px);
-    margin: clamp(48px, 5.5vw, 92px) 0 0;
-    padding-top: clamp(18px, 1.8vw, 28px);
-    display: flex;
-    flex-wrap: wrap
-}
-
-.foot-brand {
-    color: #fff;
-    letter-spacing: -.045em;
-    font-family: Didot, "Bodoni 72", Times New Roman, serif;
-    font-size: clamp(19px, 1.7vw, 26px);
-    font-weight: 500;
-    line-height: 1;
-    text-decoration: none
-}
-
-.foot-brand sup {
-    vertical-align: baseline;
-    margin-left: .06em;
-    font-size: .62em;
-    position: relative;
-    top: -.62em
-}
-
-.foot-bottom p {
-    color: #ffffff8f;
-    letter-spacing: .16em;
-    flex: 1;
-    margin: 0;
-    font: 700 clamp(8.5px, .7vw, 10px)/1 Arial, sans-serif
-}
-
-.foot-bottom small {
-    color: #ffffff70;
-    font-size: clamp(10px, .8vw, 11.5px);
-    line-height: 1.9
-}
-
-.foot-bottom small a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid #ffffff40;
-    transition: color .2s ease, border-color .2s ease
-}
-
-.foot-bottom small a:hover {
-    color: #fff;
-    border-color: #fff
-}
-
-@media (max-width: 700px) {
-    .plan {
-        padding: 60px 0
-    }
-
-    /* 横に置けないので縦。そのぶん行の間を詰める */
-    .plan-split {
-        grid-template-columns: 1fr;
-        gap: 46px
-    }
-
-    .plan-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px
-    }
-
-    .plan-row__nums {
-        text-align: left;
-        gap: 24px
-    }
-
-    .site-foot {
-        padding: 60px 0 26px
-    }
-
-    .foot-title {
-        font-size: 25px
-    }
-
-    .foot-cta {
-        justify-content: center;
-        width: 100%
-    }
-
-    .foot-bottom {
-        gap: 8px
-    }
-
-    .foot-bottom p {
-        flex: none;
-        width: 100%
-    }
-}
-
-/* ============================================================
    05 表現ショールーム（2026-08-26）
 
    v3 `#expression` の作例35件・分類・骨格を利用。
@@ -2201,10 +1803,10 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 /* ============================================================
    06 成果にこだわる（設計図オービット）（2026-08-26）
 
-   v3 `#strategy` をそのまま利用。**描画は `assets/bim.53f3a41f.js`（無改造でコピー）**。
+   v3 `#strategy` をそのまま利用。**描画は `assets/bim.4600898c.js`（無改造でコピー）**。
    Canvas 2Dの自前平行投影で、完成した採用サイトが4枚の設計シートに分解されていく。
 
-   🔴 **節を画面より十分高くすること。** `bim.53f3a41f.js` は
+   🔴 **節を画面より十分高くすること。** `bim.4600898c.js` は
       `section.offsetHeight > innerHeight * 1.25` でスクロール送りかどうかを判断し、
       満たさないと「一度だけ組み上げて終わり」に落ちる。
    ⚠️ 確認用に `#bim=0.45` をURLに付けると、その進行度で固定描画できる
@@ -2301,7 +1903,7 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 
 @media (max-width: 700px) {
     /* 🔴 SPは高さを持たせない。持たせると図だけで3画面ぶんになる。
-       bim.53f3a41f.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
+       bim.4600898c.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
     .bim-transition {
         height: auto;
         min-height: 0
@@ -2365,7 +1967,8 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 .exp-body,
 .sw-lead,
 .col-lead,
-.plan-row__head p,
+.plan-note,
+.faq-list details p span,
 .worries-list li,
 .solve-title,
 .exp-title,
@@ -2376,7 +1979,472 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     word-break: auto-phrase
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.53f3a41f.js が load 後にDOMを足す） --- */
+/* ============================================================
+   06 PRICE / FAQ ＋ 07 LET'S TALK（2026-08-27）
+
+   社長のカンプ（GPT Imageで生成）を実装したもの。**高さは指定値**:
+   06 = 400px / 07 = 546px（幅1440pxのとき）。
+   🔴 カンプに混ざっていた架空の情報は入れていない（社長承認）:
+      株式会社TILTO → 株式会社Savor Flow ／ 住所・電話は載せない ／
+      FAQ「成果が出なかった場合」は根拠が無いので承認済みの設問に差し替え ／
+      行き先の無い JOURNAL は置かない。
+   ============================================================ */
+.sr-only {
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden
+}
+
+/* 節番号（06 / PRICE / FAQ）。カンプは番号が大きく、下に分類が小さく入る */
+.sec-no {
+    margin: 0;
+    line-height: 1.35;
+    display: block
+}
+
+.sec-no b {
+    color: var(--charcoal);
+    letter-spacing: .02em;
+    font: 700 clamp(15px, 1.25vw, 19px)/1 Arial, sans-serif;
+    display: block
+}
+
+.sec-no span {
+    color: var(--charcoal);
+    letter-spacing: .1em;
+    margin-top: 5px;
+    font: 700 clamp(9px, .76vw, 11.5px)/1 Arial, sans-serif;
+    display: block
+}
+
+.sec-no--light b,
+.sec-no--light span {
+    color: #fff
+}
+
+/* --- 06 --- */
+.plan {
+    background: #f2f1ee;
+    justify-self: stretch;
+    width: auto;
+    /* 高さ400px（1440px幅のとき）。中身が増えたら伸びてよいので min-height */
+    /* 高さ400px（1440px幅）＝27.8vw。中身が増えたら伸びてよいので min-height。
+       ⚠️ 高さを決めているのはFAQ5行。数字を小さくしても縮まない */
+    min-height: 27.8vw;
+    padding: clamp(24px, 2.5vw, 38px) 0
+}
+
+.plan-inner {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+    gap: clamp(30px, 4vw, 72px);
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: grid
+}
+
+/* 🔴 数字が大きいので、列からはみ出さないよう閉じ込める。
+   `min-width: 0` だけでは足りず、`overflow: hidden` まで要る
+   （はみ出すと右のFAQ列に重なる。2026-08-27に踏んだ） */
+.plan-left {
+    min-width: 0;
+    overflow: hidden
+}
+
+/* 数字の2連。あいだに縦罫を引く（カンプどおり） */
+.plan-figs {
+    align-items: flex-end;
+    gap: clamp(16px, 2.1vw, 36px);
+    margin: clamp(14px, 1.6vw, 26px) 0 0;
+    display: flex;
+    flex-wrap: nowrap
+}
+
+.plan-figs > * {
+    min-width: 0
+}
+
+.pfig {
+    align-items: baseline;
+    gap: clamp(6px, .7vw, 12px);
+    display: flex
+}
+
+/* 「初期費用」側は左に縦罫。カンプでは数字の帯の高さいっぱいに伸びる */
+.pfig--init {
+    border-left: 1px solid #cfcbc4;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-left: clamp(20px, 2.6vw, 46px)
+}
+
+.pfig--init .pfig-num,
+.pfig--init .pfig-unit {
+    display: inline-block
+}
+
+.pfig-cap {
+    color: var(--charcoal);
+    letter-spacing: .04em;
+    flex-shrink: 0;
+    font-size: clamp(13px, 1.15vw, 17px);
+    font-weight: 700
+}
+
+.pfig-cap--top {
+    margin-bottom: clamp(4px, .5vw, 8px);
+    display: block
+}
+
+/* カンプの数字はゴシックの極太。明朝ではない */
+.pfig-num {
+    color: var(--charcoal);
+    letter-spacing: -.045em;
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-size: clamp(58px, 8.9vw, 128px);
+    font-weight: 700;
+    line-height: .82;
+    display: inline-block
+}
+
+.pfig-num--coral {
+    color: #e8261e
+}
+
+.pfig-unit {
+    color: var(--charcoal);
+    font-size: clamp(15px, 1.6vw, 24px);
+    font-weight: 700
+}
+
+.pfig-unit em {
+    color: var(--charcoal);
+    letter-spacing: .06em;
+    margin-top: 6px;
+    font: 700 clamp(10px, .95vw, 14px)/1 Arial, sans-serif;
+    font-style: normal;
+    display: block
+}
+
+.plan-note {
+    color: #6d6a64;
+    margin: clamp(14px, 1.6vw, 26px) 0 0;
+    font-size: clamp(10.5px, .87vw, 13px);
+    line-height: 1.75
+}
+
+/* --- FAQ（右列） --- */
+.faq-col {
+    min-width: 0
+}
+
+.faq-head {
+    color: var(--charcoal);
+    letter-spacing: .1em;
+    border-bottom: 1px solid #cfcbc4;
+    margin: 0;
+    padding-bottom: clamp(8px, .9vw, 13px);
+    font: 700 clamp(11px, .95vw, 14px)/1 Arial, sans-serif
+}
+
+.faq-list details {
+    border-bottom: 1px solid #dedad3
+}
+
+.faq-list summary {
+    cursor: pointer;
+    align-items: baseline;
+    gap: clamp(7px, .8vw, 12px);
+    padding: clamp(7px, .8vw, 12px) 0;
+    list-style: none;
+    display: flex
+}
+
+.faq-list summary::-webkit-details-marker {
+    display: none
+}
+
+.faq-list summary b {
+    color: var(--charcoal);
+    flex-shrink: 0;
+    font: 700 clamp(9.5px, .8vw, 12px)/1.7 Arial, sans-serif
+}
+
+.faq-list summary strong {
+    color: var(--charcoal);
+    flex: 1;
+    font-size: clamp(11px, .93vw, 14px);
+    font-weight: 700;
+    line-height: 1.7
+}
+
+/* ＋ と − は罫で描く（字形の差が出ないので揃う） */
+.faq-list summary i {
+    border-top: 1.5px solid var(--charcoal);
+    flex-shrink: 0;
+    width: 13px;
+    height: 1.5px;
+    margin-top: .55em;
+    position: relative
+}
+
+.faq-list summary i::after {
+    content: "";
+    background: var(--charcoal);
+    width: 1.5px;
+    height: 13px;
+    transition: opacity .2s ease;
+    position: absolute;
+    top: -7.5px;
+    left: 5.75px
+}
+
+.faq-list details[open] summary i::after {
+    opacity: 0
+}
+
+.faq-list details p {
+    align-items: baseline;
+    gap: clamp(7px, .8vw, 12px);
+    margin: 0 0 clamp(8px, .9vw, 13px);
+    display: flex
+}
+
+.faq-list details p b {
+    color: var(--charcoal);
+    flex-shrink: 0;
+    font: 700 clamp(9.5px, .8vw, 12px)/1.8 Arial, sans-serif
+}
+
+.faq-list details p span {
+    color: #4a4741;
+    flex: 1;
+    font-size: clamp(10.5px, .87vw, 13px);
+    line-height: 1.8
+}
+
+.faq-more {
+    color: #a09c95;
+    letter-spacing: .04em;
+    text-align: right;
+    margin: clamp(8px, .9vw, 13px) 0 0;
+    font: 400 clamp(10px, .82vw, 12.5px)/1 Arial, sans-serif
+}
+
+/* --- 07 LET'S TALK --- */
+.site-foot {
+    /* カンプの赤。ブランドのコーラルより深い */
+    background: #e8261e;
+    justify-self: stretch;
+    width: auto;
+    min-height: 37.9vw;
+    padding: clamp(28px, 3.05vw, 46px) 0 clamp(20px, 2.2vw, 34px);
+    display: flex;
+    flex-direction: column
+}
+
+.foot-inner {
+    flex-direction: column;
+    flex: 1;
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: flex
+}
+
+.foot-main {
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(24px, 3vw, 56px);
+    flex: 1;
+    margin: clamp(10px, 1.2vw, 20px) 0 0;
+    display: flex
+}
+
+.foot-title {
+    color: #fff;
+    letter-spacing: -.02em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(38px, 6.6vw, 96px);
+    font-weight: 600;
+    line-height: 1.28
+}
+
+/* 黒い箱のCTA。カンプは角丸なしの矩形 */
+.foot-cta {
+    color: #fff;
+    background: var(--charcoal);
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(30px, 4vw, 74px);
+    width: min(480px, 34vw);
+    min-height: clamp(78px, 9vw, 132px);
+    padding: 0 clamp(20px, 2.4vw, 38px);
+    font-size: clamp(13px, 1.15vw, 17px);
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    transition: background-color .22s ease, color .22s ease
+}
+
+.foot-cta span {
+    font-size: clamp(16px, 1.5vw, 22px);
+    font-weight: 400
+}
+
+.foot-cta:hover {
+    color: var(--charcoal);
+    background: #fff
+}
+
+.foot-bottom {
+    align-items: center;
+    gap: clamp(14px, 2vw, 34px);
+    margin: clamp(18px, 2.2vw, 36px) 0 0;
+    display: flex
+}
+
+.foot-brand {
+    color: #fff;
+    letter-spacing: -.045em;
+    flex-shrink: 0;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(24px, 2.3vw, 34px);
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none
+}
+
+.foot-brand sup {
+    vertical-align: baseline;
+    margin-left: .06em;
+    font-size: .62em;
+    position: relative;
+    top: -.62em
+}
+
+.foot-nav {
+    gap: clamp(12px, 1.7vw, 30px);
+    display: flex
+}
+
+.foot-nav a {
+    color: #fff;
+    letter-spacing: .06em;
+    text-decoration: none;
+    font: 700 clamp(9.5px, .82vw, 12.5px)/1 Arial, sans-serif;
+    transition: opacity .2s ease
+}
+
+.foot-nav a:hover {
+    opacity: .7
+}
+
+.foot-corp {
+    color: #ffffffdb;
+    flex-direction: column;
+    flex: 1;
+    gap: 3px;
+    margin-left: auto;
+    font-size: clamp(9.5px, .78vw, 11.5px);
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-end
+}
+
+.foot-corp b {
+    font-weight: 700
+}
+
+.foot-corp a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff59
+}
+
+.foot-corp a:hover {
+    border-color: #fff
+}
+
+.foot-copy {
+    color: #ffffffc4;
+    flex-shrink: 0;
+    font-size: clamp(9px, .74vw, 11px)
+}
+
+@media (max-width: 700px) {
+    .plan {
+        min-height: 0;
+        padding: 46px 0
+    }
+
+    .plan-inner {
+        grid-template-columns: 1fr;
+        gap: 38px;
+        width: calc(100% - 44px)
+    }
+
+    .plan-figs {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px
+    }
+
+    .pfig--init {
+        border-top: 1px solid #cfcbc4;
+        border-left: 0;
+        width: 100%;
+        padding: 20px 0 0
+    }
+
+    .pfig-num {
+        font-size: 82px
+    }
+
+    .site-foot {
+        min-height: 0;
+        padding: 46px 0 24px
+    }
+
+    .foot-inner {
+        width: calc(100% - 44px)
+    }
+
+    .foot-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 26px
+    }
+
+    .foot-title {
+        font-size: 40px
+    }
+
+    .foot-cta {
+        justify-content: space-between;
+        width: 100%;
+        min-height: 66px
+    }
+
+    .foot-bottom {
+        flex-wrap: wrap;
+        gap: 12px
+    }
+
+    .foot-corp {
+        align-items: flex-start;
+        flex-basis: 100%;
+        margin-left: 0
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.4600898c.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
