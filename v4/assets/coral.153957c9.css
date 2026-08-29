@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.304d7b6b.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.153957c9.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.304d7b6b.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.153957c9.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.304d7b6b.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.153957c9.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -2177,7 +2177,142 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.304d7b6b.js が load 後にDOMを足す） --- */
+/* ============================================================
+   06 成果にこだわる（設計図オービット）（2026-08-26）
+
+   v3 `#strategy` をそのまま利用。**描画は `assets/bim.153957c9.js`（無改造でコピー）**。
+   Canvas 2Dの自前平行投影で、完成した採用サイトが4枚の設計シートに分解されていく。
+
+   🔴 **節を画面より十分高くすること。** `bim.153957c9.js` は
+      `section.offsetHeight > innerHeight * 1.25` でスクロール送りかどうかを判断し、
+      満たさないと「一度だけ組み上げて終わり」に落ちる。
+   ⚠️ 確認用に `#bim=0.45` をURLに付けると、その進行度で固定描画できる
+      （ヘッドレスはスクロール位置を持てないので、これで撮る）。
+   ============================================================ */
+.bim-transition {
+    background: #fdfcf9;
+    border-top: 1px solid #d5d0c8;
+    border-bottom: 1px solid #d5d0c8;
+    justify-self: stretch;
+    width: 100%;
+    height: 320vh;
+    min-height: 2100px;
+    position: relative
+}
+
+.bim-sticky {
+    /* 上は固定ヘッダーが無いので、v3より詰めてよい */
+    flex-direction: column;
+    height: 100vh;
+    min-height: 560px;
+    padding: clamp(64px, 8vh, 96px) 5vw clamp(16px, 2.4vh, 26px);
+    display: flex;
+    position: sticky;
+    top: 0;
+    overflow: hidden
+}
+
+.bim-head {
+    z-index: 2;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 26px;
+    display: flex;
+    position: relative
+}
+
+.bim-head small {
+    color: var(--coral);
+    letter-spacing: .2em;
+    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif
+}
+
+.bim-head h2 {
+    color: #1c1a17;
+    letter-spacing: .01em;
+    margin: clamp(8px, 1.4vh, 14px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(24px, 2.7vw, 42px);
+    font-weight: 600;
+    line-height: 1.45
+}
+
+.bim-lead {
+    color: #5c554b;
+    letter-spacing: .04em;
+    text-align: right;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, .88vw, 13px);
+    line-height: 2
+}
+
+/* 図とヘッダーのあいだの余白を作るだけの器。canvasは sticky 全面に広がる
+   （図がヘッダーの裏まで届くのが v3 の意図） */
+.bim-stage {
+    flex: 1;
+    min-height: 0;
+    margin-top: clamp(6px, 1.4vh, 14px);
+    position: static
+}
+
+/* トレペの方眼。線はCanvas、面はここ */
+.bim-stage::before {
+    content: "";
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, #1d1b1809 0 1px, #0000 1px 64px),
+                repeating-linear-gradient(90deg, #1d1b1809 0 1px, #0000 1px 64px);
+    position: absolute;
+    inset: 0
+}
+
+.bim-canvas {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0
+}
+
+@media (max-width: 700px) {
+    /* 🔴 SPは高さを持たせない。持たせると図だけで3画面ぶんになる。
+       bim.153957c9.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
+    .bim-transition {
+        height: auto;
+        min-height: 0
+    }
+
+    .bim-sticky {
+        height: auto;
+        min-height: 0;
+        padding: 58px 22px 26px;
+        position: relative;
+        overflow: visible
+    }
+
+    .bim-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px
+    }
+
+    .bim-head h2 {
+        font-size: 23px
+    }
+
+    .bim-lead {
+        text-align: left
+    }
+
+    .bim-stage {
+        flex: none;
+        height: 100vw;
+        max-height: 470px;
+        margin-top: 12px
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.153957c9.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
