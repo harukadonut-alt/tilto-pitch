@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.4600898c.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.4600898c.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d0b5c1ee.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d0b5c1ee.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -1150,72 +1150,49 @@ function x() {
         className: `about`,
         "aria-labelledby": `about-title`,
         children: (0, i.jsxs)(`div`, {
-            className: `sec-inner`,
+            className: `about-inner`,
             children: [(0, i.jsxs)(`p`, {
-                className: `sec-label`,
-                children: [(0, i.jsx)(`i`, {
-                    className: `sec-dash`,
-                    "aria-hidden": `true`
-                }), `02 / ABOUT TILTO°`]
-            }), (0, i.jsxs)(`h2`, {
-                id: `about-title`,
-                className: `about-title`,
-                children: [`Tilto°は、採用サイトの`, (0, i.jsx)(`br`, {}), `「持ち方」を変えるサービスです。`]
+                className: `sec-no`,
+                children: [(0, i.jsx)(`b`, { children: `01` }),
+                    (0, i.jsx)(`span`, { children: `ABOUT TILTO°` })]
+            }), (0, i.jsx)(`p`, {
+                className: `about-rail`, "aria-hidden": `true`, children: `TILTO°`
             }), (0, i.jsxs)(`div`, {
-                className: `about-body`,
-                children: [(0, i.jsxs)(`p`, {
-                    children: [`Tilto°は、採用マーケティングを行う`, (0, i.jsx)(`a`, {
-                        className: `about-link`,
-                        href: `https://savorflow.co.jp/`,
-                        target: `_blank`,
-                        rel: `noopener`,
-                        children: `株式会社Savor Flow`
-                    }), `が提供する、新しい採用ブランディングサービスです。`]
+                className: `about-main`,
+                children: [(0, i.jsxs)(`h2`, {
+                    id: `about-title`, className: `about-title`,
+                    children: [(0, i.jsx)(`span`, { className: `at-1`, children: `つくる。` }),
+                        (0, i.jsx)(`span`, { className: `at-2`, children: `だけじゃない。` }),
+                        (0, i.jsx)(`br`, {}),
+                        (0, i.jsx)(`span`, { className: `at-3`, children: `採用サイトを、持ち、育てる。` })]
                 }), (0, i.jsx)(`p`, {
-                    children: `従来の採用サイトが抱えていた「高い」「時間がかかる」「成果につながるか分からない」という課題を、AIを制作プロセスに取り入れることで解消。`
-                }), (0, i.jsx)(`p`, {
-                    children: `経験豊富な採用コンサルタントとデザイナーが伴走し、企業ごとの特色や強みを活かしたオリジナルの採用サイトを、月額27,000円（税別）から制作・運用します。`
+                    className: `about-lead`,
+                    children: `公開して終わりにしない。採用の変化とともに、更新し、改善しつづける。`
                 })]
+            }), (0, i.jsx)(`ul`, {
+                className: `about-specs`,
+                children: [(0, i.jsxs)(`li`, { children: [(0, i.jsx)(`b`, { children: `MONTHLY` }), (0, i.jsx)(`span`, { children: `¥27,000` })] }, 0), (0, i.jsxs)(`li`, { children: [(0, i.jsx)(`b`, { children: `INITIAL COST` }), (0, i.jsx)(`span`, { children: `¥0` })] }, 1), (0, i.jsxs)(`li`, { children: [(0, i.jsx)(`b`, { children: `CONTINUOUS UPDATE` })] }, 2), (0, i.jsxs)(`li`, { children: [(0, i.jsx)(`b`, { children: `BUILD / UPDATE / IMPROVE` })] }, 3)]
             })]
         })
-    }), (0, i.jsxs)(`section`, {
+    }), (0, i.jsx)(`section`, {
         id: `worries`,
         className: `worries`,
         "aria-labelledby": `worries-title`,
-        children: [(0, i.jsx)(`div`, {
-            className: `worries-dark`,
-            children: (0, i.jsxs)(`div`, {
-                className: `sec-inner`,
-                children: [(0, i.jsxs)(`p`, {
-                    className: `sec-label sec-label--light`,
-                    children: [(0, i.jsx)(`i`, {
-                        className: `sec-dash`,
-                        "aria-hidden": `true`
-                    }), `03 / WORRIES`]
-                }), (0, i.jsx)(`h2`, {
-                    id: `worries-title`,
-                    className: `worries-title`,
-                    children: `採用サイトは、ハードルが高い。`
-                }), (0, i.jsx)(`ul`, {
-                    className: `worries-list`,
-                    children: [(0, i.jsx)(`li`, { children: `採用サイトに何十万円、何百万円もかけられない` }, 0), (0, i.jsx)(`li`, { children: `制作会社に頼むと完成まで何ヶ月もかかる` }, 1), (0, i.jsx)(`li`, { children: `どんなデザインにすればいいのか分からない` }, 2), (0, i.jsx)(`li`, { children: `せっかく作っても、本当に応募が増えるのか分からない` }, 3)]
-                })]
-            })
-        }), (0, i.jsx)(`div`, {
-            className: `worries-light`,
-            children: (0, i.jsxs)(`div`, {
-                className: `sec-inner`,
-                children: [(0, i.jsx)(`p`, {
-                    className: `worries-bridge`,
-                    children: (0, i.jsx)(`span`, {
-                        children: `Tilto°なら`
-                    })
-                }), (0, i.jsx)(`ol`, {
-                    className: `solve-list`,
-                    children: [(0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `01` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `オリジナルデザイン` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `自社の特色・強みを活かしたデザインを制作` })] }, 0), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `02` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `月額27,000円〜` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `初期投資を抑えて始められる` })] }, 1), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `03` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `最短1週間でご提案` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `30分程度のお打ち合わせから` })] }, 2), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `04` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `採用のプロが伴走` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `採用ブランディング・マーケティングの視点から設計` })] }, 3)]
-                })]
-            })
-        })]
+        children: (0, i.jsxs)(`div`, {
+            className: `worries-inner`,
+            children: [(0, i.jsxs)(`p`, {
+                className: `sec-no sec-no--light`,
+                children: [(0, i.jsx)(`b`, { children: `02` }),
+                    (0, i.jsx)(`span`, { children: `PROBLEMS WE SOLVE` })]
+            }), (0, i.jsx)(`h2`, {
+                id: `worries-title`, className: `sr-only`, children: `私たちが解決するお悩み`
+            }), (0, i.jsx)(`ul`, {
+                className: `prob-row`,
+                children: [(0, i.jsxs)(`li`, { className: `prob prob--1`, children: [(0, i.jsx)(`b`, { className: `prob-word`, children: `高い` }), (0, i.jsx)(`span`, { className: `prob-line`, "aria-hidden": `true` }), (0, i.jsxs)(`span`, { className: `prob-note`, children: [`制作費が大きく、`, (0, i.jsx)(`br`, {}, `b1`), `踏み出せない。`] }), (0, i.jsxs)(`span`, { className: `prob-tag`, children: [`MONTHLY　¥27,000`, (0, i.jsx)(`br`, {}, `b1`), `INITIAL　¥0`] })] }, 0), (0, i.jsxs)(`li`, { className: `prob prob--2`, children: [(0, i.jsx)(`b`, { className: `prob-word`, children: `遅い` }), (0, i.jsx)(`span`, { className: `prob-line`, "aria-hidden": `true` }), (0, i.jsxs)(`span`, { className: `prob-note`, children: [`公開までに`, (0, i.jsx)(`br`, {}, `b1`), `時間がかかりすぎる。`] }), (0, i.jsxs)(`span`, { className: `prob-tag`, children: [`FAST`, (0, i.jsx)(`br`, {}, `b1`), `PRODUCTION`] })] }, 1), (0, i.jsxs)(`li`, { className: `prob prob--3`, children: [(0, i.jsx)(`b`, { className: `prob-word`, children: `成果が見えない` }), (0, i.jsx)(`span`, { className: `prob-line`, "aria-hidden": `true` }), (0, i.jsxs)(`span`, { className: `prob-note`, children: [`つくっても、`, (0, i.jsx)(`br`, {}, `b1`), `その先が見えない。`] }), (0, i.jsxs)(`span`, { className: `prob-tag`, children: [`UPDATE /`, (0, i.jsx)(`br`, {}, `b1`), `IMPROVE`] })] }, 2)]
+            }), (0, i.jsx)(`p`, {
+                className: `prob-closing`, children: `採用サイトの常識を、更新する。`
+            })]
+        })
     }), (0, i.jsxs)(`section`, {
         id: `experience`,
         className: `experience`,
