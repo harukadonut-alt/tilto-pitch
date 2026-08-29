@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.816e2f0f.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.304d7b6b.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.816e2f0f.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.304d7b6b.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.816e2f0f.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.304d7b6b.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -1890,7 +1890,294 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.816e2f0f.js が load 後にDOMを足す） --- */
+/* ============================================================
+   05 表現ショールーム（2026-08-26）
+
+   v3 `#expression` の作例35件・分類・骨格を利用。
+   🔴 **一覧＝アトラス1枚（663KB）/ 拡大＝押した1枚だけ個別に取りに行く。**
+      個別35枚をそのまま並べると初回に3.95MB読む。押さない人は1枚も余計に読まない。
+   ⚠️ アトラスは `background-position` で切り出す。カードは `<button>` のままなので、
+      **クリック・hover・キーボード操作は普通のHTMLと同じ**。
+   ⚠️ 6列6行なので `background-size: 600% 600%`、位置は `k/(6-1) × 100%` 刻み。
+      列数を変えたらこの2つを両方直す（`docs/build-showroom-atlas.py` が値を出す）。
+   ============================================================ */
+.showcase {
+    background: #f4f1ec;
+    justify-self: stretch;
+    width: 100%;
+    padding: clamp(78px, 9vw, 150px) 0 clamp(84px, 9.5vw, 158px);
+    overflow: hidden
+}
+
+.sw-lead {
+    max-width: 40em
+}
+
+/* --- 分類の切り替え --- */
+.sw-filters {
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: clamp(24px, 2.6vw, 40px) 0 0;
+    display: flex
+}
+
+.sw-filters button {
+    color: #56534e;
+    cursor: pointer;
+    background: #0000;
+    border: 1px solid #d5d0c8;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: clamp(11px, .86vw, 13px);
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease
+}
+
+.sw-filters button:hover {
+    border-color: var(--coral);
+    color: var(--coral)
+}
+
+.sw-filters button[aria-pressed="true"] {
+    color: #fff;
+    background: var(--charcoal);
+    border-color: var(--charcoal)
+}
+
+/* --- 流れる2レーン --- */
+.sw-marquee {
+    gap: clamp(26px, 3vw, 46px);
+    margin: clamp(30px, 3.4vw, 54px) 0 0;
+    display: grid
+}
+
+.sw-lane {
+    overflow: hidden
+}
+
+.sw-track {
+    --sw-gap: clamp(18px, 1.8vw, 30px);
+    align-items: flex-start;
+    gap: var(--sw-gap);
+    width: max-content;
+    display: flex;
+    animation: swLeft 62s linear infinite
+}
+
+.sw-lane--2 .sw-track {
+    animation-name: swRight;
+    animation-duration: 74s
+}
+
+.sw-group {
+    gap: var(--sw-gap);
+    flex: none;
+    display: flex
+}
+
+@keyframes swLeft {
+      0% { translate: 0 }
+    100% { translate: calc(-50% - var(--sw-gap) / 2) }
+}
+
+@keyframes swRight {
+      0% { translate: calc(-50% - var(--sw-gap) / 2) }
+    100% { translate: 0 }
+}
+
+/* どれかに触れているあいだは止める。読ませたいので */
+.sw-lane:hover .sw-track,
+.sw-lane:focus-within .sw-track {
+    animation-play-state: paused
+}
+
+/* --- 1件のカード --- */
+.sw-item {
+    text-align: left;
+    cursor: pointer;
+    background: #0000;
+    border: 0;
+    flex: none;
+    flex-direction: column;
+    gap: 9px;
+    width: var(--sw-w, clamp(300px, 30vw, 460px));
+    padding: 0;
+    display: flex;
+    rotate: var(--sw-rot, 0deg);
+    transition: opacity .28s ease, translate .4s cubic-bezier(.2, .8, .2, 1)
+}
+
+.sw-item--wide    { --sw-w: clamp(360px, 36vw, 560px); --sw-rot: -.9deg }
+.sw-item--compact { --sw-w: clamp(260px, 24vw, 370px); --sw-rot: 1.05deg }
+.sw-item--tall    { --sw-w: clamp(290px, 27vw, 410px); --sw-rot: -1.35deg }
+.sw-item--medium  { --sw-w: clamp(320px, 30vw, 450px); --sw-rot: .65deg }
+
+.sw-meta {
+    color: #a49c92;
+    letter-spacing: .12em;
+    align-items: baseline;
+    gap: 9px;
+    font: 700 clamp(8.5px, .7vw, 10px)/1 Arial, sans-serif;
+    display: flex
+}
+
+.sw-meta b {
+    color: #56534e;
+    letter-spacing: .04em;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+    font-size: clamp(10px, .8vw, 11.5px)
+}
+
+/* 🔴 ここがアトラスの切り出し。要素は普通の span なので当たり判定は変わらない */
+.sw-visual {
+    aspect-ratio: 3/2;
+    background-image: url("../images/showroom-atlas.webp");
+    background-size: 600% 600%;
+    background-repeat: no-repeat;
+    border: 1px solid #dbd5cc;
+    width: 100%;
+    display: block;
+    box-shadow: 6px 9px 20px #32271a1f;
+    transition: box-shadow .4s ease, filter .4s ease
+}
+
+.sw-item:hover .sw-visual,
+.sw-item:focus-visible .sw-visual {
+    filter: saturate(1.06);
+    box-shadow: 10px 16px 32px #32271a2e
+}
+
+.sw-item:hover,
+.sw-item:focus-visible {
+    translate: 0 -6px
+}
+
+.sw-view {
+    color: #a49c92;
+    align-items: center;
+    gap: 5px;
+    font-size: clamp(10px, .78vw, 11.5px);
+    display: flex;
+    transition: color .25s ease
+}
+
+.sw-view i {
+    color: var(--coral);
+    font-style: normal
+}
+
+.sw-item:hover .sw-view {
+    color: var(--coral)
+}
+
+/* 分類で絞ったとき。消さずに薄くして流れを保つ手もあるが、
+   数が多いと読めないので出し入れする */
+.sw-item[data-off="1"] {
+    display: none
+}
+
+/* --- 拡大（ライトボックス）。押した1枚だけを取りに行く --- */
+.sw-box {
+    z-index: 20000;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    background: #0f0d0ce8;
+    place-items: center;
+    padding: clamp(16px, 4vw, 56px);
+    display: grid;
+    position: fixed;
+    inset: 0;
+    animation: swFade .24s ease both
+}
+
+@keyframes swFade {
+      0% { opacity: 0 }
+    100% { opacity: 1 }
+}
+
+.sw-box__inner {
+    width: min(1220px, 94vw);
+    position: relative
+}
+
+.sw-box__inner img {
+    object-fit: contain;
+    background: #0d0c0b;
+    width: 100%;
+    max-height: calc(92vh - 48px);
+    display: block;
+    box-shadow: 0 30px 90px #00000080
+}
+
+.sw-box__meta {
+    color: #f2ece3;
+    letter-spacing: .14em;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    height: 34px;
+    font: 700 9px/1 Arial, sans-serif;
+    display: flex
+}
+
+.sw-box__meta b {
+    color: var(--coral)
+}
+
+.sw-box__meta em {
+    color: #ffffff8a;
+    letter-spacing: .02em;
+    flex: 1;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: right
+}
+
+.sw-box__close {
+    color: #1c1a18;
+    letter-spacing: .12em;
+    cursor: pointer;
+    background: #f8f3eb;
+    border: 0;
+    padding: 10px 13px;
+    font: 700 9px/1 Arial, sans-serif;
+    position: absolute;
+    top: 44px;
+    right: 8px
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sw-track {
+        animation: none
+    }
+
+    .sw-box {
+        animation: none
+    }
+}
+
+@media (max-width: 700px) {
+    .showcase {
+        padding: 62px 0 66px
+    }
+
+    .sw-item--wide    { --sw-w: 76vw }
+    .sw-item--compact { --sw-w: 60vw }
+    .sw-item--tall    { --sw-w: 64vw }
+    .sw-item--medium  { --sw-w: 70vw }
+
+    .sw-filters {
+        gap: 6px
+    }
+
+    .sw-box__close {
+        top: 40px;
+        right: 6px
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.304d7b6b.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
