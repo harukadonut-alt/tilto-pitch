@@ -1,7 +1,7 @@
 /* SPのメニュー（2026-08-24）。700px以下でだけ動く。
 
    🔴 DOMは load 後に足す。このページは React が hydrate するので、
-      SSRのHTMLに書き足すと消される恐れがある（cursor.79abca20.js と同じ方針）。
+      SSRのHTMLに書き足すと消される恐れがある（cursor.816e2f0f.js と同じ方針）。
    🔴 既存の `.site-nav` は触らない。中の「カタログ」ボタンは React が
       onClick を持っている（帯の停止）ので、動かすと機能が壊れる。
       メニューは別物として新しく作り、SPでは元のナビをCSSで隠す。
@@ -15,6 +15,7 @@
     ['サービス概要', '#about'],
     ['カタログ', '.ribbon-scene'],
     ['成果にこだわる', '#worries'],
+    ['料金・FAQ', '#pricing'],
   ];
 
   function start() {

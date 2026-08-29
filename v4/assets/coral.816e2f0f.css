@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.79abca20.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.816e2f0f.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.79abca20.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.816e2f0f.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.79abca20.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.816e2f0f.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -1492,7 +1492,405 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.79abca20.js が load 後にDOMを足す） --- */
+/* ============================================================
+   07 料金 + 08 FAQ（1つの節） / 09 フッター（2026-08-26）
+
+   社長の指示「高さを取らずコンパクトに」。
+   🔴 いちばん効くのは **PCで料金とFAQを横並びにする**こと。
+      縦に積むと2画面ぶんになる。横に置けば1画面に収まる。
+   ⚠️ 料金は「大きなカード」ではなく**行**にする。カードは余白で背が伸びる。
+   ============================================================ */
+.plan,
+.site-foot {
+    justify-self: stretch;
+    width: 100%
+}
+
+.plan {
+    background: var(--paper);
+    padding: clamp(72px, 8.5vw, 140px) 0 clamp(72px, 8.5vw, 140px)
+}
+
+.plan-split {
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+    gap: clamp(38px, 5vw, 86px);
+    display: grid
+}
+
+/* 🔴 グリッドの列は既定が `min-width: auto` ＝ 中身より狭くならない。
+   これがあると長い札や長い行が列を押し広げて、画面からはみ出す。
+   `min-width: 0` にして初めて、中で折り返す */
+.plan-col,
+.faq-col {
+    min-width: 0
+}
+
+.col-title {
+    color: #0a0a09;
+    letter-spacing: -.03em;
+    margin: clamp(18px, 1.8vw, 28px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(21px, 2.5vw, 36px);
+    font-weight: 600;
+    line-height: 1.5
+}
+
+.col-lead {
+    color: #56534e;
+    margin: clamp(10px, 1vw, 16px) 0 0;
+    font-size: clamp(12.5px, 1.02vw, 15px);
+    line-height: 1.9
+}
+
+/* --- プラン2つ。行で組む --- */
+.plan-rows {
+    border-top: 1px solid #d5d0c8;
+    margin: clamp(20px, 2vw, 32px) 0 0
+}
+
+.plan-row {
+    border-bottom: 1px solid #d5d0c8;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: clamp(14px, 1.6vw, 28px);
+    padding: clamp(15px, 1.5vw, 24px) 0;
+    display: flex
+}
+
+.plan-row__head small {
+    color: var(--coral);
+    letter-spacing: .12em;
+    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif;
+    display: block
+}
+
+.plan-row__head h3 {
+    color: #0a0a09;
+    letter-spacing: -.02em;
+    margin: 7px 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(15px, 1.35vw, 20px);
+    font-weight: 600
+}
+
+.plan-row__head p {
+    color: #7d7871;
+    max-width: 24em;
+    margin: 5px 0 0;
+    font-size: clamp(11px, .86vw, 12.5px);
+    line-height: 1.7
+}
+
+.plan-row__nums {
+    text-align: right;
+    flex-shrink: 0;
+    gap: clamp(12px, 1.4vw, 24px);
+    margin: 0;
+    display: flex
+}
+
+.plan-row__nums dt {
+    color: #a49c92;
+    letter-spacing: .1em;
+    margin: 0 0 3px;
+    font: 700 clamp(8.5px, .68vw, 10px)/1 Arial, sans-serif
+}
+
+.plan-row__nums dd {
+    color: #0a0a09;
+    white-space: nowrap;
+    align-items: baseline;
+    gap: 2px;
+    margin: 0;
+    display: flex
+}
+
+.plan-row__nums strong {
+    letter-spacing: -.02em;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(19px, 1.95vw, 29px);
+    font-weight: 600
+}
+
+.plan-row__nums b {
+    font-size: clamp(10px, .82vw, 12px);
+    font-weight: 600
+}
+
+.plan-row__nums small {
+    color: #a49c92;
+    margin-left: 2px;
+    font-size: .86em
+}
+
+/* --- 共通条件。行を詰めて並べる --- */
+.plan-terms {
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: clamp(16px, 1.6vw, 24px) 0 0;
+    padding: 0;
+    display: flex;
+    list-style: none
+}
+
+.plan-terms li {
+    color: #56534e;
+    background: #efece7;
+    border-radius: 2px;
+    /* ⚠️ 既定では縮んで文字が切れる。縮ませずに次の行へ送る */
+    flex-shrink: 0;
+    max-width: 100%;
+    padding: 5px 9px;
+    font-size: clamp(10.5px, .82vw, 12px)
+}
+
+/* --- セクション追加。1行で言い切る --- */
+.plan-addon {
+    color: #56534e;
+    border-top: 1px solid #d5d0c8;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+    margin: clamp(16px, 1.6vw, 24px) 0 0;
+    padding-top: clamp(13px, 1.3vw, 20px);
+    font-size: clamp(11px, .86vw, 12.5px);
+    display: flex
+}
+
+.plan-addon b {
+    color: #0a0a09;
+    font-size: clamp(11.5px, .92vw, 13.5px)
+}
+
+.plan-addon strong {
+    color: #0a0a09;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(15px, 1.35vw, 20px);
+    font-weight: 600
+}
+
+.plan-addon em {
+    color: #7d7871;
+    flex-basis: 100%;
+    font-size: clamp(10.5px, .82vw, 12px);
+    font-style: normal;
+    line-height: 1.7
+}
+
+/* --- FAQ。閉じているぶんには背が伸びない --- */
+.faq-list {
+    border-top: 1px solid #d5d0c8;
+    margin: clamp(20px, 2vw, 32px) 0 0
+}
+
+.faq-list details {
+    border-bottom: 1px solid #d5d0c8
+}
+
+.faq-list summary {
+    cursor: pointer;
+    align-items: baseline;
+    gap: clamp(9px, 1vw, 15px);
+    padding: clamp(13px, 1.3vw, 20px) 0;
+    list-style: none;
+    display: flex
+}
+
+.faq-list summary::-webkit-details-marker {
+    display: none
+}
+
+.faq-list summary small {
+    color: var(--coral);
+    flex-shrink: 0;
+    letter-spacing: .08em;
+    font: 700 clamp(9px, .74vw, 11px)/1.6 Arial, sans-serif
+}
+
+.faq-list summary strong {
+    color: #0a0a09;
+    flex: 1;
+    font-size: clamp(12.5px, 1.02vw, 15px);
+    font-weight: 600;
+    line-height: 1.6
+}
+
+.faq-list summary i {
+    color: var(--coral);
+    flex-shrink: 0;
+    font-style: normal;
+    font-size: clamp(12px, .95vw, 14px);
+    transition: rotate .28s cubic-bezier(.2, .8, .2, 1)
+}
+
+.faq-list details[open] summary i {
+    rotate: 45deg
+}
+
+.faq-list details p {
+    color: #56534e;
+    margin: 0 0 clamp(14px, 1.4vw, 21px);
+    padding-left: calc(clamp(9px, 1vw, 15px) + 2.4em);
+    font-size: clamp(11.5px, .92vw, 13.5px);
+    line-height: 1.95
+}
+
+/* --- 09 フッター --- */
+.site-foot {
+    background: var(--charcoal);
+    padding: clamp(72px, 8.5vw, 138px) 0 clamp(30px, 3vw, 48px)
+}
+
+.foot-title {
+    color: #fff;
+    letter-spacing: -.03em;
+    margin: clamp(20px, 2vw, 32px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(26px, 3.6vw, 54px);
+    font-weight: 600;
+    line-height: 1.42
+}
+
+.foot-title small {
+    color: #ffffff8f;
+    letter-spacing: .01em;
+    margin: 0 0 clamp(12px, 1.2vw, 18px);
+    font-size: clamp(11.5px, .92vw, 13.5px);
+    font-weight: 400;
+    display: block
+}
+
+.foot-lead {
+    color: #ffffffc4;
+    margin: clamp(18px, 1.8vw, 28px) 0 0;
+    font-size: clamp(12.5px, 1.02vw, 15px);
+    line-height: 1.95
+}
+
+.foot-cta {
+    color: var(--charcoal);
+    background: #fff;
+    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(24px, 3vw, 56px);
+    width: max-content;
+    min-height: clamp(52px, 4.6vw, 68px);
+    margin: clamp(26px, 2.8vw, 44px) 0 0;
+    padding: 0 clamp(22px, 2.2vw, 34px);
+    font-size: clamp(13.5px, 1.08vw, 16px);
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    transition: background .22s ease, color .22s ease
+}
+
+/* 地が墨なので、反転先はコーラル */
+.foot-cta:hover {
+    color: #fff;
+    background: var(--coral)
+}
+
+.foot-bottom {
+    border-top: 1px solid #ffffff26;
+    align-items: baseline;
+    gap: clamp(10px, 1.4vw, 22px);
+    margin: clamp(48px, 5.5vw, 92px) 0 0;
+    padding-top: clamp(18px, 1.8vw, 28px);
+    display: flex;
+    flex-wrap: wrap
+}
+
+.foot-brand {
+    color: #fff;
+    letter-spacing: -.045em;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(19px, 1.7vw, 26px);
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none
+}
+
+.foot-brand sup {
+    vertical-align: baseline;
+    margin-left: .06em;
+    font-size: .62em;
+    position: relative;
+    top: -.62em
+}
+
+.foot-bottom p {
+    color: #ffffff8f;
+    letter-spacing: .16em;
+    flex: 1;
+    margin: 0;
+    font: 700 clamp(8.5px, .7vw, 10px)/1 Arial, sans-serif
+}
+
+.foot-bottom small {
+    color: #ffffff70;
+    font-size: clamp(10px, .8vw, 11.5px);
+    line-height: 1.9
+}
+
+.foot-bottom small a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff40;
+    transition: color .2s ease, border-color .2s ease
+}
+
+.foot-bottom small a:hover {
+    color: #fff;
+    border-color: #fff
+}
+
+@media (max-width: 700px) {
+    .plan {
+        padding: 60px 0
+    }
+
+    /* 横に置けないので縦。そのぶん行の間を詰める */
+    .plan-split {
+        grid-template-columns: 1fr;
+        gap: 46px
+    }
+
+    .plan-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px
+    }
+
+    .plan-row__nums {
+        text-align: left;
+        gap: 24px
+    }
+
+    .site-foot {
+        padding: 60px 0 26px
+    }
+
+    .foot-title {
+        font-size: 25px
+    }
+
+    .foot-cta {
+        justify-content: center;
+        width: 100%
+    }
+
+    .foot-bottom {
+        gap: 8px
+    }
+
+    .foot-bottom p {
+        flex: none;
+        width: 100%
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.816e2f0f.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
