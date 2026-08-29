@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3f04f52f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3f04f52f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.79abca20.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.79abca20.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -1215,6 +1215,41 @@ function x() {
                     children: [(0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `01` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `オリジナルデザイン` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `自社の特色・強みを活かしたデザインを制作` })] }, 0), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `02` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `月額27,000円〜` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `初期投資を抑えて始められる` })] }, 1), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `03` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `最短1週間でご提案` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `30分程度のお打ち合わせから` })] }, 2), (0, i.jsxs)(`li`, { className: `solve`, children: [(0, i.jsx)(`b`, { className: `solve-no`, "aria-hidden": `true`, children: `04` }), (0, i.jsx)(`h3`, { className: `solve-title`, children: `採用のプロが伴走` }), (0, i.jsx)(`p`, { className: `solve-body`, children: `採用ブランディング・マーケティングの視点から設計` })] }, 3)]
                 })]
             })
+        })]
+    }), (0, i.jsxs)(`section`, {
+        id: `experience`,
+        className: `experience`,
+        "aria-labelledby": `experience-title`,
+        children: [(0, i.jsx)(`div`, {
+            className: `exp-cloud`,
+            "aria-label": `採用サイトについての、まだ言葉になりきっていない考え`,
+            children: [(0, i.jsx)(`span`, { className: `exp-thought exp-thought--2`, style: { left: `6%`, top: `12%`, "--tilt": `-3deg` }, children: `若い人に届いてほしい` }, 0), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--2`, style: { left: `58%`, top: `6%`, "--tilt": `2deg` }, children: `ちゃんとした会社に見せたい` }, 1), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--3`, style: { left: `30%`, top: `24%`, "--tilt": `-1deg` }, children: `でも、堅くしたくない` }, 2), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--3`, style: { left: `84%`, top: `20%`, "--tilt": `3deg` }, children: `信頼感` }, 3), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--3`, style: { left: `14%`, top: `36%`, "--tilt": `-2deg` }, children: `温度` }, 4), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--2`, style: { left: `72%`, top: `38%`, "--tilt": `1deg` }, children: `社員の顔` }, 5), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--3`, style: { left: `3%`, top: `58%`, "--tilt": `2deg` }, children: `うちらしさって？` }, 6), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--2`, style: { left: `80%`, top: `56%`, "--tilt": `-2deg` }, children: `写真がいいかも` }, 7), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--1`, style: { left: `22%`, top: `72%`, "--tilt": `1deg` }, children: `仕事内容を伝えたい` }, 8), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--3`, style: { left: `62%`, top: `74%`, "--tilt": `-3deg` }, children: `少し、かっこよく` }, 9), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--2`, style: { left: `40%`, top: `88%`, "--tilt": `2deg` }, children: `親しみやすさも` }, 10), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--1`, style: { left: `6%`, top: `88%`, "--tilt": `-1deg` }, children: `まだ、ぼんやりしている` }, 11), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--1`, style: { left: `76%`, top: `90%`, "--tilt": `2deg` }, children: `言葉にできない` }, 12), (0, i.jsx)(`span`, { className: `exp-thought exp-thought--1`, style: { left: `46%`, top: `46%`, "--tilt": `-2deg` }, children: `採用を変えたい` }, 13)]
+        }), (0, i.jsxs)(`div`, {
+            className: `sec-inner exp-center`,
+            children: [(0, i.jsxs)(`p`, {
+                className: `sec-label`,
+                children: [(0, i.jsx)(`i`, {
+                    className: `sec-dash`,
+                    "aria-hidden": `true`
+                }), `04 / EXPERIENCE`]
+            }), (0, i.jsx)(`em`, {
+                className: `exp-step`,
+                children: `STEP 01｜お打ち合わせ`
+            }), (0, i.jsx)(`small`, {
+                className: `exp-en`,
+                children: `IT DOESN'T HAVE TO BE CLEAR YET.`
+            }), (0, i.jsxs)(`h2`, {
+                id: `experience-title`,
+                className: `exp-title`,
+                children: [(0, i.jsx)(`span`, {
+                    children: `その「なんとなく」から、`
+                }), (0, i.jsx)(`br`, {}), (0, i.jsx)(`em`, {
+                    children: `つくります。`
+                })]
+            }), (0, i.jsx)(`p`, {
+                className: `exp-body`,
+                children: `まだ輪郭がなくても大丈夫。漂う言葉から、その会社だけの表現を見つけます。`
+            })]
         })]
     })]
     })

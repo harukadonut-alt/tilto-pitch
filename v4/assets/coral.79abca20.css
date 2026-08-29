@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.3f04f52f.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.79abca20.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.3f04f52f.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.79abca20.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.3f04f52f.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.79abca20.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -1028,7 +1028,8 @@ body {
    ベンダーの `place-items: start center` の効果で、`display` を block にしても
    直らなかった。節は全幅で敷きたいので、**節の側で伸ばす**のが確実 */
 .about,
-.worries {
+.worries,
+.experience {
     justify-self: stretch;
     width: 100%
 }
@@ -1268,7 +1269,230 @@ body {
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.3f04f52f.js が load 後にDOMを足す） --- */
+/* ============================================================
+   04 体験「その『なんとなく』から、つくります。」（2026-08-26）
+
+   v3 `#process` のコピーと骨格を引き継ぐ。ただし**墨画像5枚 1.2MB は持ち込まない**
+   （配信量を976KBに保つため）。漂う言葉が中央へ寄って像を結ぶ、という体験だけ移す。
+
+   ⚠️ 進行の合図は **`<html>` のクラス**で持つ。節の要素に付けると、
+      FVの「カタログ」ボタンで React が再描画したときに消される
+      （React が className を管理しているため）。
+   ============================================================ */
+.experience {
+    background: var(--paper);
+    padding: clamp(96px, 12vw, 200px) 0 clamp(96px, 12vw, 200px);
+    position: relative;
+    overflow: hidden
+}
+
+/* --- 漂う言葉 --- */
+.exp-cloud {
+    pointer-events: none;
+    position: absolute;
+    inset: clamp(40px, 5vw, 90px) clamp(16px, 4vw, 90px);
+    /* ⚠️ 演出なしのときは14語が全部くっきり出て、中央の文と重なって読みにくい。
+       地の模様として薄く敷く。演出があるときは下で1に戻す */
+    opacity: .42;
+    transition: scale 1.15s cubic-bezier(.22, 1, .36, 1), opacity .9s ease
+}
+
+html.exp-anim.exp-in .exp-cloud {
+    opacity: 1
+}
+
+.exp-thought {
+    color: #b6afa6;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    position: absolute;
+    translate: -50% -50%;
+    rotate: var(--tilt);
+    /* 出るときは各語がばらばらに、寄るときは揃って。遅延は下で配る */
+    transition: opacity .9s ease, translate 1.15s cubic-bezier(.22, 1, .36, 1),
+                filter .9s ease, color .9s ease
+}
+
+.exp-thought--1 { font-size: clamp(11px, 1.05vw, 15px) }
+.exp-thought--2 { font-size: clamp(12px, 1.28vw, 19px) }
+.exp-thought--3 { font-size: clamp(13px, 1.55vw, 23px) }
+
+/* 🔴 隠すのは `html.exp-anim` が付いたときだけ。
+   付かない（JSが動かない／動きを減らす設定）ときは素で読める */
+html.exp-anim .exp-thought {
+    opacity: 0
+}
+
+/* ① 節が見えたら、ばらばらに浮かび上がる */
+html.exp-anim.exp-in .exp-thought {
+    opacity: 1
+}
+
+/* ② さらに読み進めると、中央へ寄って薄まる＝像を結ぶ手前 */
+html.exp-anim.exp-gather .exp-thought {
+    color: #d8d2ca;
+    translate: calc(-50% + (50% - 1px) * 0) calc(-50% + 0px);
+    opacity: .5;
+    filter: blur(1.5px)
+}
+
+/* 中央へ寄せるのは個別にやる（left/top が要素ごとに違うため、
+   共通の translate では寄らない）。scale で全体を縮めて中央に集める */
+html.exp-anim.exp-gather .exp-cloud {
+    scale: .72;
+    transition: scale 1.15s cubic-bezier(.22, 1, .36, 1)
+}
+
+/* 出の遅延を配る。14語がいっせいに出ると「点滅」に見える */
+.exp-thought:nth-child(1)  { transition-delay: .00s }
+.exp-thought:nth-child(2)  { transition-delay: .07s }
+.exp-thought:nth-child(3)  { transition-delay: .14s }
+.exp-thought:nth-child(4)  { transition-delay: .21s }
+.exp-thought:nth-child(5)  { transition-delay: .28s }
+.exp-thought:nth-child(6)  { transition-delay: .35s }
+.exp-thought:nth-child(7)  { transition-delay: .42s }
+.exp-thought:nth-child(8)  { transition-delay: .49s }
+.exp-thought:nth-child(9)  { transition-delay: .56s }
+.exp-thought:nth-child(10) { transition-delay: .63s }
+.exp-thought:nth-child(11) { transition-delay: .70s }
+.exp-thought:nth-child(12) { transition-delay: .77s }
+.exp-thought:nth-child(13) { transition-delay: .84s }
+.exp-thought:nth-child(14) { transition-delay: .91s }
+
+/* 寄せるときは遅延を消して、揃って動かす */
+html.exp-anim.exp-gather .exp-thought {
+    transition-delay: 0s
+}
+
+/* --- 中央のことば --- */
+.exp-center {
+    text-align: center;
+    position: relative;
+    z-index: 1
+}
+
+.exp-step {
+    color: var(--coral);
+    letter-spacing: .06em;
+    margin: clamp(22px, 2.2vw, 34px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, 1.1vw, 16px);
+    font-style: normal;
+    font-weight: 600;
+    display: block
+}
+
+.exp-en {
+    color: #a49c92;
+    letter-spacing: .18em;
+    margin: clamp(10px, 1vw, 15px) 0 0;
+    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif;
+    display: block
+}
+
+.exp-title {
+    color: #0a0a09;
+    letter-spacing: -.03em;
+    margin: clamp(20px, 2vw, 32px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(27px, 4.1vw, 62px);
+    font-weight: 600;
+    line-height: 1.5
+}
+
+.exp-title em {
+    color: var(--coral);
+    font-style: normal
+}
+
+/* 中央のことばは、言葉が寄ってから像を結ぶ */
+.exp-center .sec-label,
+.exp-step,
+.exp-en,
+.exp-title,
+.exp-body {
+    transition: opacity .8s ease, translate .8s cubic-bezier(.22, 1, .36, 1)
+}
+
+html.exp-anim .exp-center .sec-label,
+html.exp-anim .exp-step,
+html.exp-anim .exp-en,
+html.exp-anim .exp-title,
+html.exp-anim .exp-body {
+    opacity: 0;
+    translate: 0 14px
+}
+
+.exp-center .sec-label {
+    justify-content: center
+}
+
+html.exp-anim.exp-gather .exp-center .sec-label { opacity: 1; translate: 0; transition-delay: .10s }
+html.exp-anim.exp-gather .exp-step             { opacity: 1; translate: 0; transition-delay: .18s }
+html.exp-anim.exp-gather .exp-en               { opacity: 1; translate: 0; transition-delay: .24s }
+html.exp-anim.exp-gather .exp-title            { opacity: 1; translate: 0; transition-delay: .32s }
+html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; transition-delay: .46s }
+
+.exp-body {
+    color: #56534e;
+    max-width: 34em;
+    margin: clamp(20px, 2vw, 32px) auto 0;
+    font-size: clamp(12.5px, 1.05vw, 15.5px);
+    line-height: 2.1
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-thought,
+    .exp-cloud,
+    .exp-center .sec-label,
+    .exp-step,
+    .exp-en,
+    .exp-title,
+    .exp-body {
+        transition-duration: .01ms
+    }
+}
+
+@media (max-width: 700px) {
+    .experience {
+        padding: 74px 0
+    }
+
+    /* ⚠️ 狭い画面では言葉が中央の文と重なって読めない。
+       数を減らし、さらに**上下の帯だけ**に追いやる（中央は空ける）。
+       薄さも上げる */
+    .exp-thought:nth-child(n+9) {
+        display: none
+    }
+
+    .exp-cloud {
+        opacity: .3
+    }
+
+    .exp-thought {
+        font-size: 11px !important
+    }
+
+    /* 上半分の語は上へ、下半分の語は下へ寄せる */
+    .exp-thought:nth-child(-n+4) {
+        top: 4% !important
+    }
+
+    .exp-thought:nth-child(n+5) {
+        top: 94% !important
+    }
+
+    .exp-title {
+        font-size: 25px;
+        line-height: 1.62
+    }
+
+    .exp-body {
+        font-size: 13px
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.79abca20.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
