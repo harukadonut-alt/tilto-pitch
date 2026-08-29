@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.3b392620.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.7ace601b.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -540,7 +540,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.3b392620.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.7ace601b.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -808,7 +808,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.3b392620.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.7ace601b.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -2183,10 +2183,10 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 /* ============================================================
    06 成果にこだわる（設計図オービット）（2026-08-26）
 
-   v3 `#strategy` をそのまま利用。**描画は `assets/bim.3b392620.js`（無改造でコピー）**。
+   v3 `#strategy` をそのまま利用。**描画は `assets/bim.7ace601b.js`（無改造でコピー）**。
    Canvas 2Dの自前平行投影で、完成した採用サイトが4枚の設計シートに分解されていく。
 
-   🔴 **節を画面より十分高くすること。** `bim.3b392620.js` は
+   🔴 **節を画面より十分高くすること。** `bim.7ace601b.js` は
       `section.offsetHeight > innerHeight * 1.25` でスクロール送りかどうかを判断し、
       満たさないと「一度だけ組み上げて終わり」に落ちる。
    ⚠️ 確認用に `#bim=0.45` をURLに付けると、その進行度で固定描画できる
@@ -2283,7 +2283,7 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
 
 @media (max-width: 700px) {
     /* 🔴 SPは高さを持たせない。持たせると図だけで3画面ぶんになる。
-       bim.3b392620.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
+       bim.7ace601b.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
     .bim-transition {
         height: auto;
         min-height: 0
@@ -2319,7 +2319,46 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.3b392620.js が load 後にDOMを足す） --- */
+/* ============================================================
+   折り返しの質（2026-08-27、社長の「微妙な改行がないか」）
+
+   実測で見つかったぶら下がり: exp-body「す。」/ plan-row「運用」/
+   solve-body「を制作」/ sw-lead「トではありません。」（単語の途中）。
+
+   - `text-wrap: balance` … 行の長さを均す。2行の短文で「1行目満杯＋2行目2文字」を
+     「半々の2行」にする。Chrome/Safari/Firefoxとも対応
+   - `text-wrap: pretty` … 長文の最終行のぶら下がりだけ直す。未対応ブラウザでは無害
+   - `word-break: auto-phrase` … 日本語を文節で折る（「サイ/ト」と割らない）。
+     Chromeのみ。未対応では無害
+   ⚠️ balance は**中身が2〜3行の短文だけ**に当てる。長い本文に当てると
+      全行が均されて版面が変わりすぎる
+   ============================================================ */
+.about-body p,
+.faq-list details p,
+.foot-lead,
+.price-note {
+    /* ⚠️ pretty のぶら下がり回避は単語単位で働くので、単語境界の無い日本語では
+       auto-phrase（文節折り・Chrome）と組にしないと効かない。実測で確認した */
+    text-wrap: pretty;
+    word-break: auto-phrase
+}
+
+.solve-body,
+.exp-body,
+.sw-lead,
+.col-lead,
+.plan-row__head p,
+.worries-list li,
+.solve-title,
+.exp-title,
+.worries-title {
+    /* SPで .worries-title が「い。」だけぶら下がっていた。
+       1行に収まる幅（PC）では balance は何もしないので、共通で当ててよい */
+    text-wrap: balance;
+    word-break: auto-phrase
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.7ace601b.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
