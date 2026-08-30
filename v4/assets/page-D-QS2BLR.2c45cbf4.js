@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0a610740.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0a610740.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2c45cbf4.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2c45cbf4.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.0a610740.js / rolldown-runtime-S-ySWqyJ.0a610740.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.2c45cbf4.js / rolldown-runtime-S-ySWqyJ.2c45cbf4.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1190,7 +1190,7 @@ function Showroom() {
                     (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [work.industry, `　/　`, work.world] }),
                     (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
-                        children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION / COLOR ON` }),
+                        children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
                             (0, i.jsx)(`img`, { src: work.image, alt: work.alt })]
                     }),
                     (0, i.jsx)(`p`, { className: `works-drawer-description`, children: work.description }),
