@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.02e9fe0e.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.02e9fe0e.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.5786e12c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.5786e12c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.02e9fe0e.js / rolldown-runtime-S-ySWqyJ.02e9fe0e.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.5786e12c.js / rolldown-runtime-S-ySWqyJ.5786e12c.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1989,6 +1989,19 @@ function x() {
                             children: `ABOUT TILTO°`
                         }),
                         (0, i.jsxs)(`div`, {
+                            className: `bp-note`,
+                            children: [(0, i.jsx)(`small`, {
+                                    children: `DESIGN PRINCIPLE / 01`
+                                }),
+                                (0, i.jsxs)(`p`, {
+                                    children: [`採用は、感覚じゃない。`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `構造でつくり、言葉で届け、`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `体験で動かし、改善していく。`]
+                                })]
+                        }),
+                        (0, i.jsxs)(`div`, {
                             className: `bp-copy`,
                             children: [(0, i.jsx)(`p`, {
                                     className: `bp-phase`,
@@ -2002,22 +2015,6 @@ function x() {
                                 }),
                                 (0, i.jsx)(`h3`, {
                                     children: `デザインの前に、設計がある。`
-                                }),
-                                (0, i.jsxs)(`p`, {
-                                    className: `bp-description`,
-                                    children: [`採用は、感覚じゃない。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `構造でつくり、言葉で届け、`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `体験で動かし、改善していく。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `Tilto°は、成果にこだわり、`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `設計から、やりきる。`]
-                                }),
-                                (0, i.jsx)(`p`, {
-                                    className: `bp-closing`,
-                                    children: `設計する。届ける。測る。改善する。`
                                 })]
                         }),
                         (0, i.jsxs)(`div`, {

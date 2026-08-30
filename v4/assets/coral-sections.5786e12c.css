@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.02e9fe0e.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.5786e12c.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.02e9fe0e.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.5786e12c.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -567,4 +567,89 @@
     vertical-align: top;
     margin-left: .06em;
     font-size: .65em
+}
+
+/* ── 05 左側を3層に分解（2026-08-31・社長指示） ──────────────────────
+   旧: 左下に 大見出し＋サブ＋本文5行 が全部積まれ、重心が左下に落ちていた。
+   新: A 上部ラベル（そのまま）
+       B 左中段の小さな思想文（.bp-note・作品注釈のように）
+       C 左下の大コピー＋直下のサブだけ
+   本文は3行に短縮。「Tilto°は、成果にこだわり、設計から、やりきる。」は削った
+   （右のブループリント自体が「つくって終わらない。成果まで、設計する。」と語っている）。
+   ------------------------------------------------------------------ */
+
+/* B. 左中段の思想文。読み物ではなく、図面に添えたキャプション */
+.bp-note {
+    z-index: 22;
+    width: 250px;
+    opacity: var(--bp-intro);
+    transform: translateY(calc((1 - var(--bp-intro)) * 14px));
+    position: absolute;
+    top: 38vh;
+    left: 2.45vw
+}
+
+.bp-note small {
+    color: var(--bp-coral);
+    letter-spacing: .14em;
+    margin-bottom: 14px;
+    font: 700 9px/1 Arial, sans-serif;
+    display: block
+}
+
+.bp-note p {
+    color: #f7f4ee;
+    letter-spacing: .03em;
+    opacity: .78;
+    margin: 0;
+    font: 500 12.5px/1.9 Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif
+}
+
+/* C. 左下の大コピー。少し上げて右の設計図との距離を縮める */
+.bp-copy {
+    top: 58.5vh;
+    width: 31vw
+}
+
+.bp-copy h2 {
+    font-size: clamp(48px, 3.75vw, 58px);
+    line-height: 1.42
+}
+
+.bp-copy h3 {
+    opacity: .95;
+    margin-top: 30px   /* サブが y697 だったのを指定の y710 へ */
+}
+
+/* 左右の関係づけ。サブコピーの高さから右の図面へ、細い線を1本だけ */
+.bp-copy::after {
+    content: "";
+    background: var(--bp-coral);
+    width: 8.5vw;
+    height: 1px;
+    opacity: calc(var(--bp-intro) * .5);
+    position: absolute;
+    bottom: .7em;
+    left: calc(100% + 20px)
+}
+
+@media (max-width: 900px) {
+    /* SPは旧版どおり見出し＋サブのみ（思想文は畳む） */
+    .bp-note {
+        display: none
+    }
+
+    .bp-copy {
+        top: 9vh;
+        width: 85vw
+    }
+
+    .bp-copy h2 {
+        font-size: clamp(30px, 9.5vw, 48px);
+        line-height: 1.32
+    }
+
+    .bp-copy::after {
+        display: none
+    }
 }
