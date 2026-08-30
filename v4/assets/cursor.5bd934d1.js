@@ -18,13 +18,20 @@
    ⚠️ タッチ端末・動きを減らす設定では何もしない（v3と同じ）。SPは対象外。 */
 (() => {
   const HOVERABLE = "a, button, summary, input, textarea, select, [role='button']";
-  const CTA = '.header-cta, .pricing-cta, .pricing-cta-main, .pricing-cta-sub';
+  const CTA = '.header-cta, .pricing-cta, .pricing-cta-main, .pricing-cta-sub, .contact-cta';
 
   /* 丸の中に出す文字（v3と同じ趣向）。
      ⚠️ v3は `data-cursor-label` 属性をHTMLに書いていたが、v4は React が
         hydrate するので**SSRのHTMLとJSXの両方**を直さないと壊れる。
         ここでセレクタから引くことにして、DOMには一切触らない。 */
   const labelFor = (el) => {
+    /* 移植したGPT製の節は元のInkCursorに合わせて `data-cursor-label` を持っている。
+       そちらが書いてあれば優先する（フッターの相談CTA = TALK） */
+    const written = el.closest('[data-cursor-label]');
+    if (written) return written.getAttribute('data-cursor-label');
+    if (el.closest('.works-tile')) return 'VIEW';        // 表現ショールームのタイル
+    if (el.closest('.works-drawer-close')) return 'CLOSE';
+    if (el.closest('.reference-about-nav, .reference-contact nav')) return 'VIEW';
     if (el.closest('.pricing-cta-sub')) return 'VIEW';   // 表現事例を見る
     if (el.closest('.header-cta, .pricing-cta')) return 'TALK';  // 無料で相談する
     if (el.matches('.site-nav button'))                  // 帯の停止/再生
