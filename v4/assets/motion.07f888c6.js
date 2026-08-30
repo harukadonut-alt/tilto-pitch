@@ -89,7 +89,11 @@
                 var p = clamp(-box.top / Math.max(1, box.height - vh));
                 var organize = ramp(.27, .66, p);
                 var reveal = ramp(.61, .84, p);
-                var settle = ramp(.85, 1, p);
+                /* 完成サイトの中身を、枠の中で少しだけ下へ送る量。
+                   ⚠️ 全部は見せない。WHY WE WORK が出きって、次の節の頭がのぞく
+                      ところで止める（見本画像の下 約200px は最後まで見えない）。
+                      「この先も見たい」を残すのがこの節の役目 */
+                var settle = ramp(.72, 1, p);
                 st.setProperty('--fusion-progress', p.toFixed(4));
                 st.setProperty('--process-before-opacity', (1 - ramp(.3, .59, p)).toFixed(4));
                 st.setProperty('--process-organize', organize.toFixed(4));
@@ -98,7 +102,7 @@
                 st.setProperty('--process-wire-opacity',
                     Math.min(ramp(.47, .61, p), 1 - ramp(.71, .83, p)).toFixed(4));
                 st.setProperty('--process-site-clip', ((1 - reveal) * 100).toFixed(2) + '%');
-                st.setProperty('--process-site-y', (-settle * 24).toFixed(2) + '%');
+                st.setProperty('--process-site-y', (-settle * 19).toFixed(2) + '%');
                 st.setProperty('--process-guide-offset', (1 - organize).toFixed(4));
                 st.setProperty('--process-progress-x', (p * 100).toFixed(2) + '%');
 

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.2e457ae1.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.2e457ae1.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.07f888c6.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.07f888c6.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.2e457ae1.js / rolldown-runtime-S-ySWqyJ.2e457ae1.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.07f888c6.js / rolldown-runtime-S-ySWqyJ.07f888c6.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1681,12 +1681,12 @@ function x() {
                                         `いっしょに、かたちの糸口を見つけていきます。`]
                                 })]
                         }),
-                        (0, i.jsxs)(`div`, {
+(0, i.jsxs)(`div`, {
                             className: `process-copy process-copy-after`,
                             children: [(0, i.jsxs)(`h2`, {
-                                    children: [`曖昧な相談から、`,
+                                    children: [`曖昧な相談が、`,
                                         (0, i.jsx)(`br`, {}),
-                                        `ここまでつくる。`]
+                                        `採用サイトになる。`]
                                 }),
                                 (0, i.jsxs)(`p`, {
                                     children: [`言葉にならなかった想いを整理し、`,
@@ -1898,22 +1898,22 @@ function x() {
                                             children: `構造にする`
                                         })]
                                 }),
-                                (0, i.jsxs)(`div`, {
+(0, i.jsxs)(`figure`, {
                                     className: `process-site-assembly`,
-                                    "aria-hidden": `true`,
                                     children: [(0, i.jsxs)(`div`, {
                                             className: `process-site-frame`,
                                             children: [(0, i.jsxs)(`div`, {
                                                     className: `process-site-chrome`,
-                                                    children: [(0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
+                                                    children: [(0, i.jsx)(`i`, {
+                                                            "aria-hidden": `true`
+                                                        }),
                                                         (0, i.jsx)(`span`, {
-                                                            children: `RECRUIT SITE / PREVIEW`
+                                                            children: `RECRUIT SITE / EXPRESSION SAMPLE`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
                                                     className: `process-wireframe`,
+                                                    "aria-hidden": `true`,
                                                     children: [(0, i.jsx)(`span`, {
                                                             className: `wf-nav`
                                                         }),
@@ -1937,15 +1937,16 @@ function x() {
                                                     className: `process-site-scroll`,
                                                     children: (0, i.jsx)(`img`, {
                                                             className: `process-final-image`,
-                                                            src: `./images/section03-after.webp`,
-                                                            alt: ``
+                                                            src: `./images/section03-site.webp`,
+                                                            alt: `高架下に立つ作業員の写真に「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイト。その下に「仕事は、誰かの日常につながっている。」の節が続く`
                                                         })
                                                 })]
                                         }),
-                                        (0, i.jsx)(`small`, {
+                                        (0, i.jsx)(`figcaption`, {
                                             children: `FORMED FROM CONVERSATION / DESIGNED THROUGH TO THE NEXT SECTION`
                                         })]
-                                })]
+                                })
+                            ]
                         }),
                         (0, i.jsxs)(`div`, {
                             className: `process-progress`,

@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.2e457ae1.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.07f888c6.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.2e457ae1.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.07f888c6.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -279,5 +279,140 @@
 
     .reference-problems-scroll {
         display: none
+    }
+}
+
+/* ── 03 AFTER 「曖昧な相談が、採用サイトになる。」 ──────────────────
+   役割は**感動体験の着地点**。BEFOREの散らばった相談が、
+   ひとつの採用ブランド体験として立ち上がる瞬間を見せる。
+
+   旧版の弱点（社長の指摘）:
+     ・コピーが枠に収まらず「ここまでつく／る。」で割れていた
+     ・完成サイトが横長の1枚で、FVしか見えず「続きも設計されている」が伝わらない
+     ・枠が丸ボタン3つのブラウザUIで、作品に見えなかった
+   ------------------------------------------------------------------ */
+
+/* 版面を分ける縦罫。コピーと完成サイトのあいだに置く */
+.process-stage:before {
+    left: 40%
+}
+
+/* ⚠️ コピーは**必ず指定した位置で改行させる**。
+   幅が足りないと勝手に折り返して「ここまでつく／る。」になる（旧版がそれ）。
+   34vw = 1440pxで490px。いちばん長い「採用サイトになる。」9文字が
+   3.85vw（55px・字間-.05em）で約473px。収まる */
+.process-copy {
+    width: 34vw
+}
+
+.process-copy-after h2 {
+    letter-spacing: -.05em;
+    font-size: clamp(34px, 3.85vw, 60px);
+    line-height: 1.36
+}
+
+.process-copy-after p {
+    color: #111111c4;
+    margin-top: clamp(22px, 3.6vh, 38px)
+}
+
+/* --- 完成サイトの見せ方 --- */
+
+/* ⚠️ 高さを vh で決めない。幅とアスペクトで決める。
+   見本画像は 1229×1280。枠の窓（=枠の高さ - 上帯30px）に
+   FVが約72%・下の節が約28%見えるようにしたい。
+     窓 ÷ 幅 = 839 ÷ 1229 = 0.6827
+     枠の高さ = 幅 × 0.6827 + 30px  →  縦横比おおよそ 1.387
+   vh で決めると画面の高さ次第でこの比率が崩れ、FVだけ／出しすぎになる */
+.process-site-assembly {
+    width: 54vw;
+    height: auto;
+    margin: 0;
+    top: 12vh;
+    right: 3.6vw;
+    transform-origin: 100% 50%;
+    transform: translateY(calc((1 - var(--process-reveal)) * 30px)) scale(calc(.97 + var(--process-reveal) * .03))
+}
+
+.process-site-frame {
+    aspect-ratio: 1.387;
+    height: auto;
+    /* 作品として置いた1枚に見せる。平らな影＋墨の細罫 */
+    box-shadow: 18px 20px #11111114
+}
+
+/* ⚠️ 丸ボタン3つはブラウザUIに見えるのでやめた。
+   コーラルの細い罫と小さなラベルだけの、展示キャプションに近い帯にする */
+.process-site-chrome {
+    border-bottom: 1px solid #11111f2e;
+    gap: 10px;
+    height: 30px;
+    padding: 0 13px
+}
+
+.process-site-chrome i {
+    background: var(--tone-coral);
+    border-radius: 0;
+    width: 17px;
+    height: 1px
+}
+
+.process-site-chrome span {
+    color: #111111a8;
+    letter-spacing: .17em;
+    margin-left: auto;
+    font: 700 6.5px/1 Arial, sans-serif
+}
+
+/* 見本画像は幅いっぱい。切らずに全幅を見せて、縦だけ窓で切る */
+.process-final-image {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    top: 0;
+    right: 0
+}
+
+.process-site-assembly figcaption {
+    color: #111111a8;
+    text-align: right;
+    letter-spacing: .17em;
+    margin-top: 11px;
+    font: 700 6.5px/1 Arial, sans-serif
+}
+
+@media (max-width: 900px) {
+    .process-copy {
+        width: calc(100vw - 40px)
+    }
+
+    .process-copy-after h2 {
+        font-size: clamp(28px, 8.2vw, 44px);
+        line-height: 1.4
+    }
+
+    .process-site-assembly {
+        width: calc(100vw - 40px);
+        height: auto;
+        min-height: 0;
+        top: 46%;
+        right: 20px
+    }
+
+    /* 上帯の30pxは固定なので、幅が小さいほど窓に占める割合が増える。
+       SPでもFVが約72%になるよう、縦横比だけ詰める */
+    .process-site-frame {
+        aspect-ratio: 1.3
+    }
+
+    .process-final-image {
+        width: 100%;
+        top: 0
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .process-site-assembly {
+        transform: none
     }
 }
