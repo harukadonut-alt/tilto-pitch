@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6806fd99.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6806fd99.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2e457ae1.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2e457ae1.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.6806fd99.js / rolldown-runtime-S-ySWqyJ.6806fd99.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.2e457ae1.js / rolldown-runtime-S-ySWqyJ.2e457ae1.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1565,6 +1565,7 @@ function x() {
         }),
         (0, i.jsxs)(`section`, {
             className: `reference-problems`,
+            "data-motion": `problems-story`,
             "aria-labelledby": `reference-problems-title`,
             children: [(0, i.jsxs)(`div`, {
                     className: `reference-section-label reference-problems-label`,
@@ -1592,11 +1593,6 @@ function x() {
                         }),
                         (0, i.jsx)(`i`, {
                             "aria-hidden": `true`
-                        }),
-                        (0, i.jsxs)(`small`, {
-                            children: [`LOWER BARRIER`,
-                                (0, i.jsx)(`br`, {}),
-                                `LONGER PARTNERSHIP`]
                         })]
                 }),
                 (0, i.jsxs)(`article`, {
@@ -1608,14 +1604,6 @@ function x() {
                             children: [`公開までに`,
                                 (0, i.jsx)(`br`, {}),
                                 `時間がかかりすぎる。`]
-                        }),
-                        (0, i.jsx)(`i`, {
-                            "aria-hidden": `true`
-                        }),
-                        (0, i.jsxs)(`small`, {
-                            children: [`FAST`,
-                                (0, i.jsx)(`br`, {}),
-                                `PRODUCTION`]
                         })]
                 }),
                 (0, i.jsxs)(`article`, {
@@ -1632,16 +1620,25 @@ function x() {
                         }),
                         (0, i.jsx)(`i`, {
                             "aria-hidden": `true`
-                        }),
-                        (0, i.jsxs)(`small`, {
-                            children: [`UPDATE /`,
-                                (0, i.jsx)(`br`, {}),
-                                `IMPROVE`]
                         })]
                 }),
-                (0, i.jsx)(`p`, {
+                (0, i.jsxs)(`p`, {
                     className: `reference-problems-statement`,
-                    children: `採用サイトの常識を、更新する。`
+                    children: [(0, i.jsx)(`b`, {
+                            children: `RETHINK THE RECRUITMENT SITE.`
+                        }),
+                        (0, i.jsxs)(`span`, {
+                            children: [`採用サイトの常識を、更新する`,
+                                (0, i.jsx)(`i`, {
+                                    children: `。`
+                                })]
+                        })]
+                }),
+                (0, i.jsxs)(`span`, {
+                    className: `reference-problems-scroll`,
+                    "aria-hidden": `true`,
+                    children: [`SCROLL`,
+                        (0, i.jsx)(`i`, {})]
                 })]
         }),
         (0, i.jsx)(`section`, {

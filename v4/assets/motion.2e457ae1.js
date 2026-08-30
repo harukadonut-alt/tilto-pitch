@@ -62,6 +62,28 @@
                 root.style.setProperty('--hero-bridge-progress', hero.toFixed(4));
             }
 
+            // 02 お悩み: 黒がせり上がる → 高い（左）→ 遅い（中央）→ 成果が見えない（右）
+            //   ⚠️ 視線が左→中央→右に流れるよう、区間をずらして重ねてある。
+            //      同時に動かすと「一斉フェードイン」になって安っぽくなる
+            if (kind === 'problems-story') {
+                /* ⚠️ `seen` をそのまま使うと、着地コピーが出そろうのが seen=0.92 になり、
+                   そのとき節はもう画面の上へ抜けている（下の計算で確認済み）。
+                   節が画面にちゃんと乗っている seen 0.10〜0.65 に物語を畳み込む。
+                   0.65 の時点で節の上端が画面上端の少し上、着地コピーが画面中ほどに来る。 */
+                var pb = clamp((seen - .1) / .55);
+                st.setProperty('--pb-black', ramp(0, .15, pb).toFixed(4));
+                st.setProperty('--pb-high', ramp(.15, .35, pb).toFixed(4));
+                st.setProperty('--pb-slow', ramp(.25, .50, pb).toFixed(4));
+                st.setProperty('--pb-result', ramp(.40, .65, pb).toFixed(4));
+                st.setProperty('--pb-note-1', ramp(.55, .68, pb).toFixed(4));
+                st.setProperty('--pb-note-2', ramp(.60, .73, pb).toFixed(4));
+                st.setProperty('--pb-note-3', ramp(.65, .78, pb).toFixed(4));
+                // 赤入れは左から引かれる（transform-origin: 0）
+                st.setProperty('--pb-line-1', ramp(.58, .72, pb).toFixed(4));
+                st.setProperty('--pb-line-2', ramp(.66, .80, pb).toFixed(4));
+                st.setProperty('--pb-closing', ramp(.75, .92, pb).toFixed(4));
+            }
+
             // 03 体験: 紙が散らばった状態 → 整理 → サイトの形になる
             if (kind === 'fusion-story') {
                 var p = clamp(-box.top / Math.max(1, box.height - vh));

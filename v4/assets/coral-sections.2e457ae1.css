@@ -1,0 +1,283 @@
+/* ============================================================
+   うちで作り直した節（移植したGPT製のCSSより後に読む）
+
+   assets/gpt-sections.2e457ae1.css は「向こうのサイトから機械で抜いたCSS」で、
+   cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
+   ============================================================ */
+
+/* ── 02 私たちが解決するお悩み ────────────────────────────────
+   役割は**緊張のセクション**。01の静かな白のあとに空気を変える。
+   ⚠️ ページ最大の山は04ショールーム。ここは「強いが最大ではない」で止める。
+      巨大文字で黒を埋め尽くさず、**黒い空間に巨大文字が置かれている**印象にする。
+
+   前版から: 遅い22→16.6 / 高い20.2→13.2 / 成果8.9→6.0（単位u）、
+   赤い線 3→2本、英字の補助ラベル3つを削除、着地コピーを中央の巨大コーラルから左下の小組みに。
+
+   ⚠️ 寸法の単位は `--u`。`min(1vw, …)` で**節の高さと一緒に頭打ち**にしてある。
+      素の vw だけで組むと、広い画面で高さだけ clamp されて文字がはみ出す（前版がそうだった）。
+   ------------------------------------------------------------------ */
+.reference-problems {
+    /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
+    --u: min(1vw, 14.87px);
+
+    /* 🔴 動きの既定値は「着地後」。motion.2e457ae1.js が動かない場合
+       （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
+    --pb-black: 1;
+    --pb-high: 1;
+    --pb-slow: 1;
+    --pb-result: 1;
+    --pb-note-1: 1;
+    --pb-note-2: 1;
+    --pb-note-3: 1;
+    --pb-line-1: 1;
+    --pb-line-2: 1;
+    --pb-closing: 1;
+
+    color: #f7f4ee;
+    background: #111;
+    border-bottom: 1px solid var(--tone-coral);
+    height: clamp(560px, 41.7vw, 620px);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate
+}
+
+/* 黒い紙面が下からせり上がる。白い面が上へ抜けて、黒が下から出てくる。
+   ⚠️ scaleY で畳むと文字が潰れて見えるので、translate で抜く */
+.reference-problems::before {
+    content: "";
+    z-index: 8;
+    pointer-events: none;
+    background: var(--tone-paper);
+    translate: 0 calc(var(--pb-black) * -100%);
+    position: absolute;
+    inset: 0
+}
+
+.reference-problems-label {
+    color: #f7f4ee;
+    top: calc(var(--u) * 2.6);
+    opacity: var(--pb-black)
+}
+
+.reference-problem {
+    position: absolute;
+    inset: 0
+}
+
+.reference-problem strong {
+    color: #f7f4ee;
+    letter-spacing: -.12em;
+    white-space: nowrap;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .82;
+    display: block;
+    position: absolute
+}
+
+/* 補助説明。小さく散らす */
+.reference-problem p {
+    color: #f7f4eee6;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    line-height: 1.7;
+    position: absolute
+}
+
+/* 編集者の赤入れ。細く鋭く、2本だけ */
+.reference-problem i {
+    background: var(--tone-coral);
+    transform-origin: 0 50%;
+    height: 1px;
+    position: absolute
+}
+
+/* --- 左: 高い（少し小さめ・左端で切れたまま） --- */
+.reference-problem-high strong {
+    font-size: calc(var(--u) * 13.2);
+    top: calc(var(--u) * 9.4);
+    left: calc(var(--u) * -1.4);
+    opacity: var(--pb-high);
+    translate: calc((1 - var(--pb-high)) * -100px) 0
+}
+
+.reference-problem-high p {
+    top: calc(var(--u) * 21.2);
+    left: calc(var(--u) * 5.6);
+    opacity: var(--pb-note-1);
+    translate: 0 calc((1 - var(--pb-note-1)) * 14px)
+}
+
+.reference-problem-high i {
+    width: calc(var(--u) * 8.3);
+    top: calc(var(--u) * 20.8);
+    left: calc(var(--u) * 14.2);
+    rotate: -30deg;
+    scale: var(--pb-line-1) 1
+}
+
+/* --- 中央: 遅い（主役） --- */
+.reference-problem-late strong {
+    font-size: calc(var(--u) * 16.6);
+    top: calc(var(--u) * 8);
+    left: calc(var(--u) * 36.5);
+    transform-origin: 50% 100%;
+    opacity: var(--pb-slow);
+    scale: calc(.94 + var(--pb-slow) * .06);
+    translate: 0 calc((1 - var(--pb-slow)) * 32px)
+}
+
+.reference-problem-late p {
+    top: calc(var(--u) * 22.6);
+    left: calc(var(--u) * 41.8);
+    opacity: var(--pb-note-2);
+    translate: 0 calc((1 - var(--pb-note-2)) * 14px)
+}
+
+/* --- 右: 成果が見えない（縦組みで静かに強く） --- */
+.reference-problem-result strong {
+    letter-spacing: -.08em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--u) * 6);
+    line-height: 1.03;
+    top: calc(var(--u) * 5.9);
+    right: calc(var(--u) * 3.6);
+    opacity: var(--pb-result);
+    translate: calc((1 - var(--pb-result)) * 70px) 0
+}
+
+.reference-problem-result p {
+    top: calc(var(--u) * 24.3);
+    left: calc(var(--u) * 70.6);
+    opacity: var(--pb-note-3);
+    translate: 0 calc((1 - var(--pb-note-3)) * 14px)
+}
+
+.reference-problem-result i {
+    width: calc(var(--u) * 7);
+    top: calc(var(--u) * 23.3);
+    left: calc(var(--u) * 76.5);
+    rotate: -34deg;
+    scale: var(--pb-line-2) 1
+}
+
+/* --- 着地点。大きくしすぎず、左下に上品に --- */
+.reference-problems-statement {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    bottom: calc(var(--u) * 3.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--pb-closing);
+    translate: 0 calc((1 - var(--pb-closing)) * 12px)
+}
+
+.reference-problems-statement b {
+    color: var(--tone-coral);
+    letter-spacing: .1em;
+    margin-bottom: calc(var(--u) * .95);
+    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
+    display: block
+}
+
+.reference-problems-statement span {
+    color: #f7f4ee;
+    letter-spacing: .01em;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(26px, calc(var(--u) * 2.85), 42px);
+    font-weight: 500;
+    line-height: 1.2;
+    display: block
+}
+
+.reference-problems-statement i {
+    color: var(--tone-coral);
+    font-style: normal
+}
+
+/* --- 右下のSCROLL。主張させない --- */
+.reference-problems-scroll {
+    color: #f7f4ee8f;
+    letter-spacing: .24em;
+    writing-mode: vertical-rl;
+    font: 700 clamp(7px, calc(var(--u) * .62), 9.5px)/1 Arial, sans-serif;
+    position: absolute;
+    right: calc(var(--u) * 2.4);
+    bottom: calc(var(--u) * 6.6);
+    opacity: calc(var(--pb-closing) * .9)
+}
+
+.reference-problems-scroll i {
+    background: #f7f4ee45;
+    width: 1px;
+    height: calc(var(--u) * 4.2);
+    display: block;
+    position: absolute;
+    top: calc(100% + var(--u) * .9);
+    left: calc(50% - .5px)
+}
+
+/* --- SP: 縦に積む。巨大文字は残すが、線と縦組みは畳む --- */
+@media (max-width: 900px) {
+    .reference-problems {
+        --u: min(2.6vw, 11px);
+        height: auto;
+        min-height: 0;
+        padding: 88px 22px 40px
+    }
+
+    .reference-problems-label {
+        top: 34px;
+        left: 22px
+    }
+
+    .reference-problem,
+    .reference-problem strong,
+    .reference-problem p,
+    .reference-problems-statement,
+    .reference-problems-scroll {
+        position: static;
+        inset: auto
+    }
+
+    .reference-problem {
+        margin-bottom: 34px
+    }
+
+    .reference-problem strong {
+        font-size: 27vw;
+        margin-left: -.06em
+    }
+
+    .reference-problem-late strong {
+        font-size: 30vw
+    }
+
+    /* 縦組みは幅を食うので、SPでは横組みに戻す */
+    .reference-problem-result strong {
+        writing-mode: horizontal-tb;
+        font-size: 15vw;
+        line-height: 1.14
+    }
+
+    .reference-problem p {
+        margin-top: 12px;
+        font-size: 13px
+    }
+
+    .reference-problem i {
+        display: none
+    }
+
+    .reference-problems-statement {
+        margin-top: 44px
+    }
+
+    .reference-problems-scroll {
+        display: none
+    }
+}
