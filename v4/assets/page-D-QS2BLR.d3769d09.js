@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.2c45cbf4.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.2c45cbf4.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d3769d09.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d3769d09.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.2c45cbf4.js / rolldown-runtime-S-ySWqyJ.2c45cbf4.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.d3769d09.js / rolldown-runtime-S-ySWqyJ.d3769d09.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1171,10 +1171,6 @@ function Showroom() {
                     }, `group-${copy}`))
                 })
             }, `lane-${laneNo + 1}`))
-        }), (0, i.jsxs)(`div`, {
-            className: `works-scroll-cue`, "aria-hidden": `true`,
-            children: [(0, i.jsx)(`span`, { children: `SCROLL TO EXPLORE` }),
-                (0, i.jsx)(`i`, { children: `→` })]
         }), (0, i.jsxs)(`aside`, {
             className: `works-drawer`,
             role: `dialog`,
@@ -1467,34 +1463,6 @@ function x() {
                     children: [`Tilto`,
                         (0, i.jsx)(`span`, {
                             children: `°`
-                        })]
-                }),
-                (0, i.jsxs)(`nav`, {
-                    className: `reference-about-nav`,
-                    "aria-label": `セクションナビゲーション`,
-                    children: [(0, i.jsx)(`a`, {
-                            href: `#about`,
-                            children: `ABOUT`
-                        }),
-                        (0, i.jsx)(`a`, {
-                            href: `#fusion`,
-                            children: `SERVICE`
-                        }),
-                        (0, i.jsx)(`a`, {
-                            href: `#expression`,
-                            children: `WORKS`
-                        }),
-                        (0, i.jsx)(`a`, {
-                            href: `#blueprint`,
-                            children: `FLOW`
-                        }),
-                        (0, i.jsx)(`a`, {
-                            href: `#price`,
-                            children: `FAQ`
-                        }),
-                        (0, i.jsx)(`a`, {
-                            href: `#contact`,
-                            children: `CONTACT`
                         })]
                 }),
                 (0, i.jsxs)(`small`, {
@@ -1985,10 +1953,6 @@ function x() {
                                     children: `TILTO° / SECTION 05`
                                 }),
                                 (0, i.jsx)(`i`, {})]
-                        }),
-                        (0, i.jsx)(`span`, {
-                            className: `bp-vertical`,
-                            children: `ABOUT TILTO°`
                         }),
                         (0, i.jsxs)(`div`, {
                             className: `bp-principle`,

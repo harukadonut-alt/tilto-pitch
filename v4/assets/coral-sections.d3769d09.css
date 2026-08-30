@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.2c45cbf4.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.d3769d09.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.2c45cbf4.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.d3769d09.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -640,19 +640,9 @@
     margin-top: 30px
 }
 
-/* 縦組みの ABOUT TILTO° は、大見出しが上へ来たぶん下の空きへ移す */
-.bp-vertical {
-    top: 63vh;
-    height: 19vh
-}
-
 @media (max-width: 900px) {
     /* SPは旧版どおり見出し＋サブのみ（思想文は畳む） */
     .bp-principle {
-        display: none
-    }
-
-    .bp-vertical {
         display: none
     }
 
