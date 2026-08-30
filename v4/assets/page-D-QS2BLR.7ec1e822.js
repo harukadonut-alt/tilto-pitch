@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.07f888c6.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.07f888c6.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.7ec1e822.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.7ec1e822.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.07f888c6.js / rolldown-runtime-S-ySWqyJ.07f888c6.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.7ec1e822.js / rolldown-runtime-S-ySWqyJ.7ec1e822.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1521,9 +1521,13 @@ function x() {
                     className: `reference-about-copy`,
                     children: [(0, i.jsxs)(`h2`, {
                             id: `reference-about-title`,
-                            children: [`つくる。だけじゃない。`,
+                            children: [`つくる。`,
+                                (0, i.jsx)(`br`, { className: `sp-only` }),
+                                `だけじゃない。`,
                                 (0, i.jsx)(`br`, {}),
-                                `採用サイトを、持ち、育てる。`]
+                                `採用サイトを、`,
+                                (0, i.jsx)(`br`, { className: `sp-only` }),
+                                `持ち、育てる。`]
                         }),
                         (0, i.jsx)(`p`, {
                             children: `公開して終わりにしない。採用の変化とともに、更新し、改善しつづける。`

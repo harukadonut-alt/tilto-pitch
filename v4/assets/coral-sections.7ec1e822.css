@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.07f888c6.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.7ec1e822.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.07f888c6.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.7ec1e822.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -414,5 +414,120 @@
 @media (prefers-reduced-motion: reduce) {
     .process-site-assembly {
         transform: none
+    }
+}
+
+/* ── SP版の総点検で直した分（2026-08-31・375pxで全節を実測） ──────────
+   直したもの:
+     01 見出しの事故折り／極小文字／下の余り
+     03 読めない装飾文字（6px）と極小ラベル
+     04 流れるタイルがリード文に重なっていた／見出しの事故折り
+     06 「0」が主役の27,000より倍近く大きく、310pxを1文字で食っていた
+     07 住所と©が9px/8px
+   05の設計図の中の微細文字（5〜7px）は触っていない。あれは「図面」という
+   表現で、読ませる文字ではなく絵の一部（PCでも同じ大きさ）。
+   ------------------------------------------------------------------ */
+
+/* SPだけで効かせる改行。PCでは無いのと同じ */
+.sp-only { display: none }
+
+@media (max-width: 900px) {
+    .sp-only { display: inline }
+
+    /* --- 01 ABOUT ---
+       「つくる。だけじゃない。」11文字が幅298pxに入らず、text-wrap:balance が
+       「つくる。だけじゃ/ない。」と事故折りしていた。SP用brで4行に割り、
+       1行の最大を7文字にして文字を大きくできるようにした（35.6px→38px） */
+    .reference-about-copy h2 {
+        text-wrap: initial;
+        font-size: 38px;
+        line-height: 1.42
+    }
+
+    /* 仕様リストの右側（dd）が8pxで読めなかった */
+    .reference-about-facts dd {
+        font-size: 10px
+    }
+
+    .reference-about-facts dt {
+        font-size: 11px
+    }
+
+    /* 補助文とリストの間19px・下の余り88pxと釣り合いが崩れていたので、
+       リストを下げて 53px / 54px に配分し直す */
+    .reference-about-facts {
+        top: 500px
+    }
+
+    /* --- 03 体験 --- */
+    /* 節の小見出しが8px。9.5pxへ */
+    .process-label small {
+        font-size: 9.5px
+    }
+
+    /* 「対話する→選び取る→構造にする」が6px。読めない装飾なのでSPでは畳む */
+    .process-edit-words {
+        display: none
+    }
+
+    /* 下端の 01/LISTEN … が5px */
+    .process-progress {
+        font-size: 7px
+    }
+
+    /* 作品フレームの帯とキャプションが6.5px */
+    .process-site-chrome span,
+    .process-site-assembly figcaption {
+        font-size: 8px
+    }
+
+    /* --- 04 表現ショールーム ---
+       🔴 タイルのレーンが y421 から始まり、リード文（y451〜510）と
+          「7 INDUSTRIES…」（y530〜561）の**上に重なっていた**。
+          見出しも「振れ幅そのものが、」9文字が48.75pxで入らず事故折り。 */
+    .works-intro h3 {
+        /* 9文字 × 36px = 324px < 335px。2行で収まる */
+        font-size: clamp(30px, 9.6vw, 36px)
+    }
+
+    .works-showroom {
+        height: 1140px;
+        min-height: 1140px
+    }
+
+    /* リード文の下（実測457px）から始める */
+    .works-lane-1 { top: 500px }
+    .works-lane-2 { top: 705px }
+    .works-lane-3 { top: 910px }
+
+    /* タイルの業種ラベルが7px */
+    .works-tile span small {
+        font-size: 8px
+    }
+
+    /* --- 06 PRICE ---
+       「0」が220px（高さ310pxを1文字で占有）で、主役の27,000（116px）より
+       倍近く大きかった。PC版の「0の方が大きい」意図は残しつつ、常識的な比に */
+    .reference-initial-cost {
+        height: 200px;
+        margin: 44px 0
+    }
+
+    .reference-initial-cost strong {
+        margin-top: 34px;
+        font-size: 150px
+    }
+
+    .reference-initial-cost b {
+        margin-bottom: 28px
+    }
+
+    /* --- 07 CONTACT --- 住所9px・©8pxを一段上げる */
+    .reference-contact-bottom address {
+        font-size: 10px
+    }
+
+    .reference-contact-bottom > small {
+        font-size: 9px
     }
 }
