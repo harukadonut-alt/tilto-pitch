@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.7ec1e822.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.02e9fe0e.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.7ec1e822.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.02e9fe0e.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -530,4 +530,41 @@
     .reference-contact-bottom > small {
         font-size: 9px
     }
+}
+
+/* ── 07 フッターの直し（2026-08-31・社長指示） ──────────────────────
+   1. CTAのぎざぎざを外して四角に戻す。
+      🔴 原因: 移植元の汎用 `.contact-cta`（FV用の「破れ紙」演出。ぎざぎざの
+         clip-path・傾き・茶色い文字）が、フッターの黒い箱にまで当たっていた。
+   2. 左下の Tilto° を、FVヘッダーのロゴ（.brand）と同じ字に揃える。
+   ------------------------------------------------------------------ */
+.reference-contact > .contact-cta {
+    clip-path: none;
+    transform: none;
+    box-shadow: none;
+    margin: 0;
+    transition: background .25s, color .25s
+}
+
+.reference-contact > .contact-cta:hover {
+    transform: none
+}
+
+/* 文字色と大きさも破れ紙用（茶色・20px固定）が効いていた。箱の指定に戻す */
+.reference-contact > .contact-cta span {
+    color: inherit;
+    font-size: inherit
+}
+
+/* ヘッダーのロゴと同じ: Didot系・字間-.045em・°は上付き.65em */
+.reference-contact-brand {
+    letter-spacing: -.045em;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-weight: 500
+}
+
+.reference-contact-brand span {
+    vertical-align: top;
+    margin-left: .06em;
+    font-size: .65em
 }
