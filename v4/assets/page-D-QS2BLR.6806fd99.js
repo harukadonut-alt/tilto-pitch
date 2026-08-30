@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.5bd934d1.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.5bd934d1.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.6806fd99.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.6806fd99.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,61 +899,175 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.5bd934d1.js / rolldown-runtime-S-ySWqyJ.5bd934d1.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.6806fd99.js / rolldown-runtime-S-ySWqyJ.6806fd99.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
    ⚠️ index.html 側のSSRは、このコンポーネントの初期描画（絞り込み=ALL・未選択）を
       そのまま貼っている。**片方だけ直すとhydrationが壊れる**ので必ず両方直すこと。
    ============================================================ */
-var SR_FILTERS = [`ALL`, `IT / SaaS`, `製造`, `不動産`, `医療`, `教育`, `小売`, `STARTUP`];
+var SR_FILTERS = [`ALL`, `IT・テック`, `建設・製造`, `物流・運輸`, `医療・看護`, `介護・福祉`, `飲食・サービス`, `エンタメ`];
 
-var SR_WORLDS = [
-    { industry: `IT / SaaS`, image: `./images/showroom-it.webp`, tone: `sumi`, world: `DARK TECH` },
-    { industry: `製造`, image: `./images/showroom-construction-blueprint.webp`, tone: `paper`, world: `ENGINEERING` },
-    { industry: `医療`, image: `./images/showroom-medical.webp`, tone: `paper`, world: `CLINICAL` },
-    { industry: `小売`, image: `./images/showroom-entertainment.webp`, tone: `coral`, world: `FASHION / CULTURE` },
-    { industry: `STARTUP`, image: `./images/showroom-tech-world.webp`, tone: `sumi`, world: `FUTURE CITY` },
-    { industry: `不動産`, image: `./images/showroom-logistics-city.webp`, tone: `paper`, world: `REGIONAL / CITY` },
-    { industry: `製造`, image: `./images/showroom-construction.webp`, tone: `coral`, world: `FIELD / CRAFT` },
-    { industry: `医療`, image: `./images/showroom-care.webp`, tone: `paper`, world: `CARE / EDITORIAL` },
-    { industry: `教育`, image: `./images/showroom-tech-sketch.webp`, tone: `paper`, world: `LEARNING` },
-    { industry: `小売`, image: `./images/showroom-food.webp`, tone: `sumi`, world: `FOOD / CRAFT` },
-    { industry: `STARTUP`, image: `./images/showroom-food-illustration.webp`, tone: `coral`, world: `ILLUSTRATION` },
-    { industry: `不動産`, image: `./images/showroom-logistics.webp`, tone: `sumi`, world: `INFRASTRUCTURE` },
-    { industry: `IT / SaaS`, image: `./images/showroom-tech-world.webp`, tone: `coral`, world: `DIGITAL CULTURE` },
-    { industry: `小売`, image: `./images/showroom-care-illustration.webp`, tone: `paper`, world: `LIFESTYLE` },
-    { industry: `製造`, image: `./images/showroom-logistics-truck.webp`, tone: `sumi`, world: `LOGISTICS` },
-    { industry: `教育`, image: `./images/showroom-food-illustration.webp`, tone: `paper`, world: `FIELD LEARNING` },
-    { industry: `医療`, image: `./images/showroom-care-illustration.webp`, tone: `coral`, world: `WELLBEING` },
-    { industry: `不動産`, image: `./images/showroom-construction-blueprint.webp`, tone: `sumi`, world: `URBAN DESIGN` },
-    { industry: `IT / SaaS`, image: `./images/showroom-tech-sketch.webp`, tone: `paper`, world: `PRODUCT DESIGN` },
-    { industry: `STARTUP`, image: `./images/showroom-it.webp`, tone: `sumi`, world: `FOUNDER STORY` },
-    { industry: `小売`, image: `./images/showroom-entertainment.webp`, tone: `coral`, world: `POP / RETAIL` }
+/* うちが実際に作った35枚（images/works/）。業種・見出し・絵は1対1で対応している。
+   🔴 これは**表現サンプル**であって、実在企業の採用サイトではない。
+      「実例」「実績」と書かないこと（旧ショールームからの約束）。
+   ⚠️ 並び順を変えるとレーンへの配り方（k % 3）が変わり、業種の散り方が崩れる。
+      いまは7業種を順ぐりに並べて、3レーンに業種がばらけるようにしてある。 */
+var SR_BASE = [
+    { id: `01`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
+      title: `超える。`,
+      image: `./images/works/showroom-it-01.webp`,
+      alt: `透明なクリスタルと流体の3DグラフィックにHELLOの文字を重ねたIT企業の採用サイトFV` },
+    { id: `02`, industry: `建設・製造`, world: `ENGINEERING`, tone: `paper`,
+      title: `まだ、ここにない景色を。`,
+      image: `./images/works/showroom-construction-01.webp`,
+      alt: `巨大な高架橋の下に立つ人と、100年後。の文字を重ねた建設企業の採用サイトFV` },
+    { id: `03`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
+      title: `未来のインフラを、支えるんだ。`,
+      image: `./images/works/showroom-logistics-01.webp`,
+      alt: `夜の高速道路を走るトラックと365/24/7の大きな数字を組んだ物流企業の採用サイトFV` },
+    { id: `04`, industry: `医療・看護`, world: `CLINICAL`, tone: `coral`,
+      title: `本質を見抜き、価値をつくる。`,
+      image: `./images/works/showroom-medical-01.webp`,
+      alt: `37.0℃という体温の数字を大きく置き、看護師と患者の手を重ねた医療機関の採用サイトFV` },
+    { id: `05`, industry: `介護・福祉`, world: `WELLBEING`, tone: `sumi`,
+      title: `個性が、つながる力に。`,
+      image: `./images/works/showroom-care-01.webp`,
+      alt: `80歳の女性を主役に人生を前向きに表現した介護福祉の採用サイトFV` },
+    { id: `06`, industry: `飲食・サービス`, world: `FOOD / CRAFT`, tone: `paper`,
+      title: `Design Your Career.`,
+      image: `./images/works/showroom-food-01.webp`,
+      alt: `炎と調理風景を大きく見せた飲食店の採用サイトFV` },
+    { id: `07`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
+      title: `挑むほど、面白くなる。`,
+      image: `./images/works/showroom-entertainment-01.webp`,
+      alt: `開演5分前の暗い舞台袖を切り取り、幕と照明だけを見せたエンタメ企業の採用サイトFV` },
+    { id: `08`, industry: `IT・テック`, world: `PRODUCT DESIGN`, tone: `paper`,
+      title: `静かな革命。`,
+      image: `./images/works/showroom-it-02.webp`,
+      alt: `静かな人が深く変える、というコピーを据えたIT企業の採用サイトFV` },
+    { id: `09`, industry: `建設・製造`, world: `FIELD / CRAFT`, tone: `paper`,
+      title: `街を、未来を、つくっている。`,
+      image: `./images/works/showroom-construction-02.webp`,
+      alt: `白い建築模型と図面を俯瞰し、橋を、つくる。と置いた建設企業の採用サイトFV` },
+    { id: `10`, industry: `物流・運輸`, world: `REGIONAL / CITY`, tone: `sumi`,
+      title: `働くを、もっと自由に。`,
+      image: `./images/works/showroom-logistics-02.webp`,
+      alt: `蛍光グリーンの地に矢印と日本地図の物流網を描いた物流企業の採用サイトFV` },
+    { id: `11`, industry: `医療・看護`, world: `EDITORIAL`, tone: `coral`,
+      title: `誰かの明日を、近くする。`,
+      image: `./images/works/showroom-medical-02.webp`,
+      alt: `医療データとチームの写真を精密に構成した医療機関の採用サイトFV` },
+    { id: `12`, industry: `介護・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
+      title: `人の可能性を、ひらく。`,
+      image: `./images/works/showroom-care-02.webp`,
+      alt: `きょう、何する？の手書き文字と、利用者と職員が庭で過ごす写真を組んだ介護福祉の採用サイトFV` },
+    { id: `13`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `coral`,
+      title: `ワクワクする方へ、進め。`,
+      image: `./images/works/showroom-food-02.webp`,
+      alt: `開店前の静かな店内と、AM 5:42という時刻を組んだ飲食店の採用サイトFV` },
+    { id: `14`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `paper`,
+      title: `旅を仕事にするという生き方。`,
+      image: `./images/works/showroom-entertainment-02.webp`,
+      alt: `鮮やかなピンクとコラージュで熱狂を表現したエンタメ企業の採用サイトFV` },
+    { id: `15`, industry: `IT・テック`, world: `DIGITAL CULTURE`, tone: `sumi`,
+      title: `つくるのは、仕組みか、ミライか。`,
+      image: `./images/works/showroom-it-03.webp`,
+      alt: `NOT YETの大きな空白と線画のワイヤーフレームで余白を活かしたIT企業の採用サイトFV` },
+    { id: `16`, industry: `建設・製造`, world: `URBAN DESIGN`, tone: `paper`,
+      title: `現場から、未来を変える。`,
+      image: `./images/works/showroom-construction-03.webp`,
+      alt: `図面から現場、街へつながる仕事をグラフィカルに表現した建設企業の採用サイトFV` },
+    { id: `17`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `coral`,
+      title: `変化の真ん中へ。`,
+      image: `./images/works/showroom-logistics-03.webp`,
+      alt: `トラックの運転席から夕暮れの街を望む写真に、「いってきます」から、仕事です。と添えた物流企業の採用サイトFV` },
+    { id: `18`, industry: `医療・看護`, world: `CLINICAL`, tone: `sumi`,
+      title: `地域医療の、新しい輪郭。`,
+      image: `./images/works/showroom-medical-03.webp`,
+      alt: `病室の窓辺に立つ看護師と患者の写真に、あなたがいて、よかった。と縦書きで添えた医療機関の採用サイトFV` },
+    { id: `19`, industry: `介護・福祉`, world: `WELLBEING`, tone: `paper`,
+      title: `仕事の意味を、見つけよう。`,
+      image: `./images/works/showroom-care-03.webp`,
+      alt: `暮らす・笑う・食べる・生きるの4語を太い文字で積み、日常の写真を挟んだ介護福祉の採用サイトFV` },
+    { id: `20`, industry: `飲食・サービス`, world: `ILLUSTRATION`, tone: `sumi`,
+      title: `選ばれる理由を、つくる。`,
+      image: `./images/works/showroom-food-03.webp`,
+      alt: `黒い地に一皿だけを置き、一皿一生。と縦書きで添えた飲食店の採用サイトFV` },
+    { id: `21`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
+      title: `想像を、創造に変える。`,
+      image: `./images/works/showroom-entertainment-03.webp`,
+      alt: `つまらないなら、つくれば？という問いを漫画のコマのように構成したエンタメ企業の採用サイトFV` },
+    { id: `22`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
+      title: `テクノロジーに、温度を。`,
+      image: `./images/works/showroom-it-04.webp`,
+      alt: `コードと手書きメモを机の上に広げたようにコラージュしたIT企業の採用サイトFV` },
+    { id: `23`, industry: `建設・製造`, world: `ENGINEERING`, tone: `paper`,
+      title: `今日より、少し遠くへ。`,
+      image: `./images/works/showroom-construction-04.webp`,
+      alt: `DEKAI.の巨大なオレンジ文字とクレーンの現場写真を重ねた建設企業の採用サイトFV` },
+    { id: `24`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
+      title: `くらしを支える、その先へ。`,
+      image: `./images/works/showroom-logistics-04.webp`,
+      alt: `黄色いシャッターとフォークリフトを背に、運ぶ。以上。と大書した物流企業の採用サイトFV` },
+    { id: `25`, industry: `医療・看護`, world: `EDITORIAL`, tone: `coral`,
+      title: `誠実さを、強さに。`,
+      image: `./images/works/showroom-medical-04.webp`,
+      alt: `大きな余白の中に、そばに。の一言と病室の小さな写真だけを置いた医療機関の採用サイトFV` },
+    { id: `26`, industry: `介護・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
+      title: `ケアの景色を、更新する。`,
+      image: `./images/works/showroom-care-04.webp`,
+      alt: `鮮やかな青地に介護職、かっこよくないですか。と問いかけ、職員の横顔を置いた介護福祉の採用サイトFV` },
+    { id: `27`, industry: `飲食・サービス`, world: `FOOD / CRAFT`, tone: `paper`,
+      title: `余白から、発想する。`,
+      image: `./images/works/showroom-food-04.webp`,
+      alt: `雑誌の見開きのように畑から厨房までの写真を並べ、おいしい、の裏側へ。と置いた飲食店の採用サイトFV` },
+    { id: `28`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `coral`,
+      title: `学ぶ人から、つくる人へ。`,
+      image: `./images/works/showroom-entertainment-04.webp`,
+      alt: `誰もいない暗いスタジオに、監督椅子と照明だけを置いたエンタメ企業の採用サイトFV` },
+    { id: `29`, industry: `IT・テック`, world: `PRODUCT DESIGN`, tone: `paper`,
+      title: `好奇心を、仕事に。`,
+      image: `./images/works/showroom-it-05.webp`,
+      alt: `バグの世界をネオンカラーの壮大なイラストで描いたIT企業の採用サイトFV` },
+    { id: `30`, industry: `建設・製造`, world: `FIELD / CRAFT`, tone: `paper`,
+      title: `技術で、まだ見ぬ当たり前を。`,
+      image: `./images/works/showroom-construction-05.webp`,
+      alt: `図面から街が立ち上がる瞬間を繊細な青いイラストで表現した建設企業の採用サイトFV` },
+    { id: `31`, industry: `物流・運輸`, world: `REGIONAL / CITY`, tone: `sumi`,
+      title: `まちの記憶を、次へ。`,
+      image: `./images/works/showroom-logistics-05.webp`,
+      alt: `物流拠点と街を線で結び、見えない物流網を緻密に描いた採用サイトFV` },
+    { id: `32`, industry: `介護・福祉`, world: `WELLBEING`, tone: `coral`,
+      title: `らしさが、採用を動かす。`,
+      image: `./images/works/showroom-care-05.webp`,
+      alt: `人生のカラフルさを手描きイラストでにぎやかに表現した介護福祉の採用サイトFV` },
+    { id: `33`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `sumi`,
+      title: `売るより、出会いをつくる。`,
+      image: `./images/works/showroom-food-05.webp`,
+      alt: `食のつながりを大勢の人物と食材の温かなイラストで描いた採用サイトFV` },
+    { id: `34`, industry: `IT・テック`, world: `DIGITAL CULTURE`, tone: `coral`,
+      title: `小さな違和感から、世界を変える。`,
+      image: `./images/works/showroom-it-06.webp`,
+      alt: `エラーや発見を親しみやすい手描きモチーフで構成したIT企業の採用サイトFV` },
+    { id: `35`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `paper`,
+      title: `つながりが、未来を運ぶ。`,
+      image: `./images/works/showroom-logistics-06.webp`,
+      alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` }
 ];
 
-var SR_WORKS = (`超える。,静かな革命。,個性が、つながる力に。,挑むほど、面白くなる。,未来のインフラを、支えるんだ。,` +
-    `Design Your Career.,まだ、ここにない景色を。,本質を見抜き、価値をつくる。,旅を仕事にするという生き方。,` +
-    `ワクワクする方へ、進め。,想像を、創造に変える。,働くを、もっと自由に。,つくるのは、仕組みか、ミライか。,` +
-    `街を、未来を、つくっている。,テクノロジーに、温度を。,誰かの明日を、近くする。,変化の真ん中へ。,` +
-    `くらしを支える、その先へ。,好奇心を、仕事に。,地域医療の、新しい輪郭。,学ぶ人から、つくる人へ。,` +
-    `選ばれる理由を、つくる。,現場から、未来を変える。,今日より、少し遠くへ。,余白から、発想する。,` +
-    `人の可能性を、ひらく。,売るより、出会いをつくる。,技術で、まだ見ぬ当たり前を。,誠実さを、強さに。,` +
-    `仕事の意味を、見つけよう。,まちの記憶を、次へ。,小さな違和感から、世界を変える。,ケアの景色を、更新する。,` +
-    `つながりが、未来を運ぶ。,らしさが、採用を動かす。`).split(`,`).map((title, k) => {
-    let w = SR_WORLDS[k % SR_WORLDS.length];
-    return {
-        id: String(k + 1).padStart(2, `0`),
-        title: title,
-        ...w,
-        description: k % 3 === 0
-            ? `現場にある熱と意志を拾い上げ、挑戦する姿勢とスケール感が伝わる採用体験へ。`
-            : k % 3 === 1
-                ? `まだ言葉になっていなかった会社の魅力を、写真・コピー・余白の設計でひとつの世界観に。`
-                : `仕事の意味と働く人の温度を整理し、候補者が自分の未来を重ねられる採用サイトへ。`,
-        innerImages: [1, 4, 8, 12].map(d => SR_WORLDS[(k + d) % SR_WORLDS.length].image)
-    };
-});
+var SR_WORKS = SR_BASE.map((w, k) => ({
+    ...w,
+    description: k % 3 === 0
+        ? `現場にある熱と意志を拾い上げ、挑戦する姿勢とスケール感が伝わる採用体験へ。`
+        : k % 3 === 1
+            ? `まだ言葉になっていなかった会社の魅力を、写真・コピー・余白の設計でひとつの世界観に。`
+            : `仕事の意味と働く人の温度を整理し、候補者が自分の未来を重ねられる採用サイトへ。`,
+    /* ⚠️ ここに出るのは**別のサンプルのFV**。その会社の中面ではないので、
+       「会社を知る」「働く環境」のようなページ名を付けない（嘘になる）。業種を出す。
+       ⚠️ ずらし幅は 1,2,4,5。7業種を順ぐりに並べてあるので、この4つだと業種が必ず4つとも違う */
+    innerImages: [1, 2, 4, 5].map(d => SR_BASE[(k + d) % SR_BASE.length])
+}));
 
 // 3レーンに1枚ずつ配る。レーンごとに流れる向きが変わる
 var SR_LANES = [SR_WORKS.filter((e, k) => k % 3 === 0),
@@ -971,8 +1085,6 @@ var SR_TILES = [
     { width: 178, height: 278, gap: 45, y: -18, rotate: -.7 },
     { width: 322, height: 181, gap: 70, y: 13, rotate: 1.3 }
 ];
-
-var SR_PAGES = [`会社を知る`, `仕事を知る`, `働く環境`, `採用情報`];
 
 function Showroom() {
     let [filter, setFilter] = (0, r.useState)(`ALL`);
@@ -1013,7 +1125,7 @@ function Showroom() {
                 (0, i.jsxs)(`p`, {
                     children: [`業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`, (0, i.jsx)(`br`, {}),
-                        `その可能性を、35の実例で。`]
+                        `その可能性を、35の表現サンプルで。`]
                 }),
                 (0, i.jsxs)(`small`, {
                     children: [`7 INDUSTRIES /`, (0, i.jsx)(`br`, {}), `35 RECRUITMENT SITES`]
@@ -1073,28 +1185,23 @@ function Showroom() {
                 onClick: () => setPicked(null), "aria-label": `詳細を閉じる`, children: `×`
             }), work ? (0, i.jsxs)(`div`, {
                 className: `works-drawer-content`,
-                children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `SELECTED WORKS` }),
+                children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
                     (0, i.jsx)(`h3`, { children: work.title }),
                     (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [work.industry, `　/　`, work.world] }),
                     (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION / COLOR ON` }),
-                            (0, i.jsx)(`img`, { src: work.image, alt: `${work.title}の採用サイトファーストビュー` })]
+                            (0, i.jsx)(`img`, { src: work.image, alt: work.alt })]
                     }),
                     (0, i.jsx)(`p`, { className: `works-drawer-description`, children: work.description }),
                     (0, i.jsx)(`div`, {
                         className: `works-inner-pages`,
-                        children: work.innerImages.map((src, k) => (0, i.jsxs)(`figure`, {
-                            children: [(0, i.jsx)(`figcaption`, { children: SR_PAGES[k] }),
-                                (0, i.jsx)(`img`, { src: src, alt: `${SR_PAGES[k]}ページのプレビュー` })]
-                        }, SR_PAGES[k]))
+                        children: work.innerImages.map((other, k) => (0, i.jsxs)(`figure`, {
+                            children: [(0, i.jsx)(`figcaption`, { children: other.industry }),
+                                (0, i.jsx)(`img`, { src: other.image, alt: other.alt })]
+                        }, other.id))
                     }),
-                    (0, i.jsxs)(`button`, {
-                        type: `button`, className: `works-inside-button`,
-                        children: [(0, i.jsx)(`span`, { children: `サイトの中身を見る` }),
-                            (0, i.jsx)(`b`, { children: `→` })]
-                    }),
-                    (0, i.jsx)(`small`, { className: `works-inside-label`, children: `VIEW INSIDE` })]
+]
             }) : null]
         })]
     })
