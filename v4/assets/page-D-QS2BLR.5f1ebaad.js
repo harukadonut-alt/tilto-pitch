@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.01970373.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.01970373.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.5f1ebaad.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.5f1ebaad.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.01970373.js / rolldown-runtime-S-ySWqyJ.01970373.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.5f1ebaad.js / rolldown-runtime-S-ySWqyJ.5f1ebaad.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1191,6 +1191,8 @@ function Showroom() {
                 ref: closeRef, type: `button`, className: `works-drawer-close`,
                 onClick: () => setPicked(null), "aria-label": `詳細を閉じる`, children: `×`
             }), work ? (0, i.jsxs)(`div`, {
+                className: `works-viewer`,
+                children: [(0, i.jsxs)(`div`, {
                 className: `works-drawer-content`,
                 children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
                     (0, i.jsx)(`h3`, { children: work.title }),
@@ -1210,14 +1212,25 @@ function Showroom() {
                             (0, i.jsx)(`img`, { src: work.image, alt: work.alt })]
                     }),
                     (0, i.jsx)(`p`, { className: `works-drawer-description`, children: work.description }),
-                    (0, i.jsx)(`div`, {
-                        className: `works-inner-pages`,
-                        children: work.innerImages.map((other, k) => (0, i.jsxs)(`figure`, {
-                            children: [(0, i.jsx)(`figcaption`, { children: other.industry }),
-                                (0, i.jsx)(`img`, { src: other.image, alt: other.alt })]
-                        }, other.id))
-                    }),
 ]
+            }), (0, i.jsx)(`div`, {
+                /* 右端の縦一列。閉じずに作品を切り替えられる。
+                   ⚠️ ここは work があるときだけ描く＝クライアント側だけの要素。
+                      SSRには出ないので、index.html を触らなくてもhydrationはズレない */
+                className: `works-rail`,
+                "aria-label": `ほかの作品に切り替える`,
+                children: SR_WORKS.map(w => (0, i.jsxs)(`button`, {
+                    type: `button`,
+                    className: `works-rail-item`,
+                    "data-current": w.id === work.id ? `true` : `false`,
+                    "data-inside": w.inside ? `true` : `false`,
+                    onClick: () => setPicked(w.id),
+                    "aria-current": w.id === work.id ? `true` : void 0,
+                    "aria-label": `${w.industry}「${w.title}」に切り替える`,
+                    children: [(0, i.jsx)(`img`, { src: w.image, alt: ``, loading: `lazy` }),
+                        (0, i.jsx)(`small`, { children: w.industry })]
+                }, w.id))
+            })]
             }) : null]
         })]
     })
