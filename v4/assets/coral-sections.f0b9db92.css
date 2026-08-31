@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.1ba9a402.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.f0b9db92.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.1ba9a402.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.f0b9db92.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -500,9 +500,9 @@
     .works-lane-2 { top: 645px }
     .works-lane-3 { top: 850px }
 
-    /* タイルの業種ラベルが7px */
+    /* タイルの業種ラベル。PCと同じ9px（下の文字サイズ統一の節を見る） */
     .works-tile span small {
-        font-size: 8px
+        font-size: 9px
     }
 
     /* --- 06 PRICE ---
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.1ba9a402.css）。bands.1ba9a402.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.f0b9db92.css）。bands.f0b9db92.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.1ba9a402.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.f0b9db92.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.1ba9a402.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.f0b9db92.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.1ba9a402.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.f0b9db92.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1575,4 +1575,80 @@ html.hd-stuck .site-nav { font-size: .72vw }
 .works-filters {
     flex-wrap: wrap;
     row-gap: 9px
+}
+
+/* ── 文字サイズと書体の統一（2026-08-31・社長指示で全ページ棚卸し） ──────
+   ページの慣例はこの3つ。外れていた箇所をここで寄せる:
+     ・感情のコピー・読ませるリード → Yu Mincho 500
+     ・機能的な説明（注記・FAQ・フォーム）→ Hiragino
+     ・英字ラベル → Arial 700 ＋ 字間
+   あわせて **読ませる字の下限は10px**（1456px幅の実測で判定）。
+   ⚠️ 敢えて残した「ばらばら」は README の同名の節に一覧がある。
+   ------------------------------------------------------------------ */
+
+/* 03 リード。11.4px の Hiragino 600 だった。
+   感情のコピー（「言葉にならなかった想いを整理し…」）なので明朝に寄せ、
+   04のリード（14px Yu Mincho）と同じ大きさ帯へ */
+.process-copy p {
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(12px, .95vw, 15px);
+    font-weight: 500
+}
+
+/* 05 思想文（DESIGN PRINCIPLE）。書体の指定が無く、素のHiragino 400 16px で
+   浮いていた。ラベルは英字ラベルの慣例（Arial 700＋字間）、本文は明朝へ。
+   「お飾りだから目立たせない」（社長指示）とも同じ向き */
+.bp-principle small {
+    color: #11111f8c;
+    letter-spacing: .14em;
+    font: 700 10px/1 Arial, sans-serif;
+    display: block;
+    margin-bottom: 10px
+}
+
+.bp-principle p {
+    color: #111111b8;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(12px, .9vw, 14px);
+    font-weight: 500;
+    line-height: 1.95
+}
+
+/* 04 タイルのホバー帯。業種7px・VIEW7px は帯を出しても読めなかった */
+.works-tile > span small,
+.works-tile > span i {
+    font-size: 9px
+}
+
+.works-tile > span b {
+    font-size: 13px
+}
+
+/* 04 ビューア。「SCROLL — 下まで見られます」は操作の案内（機能的な字）なのに
+   8px だった。日本語が読める大きさへ */
+.works-site > small {
+    letter-spacing: .1em;
+    font-size: 11px
+}
+
+/* ビューア右列のラベルと業種名（8/8.5px → 10px） */
+.works-rail-head {
+    font-size: 10px
+}
+
+.works-rail-item figcaption {
+    font-size: 10px
+}
+
+/* ビューアの説明文。読ませる本文なので一段上げる */
+.works-drawer-description {
+    font-size: 13px
+}
+
+@media (max-width: 900px) {
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.f0b9db92.css の断片）。下限を守る */
+    .process-copy p {
+        font-size: 12px
+    }
 }
