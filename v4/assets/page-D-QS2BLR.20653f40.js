@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.5f1ebaad.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.5f1ebaad.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.20653f40.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.20653f40.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.5f1ebaad.js / rolldown-runtime-S-ySWqyJ.5f1ebaad.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.20653f40.js / rolldown-runtime-S-ySWqyJ.20653f40.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1168,7 +1168,11 @@ function Showroom() {
                                 "data-selected": picked === w.id ? `true` : `false`,
                                 "data-inside": w.inside ? `true` : `false`,
                                 tabIndex: copy === 1 ? -1 : 0,
-                                onClick: () => setPicked(w.id),
+                                /* 🔴 上から下まで見られる作品だけ開く。
+                                   FVだけの作品は「左に大きく」出さない（社長指示）。
+                                   カタログの中では見せるが、押しても何も起きない */
+                                onClick: w.inside ? () => setPicked(w.id) : void 0,
+                                "aria-disabled": w.inside ? void 0 : `true`,
                                 "aria-label": `${w.industry}「${w.title}」の詳細を見る`,
                                 children: [(0, i.jsx)(`img`, { src: w.image, alt: ``, loading: `lazy` }),
                                     (0, i.jsxs)(`span`, {
@@ -1213,23 +1217,17 @@ function Showroom() {
                     }),
                     (0, i.jsx)(`p`, { className: `works-drawer-description`, children: work.description }),
 ]
-            }), (0, i.jsx)(`div`, {
-                /* 右端の縦一列。閉じずに作品を切り替えられる。
+            }), (0, i.jsxs)(`div`, {
+                /* 右は「関連する表現」4点。**参照するだけ**で、押しても左は変わらない。
                    ⚠️ ここは work があるときだけ描く＝クライアント側だけの要素。
                       SSRには出ないので、index.html を触らなくてもhydrationはズレない */
                 className: `works-rail`,
-                "aria-label": `ほかの作品に切り替える`,
-                children: SR_WORKS.map(w => (0, i.jsxs)(`button`, {
-                    type: `button`,
-                    className: `works-rail-item`,
-                    "data-current": w.id === work.id ? `true` : `false`,
-                    "data-inside": w.inside ? `true` : `false`,
-                    onClick: () => setPicked(w.id),
-                    "aria-current": w.id === work.id ? `true` : void 0,
-                    "aria-label": `${w.industry}「${w.title}」に切り替える`,
-                    children: [(0, i.jsx)(`img`, { src: w.image, alt: ``, loading: `lazy` }),
-                        (0, i.jsx)(`small`, { children: w.industry })]
-                }, w.id))
+                children: [(0, i.jsx)(`small`, { className: `works-rail-head`, children: `RELATED` }),
+                    ...work.innerImages.map(other => (0, i.jsxs)(`figure`, {
+                        className: `works-rail-item`,
+                        children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
+                            (0, i.jsx)(`figcaption`, { children: other.industry })]
+                    }, other.id))]
             })]
             }) : null]
         })]
