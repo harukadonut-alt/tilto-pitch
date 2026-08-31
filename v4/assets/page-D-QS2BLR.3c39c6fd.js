@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0e41774a.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0e41774a.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3c39c6fd.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3c39c6fd.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.0e41774a.js / rolldown-runtime-S-ySWqyJ.0e41774a.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3c39c6fd.js / rolldown-runtime-S-ySWqyJ.3c39c6fd.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1107,10 +1107,8 @@ function Showroom() {
         "data-drawer-open": work ? `true` : `false`,
         children: [(0, i.jsxs)(`div`, {
             className: `works-intro`,
-            children: [(0, i.jsx)(`b`, { className: `works-brand`, children: `TILTO°` }),
-                (0, i.jsxs)(`h2`, {
-                    id: `showroom-title`,
-                    children: [(0, i.jsx)(`span`, { children: `04` }), `表現ショールーム`]
+            children: [                (0, i.jsx)(`h2`, {
+                    id: `showroom-title`, className: `sr-only`, children: `表現ショールーム`
                 }),
                 (0, i.jsx)(`div`, {
                     className: `works-filters`, role: `group`, "aria-label": `業界で絞り込む`,
@@ -1471,16 +1469,7 @@ function x() {
                         (0, i.jsx)(`br`, {}),
                         `/ DESIGN / AI-ASSISTED PRODUCTION`]
                 }),
-                (0, i.jsxs)(`div`, {
-                    className: `reference-section-label`,
-                    children: [(0, i.jsx)(`b`, {
-                            children: `01`
-                        }),
-                        (0, i.jsx)(`span`, {
-                            children: `ABOUT TILTO°`
-                        })]
-                }),
-                (0, i.jsx)(`span`, {
+                                (0, i.jsx)(`span`, {
                     className: `reference-about-vertical`,
                     "aria-hidden": `true`,
                     children: `TILTO°`
@@ -1545,16 +1534,7 @@ function x() {
             className: `reference-problems`,
             "data-motion": `problems-story`,
             "aria-labelledby": `reference-problems-title`,
-            children: [(0, i.jsxs)(`div`, {
-                    className: `reference-section-label reference-problems-label`,
-                    children: [(0, i.jsx)(`b`, {
-                            children: `02`
-                        }),
-                        (0, i.jsx)(`span`, {
-                            children: `PROBLEMS WE SOLVE`
-                        })]
-                }),
-                (0, i.jsx)(`h2`, {
+            children: [                (0, i.jsx)(`h2`, {
                     id: `reference-problems-title`,
                     className: `sr-only`,
                     children: `採用サイトで解決する3つの問題`
@@ -1628,26 +1608,7 @@ function x() {
             "data-motion": `fusion-story`,
             children: (0, i.jsxs)(`div`, {
                     className: `process-stage`,
-                    children: [(0, i.jsxs)(`div`, {
-                            className: `process-label`,
-                            "aria-hidden": `true`,
-                            children: [(0, i.jsx)(`b`, {
-                                    children: `03`
-                                }),
-                                (0, i.jsx)(`span`, {
-                                    className: `process-label-before`,
-                                    children: `BEFORE`
-                                }),
-                                (0, i.jsx)(`span`, {
-                                    className: `process-label-after`,
-                                    children: `AFTER`
-                                }),
-                                (0, i.jsx)(`i`, {}),
-                                (0, i.jsx)(`small`, {
-                                    children: `その「なんとなく」から、つくります`
-                                })]
-                        }),
-                        (0, i.jsxs)(`div`, {
+                    children: [                        (0, i.jsxs)(`div`, {
                             className: `process-copy process-copy-before`,
                             children: [(0, i.jsxs)(`h2`, {
                                     children: [(0, i.jsxs)(`span`, {
@@ -1970,14 +1931,7 @@ function x() {
             "aria-labelledby": `blueprint-title`,
             children: (0, i.jsxs)(`div`, {
                     className: `blueprint-stage`,
-                    children: [(0, i.jsxs)(`header`, {
-                            className: `bp-section-head`,
-                            children: [(0, i.jsx)(`span`, {
-                                    children: `TILTO° / SECTION 05`
-                                }),
-                                (0, i.jsx)(`i`, {})]
-                        }),
-                        (0, i.jsxs)(`div`, {
+                    children: [                        (0, i.jsxs)(`div`, {
                             className: `bp-principle`,
                             children: [(0, i.jsx)(`small`, {
                                     children: `DESIGN PRINCIPLE / 01`
@@ -2836,7 +2790,7 @@ function x() {
                             children: `06`
                         }),
                         (0, i.jsx)(`span`, {
-                            children: `PRICE / FAQ`
+                            children: `PRICE`
                         })]
                 }),
                 (0, i.jsxs)(`div`, {
@@ -2959,16 +2913,7 @@ function x() {
         (0, i.jsxs)(`footer`, {
             className: `reference-contact`,
             id: `contact`,
-            children: [(0, i.jsxs)(`div`, {
-                    className: `reference-contact-label`,
-                    children: [(0, i.jsx)(`b`, {
-                            children: `07`
-                        }),
-                        (0, i.jsx)(`span`, {
-                            children: `LET'S TALK`
-                        })]
-                }),
-                (0, i.jsxs)(`h2`, {
+            children: [                (0, i.jsxs)(`h2`, {
                     children: [`らしさを、`,
                         (0, i.jsx)(`br`, {}),
                         `採用の力に。`]
