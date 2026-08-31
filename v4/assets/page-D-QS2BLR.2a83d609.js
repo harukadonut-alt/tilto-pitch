@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0b89ab2d.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0b89ab2d.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2a83d609.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2a83d609.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,14 +899,16 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.0b89ab2d.js / rolldown-runtime-S-ySWqyJ.0b89ab2d.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.2a83d609.js / rolldown-runtime-S-ySWqyJ.2a83d609.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
    ⚠️ index.html 側のSSRは、このコンポーネントの初期描画（絞り込み=ALL・未選択）を
       そのまま貼っている。**片方だけ直すとhydrationが壊れる**ので必ず両方直すこと。
    ============================================================ */
-var SR_FILTERS = [`ALL`, `IT・テック`, `建設・製造`, `物流・運輸`, `医療・看護`, `介護・福祉`, `飲食・サービス`, `エンタメ`];
+/* 絞り込みの業種。⚠️ **まだ表現サンプルが1点も無い業種**（製造・小売／士業・コンサル／教育）も
+   ここに入れている。押しても何も残らないので、その場合は「準備中」を出す（下の hasMatch）。 */
+var SR_FILTERS = [`ALL`, `IT・テック`, `建設・不動産`, `製造・小売`, `物流・運輸`, `医療・看護`, `介護・福祉`, `飲食・サービス`, `エンタメ`, `士業・コンサル`, `教育`];
 
 /* うちが実際に作った35枚（images/works/）。業種・見出し・絵は1対1で対応している。
    🔴 これは**表現サンプル**であって、実在企業の採用サイトではない。
@@ -918,7 +920,7 @@ var SR_BASE = [
       title: `超える。`,
       image: `./images/works/showroom-it-01.webp`,
       alt: `透明なクリスタルと流体の3DグラフィックにHELLOの文字を重ねたIT企業の採用サイトFV` },
-    { id: `02`, industry: `建設・製造`, world: `ENGINEERING`, tone: `paper`,
+    { id: `02`, industry: `建設・不動産`, world: `ENGINEERING`, tone: `paper`,
       title: `まだ、ここにない景色を。`,
       image: `./images/works/showroom-construction-01.webp`,
       alt: `巨大な高架橋の下に立つ人と、100年後。の文字を重ねた建設企業の採用サイトFV` },
@@ -946,7 +948,7 @@ var SR_BASE = [
       title: `静かな革命。`,
       image: `./images/works/showroom-it-02.webp`,
       alt: `静かな人が深く変える、というコピーを据えたIT企業の採用サイトFV` },
-    { id: `09`, industry: `建設・製造`, world: `FIELD / CRAFT`, tone: `paper`,
+    { id: `09`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
       title: `街を、未来を、つくっている。`,
       image: `./images/works/showroom-construction-02.webp`,
       alt: `白い建築模型と図面を俯瞰し、橋を、つくる。と置いた建設企業の採用サイトFV` },
@@ -974,7 +976,7 @@ var SR_BASE = [
       title: `つくるのは、仕組みか、ミライか。`,
       image: `./images/works/showroom-it-03.webp`,
       alt: `NOT YETの大きな空白と線画のワイヤーフレームで余白を活かしたIT企業の採用サイトFV` },
-    { id: `16`, industry: `建設・製造`, world: `URBAN DESIGN`, tone: `paper`,
+    { id: `16`, industry: `建設・不動産`, world: `URBAN DESIGN`, tone: `paper`,
       title: `現場から、未来を変える。`,
       image: `./images/works/showroom-construction-03.webp`,
       alt: `図面から現場、街へつながる仕事をグラフィカルに表現した建設企業の採用サイトFV` },
@@ -1002,7 +1004,7 @@ var SR_BASE = [
       title: `テクノロジーに、温度を。`,
       image: `./images/works/showroom-it-04.webp`,
       alt: `コードと手書きメモを机の上に広げたようにコラージュしたIT企業の採用サイトFV` },
-    { id: `23`, industry: `建設・製造`, world: `INFRASTRUCTURE`, tone: `paper`,
+    { id: `23`, industry: `建設・不動産`, world: `INFRASTRUCTURE`, tone: `paper`,
       title: `この街は、誰かの仕事でできている。`,
       image: `./images/works/showroom-shindo-fv.webp`,
       alt: `高架下の柱に立つ作業員を見上げ、「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイトFV` },
@@ -1030,7 +1032,7 @@ var SR_BASE = [
       title: `好奇心を、仕事に。`,
       image: `./images/works/showroom-it-05.webp`,
       alt: `バグの世界をネオンカラーの壮大なイラストで描いたIT企業の採用サイトFV` },
-    { id: `30`, industry: `建設・製造`, world: `FIELD / CRAFT`, tone: `paper`,
+    { id: `30`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
       title: `技術で、まだ見ぬ当たり前を。`,
       image: `./images/works/showroom-construction-05.webp`,
       alt: `図面から街が立ち上がる瞬間を繊細な青いイラストで表現した建設企業の採用サイトFV` },
@@ -1101,6 +1103,9 @@ function Showroom() {
     let [filter, setFilter] = (0, r.useState)(`ALL`);
     let [picked, setPicked] = (0, r.useState)(null);
     let closeRef = (0, r.useRef)(null);
+    /* 🔴 サンプルが1点も無い業種で絞ると、タイルが全部薄くなるだけで壊れて見える。
+       そのときは壁の上に一言出す。⚠️ 初期は ALL なので SSR には出ない＝hydrationはズレない */
+    let hasMatch = (0, r.useMemo)(() => filter === `ALL` || SR_WORKS.some(w => w.industry === filter), [filter]);
     let work = (0, r.useMemo)(() => SR_WORKS.find(e => e.id === picked) ?? null, [picked]);
     /* 🔴 左に大きく出すのは**上から下まで見られる作品**だけ（社長指示）。
        押した作品にサイトが無いときは、いま見せられるサイトを出し、
@@ -1190,6 +1195,9 @@ function Showroom() {
                     }, `group-${copy}`))
                 })
             }, `lane-${laneNo + 1}`))
+        }), hasMatch ? null : (0, i.jsx)(`p`, {
+            className: `works-empty`,
+            children: `この業種の表現サンプルは準備中です。`
         }), (0, i.jsxs)(`aside`, {
             className: `works-drawer`,
             role: `dialog`,
@@ -1474,7 +1482,7 @@ function x() {
                 }), (0, i.jsxs)(`a`, {
                     id: `fv-cta`,
                     className: `pricing-cta`,
-                    href: `mailto:hello@tilto.jp`,
+                    href: `./contact.html`,
                     children: [(0, i.jsxs)(`span`, {
                         className: `pricing-cta-main`,
                         children: [`無料で相談する `, (0, i.jsx)(`b`, {
@@ -2981,7 +2989,7 @@ function x() {
                 }),
                 (0, i.jsxs)(`a`, {
                     className: `contact-cta`,
-                    href: `mailto:hello@tilto.jp`,
+                    href: `./contact.html`,
                     "data-cursor-label": `TALK`,
                     children: [(0, i.jsx)(`span`, {
                             children: `まずは、話してみる。`
