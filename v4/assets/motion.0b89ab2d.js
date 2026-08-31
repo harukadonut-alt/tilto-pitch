@@ -136,12 +136,15 @@
             if (kind === 'fusion-story') {
                 var p = clamp(-box.top / Math.max(1, box.height - vh));
                 var organize = ramp(.27, .66, p);
-                var reveal = ramp(.61, .84, p);
+                /* 枠の開き。⚠️ 中身のスクロール（settle）より**先に開き切る**こと。
+                   重なっていると、上が切れたまま中身が動き出す（社長の指摘） */
+                var reveal = ramp(.58, .74, p);
                 /* 完成サイトの中身を、枠の中で少しだけ下へ送る量。
                    ⚠️ 全部は見せない。WHY WE WORK が出きって、次の節の頭がのぞく
                       ところで止める（見本画像の下 約200px は最後まで見えない）。
-                      「この先も見たい」を残すのがこの節の役目 */
-                var settle = ramp(.72, 1, p);
+                      「この先も見たい」を残すのがこの節の役目
+                   ⚠️ 枠が開き切る .74 より後から始める。サイトの一番上を見せる間を作る */
+                var settle = ramp(.80, 1, p);
                 st.setProperty('--fusion-progress', p.toFixed(4));
                 st.setProperty('--process-before-opacity', (1 - ramp(.3, .59, p)).toFixed(4));
                 st.setProperty('--process-organize', organize.toFixed(4));
