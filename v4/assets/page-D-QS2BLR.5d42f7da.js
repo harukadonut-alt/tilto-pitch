@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.20653f40.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.20653f40.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.5d42f7da.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.5d42f7da.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.20653f40.js / rolldown-runtime-S-ySWqyJ.20653f40.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.5d42f7da.js / rolldown-runtime-S-ySWqyJ.5d42f7da.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1951,19 +1951,8 @@ function x() {
             children: (0, i.jsxs)(`div`, {
                     className: `blueprint-stage`,
                     children: [                        (0, i.jsxs)(`div`, {
-                            className: `bp-principle`,
-                            children: [(0, i.jsx)(`small`, {
-                                    children: `DESIGN PRINCIPLE / 01`
-                                }),
-                                (0, i.jsxs)(`p`, {
-                                    children: [`採用は、感覚じゃない。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `構造でつくり、言葉で届け、`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `体験で動かし、改善していく。`]
-                                })]
-                        }),
-                        (0, i.jsxs)(`div`, {
+                                className: `bp-lead`,
+                                children: [(0, i.jsxs)(`div`, {
                             className: `bp-copy`,
                             children: [(0, i.jsx)(`p`, {
                                     className: `bp-phase`,
@@ -1987,6 +1976,20 @@ function x() {
                                     children: `デザインの前に、設計がある。`
                                 })]
                         }),
+                                    (0, i.jsxs)(`div`, {
+                            className: `bp-principle`,
+                            children: [(0, i.jsx)(`small`, {
+                                    children: `DESIGN PRINCIPLE / 01`
+                                }),
+                                (0, i.jsxs)(`p`, {
+                                    children: [`採用は、感覚じゃない。`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `構造でつくり、言葉で届け、`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `体験で動かし、改善していく。`]
+                                })]
+                        })]
+                            }), ,
                         (0, i.jsxs)(`div`, {
                             className: `bp-board`,
                             children: [(0, i.jsxs)(`svg`, {
