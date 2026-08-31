@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.6166bb73.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.7c616bb8.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.6166bb73.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.7c616bb8.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -766,7 +766,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.6166bb73.css）。bands.6166bb73.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.7c616bb8.css）。bands.7c616bb8.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -852,7 +852,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.6166bb73.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.7c616bb8.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1197,5 +1197,111 @@ html.hd-stuck .site-nav { font-size: .72vw }
         top: 355px;
         height: 105px;
         min-height: 0
+    }
+}
+
+/* ── 04 ビューアを画面いっぱいに（2026-08-31・社長判断） ──────────────
+   移植元は右端の細いパネル（PCで428px / SPで345px）だった。
+   そこにサイトを入れても**小さすぎて何も伝わらない**ので、画面いっぱいの窓に作り直す。
+
+   「中身も見れるカタログ」の方針:
+     ・**縦長のサイト全体画像がある作品だけ**、FVから下までスクロールできる枠を出す
+     ・その作品のタイルには小さなコーラルの点を付けて、中身まで見られると分かるようにする
+     ・無い作品はFV1枚＋説明（いままでどおり）
+   ⚠️ 35点そろうのを待たない。増やすときは images/works-full/ に縦長を1枚置いて
+      page-*.js の SR_INSIDE に1行足すだけ。
+   ------------------------------------------------------------------ */
+.works-drawer {
+    z-index: 200;
+    background: #f7f4ee;
+    width: auto;
+    padding: 0;
+    transition: transform .55s cubic-bezier(.22, 1, .36, 1), visibility .55s;
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* 下からせり上がる。閉じているあいだは触れない */
+    transform: translateY(100%);
+    visibility: hidden
+}
+
+.works-showroom[data-drawer-open="true"] .works-drawer {
+    transform: none;
+    visibility: visible
+}
+
+.works-drawer-close {
+    z-index: 3;
+    color: #111;
+    background: none;
+    border: 0;
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+    line-height: 1;
+    position: fixed;
+    top: clamp(14px, 1.8vw, 30px);
+    right: clamp(14px, 2.4vw, 40px)
+}
+
+.works-drawer-content {
+    width: min(960px, 92vw);
+    margin-inline: auto;
+    padding: clamp(48px, 5vw, 84px) 0 clamp(44px, 5vw, 80px)
+}
+
+/* サイト全体を、枠の中でスクロールして見る */
+.works-site {
+    margin: clamp(20px, 2.4vw, 40px) 0 0
+}
+
+.works-site-frame {
+    background: #fff;
+    border: 1px solid #11111f2e;
+    height: clamp(320px, 56vh, 660px);
+    overflow-y: auto;
+    overscroll-behavior: contain
+}
+
+.works-site-frame img {
+    width: 100%;
+    display: block
+}
+
+.works-site > small {
+    color: #11111f8c;
+    letter-spacing: .14em;
+    margin-top: 10px;
+    font: 700 8px/1 Arial, sans-serif;
+    display: block
+}
+
+/* 中身まで見られる作品の印。小さなコーラルの点 */
+.works-tile[data-inside="true"]:before {
+    content: "";
+    z-index: 3;
+    background: var(--tone-coral);
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    box-shadow: 0 0 0 2px #f7f4ee
+}
+
+@media (max-width: 900px) {
+    .works-drawer-content {
+        width: calc(100% - 40px);
+        padding: 64px 0 40px
+    }
+
+    /* ⚠️ SPは枠が335px幅しかなく、縦長のサイトが枠の中に収まってしまって
+       スクロールする余地が無かった（実測: 画像349px < 枠422px）。
+       枠をやめて縦に全部流し、**窓そのもの**をスクロールさせる */
+    .works-site-frame {
+        height: auto;
+        overflow: visible
     }
 }

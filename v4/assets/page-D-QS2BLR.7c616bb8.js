@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6166bb73.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6166bb73.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.7c616bb8.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.7c616bb8.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.6166bb73.js / rolldown-runtime-S-ySWqyJ.6166bb73.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.7c616bb8.js / rolldown-runtime-S-ySWqyJ.7c616bb8.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1002,10 +1002,10 @@ var SR_BASE = [
       title: `テクノロジーに、温度を。`,
       image: `./images/works/showroom-it-04.webp`,
       alt: `コードと手書きメモを机の上に広げたようにコラージュしたIT企業の採用サイトFV` },
-    { id: `23`, industry: `建設・製造`, world: `ENGINEERING`, tone: `paper`,
-      title: `今日より、少し遠くへ。`,
-      image: `./images/works/showroom-construction-04.webp`,
-      alt: `DEKAI.の巨大なオレンジ文字とクレーンの現場写真を重ねた建設企業の採用サイトFV` },
+    { id: `23`, industry: `建設・製造`, world: `INFRASTRUCTURE`, tone: `paper`,
+      title: `この街は、誰かの仕事でできている。`,
+      image: `./images/works/showroom-shindo-fv.webp`,
+      alt: `高架下の柱に立つ作業員を見上げ、「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイトFV` },
     { id: `24`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
       title: `くらしを支える、その先へ。`,
       image: `./images/works/showroom-logistics-04.webp`,
@@ -1056,6 +1056,16 @@ var SR_BASE = [
       alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` }
 ];
 
+/* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
+   増やし方: images/works-full/ に縦長の画像を1枚置いて、ここに1行足すだけ。
+   ⚠️ 無い作品にうっかり書かない。押しても中身が出ない扱いになる。 */
+var SR_INSIDE = {
+    // 建設・製造「この街は、誰かの仕事でできている。」← 03で使っている縦長のサイト。
+    //   ⚠️ タイルの絵は、この縦長画像のFV部分を切り出したもの。
+    //      タイルと中身が別のサイトにならないよう、必ず同じ素材から作る
+    '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 }
+};
+
 var SR_WORKS = SR_BASE.map((w, k) => ({
     ...w,
     description: k % 3 === 0
@@ -1066,7 +1076,8 @@ var SR_WORKS = SR_BASE.map((w, k) => ({
     /* ⚠️ ここに出るのは**別のサンプルのFV**。その会社の中面ではないので、
        「会社を知る」「働く環境」のようなページ名を付けない（嘘になる）。業種を出す。
        ⚠️ ずらし幅は 1,2,4,5。7業種を順ぐりに並べてあるので、この4つだと業種が必ず4つとも違う */
-    innerImages: [1, 2, 4, 5].map(d => SR_BASE[(k + d) % SR_BASE.length])
+    innerImages: [1, 2, 4, 5].map(d => SR_BASE[(k + d) % SR_BASE.length]),
+    inside: SR_INSIDE[w.id] || null
 }));
 
 // 3レーンに1枚ずつ配る。レーンごとに流れる向きが変わる
@@ -1155,6 +1166,7 @@ function Showroom() {
                                 "data-muted": muted ? `true` : `false`,
                                 "data-tone": w.tone,
                                 "data-selected": picked === w.id ? `true` : `false`,
+                                "data-inside": w.inside ? `true` : `false`,
                                 tabIndex: copy === 1 ? -1 : 0,
                                 onClick: () => setPicked(w.id),
                                 "aria-label": `${w.industry}「${w.title}」の詳細を見る`,
@@ -1172,6 +1184,7 @@ function Showroom() {
         }), (0, i.jsxs)(`aside`, {
             className: `works-drawer`,
             role: `dialog`,
+            "aria-modal": work ? `true` : void 0,
             "aria-label": work ? `${work.title}の詳細` : `選択した作品の詳細`,
             "aria-hidden": !work,
             children: [(0, i.jsx)(`button`, {
@@ -1182,7 +1195,16 @@ function Showroom() {
                 children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
                     (0, i.jsx)(`h3`, { children: work.title }),
                     (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [work.industry, `　/　`, work.world] }),
-                    (0, i.jsxs)(`div`, {
+                    /* 中身まで見られる作品は、スクロールできる枠でサイト全体を見せる。
+                       それ以外はFV1枚。⚠️ 縦長画像が無い作品にこの枠を出さない（空になる） */
+                    work.inside ? (0, i.jsxs)(`div`, {
+                        className: `works-site`,
+                        children: [(0, i.jsx)(`div`, {
+                                className: `works-site-frame`,
+                                children: (0, i.jsx)(`img`, { src: work.inside.site, alt: work.alt })
+                            }),
+                            (0, i.jsx)(`small`, { children: `SCROLL — 下まで見られます` })]
+                    }) : (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
                             (0, i.jsx)(`img`, { src: work.image, alt: work.alt })]
