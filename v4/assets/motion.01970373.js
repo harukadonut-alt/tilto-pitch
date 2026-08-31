@@ -22,7 +22,7 @@
         var root = document.documentElement;
         var hero = document.querySelector('.hero-canvas');
         if (!hero) return;
-        var frame = 0;
+        var frame = 0, lastY = window.scrollY;
         function update() {
             frame = 0;
             var box = hero.getBoundingClientRect();
@@ -31,6 +31,18 @@
             /* 付ける/外すで閾値をずらす。同じ値だと境目で震える */
             if (!stuck && p > .78) root.classList.add('hd-stuck');
             else if (stuck && p < .70) root.classList.remove('hd-stuck');
+
+            /* 下へ読み進めている間は引っ込め、上へ戻ると出す。
+               ⚠️ 4pxの遊びを入れる。1pxでも動いたら反応させると、
+                  慣性スクロールの揺り返しでちらつく */
+            var y = window.scrollY;
+            if (root.classList.contains('hd-stuck')) {
+                if (y > lastY + 4) root.classList.add('hd-away');
+                else if (y < lastY - 4) root.classList.remove('hd-away');
+            } else {
+                root.classList.remove('hd-away');
+            }
+            lastY = y;
         }
         var req = function () { frame || (frame = window.requestAnimationFrame(update)) };
         update();

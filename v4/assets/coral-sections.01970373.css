@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.7c616bb8.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.01970373.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.7c616bb8.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.01970373.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -766,7 +766,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.7c616bb8.css）。bands.7c616bb8.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.01970373.css）。bands.01970373.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -852,7 +852,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.7c616bb8.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.01970373.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -879,12 +879,20 @@
 .site-header {
     z-index: 60;
     justify-content: space-between;
-    align-items: flex-start;
+    /* ⚠️ flex-start だとロゴが帯の上に寄る（社長の指摘）。上下中央に揃える */
+    align-items: center;
     height: auto;
     padding: 1.04vw 2.15vw 1.04vw 1.81vw;
-    transition: background-color .3s, padding .3s, box-shadow .3s;
+    transition: background-color .3s, padding .3s, box-shadow .3s, transform .38s cubic-bezier(.22, 1, .36, 1);
     position: fixed;
     inset: 0 0 auto
+}
+
+/* 🔴 下へ読み進めている間は引っ込める。
+   出しっぱなしだと、節の頭がヘッダーの帯にいつも隠れる（社長の指摘）。
+   上へスクロールすればすぐ戻るので、追従の役目は失われない */
+html.hd-away .site-header {
+    transform: translateY(-101%)
 }
 
 .brand { font-size: 2.65vw }
@@ -894,7 +902,7 @@
 html.hd-stuck .site-header {
     background: #f7f4eef2;
     box-shadow: 0 1px #11111f1a, 0 8px 22px #1111110d;
-    padding: .62vw 2.15vw .62vw 1.81vw;
+    padding: .5vw 2.15vw .5vw 1.81vw;
     -webkit-backdrop-filter: saturate(1.4) blur(6px);
             backdrop-filter: saturate(1.4) blur(6px)
 }
