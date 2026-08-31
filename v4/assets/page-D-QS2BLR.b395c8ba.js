@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.0a4772ce.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.0a4772ce.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.b395c8ba.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.b395c8ba.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.0a4772ce.js / rolldown-runtime-S-ySWqyJ.0a4772ce.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.b395c8ba.js / rolldown-runtime-S-ySWqyJ.b395c8ba.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2763,19 +2763,16 @@ function x() {
             id: `price`,
             "aria-labelledby": `pricing-title`,
             children: [(0, i.jsxs)(`div`, {
-                    className: `reference-price-label`,
-                    children: [(0, i.jsx)(`b`, {
-                            children: `06`
-                        }),
-                        (0, i.jsx)(`span`, {
+                    className: `pf-col pf-col--price`,
+                    children: [(0, i.jsx)(`p`, {
+                            className: `pf-label`,
                             children: `PRICE`
-                        })]
-                }),
-                (0, i.jsxs)(`div`, {
-                    className: `reference-price-main`,
-                    children: [(0, i.jsxs)(`h2`, {
+                        }),
+                        (0, i.jsxs)(`h2`, {
                             id: `pricing-title`,
+                            className: `pf-fig`,
                             children: [(0, i.jsx)(`span`, {
+                                    className: `pf-cap`,
                                     children: `月額`
                                 }),
                                 (0, i.jsx)(`strong`, {
@@ -2788,107 +2785,151 @@ function x() {
                                     children: `/ MONTH`
                                 })]
                         }),
-                        (0, i.jsxs)(`p`, {
-                            children: [`※表示価格は基本プランの月額料金です。`,
-                                (0, i.jsx)(`br`, {}),
-                                `※内容や更新範囲に応じてご案内します。`]
+                        (0, i.jsxs)(`div`, {
+                            className: `pf-foot`,
+                            children: [(0, i.jsxs)(`p`, {
+                                    className: `pf-note`,
+                                    children: [(0, i.jsx)(`span`, {
+                                            children: `※`
+                                        }),
+                                        `表示価格は基本プランの月額料金です。`,
+                                        (0, i.jsx)(`br`, {}),
+                                        (0, i.jsx)(`span`, {
+                                            children: `※`
+                                        }),
+                                        `内容や更新範囲に応じてご案内します。`]
+                                }),
+                                (0, i.jsxs)(`p`, {
+                                    className: `pf-init`,
+                                    children: [(0, i.jsx)(`span`, {
+                                            children: `初期費用`
+                                        }),
+                                        (0, i.jsx)(`strong`, {
+                                            children: `0`
+                                        }),
+                                        (0, i.jsx)(`b`, {
+                                            children: `円`
+                                        })]
+                                })]
                         })]
                 }),
                 (0, i.jsxs)(`div`, {
-                    className: `reference-initial-cost`,
-                    children: [(0, i.jsx)(`span`, {
-                            children: `初期費用`
-                        }),
-                        (0, i.jsx)(`strong`, {
-                            children: `0`
-                        }),
-                        (0, i.jsx)(`b`, {
-                            children: `円`
-                        })]
-                }),
-                (0, i.jsxs)(`div`, {
-                    className: `reference-faq`,
-                    "aria-labelledby": `faq-title`,
+                    className: `pf-col pf-col--faq`,
                     children: [(0, i.jsx)(`h2`, {
+                            className: `pf-label`,
                             id: `faq-title`,
                             children: `FAQ`
                         }),
-                        (0, i.jsxs)(`details`, {
-                            open: true,
-                            children: [(0, i.jsxs)(`summary`, {
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `Q.　最低契約期間はありますか？`
+                        (0, i.jsxs)(`div`, {
+                            className: `pf-list`,
+                            "aria-labelledby": `faq-title`,
+                            children: [(0, i.jsxs)(`details`, {
+                                    open: true,
+                                    children: [(0, i.jsxs)(`summary`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `Q.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `最低契約期間はありますか？`
+                                                }),
+                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
                                         }),
-                                        (0, i.jsx)(`i`, {
-                                            children: `−`
+                                        (0, i.jsxs)(`p`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `A.`
+                                                }),
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [`最低契約期間は6ヶ月です。`,
+                                                        (0, i.jsx)(`br`, {}),
+                                                        `6ヶ月以降は1ヶ月単位で契約更新が可能です。`]
+                                                })]
                                         })]
                                 }),
-                                (0, i.jsxs)(`p`, {
-                                    children: [`A.　最低契約期間は6ヶ月です。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `　　6ヶ月以降は1ヶ月単位で契約更新が可能です。`]
-                                })]
-                        }),
-                        (0, i.jsxs)(`details`, {
-                            children: [(0, i.jsxs)(`summary`, {
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `Q.　契約中の解約はどこまで対応してもらえますか？`
+                                (0, i.jsxs)(`details`, {
+                                    children: [(0, i.jsxs)(`summary`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `Q.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `契約中の解約はどこまで対応してもらえますか？`
+                                                }),
+                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
                                         }),
-                                        (0, i.jsx)(`i`, {
-                                            children: `＋`
+                                        (0, i.jsxs)(`p`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `A.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `契約内容と制作状況を確認し、個別にご案内します。`
+                                                })]
                                         })]
                                 }),
-                                (0, i.jsx)(`p`, {
-                                    children: `A.　契約内容と制作状況を確認し、個別にご案内します。`
-                                })]
-                        }),
-                        (0, i.jsxs)(`details`, {
-                            children: [(0, i.jsxs)(`summary`, {
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `Q.　原稿や写真がなくても大丈夫ですか？`
+                                (0, i.jsxs)(`details`, {
+                                    children: [(0, i.jsxs)(`summary`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `Q.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `原稿や写真がなくても大丈夫ですか？`
+                                                }),
+                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
                                         }),
-                                        (0, i.jsx)(`i`, {
-                                            children: `＋`
+                                        (0, i.jsxs)(`p`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `A.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `大丈夫です。企画・原稿整理から一緒に進められます。`
+                                                })]
                                         })]
                                 }),
-                                (0, i.jsx)(`p`, {
-                                    children: `A.　大丈夫です。企画・原稿整理から一緒に進められます。`
-                                })]
-                        }),
-                        (0, i.jsxs)(`details`, {
-                            children: [(0, i.jsxs)(`summary`, {
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `Q.　公開までどれくらいかかりますか？`
+                                (0, i.jsxs)(`details`, {
+                                    children: [(0, i.jsxs)(`summary`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `Q.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `公開までどれくらいかかりますか？`
+                                                }),
+                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
                                         }),
-                                        (0, i.jsx)(`i`, {
-                                            children: `＋`
+                                        (0, i.jsxs)(`p`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `A.`
+                                                }),
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [`ご提案は最短1週間です。`,
+                                                        (0, i.jsx)(`br`, {}),
+                                                        `公開までは内容や規模に応じてご案内します。`]
+                                                })]
                                         })]
                                 }),
-                                (0, i.jsxs)(`p`, {
-                                    children: [`A.　ご提案は最短1週間です。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `　　公開までは内容や規模に応じてご案内します。`]
-                                })]
-                        }),
-                        (0, i.jsxs)(`details`, {
-                            children: [(0, i.jsxs)(`summary`, {
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `Q.　他の制作会社との違いは何ですか？`
+                                (0, i.jsxs)(`details`, {
+                                    children: [(0, i.jsxs)(`summary`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `Q.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `他の制作会社との違いは何ですか？`
+                                                }),
+                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
                                         }),
-                                        (0, i.jsx)(`i`, {
-                                            children: `＋`
+                                        (0, i.jsxs)(`p`, {
+                                            children: [(0, i.jsx)(`b`, {
+                                                    children: `A.`
+                                                }),
+                                                (0, i.jsx)(`span`, {
+                                                    children: `公開後も継続して更新・改善することを前提に設計します。`
+                                                })]
                                         })]
-                                }),
-                                (0, i.jsx)(`p`, {
-                                    children: `A.　公開後も継続して更新・改善することを前提に設計します。`
                                 })]
                         }),
-                        (0, i.jsx)(`small`, {
-                            children: `and more...`
+                        (0, i.jsx)(`p`, {
+                            className: `pf-more`,
+                            children: `and more…`
                         })]
                 })]
-        }),
-        (0, i.jsxs)(`footer`, {
+        }), (0, i.jsxs)(`footer`, {
             className: `reference-contact`,
             id: `contact`,
             children: [                (0, i.jsxs)(`h2`, {

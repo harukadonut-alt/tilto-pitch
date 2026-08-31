@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.0a4772ce.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.b395c8ba.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.0a4772ce.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.b395c8ba.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -766,7 +766,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.0a4772ce.css）。bands.0a4772ce.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.b395c8ba.css）。bands.b395c8ba.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -852,7 +852,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.0a4772ce.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.b395c8ba.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -931,4 +931,241 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
     .brand,
     html.hd-stuck .brand { font-size: 30px }
+}
+
+/* ── 06 PRICE / FAQ を組み直し（2026-08-31・社長のカンプ） ────────────
+   左右2段。あいだに縦罫。各段の頭に見出し＋横罫。
+   左: 月額（小）→ 27,000（特大）→ 円 → / MONTH（右下）→ 横罫 → ※注記 ｜ 初期費用 0 円
+   右: Q. + 設問 + ＋/−。**開いている行はコーラル**。A. は設問の頭に揃える
+
+   ⚠️ 旧CSS（.reference-price-main / .reference-initial-cost / .reference-faq）は
+      cssx.py の REWRITTEN で抜かないようにしてある。ここが唯一の指定。
+   ------------------------------------------------------------------ */
+.reference-price-faq {
+    color: #111;
+    background: #f7f4ee;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(36px, 6.4vw, 100px);
+    height: auto;
+    min-height: 0;
+    padding: clamp(56px, 6.2vw, 96px) clamp(22px, 4.6vw, 72px) clamp(48px, 5.4vw, 84px);
+    display: grid;
+    position: relative
+}
+
+/* 2段を分ける縦罫。カンプでは見出しの少し上から最後の行の下まで通る */
+.reference-price-faq:after {
+    content: "";
+    background: #11111f2b;
+    width: 1px;
+    position: absolute;
+    top: clamp(40px, 4.6vw, 72px);
+    bottom: clamp(34px, 4vw, 62px);
+    left: 50%
+}
+
+/* PRICE / FAQ の見出し。下に横罫を敷く */
+.pf-label {
+    color: #111;
+    letter-spacing: .2em;
+    border-bottom: 1px solid #111;
+    margin: 0;
+    padding-bottom: clamp(12px, 1.15vw, 19px);
+    font: 500 clamp(12px, 1.06vw, 17px)/1 Arial, sans-serif
+}
+
+/* --- 左: 金額 --- */
+.pf-fig {
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: clamp(26px, 3vw, 48px) 0 0;
+    display: flex
+}
+
+.pf-fig .pf-cap {
+    align-self: flex-start;
+    margin: clamp(6px, .7vw, 12px) clamp(10px, 1.1vw, 18px) 0 0;
+    font-size: clamp(15px, 1.4vw, 22px);
+    font-weight: 500
+}
+
+.pf-fig strong {
+    letter-spacing: -.012em;
+    /* カンプでは数字が左段の幅の8割ほどを占める。実測で 11.2vw が近い */
+    font: 400 clamp(84px, 11.2vw, 176px)/.9 Helvetica Neue, Arial, sans-serif
+}
+
+.pf-fig b {
+    align-self: flex-end;
+    margin: 0 0 clamp(6px, .8vw, 13px) clamp(6px, .7vw, 11px);
+    font-size: clamp(24px, 2.7vw, 42px);
+    font-weight: 500
+}
+
+/* / MONTH は数字の右下。行を折り返して右へ寄せる */
+.pf-fig small {
+    text-align: right;
+    letter-spacing: .04em;
+    flex-basis: 100%;
+    margin-top: clamp(4px, .55vw, 9px);
+    font: 400 clamp(14px, 1.5vw, 23px)/1 Helvetica Neue, Arial, sans-serif
+}
+
+/* --- 左下: ※注記 ｜ 初期費用 --- */
+.pf-foot {
+    border-top: 1px solid #11111f2b;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 40px);
+    margin-top: clamp(22px, 2.4vw, 38px);
+    padding-top: clamp(22px, 2.4vw, 38px);
+    display: flex
+}
+
+.pf-note {
+    flex: 1;
+    margin: 0;
+    font-size: clamp(11px, .96vw, 15px);
+    font-weight: 500;
+    line-height: 2
+}
+
+.pf-note span {
+    margin-right: .6em
+}
+
+.pf-init {
+    border-left: 1px solid #11111f2b;
+    align-items: baseline;
+    gap: clamp(10px, 1.1vw, 18px);
+    margin: 0;
+    padding-left: clamp(18px, 2.4vw, 40px);
+    display: flex
+}
+
+.pf-init span {
+    font-size: clamp(14px, 1.28vw, 20px);
+    font-weight: 500
+}
+
+.pf-init strong {
+    letter-spacing: -.02em;
+    font: 400 clamp(34px, 3.7vw, 58px)/1 Helvetica Neue, Arial, sans-serif
+}
+
+.pf-init b {
+    font-size: clamp(15px, 1.35vw, 21px);
+    font-weight: 500
+}
+
+/* --- 右: FAQ --- */
+.pf-list details {
+    border-bottom: 1px solid #11111f26
+}
+
+.pf-list summary {
+    cursor: pointer;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 clamp(12px, 1.5vw, 26px);
+    padding: clamp(14px, 1.55vw, 25px) 0;
+    list-style: none;
+    display: grid
+}
+
+.pf-list summary::-webkit-details-marker { display: none }
+
+.pf-list summary b {
+    font: 700 clamp(11px, .95vw, 15px)/1.75 Arial, sans-serif
+}
+
+.pf-list summary span {
+    font-size: clamp(12.5px, 1.12vw, 17px);
+    font-weight: 500;
+    line-height: 1.75
+}
+
+/* ＋ と −。
+   🔴 記号をマークアップに直接書かない。書くと**別の行を開いても＋のまま**になる
+      （最初の実装でそうなっていた）。開閉はCSSで出し分ける */
+.pf-list summary i {
+    justify-self: end;
+    font-size: clamp(14px, 1.25vw, 19px);
+    font-style: normal;
+    line-height: 1
+}
+
+.pf-list summary i:before { content: "＋" }
+.pf-list details[open] summary i:before { content: "−" }
+
+/* 開いている行はコーラル。カンプの見どころ */
+.pf-list details[open] summary b,
+.pf-list details[open] summary span,
+.pf-list details[open] summary i {
+    color: var(--tone-coral)
+}
+
+/* 答えは設問の頭に揃える（A. の列を作る） */
+.pf-list details p {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0 clamp(12px, 1.5vw, 26px);
+    margin: 0 0 clamp(18px, 1.95vw, 32px);
+    display: grid
+}
+
+.pf-list details p b {
+    font: 700 clamp(11px, .95vw, 15px)/1.9 Arial, sans-serif
+}
+
+.pf-list details p span {
+    color: #111111d6;
+    font-size: clamp(12px, 1.05vw, 16px);
+    font-weight: 500;
+    line-height: 1.9
+}
+
+.pf-more {
+    color: #11111f8c;
+    text-align: right;
+    letter-spacing: .04em;
+    margin: clamp(12px, 1.3vw, 21px) 0 0;
+    font: 400 clamp(10px, .88vw, 13px)/1 Arial, sans-serif
+}
+
+@media (max-width: 900px) {
+    /* SPは縦積み。縦罫は畳む */
+    .reference-price-faq {
+        grid-template-columns: 1fr;
+        row-gap: 52px;
+        padding: 78px 22px 46px
+    }
+
+    .reference-price-faq:after { display: none }
+
+    /* ⚠️ 月額を数字と同じ行に置くと、幅が足りず「円」が次の行へ落ちる（実測）。
+       SPでは月額を独立した行にして、数字と円を1行に収める */
+    .pf-fig .pf-cap {
+        flex-basis: 100%;
+        margin: 0 0 6px;
+        font-size: 16px
+    }
+
+    .pf-fig strong { font-size: 26vw }
+    .pf-fig b { font-size: 22px; margin-bottom: 4px }
+    .pf-fig small { font-size: 14px }
+
+    /* 幅が足りないので注記と初期費用を縦に積む */
+    .pf-foot {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px
+    }
+
+    .pf-init {
+        border-top: 1px solid #11111f2b;
+        border-left: 0;
+        justify-content: flex-end;
+        padding: 20px 0 0
+    }
+
+    .pf-init strong { font-size: 44px }
 }
