@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.2a83d609.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.2a83d609.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.79013432.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.79013432.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.2a83d609.js / rolldown-runtime-S-ySWqyJ.2a83d609.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.79013432.js / rolldown-runtime-S-ySWqyJ.79013432.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1062,7 +1062,7 @@ var SR_BASE = [
    増やし方: images/works-full/ に縦長の画像を1枚置いて、ここに1行足すだけ。
    ⚠️ 無い作品にうっかり書かない。押しても中身が出ない扱いになる。 */
 var SR_INSIDE = {
-    // 建設・製造「この街は、誰かの仕事でできている。」← 03で使っている縦長のサイト。
+    // 建設・不動産「この街は、誰かの仕事でできている。」← 03で使っている縦長のサイト。
     //   ⚠️ タイルの絵は、この縦長画像のFV部分を切り出したもの。
     //      タイルと中身が別のサイトにならないよう、必ず同じ素材から作る
     '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 }
