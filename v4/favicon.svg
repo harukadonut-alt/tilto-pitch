@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- とりあえず版（2026-09-01）。ちゃんとしたアイコンは宿題③で別途制作。
+       墨地に、ブランドのセリフ体の T ＋ コーラルの °（Tilto°の度記号） -->
+  <rect width="64" height="64" fill="#111111"/>
+  <text x="26" y="47" text-anchor="middle" font-family="Didot, 'Bodoni 72', Georgia, 'Times New Roman', serif" font-size="44" font-weight="500" fill="#f7f4ee">T</text>
+  <circle cx="45" cy="17" r="6" fill="none" stroke="#ff4d4f" stroke-width="3.6"/>
+</svg>

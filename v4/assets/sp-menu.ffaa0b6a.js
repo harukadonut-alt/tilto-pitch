@@ -1,7 +1,7 @@
 /* SPのメニュー（2026-08-24）。700px以下でだけ動く。
 
    🔴 DOMは load 後に足す。このページは React が hydrate するので、
-      SSRのHTMLに書き足すと消される恐れがある（cursor.0ffa8ff7.js と同じ方針）。
+      SSRのHTMLに書き足すと消される恐れがある（cursor.ffaa0b6a.js と同じ方針）。
    🔴 既存の `.site-nav` は触らない。中の「カタログ」ボタンは React が
       onClick を持っている（帯の停止）ので、動かすと機能が壊れる。
       メニューは別物として新しく作り、SPでは元のナビをCSSで隠す。
@@ -43,7 +43,7 @@
           `<a href="#top" data-to="${sel}"><b>0${i + 1}</b>${label}</a>`
       ).join('') +
       '</nav>' +
-      '<a class="sp-menu__cta" href="#top" data-to=".pricing-cta-main">無料で相談する<span aria-hidden="true">↗</span></a>';
+      '<a class="sp-menu__cta" href="./contact.html">無料で相談する<span aria-hidden="true">↗</span></a>';
 
     /* 🔴 このページの React のルートは **body**（Next.jsが body ごと描く）。
        つまり body の子は React の管理下で、hydration のあとに
