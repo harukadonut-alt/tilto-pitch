@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.d3769d09.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.0e41774a.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.d3769d09.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.0e41774a.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -758,4 +758,61 @@
         border-width: 2px;
         box-shadow: 0 6px 14px #1111112e, 0 1px 3px #1111111a
     }
+}
+
+/* ── 見出しの幕（FVと同じ演出を下の5本にも・2026-08-31・社長指示） ────
+   FVのしくみ: 1行ぶんの箱に幕を4枚重ね、右から左へ scaleX(1)→scaleX(0) で剥がす。
+   薄い色から順に剥がれ、最後に地の色（＝文字色）の幕が抜けて文字が現れる。
+
+   ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
+      中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.0e41774a.css）。bands.0e41774a.js が動かなくても文字は読める。
+   ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
+      文字がその色から立ち上がって見える。
+   ------------------------------------------------------------------ */
+.hl-line {
+    position: relative
+}
+
+/* 紙地・墨文字の節（01 ABOUT / 03 体験） */
+.reference-about .hl-b1,
+.process-section .hl-b1 { background: #111 }
+.reference-about .hl-b2,
+.process-section .hl-b2 { background: #c9352f }
+.reference-about .hl-b3,
+.process-section .hl-b3 { background: var(--tone-coral) }
+.reference-about .hl-b4,
+.process-section .hl-b4 { background: #e9e3d6 }
+
+/* 黒地・紙文字の節（02 お悩みの着地 / 05 成果にこだわる） */
+.reference-problems .hl-b1,
+.blueprint-trust .hl-b1 { background: #f7f4ee }
+.reference-problems .hl-b2,
+.blueprint-trust .hl-b2 { background: var(--tone-coral) }
+.reference-problems .hl-b3,
+.blueprint-trust .hl-b3 { background: #c9352f }
+.reference-problems .hl-b4,
+.blueprint-trust .hl-b4 { background: #2c2a27 }
+
+/* 見えたときに1回だけ。0.11秒ずつずらすのはFVと同じ間合い */
+.hl-line.hl-in .hl-band {
+    animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
+}
+
+.hl-line.hl-in .hl-b4 { animation-delay: 0s }
+.hl-line.hl-in .hl-b3 { animation-delay: .11s }
+.hl-line.hl-in .hl-b2 { animation-delay: .22s }
+.hl-line.hl-in .hl-b1 { animation-delay: .33s }
+
+/* 2行目はさらに0.1秒遅らせて、上の行から順に開く */
+.hl-line:nth-of-type(2).hl-in .hl-b4 { animation-delay: .1s }
+.hl-line:nth-of-type(2).hl-in .hl-b3 { animation-delay: .21s }
+.hl-line:nth-of-type(2).hl-in .hl-b2 { animation-delay: .32s }
+.hl-line:nth-of-type(2).hl-in .hl-b1 { animation-delay: .43s }
+
+@media (prefers-reduced-motion: reduce) {
+    /* ⚠️ .hl-line.hl-in .hl-band と同じ強さで書く。
+       `.hl-line .hl-band`（弱い）だと、クラスが付いた瞬間に負けて動いてしまう */
+    .hl-line.hl-in .hl-band,
+    .hl-line .hl-band { animation: none }
 }

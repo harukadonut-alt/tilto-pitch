@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.d3769d09.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.d3769d09.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.0e41774a.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.0e41774a.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.d3769d09.js / rolldown-runtime-S-ySWqyJ.d3769d09.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.0e41774a.js / rolldown-runtime-S-ySWqyJ.0e41774a.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1489,13 +1489,19 @@ function x() {
                     className: `reference-about-copy`,
                     children: [(0, i.jsxs)(`h2`, {
                             id: `reference-about-title`,
-                            children: [`つくる。`,
-                                (0, i.jsx)(`br`, { className: `sp-only` }),
-                                `だけじゃない。`,
+                            children: [(0, i.jsxs)(`span`, {
+                                className: `hl-line`,
+                                children: [`つくる。`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `だけじゃない。`,
+                                    (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                            }),
                                 (0, i.jsx)(`br`, {}),
-                                `採用サイトを、`,
-                                (0, i.jsx)(`br`, { className: `sp-only` }),
-                                `持ち、育てる。`]
+                                (0, i.jsxs)(`span`, {
+                                className: `hl-line`,
+                                children: [`採用サイトを、`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `持ち、育てる。`,
+                                    (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                            })]
                         }),
                         (0, i.jsx)(`p`, {
                             children: `公開して終わりにしない。採用の変化とともに、更新し、改善しつづける。`
@@ -1600,12 +1606,13 @@ function x() {
                             children: `RETHINK THE RECRUITMENT SITE.`
                         }),
                         (0, i.jsxs)(`span`, {
-                            children: [`採用サイトの常識を、`,
-                                (0, i.jsx)(`br`, { className: `sp-only` }),
-                                `更新する`,
-                                (0, i.jsx)(`i`, {
-                                    children: `。`
-                                })]
+                            children: (0, i.jsxs)(`span`, {
+                                className: `hl-line`,
+                                children: [`採用サイトの常識を、`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `更新する`,
+                                    (0, i.jsx)(`i`, { children: `。` }),
+                                    (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                            })
                         })]
                 }),
                 (0, i.jsxs)(`span`, {
@@ -1643,9 +1650,17 @@ function x() {
                         (0, i.jsxs)(`div`, {
                             className: `process-copy process-copy-before`,
                             children: [(0, i.jsxs)(`h2`, {
-                                    children: [`まだ、うまく`,
+                                    children: [(0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`まだ、うまく`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    }),
                                         (0, i.jsx)(`br`, {}),
-                                        `言えなくていい。`]
+                                        (0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`言えなくていい。`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    })]
                                 }),
                                 (0, i.jsxs)(`p`, {
                                     children: [`その「なんとなく」を、ちゃんと形にする。`,
@@ -1658,9 +1673,17 @@ function x() {
 (0, i.jsxs)(`div`, {
                             className: `process-copy process-copy-after`,
                             children: [(0, i.jsxs)(`h2`, {
-                                    children: [`曖昧な相談が、`,
+                                    children: [(0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`曖昧な相談が、`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    }),
                                         (0, i.jsx)(`br`, {}),
-                                        `採用サイトになる。`]
+                                        (0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`採用サイトになる。`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    })]
                                 }),
                                 (0, i.jsxs)(`p`, {
                                     children: [`言葉にならなかった想いを整理し、`,
@@ -1975,9 +1998,17 @@ function x() {
                                 }),
                                 (0, i.jsxs)(`h2`, {
                                     id: `blueprint-title`,
-                                    children: [`美しいだけでは、`,
+                                    children: [(0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`美しいだけでは、`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    }),
                                         (0, i.jsx)(`br`, {}),
-                                        `採用は動かない。`]
+                                        (0, i.jsxs)(`span`, {
+                                        className: `hl-line`,
+                                        children: [`採用は動かない。`,
+                                            (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
+                                    })]
                                 }),
                                 (0, i.jsx)(`h3`, {
                                     children: `デザインの前に、設計がある。`
