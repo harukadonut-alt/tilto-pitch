@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.79013432.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.1ba9a402.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.79013432.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.1ba9a402.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.79013432.css）。bands.79013432.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.1ba9a402.css）。bands.1ba9a402.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.79013432.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.1ba9a402.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -977,11 +977,13 @@ html.hd-stuck .site-nav { font-size: .72vw }
     display: flex
 }
 
+/* 🔴 月額を数字の左に置くと、数字の頭が48px右から始まり、円・/MONTHが
+      縦罫ぎわまで届いて**塊ぜんぶが右寄りに見えた**（2026-08-31社長の指摘）。
+      PCも月額を上の行に積んで（SPと同じ形）、数字を左端から立てる。
+      月額そのものも「ちっちゃい」と言われたので 1.12→1.5vw に */
 .pf-fig .pf-cap {
-    align-self: flex-start;
-    margin: clamp(6px, .7vw, 12px) clamp(10px, 1.1vw, 18px) 0 0;
-    /* 数字を立てるぶん、月額は小さく（社長指示・1.4→1.12vw） */
-    font-size: clamp(13px, 1.12vw, 17px);
+    margin: 0 0 clamp(8px, .9vw, 15px);
+    font-size: clamp(15px, 1.5vw, 23px);
     font-weight: 500
 }
 
@@ -989,23 +991,34 @@ html.hd-stuck .site-nav { font-size: .72vw }
     letter-spacing: -.012em;
     /* 数字は左段の主役。ただし**同じ行に「円」が残る大きさ**が上限。
        🔴 12.4vw にしたら幅が足りず、円が次の行に落ちて左端に来た（社長の指摘）。
-          左段608px − 月額32 − 余白16 − 円の余白10 − 円39 = 数字に使えるのは511px。
-          この字は font-size 1px あたり約2.98px の幅なので 511 ÷ 2.98 ≒ 171px ＝ 11.8vw が上限 */
-    font: 400 clamp(92px, 11.8vw, 190px)/.9 Helvetica Neue, Arial, sans-serif
+       月額を上の行へ移して左端から立つようになったぶん、少し落として
+       右側に息をつくらせる（11.8→11.2vw。円の右と縦罫のあいだ実測89px） */
+    font: 400 clamp(92px, 11.2vw, 182px)/.9 Helvetica Neue, Arial, sans-serif
 }
 
 .pf-fig b {
-    align-self: flex-end;
+    align-self: end;
     margin: 0 0 clamp(6px, .8vw, 13px) clamp(6px, .7vw, 11px);
     font-size: clamp(24px, 2.7vw, 42px);
     font-weight: 500
 }
 
-/* / MONTH は数字の右下。行を折り返して右へ寄せる */
+/* / MONTH は数字の右下。**列の右端（=縦罫ぎわ）でなく円の右端**に揃える。
+   🔴 flex+wrap+fit-content では畳まれない（wrap前の1行合計で幅が決まり、
+      列幅いっぱいに張り付く。実測664pxのまま）。gridなら
+      塊の幅＝いちばん広い行（数字+円）になるので、こちらで組む */
+.pf-fig {
+    grid-template-columns: auto auto;
+    justify-content: start;
+    display: inline-grid
+}
+
+.pf-fig .pf-cap,
+.pf-fig small { grid-column: 1 / -1 }
+
 .pf-fig small {
     text-align: right;
     letter-spacing: .04em;
-    flex-basis: 100%;
     margin-top: clamp(4px, .55vw, 9px);
     font: 400 clamp(14px, 1.5vw, 23px)/1 Helvetica Neue, Arial, sans-serif
 }
@@ -1145,9 +1158,8 @@ html.hd-stuck .site-nav { font-size: .72vw }
     /* ⚠️ 月額を数字と同じ行に置くと、幅が足りず「円」が次の行へ落ちる（実測）。
        SPでは月額を独立した行にして、数字と円を1行に収める */
     .pf-fig .pf-cap {
-        flex-basis: 100%;
         margin: 0 0 6px;
-        font-size: 16px
+        font-size: 17px
     }
 
     .pf-fig strong { font-size: 26vw }
@@ -1484,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.79013432.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.1ba9a402.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1497,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.79013432.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.1ba9a402.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
