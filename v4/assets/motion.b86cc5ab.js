@@ -136,29 +136,37 @@
             // 05 成果にこだわる: 設計図が段ごとに立ち上がる
             if (kind === 'blueprint-story') {
                 var b = clamp(-box.top / Math.max(1, box.height - vh));
-                var foundation = ramp(.1, .22, b);
-                var notes = ramp(.62, .76, b);
-                var kpi = ramp(.76, .9, b);
+
+                /* 🔴 節が画面に**入ってくる間**の進捗。b は「節の上端が画面上端に着いてから」
+                   しか動かないので、それまで図面が rest のまま薄く見えてしまっていた。
+                   arrive で図面全体をゲートし、出現も前倒しする。
+                   0 = 節の上端が画面下端 / 1 = 上端が画面の38%まで上がった */
+                var arrive = clamp((vh - box.top) / Math.max(1, vh * .62));
+                st.setProperty('--bp-arrive', arrive.toFixed(4));
+                var foundation = ramp(0, .10, b);
+                var notes = ramp(.50, .63, b);
+                var kpi = ramp(.63, .77, b);
                 st.setProperty('--bp-progress', b.toFixed(4));
-                var intro = ramp(0, .1, b);
+                /* 見出しは節が入ってくる間に出す（b を待たない） */
+                var intro = ramp(.3, .85, arrive);
                 st.setProperty('--bp-intro', intro.toFixed(4));
                 if (intro > .06) wipe(el.querySelector('.bp-copy'), 'bp');
                 st.setProperty('--bp-foundation', foundation.toFixed(4));
-                st.setProperty('--bp-information', ramp(.22, .32, b).toFixed(4));
-                st.setProperty('--bp-ui', ramp(.26, .36, b).toFixed(4));
-                st.setProperty('--bp-wire', ramp(.36, .47, b).toFixed(4));
-                st.setProperty('--bp-content', ramp(.4, .5, b).toFixed(4));
-                st.setProperty('--bp-visual', ramp(.5, .62, b).toFixed(4));
+                st.setProperty('--bp-information', ramp(.10, .20, b).toFixed(4));
+                st.setProperty('--bp-ui', ramp(.14, .24, b).toFixed(4));
+                st.setProperty('--bp-wire', ramp(.24, .34, b).toFixed(4));
+                st.setProperty('--bp-content', ramp(.28, .38, b).toFixed(4));
+                st.setProperty('--bp-visual', ramp(.38, .50, b).toFixed(4));
                 st.setProperty('--bp-notes', notes.toFixed(4));
                 st.setProperty('--bp-kpi', kpi.toFixed(4));
-                st.setProperty('--bp-settle', ramp(.9, 1, b).toFixed(4));
+                st.setProperty('--bp-settle', ramp(.77, .88, b).toFixed(4));
                 st.setProperty('--bp-grid-opacity', (.08 + foundation * .2).toFixed(4));
                 st.setProperty('--bp-axis-offset', (1 - foundation).toFixed(4));
                 st.setProperty('--bp-leader-offset', (1 - notes).toFixed(4));
                 st.setProperty('--bp-chart-offset', (1 - kpi).toFixed(4));
-                st.setProperty('--bp-dimension-offset', (1 - ramp(.1, .9, b)).toFixed(4));
+                st.setProperty('--bp-dimension-offset', (1 - ramp(0, .78, b)).toFixed(4));
                 for (var k = 0; k < 8; k++) {
-                    st.setProperty('--bp-note-' + (k + 1), ramp(.62 + k * .016, .66 + k * .016, b).toFixed(4));
+                    st.setProperty('--bp-note-' + (k + 1), ramp(.50 + k * .014, .54 + k * .014, b).toFixed(4));
                 }
                 st.setProperty('--bp-parallax-back', ((b - .5) * 8).toFixed(2) + 'px');
                 st.setProperty('--bp-parallax-front', ((b - .5) * -10).toFixed(2) + 'px');
