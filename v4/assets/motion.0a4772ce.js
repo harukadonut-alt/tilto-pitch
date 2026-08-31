@@ -13,6 +13,31 @@
    ============================================================ */
 (function () {
     'use strict';
+
+    /* ── 追従ヘッダーの紙の板 ──────────────────────────────────
+       🔴 これは「演出」ではなく**読めるかどうか**の問題。ヘッダーの文字は墨色で、
+          黒い節（02・05）の上では板が無いと文字が消える。
+          だから prefers-reduced-motion の早期returnより**前**に置く。 */
+    (function () {
+        var root = document.documentElement;
+        var hero = document.querySelector('.hero-canvas');
+        if (!hero) return;
+        var frame = 0;
+        function update() {
+            frame = 0;
+            var box = hero.getBoundingClientRect();
+            var p = Math.min(1, Math.max(0, -box.top / Math.max(1, box.height)));
+            var stuck = root.classList.contains('hd-stuck');
+            /* 付ける/外すで閾値をずらす。同じ値だと境目で震える */
+            if (!stuck && p > .78) root.classList.add('hd-stuck');
+            else if (stuck && p < .70) root.classList.remove('hd-stuck');
+        }
+        var req = function () { frame || (frame = window.requestAnimationFrame(update)) };
+        update();
+        window.addEventListener('scroll', req, { passive: true });
+        window.addEventListener('resize', req);
+    })();
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var clamp = function (v) { return Math.min(1, Math.max(0, v)) };

@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.b86cc5ab.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.0a4772ce.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.b86cc5ab.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.0a4772ce.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -766,7 +766,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.b86cc5ab.css）。bands.b86cc5ab.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.0a4772ce.css）。bands.0a4772ce.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -852,7 +852,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.b86cc5ab.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.0a4772ce.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -862,4 +862,73 @@
 .bp-board,
 .bp-annotations {
     opacity: var(--bp-arrive)
+}
+
+/* ── ヘッダーを追従させる（2026-08-31・社長指示） ────────────────────
+   🔴 いままで `.site-header` は `.hero-canvas` の中にあった。あそこは
+      `container-type: inline-size` なので、**position:fixed が画面ではなく
+      FVを基準にしてしまう**（実測: FVの中に置いたfixedは 0,-7 に落ちた）。
+      マークアップごと `.site-shell` の直下へ移した（`.site-shell` の
+      `overflow: clip visible` は fixed を閉じ込めない。実測で 0,0）。
+
+   ⚠️ 元は `top:1.9% / left:2.35% / height:6.1%`（FVの高さ基準）と
+      `2.65cqw`（FVの幅基準）で組まれていた。FVの外に出ると基準が消えるので、
+      画面幅（vw）で組み直す。1440pxのFVでは 1cqw = 1vw なので、
+      **ページ最上部での見え方は今までと同じ**。
+   ------------------------------------------------------------------ */
+.site-header {
+    z-index: 60;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: auto;
+    padding: 1.04vw 2.15vw 1.04vw 1.81vw;
+    transition: background-color .3s, padding .3s, box-shadow .3s;
+    position: fixed;
+    inset: 0 0 auto
+}
+
+.brand { font-size: 2.65vw }
+.site-nav { gap: 3.08vw; font-size: .76vw }
+
+/* FVを抜けたら紙の板を敷く。黒い節（02・05）の上で文字が消えないように */
+html.hd-stuck .site-header {
+    background: #f7f4eef2;
+    box-shadow: 0 1px #11111f1a, 0 8px 22px #1111110d;
+    padding: .62vw 2.15vw .62vw 1.81vw;
+    -webkit-backdrop-filter: saturate(1.4) blur(6px);
+            backdrop-filter: saturate(1.4) blur(6px)
+}
+
+html.hd-stuck .brand { font-size: 1.95vw }
+html.hd-stuck .site-nav { font-size: .72vw }
+
+@media (max-width: 700px) {
+    /* SPも追従。ヘッダーがFVの流れから抜けたぶん、FVの頭に余白を足して埋める */
+    .site-header {
+        padding: 14px 20px;
+        transition: background-color .3s, box-shadow .3s
+    }
+
+    .hero-canvas {
+        padding-top: 56px
+    }
+
+    html.hd-stuck .site-header {
+        padding: 10px 20px
+    }
+
+    /* ⚠️ SPメニューのパネルは z-index 31、三本線は 32。
+       ヘッダーを60のままにすると、開いたコーラルの面より前に出てしまう。
+       パネルは自前のロゴを持っているので、開いている間は引っ込める */
+    .site-header {
+        z-index: 28
+    }
+
+    html.sp-menu-open .site-header {
+        opacity: 0;
+        pointer-events: none
+    }
+
+    .brand,
+    html.hd-stuck .brand { font-size: 30px }
 }

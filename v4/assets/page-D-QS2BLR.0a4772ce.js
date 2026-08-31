@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.b86cc5ab.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.b86cc5ab.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.0a4772ce.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.0a4772ce.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.b86cc5ab.js / rolldown-runtime-S-ySWqyJ.b86cc5ab.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.0a4772ce.js / rolldown-runtime-S-ySWqyJ.0a4772ce.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1206,7 +1206,40 @@ function x() {
         n = (0, r.useRef)(null);
     return (0, i.jsxs)(`main`, {
         className: `site-shell`,
-        children: [(0, i.jsxs)(`section`, {
+        children: [(0, i.jsxs)(`header`, {
+        className: `site-header`,
+        children: [(0, i.jsxs)(`a`, {
+            className: `brand`,
+            href: `#top`,
+            "aria-label": `Tilto ホーム`,
+            children: [`Tilto`, (0, i.jsx)(`sup`, {
+                children: `°`
+            })]
+        }), (0, i.jsxs)(`nav`, {
+            className: `site-nav`,
+            "aria-label": `メインナビゲーション`,
+            children: [(0, i.jsx)(`a`, {
+                href: `#about`,
+                children: `サービス概要`
+            }), (0, i.jsx)(`button`, {
+                type: `button`,
+                "aria-pressed": !e,
+                "aria-label": e ? `3Dリボンの動きを停止` : `3Dリボンの動きを再生`,
+                onClick: () => t(e => !e),
+                children: e ? `カタログ` : `再生する`
+            }), (0, i.jsx)(`a`, {
+                href: `#blueprint`,
+                children: `成果にこだわる`
+            }), (0, i.jsxs)(`a`, {
+                className: `header-cta`,
+                href: `#contact`,
+                children: [`無料で相談する `, (0, i.jsx)(`span`, {
+                    "aria-hidden": `true`,
+                    children: `↗`
+                })]
+            })]
+        })]
+    }), (0, i.jsxs)(`section`, {
             className: `hero-canvas${e ? ` is-moving` : ` is-paused`}`,
             "aria-label": `Tilto 採用サイト制作サービス`,
             onPointerMove: e => {
@@ -1223,40 +1256,7 @@ function x() {
                 n.current?.style.setProperty(`--scene-ry`, `0deg`),
                 n.current?.style.setProperty(`--scene-rx`, `0deg`)
             },
-            children: [(0, i.jsxs)(`header`, {
-                className: `site-header`,
-                children: [(0, i.jsxs)(`a`, {
-                    className: `brand`,
-                    href: `#top`,
-                    "aria-label": `Tilto ホーム`,
-                    children: [`Tilto`, (0, i.jsx)(`sup`, {
-                        children: `°`
-                    })]
-                }), (0, i.jsxs)(`nav`, {
-                    className: `site-nav`,
-                    "aria-label": `メインナビゲーション`,
-                    children: [(0, i.jsx)(`a`, {
-                        href: `#about`,
-                        children: `サービス概要`
-                    }), (0, i.jsx)(`button`, {
-                        type: `button`,
-                        "aria-pressed": !e,
-                        "aria-label": e ? `3Dリボンの動きを停止` : `3Dリボンの動きを再生`,
-                        onClick: () => t(e => !e),
-                        children: e ? `カタログ` : `再生する`
-                    }), (0, i.jsx)(`a`, {
-                        href: `#blueprint`,
-                        children: `成果にこだわる`
-                    }), (0, i.jsxs)(`a`, {
-                        className: `header-cta`,
-                        href: `#contact`,
-                        children: [`無料で相談する `, (0, i.jsx)(`span`, {
-                            "aria-hidden": `true`,
-                            children: `↗`
-                        })]
-                    })]
-                })]
-            }), (0, i.jsxs)(`div`, {
+            children: [(0, i.jsxs)(`div`, {
                 id: `top`,
                 className: `hero-copy`,
                 children: [(0, i.jsxs)(`p`, {
@@ -1455,15 +1455,7 @@ function x() {
             className: `reference-about`,
             id: `about`,
             "aria-labelledby": `reference-about-title`,
-            children: [(0, i.jsxs)(`a`, {
-                    className: `reference-about-brand`,
-                    href: `#top`,
-                    children: [`Tilto`,
-                        (0, i.jsx)(`span`, {
-                            children: `°`
-                        })]
-                }),
-                                (0, i.jsx)(`span`, {
+            children: [(0, i.jsx)(`span`, {
                     className: `reference-about-vertical`,
                     "aria-hidden": `true`,
                     children: `TILTO°`
