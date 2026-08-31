@@ -14,7 +14,15 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!('IntersectionObserver' in window)) return;
 
-    var lines = document.querySelectorAll('.hl-line');
+    /* 🔴 「見えたら剥がす」で良いのは、最初から opacity 1 の塊だけ。
+       03 AFTER / 02の着地 / 05の見出しは **初期 opacity 0** で、
+       節のスクロール進捗に合わせて後から現れる。IntersectionObserver は
+       透明でも「見えている」と判定するので、文字が出る前に幕が剥がれ切ってしまう。
+       この3つは motion.6415ece6.js が進捗を見て `hl-in` を付ける（HL_BY_SCROLL）。 */
+    var BY_SCROLL = '.process-copy-after .hl-line, .reference-problems-statement .hl-line, .bp-copy .hl-line';
+    var lines = Array.prototype.filter.call(
+        document.querySelectorAll('.hl-line'),
+        function (el) { return !el.matches(BY_SCROLL) });
     if (!lines.length) return;
 
     var io = new IntersectionObserver(function (entries) {
@@ -25,5 +33,5 @@
         });
     }, { threshold: .35, rootMargin: '0px 0px -8% 0px' });
 
-    Array.prototype.forEach.call(lines, function (el) { io.observe(el) });
+    lines.forEach(function (el) { io.observe(el) });
 })();

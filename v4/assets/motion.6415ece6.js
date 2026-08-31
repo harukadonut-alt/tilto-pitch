@@ -22,6 +22,15 @@
         return t * t * (3 - 2 * t);
     };
 
+    /* 幕を「文字が現れるのに合わせて」剥がす係。
+       ⚠️ 一度付けたら外さない。戻ってまた下りたときに毎回引き直すとうるさい */
+    var wiped = new Set();
+    function wipe(scope, key) {
+        if (!scope || wiped.has(key)) return;
+        wiped.add(key);
+        scope.querySelectorAll('.hl-line').forEach(function (n) { n.classList.add('hl-in') });
+    }
+
     var root = document.documentElement;
     var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-motion]'));
     if (!nodes.length) return;
@@ -81,7 +90,9 @@
                 // 赤入れは左から引かれる（transform-origin: 0）
                 st.setProperty('--pb-line-1', ramp(.58, .72, pb).toFixed(4));
                 st.setProperty('--pb-line-2', ramp(.66, .80, pb).toFixed(4));
-                st.setProperty('--pb-closing', ramp(.75, .92, pb).toFixed(4));
+                var closing = ramp(.75, .92, pb);
+                st.setProperty('--pb-closing', closing.toFixed(4));
+                if (closing > .06) wipe(el.querySelector('.reference-problems-statement'), 'pb');
             }
 
             // 03 体験: 紙が散らばった状態 → 整理 → サイトの形になる
@@ -98,7 +109,9 @@
                 st.setProperty('--process-before-opacity', (1 - ramp(.3, .59, p)).toFixed(4));
                 st.setProperty('--process-organize', organize.toFixed(4));
                 st.setProperty('--process-reveal', reveal.toFixed(4));
-                st.setProperty('--process-after-opacity', ramp(.7, .87, p).toFixed(4));
+                var after = ramp(.7, .87, p);
+                st.setProperty('--process-after-opacity', after.toFixed(4));
+                if (after > .06) wipe(el.querySelector('.process-copy-after'), 'after');
                 st.setProperty('--process-wire-opacity',
                     Math.min(ramp(.47, .61, p), 1 - ramp(.71, .83, p)).toFixed(4));
                 st.setProperty('--process-site-clip', ((1 - reveal) * 100).toFixed(2) + '%');
@@ -127,7 +140,9 @@
                 var notes = ramp(.62, .76, b);
                 var kpi = ramp(.76, .9, b);
                 st.setProperty('--bp-progress', b.toFixed(4));
-                st.setProperty('--bp-intro', ramp(0, .1, b).toFixed(4));
+                var intro = ramp(0, .1, b);
+                st.setProperty('--bp-intro', intro.toFixed(4));
+                if (intro > .06) wipe(el.querySelector('.bp-copy'), 'bp');
                 st.setProperty('--bp-foundation', foundation.toFixed(4));
                 st.setProperty('--bp-information', ramp(.22, .32, b).toFixed(4));
                 st.setProperty('--bp-ui', ramp(.26, .36, b).toFixed(4));
