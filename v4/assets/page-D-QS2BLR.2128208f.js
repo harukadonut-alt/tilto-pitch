@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.53042e4f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.53042e4f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2128208f.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2128208f.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.53042e4f.js / rolldown-runtime-S-ySWqyJ.53042e4f.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.2128208f.js / rolldown-runtime-S-ySWqyJ.2128208f.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1102,6 +1102,15 @@ function Showroom() {
     let [picked, setPicked] = (0, r.useState)(null);
     let closeRef = (0, r.useRef)(null);
     let work = (0, r.useMemo)(() => SR_WORKS.find(e => e.id === picked) ?? null, [picked]);
+    /* 🔴 左に大きく出すのは**上から下まで見られる作品**だけ（社長指示）。
+       押した作品にサイトが無いときは、いま見せられるサイトを出し、
+       押した作品そのものは右の一覧の先頭に置く。
+       ⚠️ どのタイルも押したら開く。「押しても何も起きない」は壊れて見える */
+    let shown = (0, r.useMemo)(() => work
+        ? (work.inside ? work : (SR_WORKS.find(x => x.inside) || work))
+        : null, [work]);
+    let related = (0, r.useMemo)(() => !work ? []
+        : (work === shown ? work.innerImages : [work, ...work.innerImages.slice(0, 3)]), [work, shown]);
 
     (0, r.useEffect)(() => {
         if (!work) return;
@@ -1168,11 +1177,7 @@ function Showroom() {
                                 "data-selected": picked === w.id ? `true` : `false`,
                                 "data-inside": w.inside ? `true` : `false`,
                                 tabIndex: copy === 1 ? -1 : 0,
-                                /* 🔴 上から下まで見られる作品だけ開く。
-                                   FVだけの作品は「左に大きく」出さない（社長指示）。
-                                   カタログの中では見せるが、押しても何も起きない */
-                                onClick: w.inside ? () => setPicked(w.id) : void 0,
-                                "aria-disabled": w.inside ? void 0 : `true`,
+                                onClick: () => setPicked(w.id),
                                 "aria-label": `${w.industry}「${w.title}」の詳細を見る`,
                                 children: [(0, i.jsx)(`img`, { src: w.image, alt: ``, loading: `lazy` }),
                                     (0, i.jsxs)(`span`, {
@@ -1189,7 +1194,7 @@ function Showroom() {
             className: `works-drawer`,
             role: `dialog`,
             "aria-modal": work ? `true` : void 0,
-            "aria-label": work ? `${work.title}の詳細` : `選択した作品の詳細`,
+            "aria-label": shown ? `${shown.title}の詳細` : `選択した作品の詳細`,
             "aria-hidden": !work,
             children: [(0, i.jsx)(`button`, {
                 ref: closeRef, type: `button`, className: `works-drawer-close`,
@@ -1199,23 +1204,23 @@ function Showroom() {
                 children: [(0, i.jsxs)(`div`, {
                 className: `works-drawer-content`,
                 children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
-                    (0, i.jsx)(`h3`, { children: work.title }),
-                    (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [work.industry, `　/　`, work.world] }),
+                    (0, i.jsx)(`h3`, { children: shown.title }),
+                    (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] }),
                     /* 中身まで見られる作品は、スクロールできる枠でサイト全体を見せる。
                        それ以外はFV1枚。⚠️ 縦長画像が無い作品にこの枠を出さない（空になる） */
-                    work.inside ? (0, i.jsxs)(`div`, {
+                    shown.inside ? (0, i.jsxs)(`div`, {
                         className: `works-site`,
                         children: [(0, i.jsx)(`div`, {
                                 className: `works-site-frame`,
-                                children: (0, i.jsx)(`img`, { src: work.inside.site, alt: work.alt })
+                                children: (0, i.jsx)(`img`, { src: shown.inside.site, alt: shown.alt })
                             }),
                             (0, i.jsx)(`small`, { children: `SCROLL — 下まで見られます` })]
                     }) : (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
-                            (0, i.jsx)(`img`, { src: work.image, alt: work.alt })]
+                            (0, i.jsx)(`img`, { src: shown.image, alt: shown.alt })]
                     }),
-                    (0, i.jsx)(`p`, { className: `works-drawer-description`, children: work.description }),
+                    (0, i.jsx)(`p`, { className: `works-drawer-description`, children: shown.description }),
 ]
             }), (0, i.jsxs)(`div`, {
                 /* 右は「関連する表現」4点。**参照するだけ**で、押しても左は変わらない。
@@ -1223,8 +1228,9 @@ function Showroom() {
                       SSRには出ないので、index.html を触らなくてもhydrationはズレない */
                 className: `works-rail`,
                 children: [(0, i.jsx)(`small`, { className: `works-rail-head`, children: `RELATED` }),
-                    ...work.innerImages.map(other => (0, i.jsxs)(`figure`, {
+                    ...related.map(other => (0, i.jsxs)(`figure`, {
                         className: `works-rail-item`,
+                        "data-current": other.id === work.id ? `true` : `false`,
                         children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
                             (0, i.jsx)(`figcaption`, { children: other.industry })]
                     }, other.id))]
