@@ -1,4 +1,31 @@
-<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta name="robots" content="noindex,nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="./assets/index-D5NZeMWX.42429775.css" data-rsc-css-href="./assets/index-D5NZeMWX.42429775.css" data-precedence="vite-rsc/importer-resources"/>
+<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta name="robots" content="noindex,nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/><script>/* 🔴 スクロールが上に引き戻される不具合の対策（2026-09-01）。
+   ロゴのリンクは href="#top"。押すとURLに #top が残る。
+   次にそのURLを開くと、ルーター(index-DteDOMqj.42429775.js)の Qi() が
+     requestAnimationFrame(() => window.scrollTo(0, 0))
+   を仕込む（ハッシュが "top" か空のときだけ scrollTo(0,0) になる特別扱い）。
+   これがハイドレーションの後に走るので、**先に読み始めていると先頭へ引き戻される**。
+   history.scrollRestoration も manual にされていて、ブラウザ側の復元も働かない。
+   ⚠️ このスクリプトは head の中で**即時実行**すること。defer や module にすると
+      ルーターより後になり、ハッシュを消す前に rAF を仕込まれる。 */
+(function () {
+  var strip = function () {
+    if (location.hash === "#top") {
+      history.replaceState(history.state, "", location.pathname + location.search);
+    }
+  };
+  strip();                                   /* 読み込み時: ルーターが見る前に消す。ここが本命 */
+  /* ⚠️ ロゴ押下はハッシュ移動ではないので hashchange は出ない。
+     さらにルーターは history.pushState を**自前のものに差し替える**ので、
+     履歴APIを包む手は効かない（実測: 包んでもロゴ経由では剥がれなかった）。
+     クリックを見て、移動が終わったころに掃除する。
+     ⚠️ 消すのは **#top のときだけ**。#about などの節リンクには触らない */
+  addEventListener("click", function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href="#top"]');
+    if (!a) return;
+    setTimeout(strip, 0);
+    setTimeout(strip, 120);
+  }, true);
+})();</script><link rel="stylesheet" href="./assets/index-D5NZeMWX.42429775.css" data-rsc-css-href="./assets/index-D5NZeMWX.42429775.css" data-precedence="vite-rsc/importer-resources"/>
     <link rel="stylesheet" href="./assets/coral.42429775.css"/>
 <link rel="stylesheet" href="./assets/gpt-sections.42429775.css"/>
 <link rel="stylesheet" href="./assets/coral-sections.42429775.css"/><link rel="modulepreload" href="./assets/layout-segment-context-D8kpiUqc.42429775.js" crossorigin=""/><link rel="modulepreload" href="./assets/rolldown-runtime-S-ySWqyJ.42429775.js" crossorigin=""/><link rel="modulepreload" href="./assets/index-DteDOMqj.42429775.js" crossorigin=""/><link rel="modulepreload" href="./assets/framework-DjPHiq1u.42429775.js" crossorigin=""/><link rel="modulepreload" href="./assets/page-D-QS2BLR.42429775.js" crossorigin=""/><link rel="icon" href="./favicon.svg"/><title>Tilto°｜採用サイトの、新しい持ち方。</title><meta name="description" content="月額27,000円・初期費用0円。つくって終わりにしない、育てつづける採用サイト。"/><meta property="og:title" content="Tilto°｜採用サイトの、新しい持ち方。"/><meta property="og:description" content="月額27,000円・初期費用0円。つくって終わりにしない、育てつづける採用サイト。"/><meta property="og:image" content="https://harukadonut-alt.github.io/tilto-pitch/v4/images/og.jpg?v=0f1f837e"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Tilto°｜採用サイトの、新しい持ち方。"/><meta name="twitter:description" content="月額27,000円・初期費用0円。つくって終わりにしない、育てつづける採用サイト。"/><meta name="twitter:image" content="https://harukadonut-alt.github.io/tilto-pitch/v4/images/og.jpg?v=0f1f837e"/><script>self.__VINEXT_RSC_PARAMS__={}</script><script>self.__VINEXT_RSC_NAV__={"pathname":"/","searchParams":[]}</script><link rel="modulepreload" href="./assets/index-DteDOMqj.42429775.js" />
