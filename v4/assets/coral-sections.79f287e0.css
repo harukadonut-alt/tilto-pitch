@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.cf47450a.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.79f287e0.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.cf47450a.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.79f287e0.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.cf47450a.css）。bands.cf47450a.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.79f287e0.css）。bands.79f287e0.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.cf47450a.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.79f287e0.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1498,7 +1498,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.cf47450a.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.79f287e0.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1511,7 +1511,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.cf47450a.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.79f287e0.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1649,7 +1649,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.cf47450a.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.79f287e0.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1877,12 +1877,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.cf47450a.js が動かしている
-     ・motion.cf47450a.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.79f287e0.js が動かしている
+     ・motion.79f287e0.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.cf47450a.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.79f287e0.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2061,4 +2061,62 @@ html.hd-stuck .site-nav { font-size: .72vw }
     }
 
     .works-empty { top: 470px }
+}
+
+/* ── 07 CTA / フッターのレイアウトを磨く（2026-09-01・社長の指示書）────────
+   配色・文言・コンセプトは触らない。数十px単位で余白の意味を整えるだけ。
+   狙い: 左の大コピー →（呼吸する余白）→ 右下のCTA → フッターへ静かに着地、
+         という斜めの視線。左右を同じ高さに揃えない。
+   ⚠️ SP（≤900px）は縦積みで左右の関係が無いので触らない。min-widthで囲う。
+   ------------------------------------------------------------------ */
+@media (min-width: 901px) {
+
+    /* 01 左のコピー: 約0.91倍に絞り、少し左上へ。存在感は残す。
+       ⚠️ 2行（らしさを、／採用の力に。）は <br> で固定済み。折り返しに頼らない */
+    .reference-contact > h2 {
+        font-size: clamp(64px, 6.8vw, 104px);
+        top: 2.9vw;
+        left: 9.4vw
+    }
+
+    /* 02 CTA: 現在より約110px左・約40px下へ。
+       コピーの下端(y276)より上から始まるので、左右は**わざと揃わない** */
+    .reference-contact > .contact-cta {
+        width: 32vw;            /* 33.6vw から約5%短く */
+        right: 14.7vw;          /* 4.87vw → 約120px左へ */
+        left: auto;
+        top: 14.2vw;            /* 11.5vw → 約40px下へ */
+        height: 10.8vw;
+        min-height: 140px;
+        /* 03 ⚠️ 幅を詰めて文字と矢印を大きくすると、**間の余白が先に消える**。
+           元は113pxあった間が、幅31.3vw・padding3.6vwでは29pxまで潰れた（実測）。
+           間の余白 ≒ 左右padding（どちらも約50px）になる幅と余白に取り直す */
+        padding: 0 3.15vw;
+        font-size: clamp(19px, 1.75vw, 27px)
+    }
+
+    /* 03 矢印も一回り大きく */
+    .reference-contact > .contact-cta b {
+        font-size: clamp(42px, 4.55vw, 70px)
+    }
+
+    /* 04 フッター: 均等4カラムをやめる。
+       Tilto° → NAV → 会社情報 を**ひとつの情報群**として左に寄せ、
+       著作権表示だけを右端へ離す */
+    .reference-contact-bottom {
+        grid-template-columns: auto auto auto 1fr;
+        column-gap: clamp(30px, 3.4vw, 54px)
+    }
+
+    /* 上に1pxの細い罫線。ここから下がフッターだと分かる一本 */
+    .reference-contact-bottom:before {
+        content: "";
+        background: var(--tone-sumi);
+        opacity: .22;
+        height: 1px;
+        position: absolute;
+        top: -26px;
+        left: 0;
+        right: 0
+    }
 }
