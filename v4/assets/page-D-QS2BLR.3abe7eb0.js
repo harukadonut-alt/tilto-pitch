@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.a8e00c32.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.a8e00c32.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3abe7eb0.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3abe7eb0.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.a8e00c32.js / rolldown-runtime-S-ySWqyJ.a8e00c32.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3abe7eb0.js / rolldown-runtime-S-ySWqyJ.3abe7eb0.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1394,6 +1394,13 @@ function x() {
                     kind: `lower`,
                     shadowOnly: !0
                 })]
+            }),
+            /* WebGL2が無い環境用の静止フォールバック。
+               ⚠️ SSR(index.html)にも同じ形で入っている。片方だけ足すと hydration がズレる */
+            (0, i.jsx)(`div`, {
+                className: `hero-film-still`,
+                "aria-hidden": `true`,
+                children: [1, 2, 3, 4, 5].map(e => (0, i.jsx)(`i`, {}, e))
             }), (0, i.jsxs)(`div`, {
                 ref: n,
                 className: `ribbon-scene`,
@@ -2995,10 +3002,6 @@ function x() {
                                                 })]
                                         })]
                                 })]
-                        }),
-                        (0, i.jsx)(`p`, {
-                            className: `pf-more`,
-                            children: `and more…`
                         })]
                 })]
         }), (0, i.jsxs)(`footer`, {
