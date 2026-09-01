@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.d9d19bb5.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.d9d19bb5.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.cd80402e.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.cd80402e.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.d9d19bb5.js / rolldown-runtime-S-ySWqyJ.d9d19bb5.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.cd80402e.js / rolldown-runtime-S-ySWqyJ.cd80402e.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1089,6 +1089,18 @@ var SR_LANES = [SR_WORKS.filter((e, k) => k % 3 === 0),
       縦長の枠に入れると object-fit: cover で**横幅の57〜69%が切り落とされ**、
       作品が読めない断片になっていた。振れ幅は「向き」ではなく**大きさ**で出す
       （幅 205〜420px の8段階）。 */
+/* 🔴 奥行き（2026-09-01・お試し）。レーンに「奥・中・手前」の役を与える。
+   奥ほど小さいタイルだけを流し、CSS側で遅く・沈ませる。3D変形は使わない
+   （FVのリボンと役割が重なるのと、35枚を傾けると文字が歪んで重くなるため）。
+   ⚠️ 気に入らなければ `git checkout before-depth-04 -- site-v4` で戻せる。
+   ⚠️ ここを変えたら **SSRのインラインstyleも同じ規則で作り直す**こと
+      （docs/retile.py が同じ規則で index.html を書き換える） */
+var SR_LANE_TILES = [
+    [5, 1, 2],   // 奥   … 205 / 235 / 265px
+    [3, 7],      // 中   … 298 / 322px
+    [0, 6, 4]    // 手前 … 350 / 385 / 420px
+];
+
 var SR_TILES = [
     { width: 350, height: 197, gap: 54, y: 15, rotate: -1.2 },
     { width: 235, height: 132, gap: 27, y: -12, rotate: 1.7 },
@@ -1166,7 +1178,7 @@ function Showroom() {
                         className: `works-track-group`,
                         "aria-hidden": copy === 1 || void 0,
                         children: lane.map((w, k) => {
-                            let t = SR_TILES[(k + laneNo * 3) % SR_TILES.length];
+                            let t = SR_TILES[SR_LANE_TILES[laneNo][k % SR_LANE_TILES[laneNo].length]];
                             let muted = filter !== `ALL` && filter !== w.industry;
                             return (0, i.jsxs)(`button`, {
                                 className: `works-tile`,
