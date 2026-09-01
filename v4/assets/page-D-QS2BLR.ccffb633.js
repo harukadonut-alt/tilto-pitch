@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.ae2162d5.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.ae2162d5.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.ccffb633.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.ccffb633.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.ae2162d5.js / rolldown-runtime-S-ySWqyJ.ae2162d5.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.ccffb633.js / rolldown-runtime-S-ySWqyJ.ccffb633.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1561,16 +1561,13 @@ function x() {
                             children: `公開して終わりにしない。採用の変化とともに、更新し、改善しつづける。`
                         })]
                 }),
-                (0, i.jsxs)(`dl`, {
+                (0, i.jsx)(`div`, {
                     className: `reference-about-facts`,
-                    /* 🔴 飾りだが、意味のある飾り（2026-09-01・社長指示）。
-                       中身は SITE-PLAN「共通で含まれるもの」の事実だけ。
-                       「1社1設計」はFVの料金帯に既にあるので**ここには置かない**。
-                       「デザイン修正2回まで」は制限の話なので料金の節に任せる */
-                    children: [(0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `つくる` }), (0, i.jsx)(`dd`, { children: `原稿と構成も、おまかせ` })] }),
-                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `そだてる` }), (0, i.jsx)(`dd`, { children: `差し替え無制限・運用込み` })] }),
-                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `きりかえる` }), (0, i.jsx)(`dd`, { children: `1年継続で、新デザインへ` })] }),
-                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `わたす` }), (0, i.jsx)(`dd`, { children: `12ヶ月継続で、コードをお渡し` })] })]
+                    /* 🔴 中身は空。この要素は::before/::afterの英字ラベル
+                       （RECRUITMENT CHANGES. / SO DOES THE SITE.）の錨として残している。
+                       「つくる/そだてる/きりかえる/わたす」の仕様リストは
+                       2026-09-02 社長指示で削除した。要素ごと消すとラベルも消えるので注意 */
+                    "aria-hidden": `true`
                 })]
         }),
         (0, i.jsxs)(`section`, {
