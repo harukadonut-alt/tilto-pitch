@@ -205,7 +205,7 @@
                 st.setProperty('--bp-kpi', kpi.toFixed(4));
                 /* ⚠️ .88 で終わると、残り12%＝173px はピン留めのまま何も動かない。最後まで使う */
                 st.setProperty('--bp-settle', ramp(.77, .98, b).toFixed(4));
-                st.setProperty('--bp-grid-opacity', (.08 + foundation * .2).toFixed(4));
+                st.setProperty('--bp-grid-opacity', (.19 + foundation * .11).toFixed(4));
                 st.setProperty('--bp-axis-offset', (1 - foundation).toFixed(4));
                 st.setProperty('--bp-leader-offset', (1 - notes).toFixed(4));
                 st.setProperty('--bp-chart-offset', (1 - kpi).toFixed(4));
