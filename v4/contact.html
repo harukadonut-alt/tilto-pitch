@@ -259,6 +259,16 @@ a { color: inherit }
     font-style: normal
 }
 
+/* 送信の結果。派手にしない */
+.cf-result {
+    margin: 14px 0 0;
+    font-size: clamp(12px, .95vw, 14px);
+    line-height: 1.8
+}
+
+.cf-result.is-ok { color: #111 }
+.cf-result.is-ng { color: #ff4d4f }
+
 /* --- フッター --- */
 .cf-foot {
     border-top: 1px solid #11111f1f;
@@ -321,8 +331,21 @@ a { color: inherit }
     </div>
 
     <div>
-        <!-- 🔴 送信先が決まったら action= を入れて、下の disabled と .cf-pending を外す -->
-        <form class="cf-form" method="post">
+        <!-- 🔴 やることは**1行だけ**。下の access_key の value に、
+             web3forms.com で受け取ったアクセスキーを貼る。それだけで
+             ボタンが有効になり、届いた内容が指定のメールへ転送される。
+             （キーを貼るまではボタンは押せないまま＝届かない送信は起きない）
+
+             ⚠️ **メールアドレスをこのHTMLに書かないこと。**
+                このサイトの配信リポジトリは public なので、書くと
+                アドレスが公開され、git履歴からも消せなくなる。
+                web3forms は「キー」だけを置く仕組みなのでそれを使う。 -->
+        <form class="cf-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="PASTE_ACCESS_KEY_HERE"/>
+            <input type="hidden" name="subject" value="Tilto° サイトからのご相談"/>
+            <input type="hidden" name="from_name" value="Tilto° お問い合わせフォーム"/>
+            <!-- 迷惑メール除け。人には見えない。埋まっていたら弾かれる -->
+            <input type="checkbox" name="botcheck" tabindex="-1" aria-hidden="true" style="display:none"/>
             <div class="cf-field">
                 <label for="cf-company"><b>会社名</b><span class="cf-req">REQUIRED</span></label>
                 <input id="cf-company" name="company" type="text" autocomplete="organization" required/>
@@ -362,6 +385,7 @@ a { color: inherit }
             <button class="cf-send" type="submit" disabled>送信する<b aria-hidden="true">→</b></button>
 
             <p class="cf-pending"><i>※</i><span>このページは仮です。送信先の設定が済みしだい、このボタンが有効になります。</span></p>
+            <p class="cf-result" role="status" hidden></p>
         </form>
     </div>
 </main>
@@ -372,5 +396,59 @@ a { color: inherit }
     <small>© 2026 TILTO° All Rights Reserved.</small>
 </footer>
 
+<script>
+/* 送信の制御。
+   ・アクセスキーが未設定のあいだはボタンを押せないままにする（届かない送信を起こさない）
+   ・キーが入っていればボタンを有効にし、fetchで送ってこのページのまま結果を出す
+     （素のPOSTだと web3forms の画面へ飛ばされてサイトの世界観から外れる）
+   ・JSが動かない環境では素のPOSTにそのまま任せる（届きはする） */
+(function () {
+    var form = document.querySelector('.cf-form');
+    if (!form) return;
+    var key = form.querySelector('[name="access_key"]');
+    var btn = form.querySelector('.cf-send');
+    var pending = form.querySelector('.cf-pending');
+    var result = form.querySelector('.cf-result');
+    var ready = key && key.value && key.value !== 'PASTE_ACCESS_KEY_HERE';
+
+    if (!ready) return;              /* 仮のまま。disabled と注記を残す */
+
+    btn.disabled = false;
+    if (pending) pending.remove();
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        var label = btn.firstChild;
+        var was = label.nodeValue;
+        label.nodeValue = '送信中';
+        result.hidden = true;
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form)
+        }).then(function (r) { return r.json(); })
+          .then(function (d) {
+              if (d && d.success) {
+                  form.reset();
+                  result.textContent = 'ありがとうございます。内容を受け取りました。追ってご連絡します。';
+                  result.className = 'cf-result is-ok';
+              } else {
+                  throw new Error('ng');
+              }
+          })
+          .catch(function () {
+              result.textContent = 'うまく送信できませんでした。お手数ですが、時間をおいてもう一度お試しください。';
+              result.className = 'cf-result is-ng';
+          })
+          .then(function () {
+              result.hidden = false;
+              label.nodeValue = was;
+              btn.disabled = false;
+          });
+    });
+})();
+</script>
 </body>
 </html>
