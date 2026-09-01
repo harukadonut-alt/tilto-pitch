@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.2ecd938f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.2ecd938f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.c376410c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.c376410c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.2ecd938f.js / rolldown-runtime-S-ySWqyJ.2ecd938f.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.c376410c.js / rolldown-runtime-S-ySWqyJ.c376410c.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1099,7 +1099,7 @@ var SR_LANE_TILES = [
     [0, 1],   // 奥   … 112 / 130px
     [2, 3],   //      … 205 / 240px
     [4, 5],   //      … 330 / 385px
-    [6, 7]    // 手前 … 520 / 600px
+    [6, 7]    // 手前 … 572 / 660px（2026-09-01 +10%・社長指示）
 ];
 
 var SR_TILES = [
@@ -1109,8 +1109,8 @@ var SR_TILES = [
     { width: 240, height: 135, gap: 22, y: 8, rotate: -1.4 },
     { width: 330, height: 186, gap: 34, y: 10, rotate: -.8 },
     { width: 385, height: 217, gap: 40, y: -12, rotate: .9 },
-    { width: 520, height: 293, gap: 50, y: 12, rotate: -1.1 },
-    { width: 600, height: 338, gap: 58, y: -13, rotate: 1.5 }
+    { width: 572, height: 322, gap: 54, y: 12, rotate: -1.1 },
+    { width: 660, height: 371, gap: 62, y: -13, rotate: 1.5 }
 ];
 
 function Showroom() {
