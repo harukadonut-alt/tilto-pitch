@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3abe7eb0.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3abe7eb0.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.50137978.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.50137978.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.3abe7eb0.js / rolldown-runtime-S-ySWqyJ.3abe7eb0.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.50137978.js / rolldown-runtime-S-ySWqyJ.50137978.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -908,7 +908,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    ============================================================ */
 /* 絞り込みの業種。⚠️ **まだ表現サンプルが1点も無い業種**（製造・小売／士業・コンサル／教育）も
    ここに入れている。押しても何も残らないので、その場合は「準備中」を出す（下の hasMatch）。 */
-var SR_FILTERS = [`ALL`, `IT・テック`, `建設・不動産`, `製造・小売`, `物流・運輸`, `医療・看護`, `介護・福祉`, `飲食・サービス`, `エンタメ`, `士業・コンサル`, `教育`];
+var SR_FILTERS = [`ALL`, `IT・テック`, `建設・不動産`, `製造・小売`, `物流・運輸`, `医療・福祉`, `飲食・サービス`, `エンタメ`, `士業・コンサル`, `教育`];
 
 /* うちが実際に作った35枚（images/works/）。業種・見出し・絵は1対1で対応している。
    🔴 これは**表現サンプル**であって、実在企業の採用サイトではない。
@@ -928,11 +928,11 @@ var SR_BASE = [
       title: `未来のインフラを、支えるんだ。`,
       image: `./images/works/showroom-logistics-01.webp`,
       alt: `夜の高速道路を走るトラックと365/24/7の大きな数字を組んだ物流企業の採用サイトFV` },
-    { id: `04`, industry: `医療・看護`, world: `CLINICAL`, tone: `coral`,
+    { id: `04`, industry: `医療・福祉`, world: `CLINICAL`, tone: `coral`,
       title: `本質を見抜き、価値をつくる。`,
       image: `./images/works/showroom-medical-01.webp`,
       alt: `37.0℃という体温の数字を大きく置き、看護師と患者の手を重ねた医療機関の採用サイトFV` },
-    { id: `05`, industry: `介護・福祉`, world: `WELLBEING`, tone: `sumi`,
+    { id: `05`, industry: `医療・福祉`, world: `WELLBEING`, tone: `sumi`,
       title: `個性が、つながる力に。`,
       image: `./images/works/showroom-care-01.webp`,
       alt: `80歳の女性を主役に人生を前向きに表現した介護福祉の採用サイトFV` },
@@ -956,11 +956,11 @@ var SR_BASE = [
       title: `働くを、もっと自由に。`,
       image: `./images/works/showroom-logistics-02.webp`,
       alt: `蛍光グリーンの地に矢印と日本地図の物流網を描いた物流企業の採用サイトFV` },
-    { id: `11`, industry: `医療・看護`, world: `EDITORIAL`, tone: `coral`,
+    { id: `11`, industry: `医療・福祉`, world: `EDITORIAL`, tone: `coral`,
       title: `誰かの明日を、近くする。`,
       image: `./images/works/showroom-medical-02.webp`,
       alt: `医療データとチームの写真を精密に構成した医療機関の採用サイトFV` },
-    { id: `12`, industry: `介護・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
+    { id: `12`, industry: `医療・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
       title: `人の可能性を、ひらく。`,
       image: `./images/works/showroom-care-02.webp`,
       alt: `きょう、何する？の手書き文字と、利用者と職員が庭で過ごす写真を組んだ介護福祉の採用サイトFV` },
@@ -984,11 +984,11 @@ var SR_BASE = [
       title: `変化の真ん中へ。`,
       image: `./images/works/showroom-logistics-03.webp`,
       alt: `トラックの運転席から夕暮れの街を望む写真に、「いってきます」から、仕事です。と添えた物流企業の採用サイトFV` },
-    { id: `18`, industry: `医療・看護`, world: `CLINICAL`, tone: `sumi`,
+    { id: `18`, industry: `医療・福祉`, world: `CLINICAL`, tone: `sumi`,
       title: `地域医療の、新しい輪郭。`,
       image: `./images/works/showroom-medical-03.webp`,
       alt: `病室の窓辺に立つ看護師と患者の写真に、あなたがいて、よかった。と縦書きで添えた医療機関の採用サイトFV` },
-    { id: `19`, industry: `介護・福祉`, world: `WELLBEING`, tone: `paper`,
+    { id: `19`, industry: `医療・福祉`, world: `WELLBEING`, tone: `paper`,
       title: `仕事の意味を、見つけよう。`,
       image: `./images/works/showroom-care-03.webp`,
       alt: `暮らす・笑う・食べる・生きるの4語を太い文字で積み、日常の写真を挟んだ介護福祉の採用サイトFV` },
@@ -1012,11 +1012,11 @@ var SR_BASE = [
       title: `くらしを支える、その先へ。`,
       image: `./images/works/showroom-logistics-04.webp`,
       alt: `黄色いシャッターとフォークリフトを背に、運ぶ。以上。と大書した物流企業の採用サイトFV` },
-    { id: `25`, industry: `医療・看護`, world: `EDITORIAL`, tone: `coral`,
+    { id: `25`, industry: `医療・福祉`, world: `EDITORIAL`, tone: `coral`,
       title: `誠実さを、強さに。`,
       image: `./images/works/showroom-medical-04.webp`,
       alt: `大きな余白の中に、そばに。の一言と病室の小さな写真だけを置いた医療機関の採用サイトFV` },
-    { id: `26`, industry: `介護・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
+    { id: `26`, industry: `医療・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
       title: `ケアの景色を、更新する。`,
       image: `./images/works/showroom-care-04.webp`,
       alt: `鮮やかな青地に介護職、かっこよくないですか。と問いかけ、職員の横顔を置いた介護福祉の採用サイトFV` },
@@ -1040,7 +1040,7 @@ var SR_BASE = [
       title: `まちの記憶を、次へ。`,
       image: `./images/works/showroom-logistics-05.webp`,
       alt: `物流拠点と街を線で結び、見えない物流網を緻密に描いた採用サイトFV` },
-    { id: `32`, industry: `介護・福祉`, world: `WELLBEING`, tone: `coral`,
+    { id: `32`, industry: `医療・福祉`, world: `WELLBEING`, tone: `coral`,
       title: `らしさが、採用を動かす。`,
       image: `./images/works/showroom-care-05.webp`,
       alt: `人生のカラフルさを手描きイラストでにぎやかに表現した介護福祉の採用サイトFV` },
