@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.50137978.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.50137978.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.2ecd938f.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.2ecd938f.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.50137978.js / rolldown-runtime-S-ySWqyJ.50137978.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.2ecd938f.js / rolldown-runtime-S-ySWqyJ.2ecd938f.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1078,10 +1078,12 @@ var SR_WORKS = SR_BASE.map((w, k) => ({
     inside: SR_INSIDE[w.id] || null
 }));
 
-// 3レーンに1枚ずつ配る。レーンごとに流れる向きが変わる
-var SR_LANES = [SR_WORKS.filter((e, k) => k % 3 === 0),
-                SR_WORKS.filter((e, k) => k % 3 === 1),
-                SR_WORKS.filter((e, k) => k % 3 === 2)];
+/* 4レーンに1枚ずつ配る（2026-09-01・社長指示で3→4段に）。
+       絞り込んだとき画面に出る該当タイルが少なすぎたため。9/9/9/8枚 */
+    var SR_LANES = [SR_WORKS.filter((e, k) => k % 4 === 0),
+                SR_WORKS.filter((e, k) => k % 4 === 1),
+                SR_WORKS.filter((e, k) => k % 4 === 2),
+                SR_WORKS.filter((e, k) => k % 4 === 3)];
 
 /* タイルの寸法と傾き。
    🔴 **全部 16:9。縦長を混ぜない**（2026-09-01）。素材35点はすべて横長で、
@@ -1094,20 +1096,21 @@ var SR_LANES = [SR_WORKS.filter((e, k) => k % 3 === 0),
       1456px幅では手前1枚が画面の48%を占める。
       ⚠️ 戻すときは `git checkout before-depth-04c -- site-v4` */
 var SR_LANE_TILES = [
-    [0, 1, 2],   // 奥   … 108 / 124 / 142px
-    [3, 4],      // 中   … 250 / 290px
-    [5, 6, 7]    // 手前 … 540 / 620 / 700px
+    [0, 1],   // 奥   … 112 / 130px
+    [2, 3],   //      … 205 / 240px
+    [4, 5],   //      … 330 / 385px
+    [6, 7]    // 手前 … 520 / 600px
 ];
 
 var SR_TILES = [
-    { width: 108, height: 61, gap: 14, y: 7, rotate: -1.1 },
-    { width: 124, height: 70, gap: 11, y: -6, rotate: 1.4 },
-    { width: 142, height: 80, gap: 17, y: 4, rotate: -.6 },
-    { width: 250, height: 141, gap: 28, y: -10, rotate: 1.1 },
-    { width: 290, height: 163, gap: 24, y: 9, rotate: -1.5 },
-    { width: 540, height: 304, gap: 52, y: 13, rotate: -1.1 },
-    { width: 620, height: 349, gap: 66, y: -15, rotate: .8 },
-    { width: 700, height: 394, gap: 58, y: 11, rotate: 1.5 }
+    { width: 112, height: 63, gap: 14, y: 6, rotate: -1.1 },
+    { width: 130, height: 73, gap: 18, y: -6, rotate: 1.3 },
+    { width: 205, height: 115, gap: 24, y: -9, rotate: 1.1 },
+    { width: 240, height: 135, gap: 22, y: 8, rotate: -1.4 },
+    { width: 330, height: 186, gap: 34, y: 10, rotate: -.8 },
+    { width: 385, height: 217, gap: 40, y: -12, rotate: .9 },
+    { width: 520, height: 293, gap: 50, y: 12, rotate: -1.1 },
+    { width: 600, height: 338, gap: 58, y: -13, rotate: 1.5 }
 ];
 
 function Showroom() {
