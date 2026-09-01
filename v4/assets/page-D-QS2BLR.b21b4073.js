@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.77c5a41c.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.77c5a41c.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.b21b4073.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.b21b4073.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.77c5a41c.js / rolldown-runtime-S-ySWqyJ.77c5a41c.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.b21b4073.js / rolldown-runtime-S-ySWqyJ.b21b4073.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1563,36 +1563,14 @@ function x() {
                 }),
                 (0, i.jsxs)(`dl`, {
                     className: `reference-about-facts`,
-                    children: [(0, i.jsxs)(`div`, {
-                            children: [(0, i.jsx)(`dt`, {
-                                    children: `OWN`
-                                }),
-                                (0, i.jsx)(`dd`, {
-                                    children: `YOUR RECRUIT SITE`
-                                })]
-                        }),
-                        (0, i.jsxs)(`div`, {
-                            children: [(0, i.jsx)(`dt`, {
-                                    children: `GROW`
-                                }),
-                                (0, i.jsx)(`dd`, {
-                                    children: `WITH YOUR TEAM`
-                                })]
-                        }),
-                        (0, i.jsxs)(`div`, {
-                            children: [(0, i.jsx)(`dt`, {
-                                    children: `CONTINUOUS UPDATE`
-                                }),
-                                (0, i.jsx)(`dd`, {
-                                    children: `ALWAYS`
-                                })]
-                        }),
-                        (0, i.jsxs)(`div`, {
-                            children: [(0, i.jsx)(`dt`, {
-                                    children: `BUILD / MEASURE / IMPROVE`
-                                }),
-                                (0, i.jsx)(`dd`, {})]
-                        })]
+                    /* 🔴 飾りだが、意味のある飾り（2026-09-01・社長指示）。
+                       中身は SITE-PLAN「共通で含まれるもの」の事実だけ。
+                       「1社1設計」はFVの料金帯に既にあるので**ここには置かない**。
+                       「デザイン修正2回まで」は制限の話なので料金の節に任せる */
+                    children: [(0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `つくる` }), (0, i.jsx)(`dd`, { children: `原稿と構成も、おまかせ` })] }),
+                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `そだてる` }), (0, i.jsx)(`dd`, { children: `差し替え無制限・運用込み` })] }),
+                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `きりかえる` }), (0, i.jsx)(`dd`, { children: `1年継続で、新デザインへ` })] }),
+                        (0, i.jsxs)(`div`, { children: [(0, i.jsx)(`dt`, { children: `わたす` }), (0, i.jsx)(`dd`, { children: `12ヶ月継続で、コードをお渡し` })] })]
                 })]
         }),
         (0, i.jsxs)(`section`, {
