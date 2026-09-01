@@ -1,29 +1,41 @@
-<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta name="robots" content="noindex,nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/><script>/* 🔴 スクロールが上に引き戻される不具合の対策（2026-09-01）。
-   ロゴのリンクは href="#top"。押すとURLに #top が残る。
-   次にそのURLを開くと、ルーター(index-DteDOMqj.50137978.js)の Qi() が
-     requestAnimationFrame(() => window.scrollTo(0, 0))
-   を仕込む（ハッシュが "top" か空のときだけ scrollTo(0,0) になる特別扱い）。
-   これがハイドレーションの後に走るので、**先に読み始めていると先頭へ引き戻される**。
-   history.scrollRestoration も manual にされていて、ブラウザ側の復元も働かない。
-   ⚠️ このスクリプトは head の中で**即時実行**すること。defer や module にすると
-      ルーターより後になり、ハッシュを消す前に rAF を仕込まれる。 */
+<!DOCTYPE html><html lang="ja"><head><meta charSet="utf-8"/><meta name="robots" content="noindex,nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/><script>/* 🔴 ページ内リンクを押すとスクロールが数秒固まる不具合の対策・2回目（2026-09-01）。
+
+   1回目は「ロゴ(#top)のハッシュを時間差で掃除する」方式にしたが、再発した。
+   実測で分かった本当の動き:
+     ルーター(index-DteDOMqj.50137978.js)はハッシュ遷移の間、**スクロールを固定し続ける**。
+     固定中は scrollTo も車輪も効かない。実測でロゴは数秒以上、#price でも約3秒。
+     ページが重いほど長い。ハッシュを後から消しても、遷移が始まった時点で負け。
+
+   対策: ページ内リンクのクリックを capture で先回りして横取りし、
+   **ルーターに一切渡さない**。スクロールとURLの更新は自前でやる
+   （replaceState はルーターの遷移を起こさない）。
+
+   ⚠️ SPメニュー内のリンクは横取りしない（sp-menu.50137978.js が自前で閉じ＋スクロール）。
+   ⚠️ head の中で**即時実行**のまま維持（defer にするとルーターが先に付く）。
+   ⚠️ 即時ジャンプにしてある。smooth にするなら実機で確認すること
+      （検証環境では描画が止まり確かめられない）。 */
 (function () {
-  var strip = function () {
-    if (location.hash === "#top") {
-      history.replaceState(history.state, "", location.pathname + location.search);
-    }
-  };
-  strip();                                   /* 読み込み時: ルーターが見る前に消す。ここが本命 */
-  /* ⚠️ ロゴ押下はハッシュ移動ではないので hashchange は出ない。
-     さらにルーターは history.pushState を**自前のものに差し替える**ので、
-     履歴APIを包む手は効かない（実測: 包んでもロゴ経由では剥がれなかった）。
-     クリックを見て、移動が終わったころに掃除する。
-     ⚠️ 消すのは **#top のときだけ**。#about などの節リンクには触らない */
+  if (location.hash === "#top") {   /* 共有されたURLに #top が残っていた場合の掃除 */
+    history.replaceState(history.state, "", location.pathname + location.search);
+  }
   addEventListener("click", function (e) {
-    var a = e.target && e.target.closest && e.target.closest('a[href="#top"]');
+    var a = e.target && e.target.closest && e.target.closest('a[href^="#"]');
     if (!a) return;
-    setTimeout(strip, 0);
-    setTimeout(strip, 120);
+    var hash = a.getAttribute("href");
+    if (hash.length < 2) return;
+    if (a.closest(".sp-menu")) return;       /* SPメニューは自前処理に任せる */
+    e.preventDefault();
+    e.stopPropagation();                     /* ルーターへ渡さない。ここが本体 */
+    if (hash === "#top") {
+      window.scrollTo(0, 0);
+      /* 前の節のハッシュが残っているとき（#priceのまま先頭にいる等）も掃除する */
+      if (location.hash) history.replaceState(history.state, "", location.pathname + location.search);
+      return;                                /* #top はURLに残さない */
+    }
+    var t = document.getElementById(hash.slice(1));
+    if (!t) return;
+    t.scrollIntoView({ block: "start" });
+    history.replaceState(history.state, "", hash);  /* 共有用にハッシュだけ更新 */
   }, true);
 })();</script><link rel="stylesheet" href="./assets/index-D5NZeMWX.50137978.css" data-rsc-css-href="./assets/index-D5NZeMWX.50137978.css" data-precedence="vite-rsc/importer-resources"/>
     <link rel="stylesheet" href="./assets/coral.50137978.css"/>
