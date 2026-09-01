@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.42d089cb.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.6326473a.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.42d089cb.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.6326473a.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.42d089cb.css）。bands.42d089cb.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.6326473a.css）。bands.6326473a.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.42d089cb.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.6326473a.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1498,7 +1498,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.42d089cb.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.6326473a.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1511,7 +1511,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.42d089cb.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.6326473a.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1649,7 +1649,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.42d089cb.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.6326473a.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1800,5 +1800,74 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
     .works-drawer-head h3 {
         font-size: 19px
+    }
+}
+
+/* ── ヘッダーのナビを買い手の問いに合わせる（2026-09-01・社長判断/案A） ────
+   前: サービス概要 ／ カタログ ／ 成果にこだわる ＋ CTA
+   後: サービス概要 ／ カタログ ／ 料金 ＋ CTA（PC・SP同じ3つ）
+
+   直した中身:
+   🔴 「カタログ」が**押しても移動しなかった**。3Dリボンの停止トグルで、
+      押すとラベルが「再生する」に変わり、読み上げ名は「3Dリボンの動きを停止」だった。
+      → `#expression` への普通のリンクにし、停止は下の `.ribbon-toggle` へ移した
+   🔴 ヘッダーのCTAだけ `#contact`（フッターへスクロール）だった。
+      → `./contact.html`。これで相談CTAの4箇所が全部そろった
+   ・「料金」を足した。月額27,000円・初期費用0円が最大の武器なのにナビから飛べなかった
+   ・「成果にこだわる」はナビから外した（節は残る）。他2つが名詞なのにここだけ動詞句で、
+     かつ社内の節名。買い手が探す言葉ではない
+   ------------------------------------------------------------------ */
+
+/* 🔴 追従ヘッダー（79px）のぶん、飛び先の節の頭が隠れていた。
+   hd-away で下スクロール中は引っ込むので実害は小さいが、
+   ハッシュ直打ち・リロード時は隠れたままになる */
+.site-shell section[id],
+.site-shell [id="top"] {
+    scroll-margin-top: clamp(64px, 6vw, 96px)
+}
+
+/* FVの隅の停止/再生。ナビから移したもの。
+   ⚠️ 見えている文字と読み上げ名を一致させる（前は別物だった）ので aria-label を持たせない。
+   紙色の下地に溶けこむ控えめな見た目。主役はリボンなので目立たせない */
+.ribbon-toggle {
+    z-index: 4;
+    color: #11111f8c;
+    cursor: pointer;
+    letter-spacing: .1em;
+    background: #f7f4eeb8;
+    border: 1px solid #11111f26;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font: 700 10px/1 Arial, sans-serif;
+    transition: color .25s, border-color .25s, background-color .25s;
+    position: absolute;
+    right: clamp(14px, 1.9vw, 30px);
+    bottom: clamp(14px, 1.9vw, 30px);
+    -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px)
+}
+
+.ribbon-toggle:hover,
+.ribbon-toggle:focus-visible {
+    color: #111;
+    border-color: #11111f6b
+}
+
+/* 動きを止めている間は、止まっていることが分かる色に */
+.ribbon-toggle[aria-pressed="true"] {
+    color: var(--tone-coral);
+    border-color: #ff4d4f5c
+}
+
+@media (max-width: 700px) {
+    /* 🔴 SPのFVは1409pxもあり、下端に置くと**画面外（実測 y1374）**で押せなかった。
+       1画面目の下端に来るよう、ヘッダーからでなく**表示領域の高さ**から逆算して置く。
+       リボンの上に重なるが、そのリボンを止めるボタンなので位置として正しい */
+    .ribbon-toggle {
+        top: calc(100svh - 58px);
+        bottom: auto;
+        right: 14px;
+        padding: 8px 13px;
+        font-size: 9.5px
     }
 }

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.42d089cb.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.42d089cb.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.6326473a.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.6326473a.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.42d089cb.js / rolldown-runtime-S-ySWqyJ.42d089cb.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.6326473a.js / rolldown-runtime-S-ySWqyJ.6326473a.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1268,21 +1268,21 @@ function x() {
         }), (0, i.jsxs)(`nav`, {
             className: `site-nav`,
             "aria-label": `メインナビゲーション`,
+            /* 🔴 買い手の3つの問い「何か・見せて・いくら」に対応させた（2026-09-01）。
+               前は「カタログ」が3Dリボンの停止トグルで、押しても移動せず
+               ラベルが「再生する」に変わっていた。停止はFVの隅の専用ボタンへ移した */
             children: [(0, i.jsx)(`a`, {
                 href: `#about`,
                 children: `サービス概要`
-            }), (0, i.jsx)(`button`, {
-                type: `button`,
-                "aria-pressed": !e,
-                "aria-label": e ? `3Dリボンの動きを停止` : `3Dリボンの動きを再生`,
-                onClick: () => t(e => !e),
-                children: e ? `カタログ` : `再生する`
             }), (0, i.jsx)(`a`, {
-                href: `#blueprint`,
-                children: `成果にこだわる`
+                href: `#expression`,
+                children: `カタログ`
+            }), (0, i.jsx)(`a`, {
+                href: `#price`,
+                children: `料金`
             }), (0, i.jsxs)(`a`, {
                 className: `header-cta`,
-                href: `#contact`,
+                href: `./contact.html`,
                 children: [`無料で相談する `, (0, i.jsx)(`span`, {
                     "aria-hidden": `true`,
                     children: `↗`
@@ -1422,6 +1422,13 @@ function x() {
                     className: `ribbon-glow`,
                     "aria-hidden": `true`
                 })]
+            }), /* リボンの停止/再生。ナビから移した。見えている文字と読み上げ名を一致させる */
+            (0, i.jsx)(`button`, {
+                type: `button`,
+                className: `ribbon-toggle`,
+                "aria-pressed": !e,
+                onClick: () => t(e => !e),
+                children: e ? `動きを止める` : `動きを再生する`
             }), (0, i.jsxs)(`section`, {
                 className: `pricing-strip`,
                 "aria-label": `料金と制作スタイル`,
