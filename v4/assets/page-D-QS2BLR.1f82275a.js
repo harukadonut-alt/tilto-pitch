@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.42429775.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.42429775.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.1f82275a.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.1f82275a.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.42429775.js / rolldown-runtime-S-ySWqyJ.42429775.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.1f82275a.js / rolldown-runtime-S-ySWqyJ.1f82275a.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1149,9 +1149,6 @@ function Showroom() {
                     children: [`業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`, (0, i.jsx)(`br`, {}),
                         `その可能性を、35の表現サンプルで。`]
-                }),
-                (0, i.jsxs)(`small`, {
-                    children: [`7 INDUSTRIES /`, (0, i.jsx)(`br`, {}), `35 RECRUITMENT SITES`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
