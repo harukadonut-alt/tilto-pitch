@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.29f21347.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.29f21347.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d9d19bb5.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d9d19bb5.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.29f21347.js / rolldown-runtime-S-ySWqyJ.29f21347.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.d9d19bb5.js / rolldown-runtime-S-ySWqyJ.d9d19bb5.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1083,15 +1083,20 @@ var SR_LANES = [SR_WORKS.filter((e, k) => k % 3 === 0),
                 SR_WORKS.filter((e, k) => k % 3 === 1),
                 SR_WORKS.filter((e, k) => k % 3 === 2)];
 
-// タイルの寸法と傾き。8種を順に当てて、大きさの振れ幅そのものを見せる
+/* タイルの寸法と傾き。8種を順に当てて、大きさの振れ幅そのものを見せる。
+   🔴 **全部 16:9。縦長を混ぜない**（2026-09-01）。
+      素材35点はすべて横長で、採用サイトのFV自体が横長（ブラウザの画面）。
+      縦長の枠に入れると object-fit: cover で**横幅の57〜69%が切り落とされ**、
+      作品が読めない断片になっていた。振れ幅は「向き」ではなく**大きさ**で出す
+      （幅 205〜420px の8段階）。 */
 var SR_TILES = [
     { width: 350, height: 197, gap: 54, y: 15, rotate: -1.2 },
     { width: 235, height: 132, gap: 27, y: -12, rotate: 1.7 },
-    { width: 155, height: 245, gap: 68, y: 19, rotate: -2.1 },
+    { width: 265, height: 149, gap: 68, y: 19, rotate: -2.1 },
     { width: 298, height: 168, gap: 38, y: 6, rotate: .8 },
     { width: 420, height: 236, gap: 62, y: -15, rotate: -1.6 },
     { width: 205, height: 116, gap: 24, y: 18, rotate: 2.3 },
-    { width: 178, height: 278, gap: 45, y: -18, rotate: -.7 },
+    { width: 385, height: 217, gap: 45, y: -18, rotate: -.7 },
     { width: 322, height: 181, gap: 70, y: 13, rotate: 1.3 }
 ];
 
