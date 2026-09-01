@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.1f82275a.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.1f82275a.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.67c11262.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.67c11262.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.1f82275a.js / rolldown-runtime-S-ySWqyJ.1f82275a.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.67c11262.js / rolldown-runtime-S-ySWqyJ.67c11262.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1075,10 +1075,6 @@ var SR_WORKS = SR_BASE.map((w, k) => ({
         : k % 3 === 1
             ? `まだ言葉になっていなかった会社の魅力を、写真・コピー・余白の設計でひとつの世界観に。`
             : `仕事の意味と働く人の温度を整理し、候補者が自分の未来を重ねられる採用サイトへ。`,
-    /* ⚠️ ここに出るのは**別のサンプルのFV**。その会社の中面ではないので、
-       「会社を知る」「働く環境」のようなページ名を付けない（嘘になる）。業種を出す。
-       ⚠️ ずらし幅は 1,2,4,5。7業種を順ぐりに並べてあるので、この4つだと業種が必ず4つとも違う */
-    innerImages: [1, 2, 4, 5].map(d => SR_BASE[(k + d) % SR_BASE.length]),
     inside: SR_INSIDE[w.id] || null
 }));
 
@@ -1114,8 +1110,11 @@ function Showroom() {
     let shown = (0, r.useMemo)(() => work
         ? (work.inside ? work : (SR_WORKS.find(x => x.inside) || work))
         : null, [work]);
+    /* 右の列は「選んだタイルと同じ業種のFVを**全部**」（2026-09-01・社長指示）。
+       前は業種に関係なく、ずらし幅 1,2,4,5 で4点だけ拾っていた。
+       ⚠️ 数を決め打ちしない。業種ごとの点数が増えたらそのぶん増える（列はスクロールする） */
     let related = (0, r.useMemo)(() => !work ? []
-        : (work === shown ? work.innerImages : [work, ...work.innerImages.slice(0, 3)]), [work, shown]);
+        : SR_WORKS.filter(w => w.industry === work.industry), [work]);
 
     (0, r.useEffect)(() => {
         if (!work) return;
@@ -1235,12 +1234,13 @@ function Showroom() {
                    ⚠️ ここは work があるときだけ描く＝クライアント側だけの要素。
                       SSRには出ないので、index.html を触らなくてもhydrationはズレない */
                 className: `works-rail`,
-                children: [(0, i.jsx)(`small`, { className: `works-rail-head`, children: `RELATED` }),
+                children: [(0, i.jsxs)(`small`, { className: `works-rail-head`, children: [`RELATED — `, work.industry] }),
                     ...related.map(other => (0, i.jsxs)(`figure`, {
                         className: `works-rail-item`,
                         "data-current": other.id === work.id ? `true` : `false`,
                         children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
-                            (0, i.jsx)(`figcaption`, { children: other.industry })]
+                            /* 業種は上の見出しに出したので、ここは作品名（全部違う） */
+                            (0, i.jsx)(`figcaption`, { children: other.title })]
                     }, other.id))]
             })]
             }) : null]
