@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.ffaa0b6a.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.42d089cb.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.ffaa0b6a.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.42d089cb.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.ffaa0b6a.css）。bands.ffaa0b6a.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.42d089cb.css）。bands.42d089cb.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.ffaa0b6a.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.42d089cb.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1498,7 +1498,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.ffaa0b6a.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.42d089cb.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1511,7 +1511,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.ffaa0b6a.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.42d089cb.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1649,7 +1649,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.ffaa0b6a.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.42d089cb.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1663,4 +1663,142 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ⚠️ border-top（横罫）は列いっぱいのまま。padding なので罫は縮まない */
 .pf-foot {
     padding-right: clamp(0px, 11vw - 105px, 150px)
+}
+
+/* ── 04 ビューアを作品優先に組み直す（2026-09-01・社長指示） ───────────
+   「画像で説明、テキストで説明するんじゃなくて、作品で説明したいから、
+     もっと左も右も画面いっぱいに使ってほしい」
+
+   前: `.works-drawer-content` が min(960px, 92vw) で中央寄せ。
+       2000px幅の画面では左右に大きな余白が残り、作品が画面の半分しか使えていなかった。
+       さらに見出し3行＋説明文1行で、縦も文字に取られていた。
+   後: 段の幅いっぱいを作品に使い、見出しは1本のバーに畳む。説明文は削除
+       （3種を使い回しているだけの一般論で、その作品について何も言っていなかった）。
+
+   ⚠️ ビューアは `work` があるときだけ描かれる**クライアント専用要素**。
+      SSR（index.html）には出ないので、ここはJSXだけ直せばよい
+   ------------------------------------------------------------------ */
+
+/* 右の関連列も広げる（120〜210px → 170〜300px）。FVが小さすぎて何か分からなかった。
+   🔴 列幅は**変数1本**にする。閉じるボタンの逃げ幅がこれと同じ値を持っていて、
+      片方だけ変えたら×が右列に重なった（2026-09-01に踏んだ） */
+.works-drawer {
+    --sr-rail: clamp(170px, 16vw, 300px)
+}
+
+.works-viewer {
+    grid-template-columns: minmax(0, 1fr) var(--sr-rail)
+}
+
+/* 閉じるボタンは右列の左どなり。上の変数から引く */
+.works-drawer-close {
+    right: calc(var(--sr-rail) + clamp(10px, 1.4vw, 24px))
+}
+
+/* 左段: 960pxの上限をやめて段いっぱい。中身は縦に詰めて、作品に余った高さを全部渡す */
+.works-viewer .works-drawer-content {
+    flex-direction: column;
+    width: auto;
+    margin-inline: 0;
+    padding: clamp(22px, 2.4vw, 40px) clamp(20px, 2.2vw, 38px) clamp(18px, 2vw, 32px) clamp(24px, 3.2vw, 60px);
+    display: flex;
+    overflow: hidden
+}
+
+/* 見出しは1行のバー。作品名を主、業種を従にして、縦は1行ぶんしか使わない */
+.works-drawer-head {
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px clamp(12px, 1.4vw, 24px);
+    margin-bottom: clamp(14px, 1.5vw, 24px);
+    display: flex
+}
+
+.works-drawer-head h3 {
+    letter-spacing: -.02em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(19px, 1.85vw, 30px);
+    font-weight: 500;
+    line-height: 1.3
+}
+
+.works-drawer-head .works-drawer-kicker {
+    flex-basis: 100%
+}
+
+.works-drawer-head .works-drawer-industry {
+    color: #11111fa6;
+    margin: 0
+}
+
+/* 作品の枠に、余った高さを全部渡す */
+.works-viewer .works-site {
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    display: flex
+}
+
+.works-viewer .works-site-frame {
+    flex: 1;
+    min-height: 0;
+    height: auto
+}
+
+/* FV1枚しかない作品も、同じ枠いっぱいに見せる（16/9固定をやめる） */
+.works-viewer .works-selected-preview {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 0;
+    margin: 0
+}
+
+@media (max-width: 900px) {
+    /* 🔴 上のPC指定はこのファイルの**後ろ**にあるので、前半のSP指定に勝ってしまう。
+       ここで縦積みに戻す（戻さないと左段が205pxになり、右列が縦に居座った） */
+    .works-viewer {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto
+    }
+
+    .works-drawer-close {
+        top: 12px;
+        right: 14px
+    }
+
+    /* SPは縦積みのまま。作品は枠を外して全部流す（既存の方針を維持）。
+       ⚠️ 左右の余白をゼロにして**画面幅いっぱい**に。20pxずつ空けていたぶん、
+          作品が横335px→375pxになり、そのぶん縦にも大きく見える（社長指示） */
+    .works-viewer .works-drawer-content {
+        padding: 56px 0 16px;
+        overflow-y: auto
+    }
+
+    /* 文字だけは端に付かないよう内側へ戻す */
+    .works-drawer-head,
+    .works-viewer .works-site > small {
+        padding-inline: 20px
+    }
+
+    /* この作品は縦横比が1:1に近く、幅いっぱいにしても画面の高さが余る。
+       下に空きを寄せず、余りを上下で分ける */
+    .works-viewer .works-site {
+        margin-block: auto
+    }
+
+    .works-viewer .works-site,
+    .works-viewer .works-site-frame,
+    .works-viewer .works-selected-preview {
+        flex: none
+    }
+
+    .works-viewer .works-selected-preview {
+        aspect-ratio: 16 / 9
+    }
+
+    .works-drawer-head h3 {
+        font-size: 19px
+    }
 }

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.ffaa0b6a.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.ffaa0b6a.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.42d089cb.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.42d089cb.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.ffaa0b6a.js / rolldown-runtime-S-ySWqyJ.ffaa0b6a.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.42d089cb.js / rolldown-runtime-S-ySWqyJ.42d089cb.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1211,9 +1211,13 @@ function Showroom() {
                 className: `works-viewer`,
                 children: [(0, i.jsxs)(`div`, {
                 className: `works-drawer-content`,
-                children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
-                    (0, i.jsx)(`h3`, { children: shown.title }),
-                    (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] }),
+                children: [/* 見出しは1本のバーに畳む。主役は下の作品なので、文字に高さを使わない */
+                    (0, i.jsxs)(`div`, {
+                        className: `works-drawer-head`,
+                        children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
+                            (0, i.jsx)(`h3`, { children: shown.title }),
+                            (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] })]
+                    }),
                     /* 中身まで見られる作品は、スクロールできる枠でサイト全体を見せる。
                        それ以外はFV1枚。⚠️ 縦長画像が無い作品にこの枠を出さない（空になる） */
                     shown.inside ? (0, i.jsxs)(`div`, {
@@ -1228,7 +1232,6 @@ function Showroom() {
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
                             (0, i.jsx)(`img`, { src: shown.image, alt: shown.alt })]
                     }),
-                    (0, i.jsx)(`p`, { className: `works-drawer-description`, children: shown.description }),
 ]
             }), (0, i.jsxs)(`div`, {
                 /* 右は「関連する表現」4点。**参照するだけ**で、押しても左は変わらない。
