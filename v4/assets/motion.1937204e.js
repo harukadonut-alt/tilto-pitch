@@ -135,7 +135,11 @@
             // 03 体験: 紙が散らばった状態 → 整理 → サイトの形になる
             if (kind === 'fusion-story') {
                 var p = clamp(-box.top / Math.max(1, box.height - vh));
-                var organize = ramp(.27, .66, p);
+                /* 🔴 開始値は「ピン留めが始まってから何px動かないか」に直結する。
+                   .27 だと節240vhでは **328px スクロールしても画面が変わらない**＝
+                   固まったように見える（2026-09-01の社長報告）。ピン開始直後から動かす。
+                   ⚠️ 節の高さを変えたら、ここの開始値も見直すこと（px換算が変わる） */
+                var organize = ramp(.06, .66, p);
                 /* 枠の開き。⚠️ 中身のスクロール（settle）より**先に開き切る**こと。
                    重なっていると、上が切れたまま中身が動き出す（社長の指摘） */
                 var reveal = ramp(.58, .74, p);
@@ -146,7 +150,7 @@
                    ⚠️ 枠が開き切る .74 より後から始める。サイトの一番上を見せる間を作る */
                 var settle = ramp(.80, 1, p);
                 st.setProperty('--fusion-progress', p.toFixed(4));
-                st.setProperty('--process-before-opacity', (1 - ramp(.3, .59, p)).toFixed(4));
+                st.setProperty('--process-before-opacity', (1 - ramp(.10, .59, p)).toFixed(4));
                 st.setProperty('--process-organize', organize.toFixed(4));
                 st.setProperty('--process-reveal', reveal.toFixed(4));
                 var after = ramp(.7, .87, p);
@@ -160,9 +164,9 @@
                 st.setProperty('--process-progress-x', (p * 100).toFixed(2) + '%');
 
                 el.querySelectorAll('.process-paper').forEach(function (paper, k) {
-                    var move = ramp(.26 + k * .012, .65 + k * .008, p);
+                    var move = ramp(.05 + k * .012, .65 + k * .008, p);
                     var keep = paper.dataset.keep === 'true';   // 最後まで残る紙
-                    var fade = ramp(keep ? .7 : .55, keep ? .84 : .73, p);
+                    var fade = ramp(keep ? .62 : .45, keep ? .84 : .73, p);
                     var dx = Number(paper.dataset.dx || 0), dy = Number(paper.dataset.dy || 0);
                     var r0 = Number(paper.dataset.r || 0);
                     var rot = r0 + (Number(paper.dataset.endR || 0) - r0) * move;
@@ -199,7 +203,8 @@
                 st.setProperty('--bp-visual', ramp(.38, .50, b).toFixed(4));
                 st.setProperty('--bp-notes', notes.toFixed(4));
                 st.setProperty('--bp-kpi', kpi.toFixed(4));
-                st.setProperty('--bp-settle', ramp(.77, .88, b).toFixed(4));
+                /* ⚠️ .88 で終わると、残り12%＝173px はピン留めのまま何も動かない。最後まで使う */
+                st.setProperty('--bp-settle', ramp(.77, .98, b).toFixed(4));
                 st.setProperty('--bp-grid-opacity', (.08 + foundation * .2).toFixed(4));
                 st.setProperty('--bp-axis-offset', (1 - foundation).toFixed(4));
                 st.setProperty('--bp-leader-offset', (1 - notes).toFixed(4));

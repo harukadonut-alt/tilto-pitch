@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.72935fcf.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.72935fcf.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.1937204e.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.1937204e.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.72935fcf.js / rolldown-runtime-S-ySWqyJ.72935fcf.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.1937204e.js / rolldown-runtime-S-ySWqyJ.1937204e.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 

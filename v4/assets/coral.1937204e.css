@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.72935fcf.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.1937204e.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -538,7 +538,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.72935fcf.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.1937204e.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -806,7 +806,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.72935fcf.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.1937204e.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -2446,7 +2446,7 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.72935fcf.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.1937204e.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;
