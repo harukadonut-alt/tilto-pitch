@@ -127,6 +127,7 @@
                 // 赤入れは左から引かれる（transform-origin: 0）
                 st.setProperty('--pb-line-1', ramp(.58, .72, pb).toFixed(4));
                 st.setProperty('--pb-line-2', ramp(.66, .80, pb).toFixed(4));
+                st.setProperty('--pb-line-mid', ramp(.62, .76, pb).toFixed(4));
                 var closing = ramp(.75, .92, pb);
                 st.setProperty('--pb-closing', closing.toFixed(4));
                 if (closing > .06) wipe(el.querySelector('.reference-problems-statement'), 'pb');
