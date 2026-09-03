@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.f0495187.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.f0495187.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d835ff4c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d835ff4c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.f0495187.js / rolldown-runtime-S-ySWqyJ.f0495187.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.d835ff4c.js / rolldown-runtime-S-ySWqyJ.d835ff4c.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1288,17 +1288,11 @@ function x() {
                ラベルが「再生する」に変わっていた。停止はFVの隅の専用ボタンへ移した */
             children: [(0, i.jsx)(`a`, {
                 href: `#about`,
-                children: `サービス概要`
-            }), (0, i.jsx)(`a`, {
-                href: `#expression`,
-                children: `カタログ`
-            }), (0, i.jsx)(`a`, {
+                children: `Tiltoとは` }), (0, i.jsx)(`a`, { href: `#expression`, children: `デザインカタログ` }), (0, i.jsx)(`a`, {
                 href: `#price`,
                 children: `料金`
             }), (0, i.jsxs)(`a`, {
-                className: `header-cta`,
-                href: `./contact.html`,
-                children: [`無料で相談する `, (0, i.jsx)(`span`, {
+                className: `header-cta`, href: `./contact.html`, children: [`無料で相談してみる `, (0, i.jsx)(`span`, {
                     "aria-hidden": `true`,
                     children: `↗`
                 })]
@@ -1377,13 +1371,9 @@ function x() {
                     children: [`つくって終わりにしない。`, (0, i.jsx)(`br`, {
                         className: `lead-br`
                     }), `月額で持ち、育てつづける採用サイト。`]
-                }), (0, i.jsxs)(`p`, {
+                }), (0, i.jsx)(`p`, {
                     className: `service-chip`,
-                    children: [`採用コンサルタント `, (0, i.jsx)(`b`, {
-                        children: `×`
-                    }), ` AI `, (0, i.jsx)(`b`, {
-                        children: `×`
-                    }), ` Web制作`]
+                    children: `プロと作る、新しい採用サイト`
                 })]
             }), (0, i.jsxs)(`div`, {
                 className: `ribbon-cast-shadow-scene`,
@@ -1480,17 +1470,17 @@ function x() {
                         className: `price-label`,
                         children: [(0, i.jsx)(`span`, {
                             children: `02`
-                        }), ` 初期費用`]
+                        }), ` 制作期間`]
                     }), (0, i.jsxs)(`p`, {
                         className: `price-value price-value--ink`,
                         children: [(0, i.jsx)(`strong`, {
-                            children: `0`
+                            children: `1`
                         }), (0, i.jsx)(`span`, {
-                            children: `円`
+                            children: `週間〜`
                         })]
                     }), (0, i.jsx)(`p`, {
                         className: `price-note`,
-                        children: `制作開始時のまとまった費用は不要。はじめやすい料金設計です。`
+                        children: `最初のお打ち合わせから最短1週間。すぐに動き出せます。`
                     })]
                 }), (0, i.jsxs)(`article`, {
                     id: `style`,
@@ -1509,15 +1499,14 @@ function x() {
                         })]
                     }), (0, i.jsx)(`p`, {
                         className: `price-note`,
-                        children: `テンプレートに当てはめない、その会社だけのオリジナル設計。`
+                        children: `テンプレートに当てはめない、自社独自のオリジナルサイト。`
                     })]
                 }), (0, i.jsxs)(`a`, {
                     id: `fv-cta`,
                     className: `pricing-cta`,
                     href: `./contact.html`,
                     children: [(0, i.jsxs)(`span`, {
-                        className: `pricing-cta-main`,
-                        children: [`無料で相談する `, (0, i.jsx)(`b`, {
+                        className: `pricing-cta-main`, children: [`無料で相談してみる `, (0, i.jsx)(`b`, {
                             "aria-hidden": `true`,
                             children: `↗`
                         })]
