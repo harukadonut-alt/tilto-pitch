@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.25ceb3b9.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.25ceb3b9.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.edc5c313.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.edc5c313.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.25ceb3b9.js / rolldown-runtime-S-ySWqyJ.25ceb3b9.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.edc5c313.js / rolldown-runtime-S-ySWqyJ.edc5c313.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2011,6 +2011,10 @@ function x() {
                                         `構造でつくり、言葉で届け、`,
                                         (0, i.jsx)(`br`, {}),
                                         `体験で動かし、改善していく。`]
+                                }), (0, i.jsxs)(`p`, {
+                                    children: [`Tiltoでは、デザインクオリティは大前提に、`, (0, i.jsx)(`br`, {}),
+                                        `採用コンサルタントがこれまでの採用支援で培ってきたノウハウを活用し、`, (0, i.jsx)(`br`, {}),
+                                        `「応募が集まる採用サイト」を設計します。`]
                                 })]
                         })]
                             }), ,
@@ -2761,23 +2765,7 @@ function x() {
                                                 })]
                                         })]
                                 }),
-                                (0, i.jsxs)(`div`, {
-                                    className: `bp-title-block`,
-                                    children: [(0, i.jsxs)(`div`, {
-                                            children: [(0, i.jsx)(`small`, {
-                                                    children: `SCALE`
-                                                }),
-                                                (0, i.jsx)(`b`, {
-                                                    children: `1 : 1`
-                                                }),
-                                                (0, i.jsx)(`small`, {
-                                                    children: `DATE`
-                                                }),
-                                                (0, i.jsx)(`b`, {
-                                                    children: `2024.05`
-                                                })]
-                                        })]
-                                }),
+                                
                                 (0, i.jsxs)(`span`, {
                                     className: `bp-ref bp-ref-a`,
                                     children: [`A`,
