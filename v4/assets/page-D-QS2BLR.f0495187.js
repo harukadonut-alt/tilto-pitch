@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.edc5c313.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.edc5c313.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.f0495187.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.f0495187.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.edc5c313.js / rolldown-runtime-S-ySWqyJ.edc5c313.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.f0495187.js / rolldown-runtime-S-ySWqyJ.f0495187.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1563,13 +1563,21 @@ function x() {
                                 `更新し、改善しつづける。`]
                         })]
                 }),
-                (0, i.jsx)(`div`, {
+                (0, i.jsxs)(`div`, {
                     className: `reference-about-facts`,
-                    /* 🔴 中身は空。この要素は::before/::afterの英字ラベル
-                       （RECRUITMENT CHANGES. / SO DOES THE SITE.）の錨として残している。
-                       「つくる/そだてる/きりかえる/わたす」の仕様リストは
-                       2026-09-02 社長指示で削除した。要素ごと消すとラベルも消えるので注意 */
-                    "aria-hidden": `true`
+                    /* 🔴 この要素は ::before/::after の英字ラベル
+                       （RECRUITMENT CHANGES. / SO DOES THE SITE.）の錨でもある。
+                       要素ごと消すとラベルも消えるので注意。
+                       中身は 2026-09-03 に社長指示でサービス説明を入れた（元は空） */
+                    children: [(0, i.jsx)(`p`, {
+                            children: `Tiltoは、採用マーケティングを行う株式会社Savor Flowが提供する、新しい採用ブランディングサービスです。`
+                        }),
+                        (0, i.jsx)(`p`, {
+                            children: `従来の採用サイトが抱えていた「高い」「時間がかかる」「成果につながるか分からない」という課題を、AIを制作プロセスに取り入れることで解消。経験豊富な採用コンサルタントとデザイナーが伴走し、企業ごとの特色や強みを活かしたオリジナルの採用サイトを、月2.7万円〜制作します。`
+                        }),
+                        (0, i.jsx)(`p`, {
+                            children: `さらに、12ヶ月ご契約いただいた場合は、無料でデザインの再制作も行います。`
+                        })]
                 })]
         }),
         (0, i.jsxs)(`section`, {
@@ -1689,10 +1697,8 @@ function x() {
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     })]
                                 }),
-                                (0, i.jsxs)(`p`, {
-                                    children: [`言葉にならなかった想いを整理し、`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `採用サイトという形で、未来へつなげます。`]
+                                (0, i.jsx)(`p`, {
+                                    children: `「なんとなく」から、まとめます。`
                                 })]
                         }),
                         (0, i.jsxs)(`div`, {
