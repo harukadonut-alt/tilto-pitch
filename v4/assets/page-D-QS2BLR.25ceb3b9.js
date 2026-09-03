@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.36322fa0.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.36322fa0.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.25ceb3b9.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.25ceb3b9.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.36322fa0.js / rolldown-runtime-S-ySWqyJ.36322fa0.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.25ceb3b9.js / rolldown-runtime-S-ySWqyJ.25ceb3b9.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2849,20 +2849,12 @@ function x() {
                                     children: [(0, i.jsx)(`span`, {
                                             children: `※`
                                         }),
+                                        `表示価格は基本プランの月額料金です。`, (0, i.jsx)(`br`, {}), (0, i.jsx)(`span`, {
+                                            children: `※`
+                                        }),
                                         `内容や更新範囲に応じてご案内します。`]
-                                }),
-                                (0, i.jsxs)(`p`, {
-                                    className: `pf-init`,
-                                    children: [(0, i.jsx)(`span`, {
-                                            children: `初期費用`
-                                        }),
-                                        (0, i.jsx)(`strong`, {
-                                            children: `0`
-                                        }),
-                                        (0, i.jsx)(`b`, {
-                                            children: `円`
-                                        })]
-                                })]
+                                })
+                                ]
                         })]
                 }),
                 (0, i.jsxs)(`div`, {
