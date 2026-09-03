@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3eb05fff.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3eb05fff.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.36322fa0.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.36322fa0.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.3eb05fff.js / rolldown-runtime-S-ySWqyJ.3eb05fff.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.36322fa0.js / rolldown-runtime-S-ySWqyJ.36322fa0.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2839,10 +2839,7 @@ function x() {
                                     children: `27,000`
                                 }),
                                 (0, i.jsx)(`b`, {
-                                    children: `円`
-                                }),
-                                (0, i.jsx)(`small`, {
-                                    children: `/ MONTH`
+                                    children: `円〜`
                                 })]
                         }),
                         (0, i.jsxs)(`div`, {
@@ -2850,11 +2847,6 @@ function x() {
                             children: [(0, i.jsxs)(`p`, {
                                     className: `pf-note`,
                                     children: [(0, i.jsx)(`span`, {
-                                            children: `※`
-                                        }),
-                                        `表示価格は基本プランの月額料金です。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        (0, i.jsx)(`span`, {
                                             children: `※`
                                         }),
                                         `内容や更新範囲に応じてご案内します。`]
@@ -2899,31 +2891,11 @@ function x() {
                                                     children: `A.`
                                                 }),
                                                 (0, i.jsxs)(`span`, {
-                                                    children: [`最低契約期間は6ヶ月です。`,
-                                                        (0, i.jsx)(`br`, {}),
-                                                        `6ヶ月以降は1ヶ月単位で契約更新が可能です。`]
+                                                    children: [`最低契約期間は6ヶ月です。`, (0, i.jsx)(`br`, {}), `12ヶ月間継続いただけた場合、無料でのデザイン更新、またはコードのお渡しをお選びいただけます。`]
                                                 })]
                                         })]
                                 }),
-                                (0, i.jsxs)(`details`, {
-                                    children: [(0, i.jsxs)(`summary`, {
-                                            children: [(0, i.jsx)(`b`, {
-                                                    children: `Q.`
-                                                }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `契約中の解約はどこまで対応してもらえますか？`
-                                                }),
-                                                (0, i.jsx)(`i`, { "aria-hidden": `true` })]
-                                        }),
-                                        (0, i.jsxs)(`p`, {
-                                            children: [(0, i.jsx)(`b`, {
-                                                    children: `A.`
-                                                }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `契約内容と制作状況を確認し、個別にご案内します。`
-                                                })]
-                                        })]
-                                }),
+                                
                                 (0, i.jsxs)(`details`, {
                                     children: [(0, i.jsxs)(`summary`, {
                                             children: [(0, i.jsx)(`b`, {
@@ -2939,7 +2911,7 @@ function x() {
                                                     children: `A.`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `大丈夫です。企画・原稿整理から一緒に進められます。`
+                                                    children: `問題ありません。一緒にご用意いたします。`
                                                 })]
                                         })]
                                 }),
@@ -2958,9 +2930,7 @@ function x() {
                                                     children: `A.`
                                                 }),
                                                 (0, i.jsxs)(`span`, {
-                                                    children: [`ご提案は最短1週間です。`,
-                                                        (0, i.jsx)(`br`, {}),
-                                                        `公開までは内容や規模に応じてご案内します。`]
+                                                    children: [`最初のお打ち合わせから最短1週間で完成いたします。`]
                                                 })]
                                         })]
                                 }),
@@ -2979,7 +2949,7 @@ function x() {
                                                     children: `A.`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `公開後も継続して更新・改善することを前提に設計します。`
+                                                    children: `実際に応募が集まるサイトを、お手軽に制作可能です。`
                                                 })]
                                         })]
                                 })]
