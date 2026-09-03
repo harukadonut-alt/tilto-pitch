@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.d835ff4c.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.d835ff4c.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.f32f27c6.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.f32f27c6.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.d835ff4c.js / rolldown-runtime-S-ySWqyJ.d835ff4c.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.f32f27c6.js / rolldown-runtime-S-ySWqyJ.f32f27c6.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1163,9 +1163,9 @@ function Showroom() {
                 }),
                 (0, i.jsxs)(`h3`, { children: [`振れ幅そのものが、`, (0, i.jsx)(`br`, {}), `商品です。`] }),
                 (0, i.jsxs)(`p`, {
-                    children: [`業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
-                        `採用サイトは、もっと自由でいい。`, (0, i.jsx)(`br`, {}),
-                        `その可能性を、35の表現サンプルで。`]
+                    children: [`35の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                        `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
+                        `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
