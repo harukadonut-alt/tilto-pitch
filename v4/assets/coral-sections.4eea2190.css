@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.f32f27c6.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.4eea2190.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.f32f27c6.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.4eea2190.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -751,7 +751,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.f32f27c6.css）。bands.f32f27c6.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.4eea2190.css）。bands.4eea2190.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +837,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.f32f27c6.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.4eea2190.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1491,7 +1491,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.f32f27c6.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.4eea2190.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1504,7 +1504,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.f32f27c6.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.4eea2190.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1642,7 +1642,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.f32f27c6.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.4eea2190.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1870,12 +1870,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.f32f27c6.js が動かしている
-     ・motion.f32f27c6.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.4eea2190.js が動かしている
+     ・motion.4eea2190.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.f32f27c6.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.4eea2190.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2221,7 +2221,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.f32f27c6.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.4eea2190.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2449,7 +2449,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 115s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.f32f27c6.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.4eea2190.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2486,7 +2486,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.f32f27c6.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.4eea2190.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2549,51 +2549,33 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .bp-note-structure    { top: 27% }
 .bp-note-architecture { top: 37% }
 
-/* ── 01 見出しを大きく／右にサービス説明を入れる（2026-09-03・社長の赤入れ）────
-   ③「つくる。だけじゃない。」をもう少し目立たせたい → 6.8vw → 7.6vw（1456pxで99→111px）
-   ④ 右の英字ラベルの下に、Tiltoが何者かの説明を入れる（元は空の錨だった） */
+/* ── 01 サービス説明を右上に（2026-09-04・社長指示で構成を戻した）────────
+   9/3に「見出しを大きく＋説明文をリードの下」に振ったが、**元の構成に戻す**。
+     ・見出しは元のまま（サイズも重さも触らない。99pxが既に上限だった）
+     ・英字ラベルは**元の右上**（top 11.62vw / right 4.95vw）へ
+     ・説明文は改行しすぎない
+
+   🔴 **右カラムの幅は見出しが決めている。**見出しの右端は x1121（実測）で、
+      右余白4.95vw=72px を引くと**使えるのは263pxしかない**。
+      255px幅では2段落目が6行に折れ、字を10pxまで落としても改善しなかった。
+
+   → **説明文はラベルの下ではなく、見出しの2行目より下から始める。**
+      y360以降は見出しが無いので、幅を 430px まで広げられる（6行→4行）。
+      ラベルは右上のまま。ラベルと説明文が離れるが、
+      ラベルは「節の見出し」、説明文は「本文」なので役割が違う。 */
 @media (min-width: 901px) {
-    /* ⚠️ 7.6vwにしたら見出しが x158〜1456 まで伸びて、右の説明文と重なった。
-       説明文の左端(1085)の手前で折り返すよう、コピー側に幅の上限を持たせる。
-       ⚠️ 見出しは <br> ではなく折り返しで2行になっているので、幅で決める */
-    /* 🔴 **文字サイズでは大きくできない。**
-       2行目「採用サイトを、持ち、育てる。」は1文字あたり幅の13.28倍あり、
-       画面1456pxで右余白4.55vwを確保すると**上限97.9px**。元が99pxなので既に限界。
-       左余白を詰めて幅を稼いでも上限は変わらなかった（実測）。
-
-       → **サイズではなく「重さ」で目立たせる。**
-       ウェイトを500→600に、字間を-.06em→-.075emに詰めて字面を締める。
-       同じ幅のまま、線が太くなるぶん確実に強く見える。 */
-    .reference-about-copy { left: 6.2vw }
-
-    .reference-about > .reference-about-copy h2 {
-        font-size: clamp(70px, 6.72vw, 100px);
-        font-weight: 600;
-        letter-spacing: -.075em
-    }
-
-    /* 縦の ABOUT TILTO° も、コピーが左へ寄ったぶん詰める */
-    .reference-about-vertical { left: 2.1vw }
-
-    /* リード（下端473）の下から始める。bottomではなくtopで置く */
     .reference-about-facts {
-        top: 556px;   /* リード下端473 → ラベル1が501（28px空き） */
-        right: auto;
-        left: 6.2vw;
+        top: 24.7vw;          /* 見出しの下端(349)より下 */
+        right: 4.95vw;
+        left: auto;
         bottom: auto;
-        width: min(46vw, 660px);
-        min-width: 0
+        width: min(29.5vw, 430px);
+        min-width: 300px
     }
 
-    /* 英字ラベルは説明文の上に（リードと説明文の間の帯に置く） */
-    .reference-about-facts:before { top: -56px }
-    .reference-about-facts:after { top: -30px }
-
-    /* 説明文。英字ラベル（::after は top .78vw）の下から始める */
-    .reference-about-facts {
-        width: 20.5vw;
-        min-width: 268px
-    }
+    /* 英字ラベルは元の右上へ（説明文が下がったぶん、上へ大きく戻す） */
+    .reference-about-facts:before { top: -19.9vw }
+    .reference-about-facts:after { top: -16.5vw }
 
     .reference-about-facts p {
         color: #111111c4;
@@ -2605,9 +2587,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
     .reference-about-facts p:last-child { margin-bottom: 0 }
 
-    /* 見出しが2行＋説明文3段落になったので、節を伸ばす（実測で下が足りなかった） */
-    /* 見出し2行＋リード＋ラベル2行＋説明文3段落。実測で下端760 → 余白60で820 */
-    .reference-about { height: clamp(700px, 56.3vw, 880px) }
+    .reference-about { height: clamp(600px, 46vw, 700px) }
 }
 
 @media (max-width: 900px) {
