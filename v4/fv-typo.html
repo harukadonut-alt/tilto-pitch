@@ -7,123 +7,89 @@
 <title>FV見出しの書体比較｜Tilto°</title>
 <link rel="icon" type="image/png" sizes="64x64" href="./favicon-64.png?v=1"/>
 <style>
-  :root { --paper:#f7f4ee; --sumi:#111317; --coral:#ff4d4f; }
+  :root { --paper:#f7f4ee; --sumi:#111317; --coral:#ff4d4f; --chrome:96px }
   * { box-sizing: border-box }
-  body { margin:0; background:var(--paper); color:var(--sumi);
+  /* 1画面に収める。積まないので、案を切り替えても目の位置が動かない */
+  html, body { height:100% }
+  body { margin:0; display:flex; flex-direction:column; overflow:hidden;
+         background:var(--paper); color:var(--sumi);
          font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
 
-  /* 番号で飛べる棒。1案がFVまるごとぶんの高さになったので、離れた案を見比べるのに要る */
-  .jump { position:sticky; top:0; z-index:9; display:flex; gap:6px; flex-wrap:wrap;
-          padding:10px 5vw; background:#f7f4eeec; backdrop-filter:blur(6px);
-          border-bottom:1px solid #11131714 }
-  .jump a { font:700 12px/1 Arial,sans-serif; letter-spacing:.06em; color:var(--sumi);
-            text-decoration:none; border:1px solid #11131733; border-radius:2px;
-            padding:7px 11px; transition:background .18s ease, color .18s ease }
-  .jump a:hover { background:var(--coral); border-color:var(--coral); color:#fff }
-  /* 帯の動きの切り替え。番号と役割が違うので、右端に離して置く */
-  .jump button { margin-left:auto; font:700 12px/1 inherit; letter-spacing:.06em;
-                 color:#fff; background:var(--sumi); border:1px solid var(--sumi);
-                 border-radius:2px; padding:7px 12px; cursor:pointer;
-                 transition:background .18s ease, border-color .18s ease }
-  .jump button[aria-pressed="true"] { color:var(--sumi); background:#0000; border-color:#11131733 }
-  .jump button:hover { background:var(--coral); border-color:var(--coral); color:#fff }
+  .bar { flex:none; display:flex; gap:6px; flex-wrap:wrap; align-items:center;
+         padding:10px 5vw; border-bottom:1px solid #11131714 }
+  .bar button { font:700 12px/1 Arial,"Hiragino Kaku Gothic ProN",sans-serif;
+                letter-spacing:.06em; color:var(--sumi); background:#0000;
+                border:1px solid #11131733; border-radius:2px; padding:8px 12px;
+                cursor:pointer; transition:background .18s ease, color .18s ease, border-color .18s ease }
+  .bar button:hover { background:var(--coral); border-color:var(--coral); color:#fff }
+  .bar button[aria-pressed="true"] { background:var(--sumi); border-color:var(--sumi); color:#fff }
+  /* 帯の動きは案の選択と役割が違うので、右端に離す */
+  .bar #motion { margin-left:auto }
+  .bar #motion[aria-pressed="false"] { background:var(--sumi); border-color:var(--sumi); color:#fff }
+  .bar #motion[aria-pressed="true"] { background:#0000; border-color:#11131733; color:var(--sumi) }
 
-  .row { padding:24px 0 30px; border-top:1px solid #11131722; scroll-margin-top:52px }
-  .row:first-of-type { border-top:0 }
-  .inner { padding:0 5vw }
-  .tag { display:flex; align-items:baseline; gap:14px; margin:0 0 12px }
+  .tag { flex:none; display:flex; align-items:baseline; gap:14px; margin:0; padding:14px 5vw }
   .tag i { font-style:normal; font:700 11px/1 Arial,sans-serif; letter-spacing:.16em;
            color:var(--coral); border:1px solid var(--coral); padding:6px 9px; border-radius:2px }
   .tag b { font-size:14px; letter-spacing:.03em }
   .tag small { font-size:12px; color:#111317a0; letter-spacing:.02em }
-  .note { margin:12px 0 0; font-size:12px; line-height:1.85; color:#111317a0 }
 
   /* ── 本番のFVを**そのまま**入れる ─────────────────────────────────
      🔴 帯は WebGL で描いている。CSSで似せた静止版も試したが、本番は
         「細かいコマが曲がって二段」なのに対し、写真5枚が平らに並ぶ別物になった。
         なので本物のページを iframe で入れて、**見出しの指定だけ差し替える**。
-     ⚠️ 高さは 1674:943（本番の .hero-canvas の比）。この比にすると FV が
+     ⚠️ 比は 1674:943（本番の .hero-canvas の比）。この比にすると FV が
         ちょうど枠いっぱいに収まり、下の料金帯から先は見えない。
-     ⚠️ WebGLの文脈はブラウザごとに上限がある（1つのFVで4枚使う）。
-        7案ぶん常時置くと古い枠から黒く落ちるので、**見えている前後だけ載せて、
-        離れたら外す**。だから下までスクロールしても重くならない。 */
-  .stage { position:relative; width:100%; aspect-ratio:1674/943; overflow:hidden;
+     ⚠️ 枠は**1つだけ**。案は枠の中のstyleを書き換えて切り替えるので、
+        読み込み直しがなく、帯が巻き戻らない（WebGLの文脈の上限も気にしなくてよい）。 */
+  .frame { flex:1; min-height:0; display:flex; align-items:flex-start; justify-content:center;
+           padding:0 5vw 16px }
+  .stage { position:relative; aspect-ratio:1674/943; overflow:hidden;
+           width:min(100%, calc((100dvh - var(--chrome)) * 1674 / 943));
            background:linear-gradient(115deg,#fff 0%,#fbfcfd 47%,#f2f4f7 100%) }
   .stage iframe { display:block; width:100%; height:100%; border:0; pointer-events:none }
-  .stage[data-on="0"]::after { content:'この案の枠を読み込み中…'; position:absolute; inset:0;
+  .stage[data-on="0"]::after { content:'読み込み中…'; position:absolute; inset:0;
            display:flex; align-items:center; justify-content:center;
            font-size:12px; letter-spacing:.06em; color:#11131759 }
-
-  .fallback { display:none; padding:14px 5vw; font-size:12px; line-height:1.9; color:#111317a0 }
-  .no-js .fallback { display:block }
 </style>
 </head>
 <body>
 
-<nav class="jump" aria-label="案へ飛ぶ">
-  <a href="#t0">0 現状</a><a href="#t1">1 潰しなし</a><a href="#t2">2 ひらく</a><a href="#t3">3 太く</a>
-  <a href="#t4">4 細く</a><a href="#t5">5 ヒラギノ</a><a href="#t6">6 Noto</a>
+<nav class="bar" aria-label="案の切り替え">
+  <button type="button" data-name="いまのサイト"        data-spec="游明朝 ・ w600 ・ 字間 -.085em"                data-css="">0 現状</button>
+  <button type="button" data-name="縦に潰すのをやめる"  data-spec="scale 1×.8475 → 等倍 ・ 行間 1.24 → 1.15"      data-css="scale:1 1;line-height:1.15;margin-bottom:0">1 潰しなし</button>
+  <button type="button" data-name="字間をひらく"        data-spec="-.085em → -.035em"                             data-css="letter-spacing:-.035em">2 ひらく</button>
+  <button type="button" data-name="ウェイトを上げる"    data-spec="w600 → w700"                                   data-css="font-weight:700">3 太く</button>
+  <button type="button" data-name="ウェイトを落とす"    data-spec="w600 → w400"                                   data-css="font-weight:400">4 細く</button>
+  <button type="button" data-name="ヒラギノ明朝を先に"  data-spec="書体だけ変更 ・ w600"                          data-css="font-family:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif">5 ヒラギノ</button>
+  <button type="button" data-name="Noto Serif JP を先に" data-spec="書体だけ変更 ・ w500"                          data-css="font-family:'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif;font-weight:500">6 Noto</button>
   <button type="button" id="motion" aria-pressed="false">帯を止める</button>
 </nav>
 
-<p class="fallback">JavaScriptが切れているため、各案の枠を読み込めません。ブラウザの設定を戻すか、本番サイトで見比べてください。</p>
+<p class="tag"><i id="tag-n">0</i><b id="tag-name">いまのサイト</b><small id="tag-spec">游明朝 ・ w600 ・ 字間 -.085em</small></p>
 
-<section class="row" id="t0">
-  <div class="inner"><p class="tag"><i>0</i><b>いまのサイト</b><small>游明朝 ・ w600 ・ 字間 -.085em</small></p></div>
-  <div class="stage" data-on="0" data-css=""></div>
-  <div class="inner"><p class="note">比較の基準。見出しの幅は1行目478px / 2行目483px（画面幅1456pxで実測。コピーの器は499px）。以下の案はこの数字との差で書いている。</p></div>
-</section>
-
-<section class="row" id="t1">
-  <div class="inner"><p class="tag"><i>1</i><b>縦に潰すのをやめる</b><small>scale 1×.8475 → 等倍 ・ 行間 1.24 → 1.15</small></p></div>
-  <div class="stage" data-on="0" data-css="scale:1 1;line-height:1.15;margin-bottom:0"></div>
-  <div class="inner"><p class="note">2026-08-24に入れた「縦に潰す加工」を外した素の游明朝。潰しの目的は独自性で、外すと<b>字が本来の縦横比に戻って、素直・端正な顔になる</b>。行間も潰し前の1.15に戻している（1.24は潰しぶんを補うために広げた値なので、等倍のまま残すと間が空きすぎる）。<b>字は1.18倍の縦長に戻り、見出しの箱は約9%高くなる</b>（1456px幅で139→153px相当。幅は変わらない）ので、下のリード文が15pxほど押し下がる。以下2〜6は潰しが掛かったまま（0と同条件）の比較。</p></div>
-</section>
-
-<section class="row" id="t2">
-  <div class="inner"><p class="tag"><i>2</i><b>字間をひらく</b><small>-.085em → -.035em</small></p></div>
-  <div class="stage" data-on="0" data-css="letter-spacing:-.035em"></div>
-  <div class="inner"><p class="note">一字ずつが立って、上品で静かになる。「スタイリッシュ」がこちら寄りの意味なら本命。幅は 483 → <b>509px</b>で、コピーの器（499px）を10pxはみ出す（折り返しはしないが、右の帯に10px近づく）。</p></div>
-</section>
-
-<section class="row" id="t3">
-  <div class="inner"><p class="tag"><i>3</i><b>ウェイトを上げる</b><small>w600 → w700</small></p></div>
-  <div class="stage" data-on="0" data-css="font-weight:700"></div>
-  <div class="inner"><p class="note">強く、主張が前に出る。帯が派手なので、負けないという意味では有効。<b>幅は現状と同じ</b>（游明朝は太さを変えても字送りが変わらない）。</p></div>
-</section>
-
-<section class="row" id="t4">
-  <div class="inner"><p class="tag"><i>4</i><b>ウェイトを落とす</b><small>w600 → w400</small></p></div>
-  <div class="stage" data-on="0" data-css="font-weight:400"></div>
-  <div class="inner"><p class="note">明朝の線の細さが出て、いちばん「編集物」らしい。<b>細い＝弱いではなく、余白が効いて洗練に見える</b>。幅は現状と同じ。</p></div>
-</section>
-
-<section class="row" id="t5">
-  <div class="inner"><p class="tag"><i>5</i><b>ヒラギノ明朝を先に</b><small>書体だけ変更 ・ w600</small></p></div>
-  <div class="stage" data-on="0" data-css="font-family:'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif"></div>
-  <div class="inner"><p class="note">游明朝よりも横画が細く、縦画との差が大きい。線に強弱が出て華やか。幅は現状と同じ。<b>Macでしか出ない</b>（Windowsは游明朝に落ちる）。</p></div>
-</section>
-
-<section class="row" id="t6">
-  <div class="inner"><p class="tag"><i>6</i><b>Noto Serif JP を先に</b><small>書体だけ変更 ・ w500</small></p></div>
-  <div class="stage" data-on="0" data-css="font-family:'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif;font-weight:500"></div>
-  <div class="inner"><p class="note">線の太さが均質で、現代的・端正。幅は現状と同じ。<b>WindowsでもAndroidでも同じ顔になる</b>のが最大の利点。</p></div>
-</section>
+<div class="frame">
+  <div class="stage" id="stage" data-on="0">
+    <iframe id="fv" src="./index.html?intro=0" scrolling="no" tabindex="-1" aria-hidden="true" title="FVの見え方"></iframe>
+  </div>
+</div>
 
 <script>
 (function () {
     'use strict';
-    document.documentElement.classList.remove('no-js');
 
-    var stages = [].slice.call(document.querySelectorAll('.stage'));
+    var frame  = document.getElementById('fv');
+    var stage  = document.getElementById('stage');
+    var opts   = [].slice.call(document.querySelectorAll('.bar button[data-css]'));
+    var motion = document.getElementById('motion');
+    var current = 0;
 
     /* 🔴 既定は**動かしたまま**（本番と同じ）。
        この比較の判断軸が「右の帯に乗っている大きな文字に目を持っていかれないか」
        なので、止めた画で見比べると帯の文字が弱く見えて判断を誤る。
-       字面そのものを見たいときだけボタンで止める。 */
+       字面そのものを見たいときだけ止める。 */
     var running = true;
-    /* 状態を変えるたびに増やす。古い見張り（下の keepMotion）に降りてもらうため */
-    var gen = 0;
+    var gen = 0;   /* 状態を変えるたびに増やす。古い見張りに降りてもらうため */
 
     /* 枠の中の帯を、いまの running に合わせ続ける。
        🔴 1回押して終わりにできない。SSRのHTMLにボタンが**先に**あるので
@@ -131,10 +97,10 @@
           自分の初期状態（動いている）で上書きしてしまう。
           → **状態を毎回読み直して、食い違っていたら押す**。合っていれば触らないので、
             成功したあとに押し戻すことはない。 */
-    function keepMotion(frame) {
+    function keepMotion() {
         var my = gen, tries = 0;
         (function step() {
-            if (my !== gen) return;                 /* 状態が変わった。古い見張りは降りる */
+            if (my !== gen) return;
             var doc;
             try { doc = frame.contentDocument } catch (e) { return }
             var b = doc && doc.querySelector('.ribbon-toggle');
@@ -144,78 +110,68 @@
         })();
     }
 
-    /* 枠の中の本番ページに手を入れる。同一オリジンなので触れる。
-       ① 見出しの指定を差し替える（この比較で変えたい唯一のところ）
-       ② 帯の動きをいまの状態に合わせる
-       ③ 枠の中でスクロールできないようにする */
-    function dress(frame, css) {
+    /* 案の切り替え。枠は読み込み直さず、中のstyleを書き換えるだけ。
+       ⚠️ !important を付ける。本番の #top h1 と詳細度が同じで、
+          読み込み順に左右されるのを避けるため */
+    function paint() {
         var doc;
         try { doc = frame.contentDocument } catch (e) { return }
-        if (!doc) return;
-        doc.documentElement.style.overflow = 'hidden';
-        if (css) {
-            var st = doc.createElement('style');
-            /* ⚠️ !important を付ける。本番の #top h1 と詳細度が同じで、
-               読み込み順に左右されるのを避けるため */
-            st.textContent = '#top h1{' + css.split(';').filter(Boolean)
-                .map(function (d) { return d + ' !important' }).join(';') + '}';
+        if (!doc || !doc.head) return;
+        var st = doc.getElementById('fv-typo');
+        if (!st) {
+            st = doc.createElement('style');
+            st.id = 'fv-typo';
             doc.head.appendChild(st);
         }
-        keepMotion(frame);
+        var css = opts[current].dataset.css;
+        st.textContent = css ? '#top h1{' + css.split(';').filter(Boolean)
+            .map(function (d) { return d + ' !important' }).join(';') + '}' : '';
     }
 
-    var motionBtn = document.getElementById('motion');
-    motionBtn.addEventListener('click', function () {
+    function select(i) {
+        current = i;
+        opts.forEach(function (b, n) { b.setAttribute('aria-pressed', n === i ? 'true' : 'false') });
+        document.getElementById('tag-n').textContent = String(i);
+        document.getElementById('tag-name').textContent = opts[i].dataset.name;
+        document.getElementById('tag-spec').textContent = opts[i].dataset.spec;
+        paint();
+    }
+
+    opts.forEach(function (b, i) { b.addEventListener('click', function () { select(i) }) });
+
+    motion.addEventListener('click', function () {
         running = !running;
         gen++;
-        motionBtn.textContent = running ? '帯を止める' : '帯を動かす';
-        motionBtn.setAttribute('aria-pressed', running ? 'false' : 'true');
-        /* いま載っている枠だけ追従させる。あとから載る枠は dress が拾う */
-        stages.forEach(function (st) { if (st.firstChild) keepMotion(st.firstChild) });
+        motion.textContent = running ? '帯を止める' : '帯を動かす';
+        motion.setAttribute('aria-pressed', running ? 'false' : 'true');
+        keepMotion();
     });
 
-    function mount(stage) {
-        if (stage.firstChild) return;
-        var f = document.createElement('iframe');
-        f.src = './index.html?intro=0';
-        f.setAttribute('scrolling', 'no');
-        f.setAttribute('tabindex', '-1');
-        f.setAttribute('aria-hidden', 'true');
-        f.setAttribute('title', 'FVの見え方');
-        f.addEventListener('load', function () {
-            stage.setAttribute('data-on', '1');
-            dress(f, stage.getAttribute('data-css'));
-        });
-        stage.appendChild(f);
-    }
+    /* 案の行き来は矢印キーと数字キーでもできる。見比べは連打になるので */
+    document.addEventListener('keydown', function (e) {
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { select((current + 1) % opts.length); e.preventDefault() }
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { select((current - 1 + opts.length) % opts.length); e.preventDefault() }
+        else if (/^[0-9]$/.test(e.key) && +e.key < opts.length) select(+e.key);
+    });
 
-    function unmount(stage) {
-        if (!stage.firstChild) return;
-        stage.removeChild(stage.firstChild);
-        stage.setAttribute('data-on', '0');
-    }
+    frame.addEventListener('load', function () {
+        stage.setAttribute('data-on', '1');
+        try { frame.contentDocument.documentElement.style.overflow = 'hidden' } catch (e) {}
+        paint();
+        keepMotion();
+    });
 
-    /* 前後1画面ぶんだけ載せて、離れたら外す。
-       🔴 IntersectionObserver は使わない。**フレームが回らない環境だと1度も発火せず**、
-          「読み込み中…」のまま何も出ないページになる（実際にそうなった）。
-          スクロールと寸法だけで判定すれば、その事故が起きない。 */
-    var timer = null;
-    function sync() {
-        var m = window.innerHeight * 0.9;
-        stages.forEach(function (st) {
-            var r = st.getBoundingClientRect();
-            (r.bottom > -m && r.top < window.innerHeight + m) ? mount(st) : unmount(st);
-        });
+    /* 枠の高さは「画面の高さ − 上の帯とラベル」から出す。実測して入れる */
+    function chrome() {
+        var h = document.querySelector('.bar').offsetHeight
+              + document.querySelector('.tag').offsetHeight + 16;
+        document.documentElement.style.setProperty('--chrome', h + 'px');
     }
-    function schedule() {
-        if (timer) return;
-        timer = setTimeout(function () { timer = null; sync() }, 120);
-    }
+    window.addEventListener('resize', chrome);
+    chrome();
 
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    window.addEventListener('hashchange', schedule);
-    sync();
+    select(0);
 })();
 </script>
 </body>

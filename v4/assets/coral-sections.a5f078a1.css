@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.062c8a94.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.a5f078a1.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.062c8a94.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.a5f078a1.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -299,10 +299,15 @@
 
 /* ⚠️ コピーは**必ず指定した位置で改行させる**。
    幅が足りないと勝手に折り返して「ここまでつく／る。」になる（旧版がそれ）。
-   34vw = 1440pxで490px。いちばん長い「採用サイトになる。」9文字が
-   3.85vw（55px・字間-.05em）で約473px。収まる */
+
+   🔴 2026-09-04: afterの見出しを「曖昧な相談が、／採用サイトになる。」から
+      「「なんとなく」から、／まとめます。」へ変えたとき、**1行目が折れた**。
+      いちばん長い行が9文字→**10文字**になり、必要幅が 9.5×font-size に増えたため。
+        font-size = clamp(34px,3.85vw,60px) なので 必要幅 ≒ 36.6vw（clampが効く883〜1558px）
+        画面の端（60px止まり・34px止まり）でも足りるように **38vw** を取る。
+      ⚠️ 文字数を変えたら、この幅も計算し直すこと（必要幅 ≒ 9.5 × 見出しの文字サイズ）。 */
 .process-copy {
-    width: 34vw
+    width: 38vw
 }
 
 .process-copy-after h2 {
@@ -751,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.062c8a94.css）。bands.062c8a94.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.a5f078a1.css）。bands.a5f078a1.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -837,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.062c8a94.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.a5f078a1.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1491,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.062c8a94.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.a5f078a1.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1504,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.062c8a94.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.a5f078a1.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1642,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.062c8a94.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.a5f078a1.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1870,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.062c8a94.js が動かしている
-     ・motion.062c8a94.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.a5f078a1.js が動かしている
+     ・motion.a5f078a1.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.062c8a94.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.a5f078a1.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2221,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.062c8a94.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.a5f078a1.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2455,7 +2460,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 128s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.062c8a94.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.a5f078a1.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2492,7 +2497,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.062c8a94.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.a5f078a1.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2768,4 +2773,36 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .bp-note-architecture p {
     font-size: clamp(10px, .79vw, 11.5px);
     line-height: 1.72
+}
+
+/* ── FVのチップを2つに（2026-09-04・社長の赤入れ）──────────────────────
+   9/4に「採用コンサルタント × AI × Web制作」を丸ごと「プロと作る、新しい採用サイト」へ
+   **置き換えてしまった**が、社長の指示は
+     ・チップは **AIだけ削除** → 「採用コンサルタント × Web制作」
+     ・そこへ **「プロと作る新しい採用サイト」を足す**（読点なし）
+   の2つだった。並びはスクショどおり「黒いチップが左、添え文が右」。
+
+   🔴 <p>2つを横に並べるので inline-block にする。`.hero-copy` は幅34.3%（1456pxで499px）
+      しかないので、収まるかを実測すること（チップ約275px＋添え文約175px＝450px）。 */
+.service-chip,
+.service-tag {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.service-tag {
+    margin: 1.45cqw 0 0 .9cqw;
+    color: #282623;
+    letter-spacing: .04em;
+    font-size: .86cqw;
+    font-weight: 800;
+    white-space: nowrap
+}
+
+@media (max-width: 900px) {
+    /* SPは横に並べる幅がない。添え文をチップの下へ落とす */
+    .service-chip,
+    .service-tag { display: block }
+
+    .service-tag { margin: 10px 0 0; font-size: 11px }
 }

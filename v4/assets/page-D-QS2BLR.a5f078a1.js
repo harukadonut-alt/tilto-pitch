@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.062c8a94.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.062c8a94.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.a5f078a1.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.a5f078a1.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.062c8a94.js / rolldown-runtime-S-ySWqyJ.062c8a94.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.a5f078a1.js / rolldown-runtime-S-ySWqyJ.a5f078a1.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1389,9 +1389,12 @@ function x() {
                     children: [`つくって終わりにしない。`, (0, i.jsx)(`br`, {
                         className: `lead-br`
                     }), `月額で持ち、育てつづける採用サイト。`]
-                }), (0, i.jsx)(`p`, {
+                }), (0, i.jsxs)(`p`, {
                     className: `service-chip`,
-                    children: `プロと作る、新しい採用サイト`
+                    children: [`採用コンサルタント `, (0, i.jsx)(`b`, { children: `×` }), ` Web制作`]
+                }), (0, i.jsx)(`p`, {
+                    className: `service-tag`,
+                    children: `プロと作る新しい採用サイト`
                 })]
             }), (0, i.jsxs)(`div`, {
                 className: `ribbon-cast-shadow-scene`,
@@ -1694,18 +1697,20 @@ function x() {
                             children: [(0, i.jsxs)(`h2`, {
                                     children: [(0, i.jsxs)(`span`, {
                                         className: `hl-line`,
-                                        children: [`曖昧な相談が、`,
+                                        children: [`「なんとなく」から、`,
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     }),
                                         (0, i.jsx)(`br`, {}),
                                         (0, i.jsxs)(`span`, {
                                         className: `hl-line`,
-                                        children: [`採用サイトになる。`,
+                                        children: [`まとめます。`,
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     })]
                                 }),
-                                (0, i.jsx)(`p`, {
-                                    children: `「なんとなく」から、まとめます。`
+                                (0, i.jsxs)(`p`, {
+                                    children: [`言葉にならなかった想いを整理し、`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `採用サイトという形で、未来へつなげます。`]
                                 })]
                         }),
                         (0, i.jsxs)(`div`, {
