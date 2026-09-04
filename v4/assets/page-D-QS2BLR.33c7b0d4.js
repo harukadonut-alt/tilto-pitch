@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.a5f078a1.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.a5f078a1.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.33c7b0d4.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.33c7b0d4.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.a5f078a1.js / rolldown-runtime-S-ySWqyJ.a5f078a1.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.33c7b0d4.js / rolldown-runtime-S-ySWqyJ.33c7b0d4.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1083,7 +1083,14 @@ var SR_INSIDE = {
     // 建設・不動産「この街は、誰かの仕事でできている。」← 03で使っている縦長のサイト。
     //   ⚠️ タイルの絵は、この縦長画像のFV部分を切り出したもの。
     //      タイルと中身が別のサイトにならないよう、必ず同じ素材から作る
-    '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 }
+    '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 },
+
+    /* 36〜38: 実際に組んだ3本。**動くサイトを全画面で撮った縦長1枚**。
+       ⚠️ タイルの絵（showroom-*-real.webp）は、この縦長画像のFVと同じ素材。
+          タイルと中身が別のサイトにならないよう、必ず同じ元から作ること。 */
+    '36': { site: `./images/works/site-medical.webp`,   ratio: 1280 / 3914 },
+    '37': { site: `./images/works/site-food.webp`,      ratio: 1280 / 3047 },
+    '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940 }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1143,8 +1150,13 @@ function Showroom() {
        押した作品にサイトが無いときは、いま見せられるサイトを出し、
        押した作品そのものは右の一覧の先頭に置く。
        ⚠️ どのタイルも押したら開く。「押しても何も起きない」は壊れて見える */
+    /* 🔴 2026-09-04・社長指示「左の上から下まで見られる部分を業種に合わせて切り替えて」。
+       押した作品に縦長サイトが無いときは、**まず同じ業種**のものを探す。
+       それも無ければ従来どおり、いま見せられるサイトを出す。 */
     let shown = (0, r.useMemo)(() => work
-        ? (work.inside ? work : (SR_WORKS.find(x => x.inside) || work))
+        ? (work.inside ? work
+            : (SR_WORKS.find(x => x.inside && x.industry === work.industry)
+                || SR_WORKS.find(x => x.inside) || work))
         : null, [work]);
     /* 右の列は「選んだタイルと同じ業種のFVを**全部**」（2026-09-01・社長指示）。
        前は業種に関係なく、ずらし幅 1,2,4,5 で4点だけ拾っていた。
