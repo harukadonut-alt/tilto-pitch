@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.33c7b0d4.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.33c7b0d4.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.ecd86892.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.ecd86892.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.33c7b0d4.js / rolldown-runtime-S-ySWqyJ.33c7b0d4.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.ecd86892.js / rolldown-runtime-S-ySWqyJ.ecd86892.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1396,17 +1396,12 @@ function x() {
                             "aria-hidden": `true`
                         })]
                     })]
-                }), (0, i.jsxs)(`p`, {
-                    className: `lead`,
-                    children: [`つくって終わりにしない。`, (0, i.jsx)(`br`, {
-                        className: `lead-br`
-                    }), `月額で持ち、育てつづける採用サイト。`]
-                }), (0, i.jsxs)(`p`, {
-                    className: `service-chip`,
-                    children: [`採用コンサルタント `, (0, i.jsx)(`b`, { children: `×` }), ` Web制作`]
                 }), (0, i.jsx)(`p`, {
                     className: `service-tag`,
                     children: `プロと作る新しい採用サイト`
+                }), (0, i.jsxs)(`p`, {
+                    className: `service-chip`,
+                    children: [`採用コンサルタント `, (0, i.jsx)(`b`, { children: `×` }), ` Web制作`]
                 })]
             }), (0, i.jsxs)(`div`, {
                 className: `ribbon-cast-shadow-scene`,
@@ -1709,13 +1704,13 @@ function x() {
                             children: [(0, i.jsxs)(`h2`, {
                                     children: [(0, i.jsxs)(`span`, {
                                         className: `hl-line`,
-                                        children: [`「なんとなく」から、`,
+                                        children: [`「なんとなく」`,
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     }),
                                         (0, i.jsx)(`br`, {}),
                                         (0, i.jsxs)(`span`, {
                                         className: `hl-line`,
-                                        children: [`まとめます。`,
+                                        children: [`からまとめます。`,
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     })]
                                 }),
@@ -2036,12 +2031,6 @@ function x() {
                                     children: `DESIGN PRINCIPLE / 01`
                                 }),
                                 (0, i.jsxs)(`p`, {
-                                    children: [`採用は、感覚じゃない。`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `構造でつくり、言葉で届け、`,
-                                        (0, i.jsx)(`br`, {}),
-                                        `体験で動かし、改善していく。`]
-                                }), (0, i.jsxs)(`p`, {
                                     children: [`Tiltoでは、デザインクオリティは大前提に、`, (0, i.jsx)(`br`, {}),
                                         `採用コンサルタントがこれまでの採用支援で培ってきたノウハウを活用し、`, (0, i.jsx)(`br`, {}),
                                         `「応募が集まる採用サイト」を設計します。`]
