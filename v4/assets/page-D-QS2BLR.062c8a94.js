@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.eb640408.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.eb640408.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.062c8a94.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.062c8a94.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.eb640408.js / rolldown-runtime-S-ySWqyJ.eb640408.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.062c8a94.js / rolldown-runtime-S-ySWqyJ.062c8a94.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1055,7 +1055,25 @@ var SR_BASE = [
     { id: `35`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `paper`,
       title: `つながりが、未来を運ぶ。`,
       image: `./images/works/showroom-logistics-06.webp`,
-      alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` }
+      alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` },
+
+    /* ── 36〜38: 実際に1枚のサイトとして組んだ3本（2026-09-04・社長指示）─────
+       他の35点は「FVの絵」だが、この3本は**動くサイトを作ってからFVを撮った**もの。
+       ⚠️ それでも**架空の会社**であることは同じ。「実例」「実績」と書かないこと。
+       ⚠️ 末尾に足すこと。SR_LANES は k % 4 で配るので、途中に入れると
+          既存34枚のレーンが全部ずれて、業種の散り方が崩れる。 */
+    { id: `36`, industry: `医療・福祉`, world: `NURSING`, tone: `paper`,
+      title: `看護は、強さよりも、まなざしだと思う。`,
+      image: `./images/works/showroom-medical-real.webp`,
+      alt: `白いカーテン越しの病室で、看護師と入院患者が笑顔で向き合う医療機関の採用サイトFV` },
+    { id: `37`, industry: `飲食・サービス`, world: `LOCAL DINING`, tone: `sumi`,
+      title: `灯りのように、人の心をあたためる食をつくる。`,
+      image: `./images/works/showroom-food-real.webp`,
+      alt: `暗い厨房で銅の照明の下、料理人が一皿を仕上げている飲食店の採用サイトFV` },
+    { id: `38`, industry: `教育`, world: `EDUCATION`, tone: `paper`,
+      title: `人の可能性に、火をつける仕事。`,
+      image: `./images/works/showroom-education-real.webp`,
+      alt: `明るい教室で講師が生徒の手元をのぞき込み、笑顔で教えている教育企業の採用サイトFV` }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
@@ -1163,13 +1181,13 @@ function Showroom() {
                 }),
                 (0, i.jsxs)(`h3`, { children: [`振れ幅そのものが、`, (0, i.jsx)(`br`, {}), `商品です。`] }),
                 (0, i.jsxs)(`p`, {
-                    children: [`35の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`38の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `35の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `38の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
