@@ -17,7 +17,15 @@
   .page-head p { margin:0; font-size:13px; line-height:1.9; color:#111317b0; max-width:70ch }
   .page-head b { color:var(--coral) }
 
-  .row { padding:40px 5vw 44px; border-top:1px solid #11131722 }
+  /* 🔴 本番の見出しは .hero-copy h1 { font-size: 5.18cqw }＝**コンテナ基準**。
+     比較ページも同じ計算にするため、行をコンテナにして cqw を使う。
+     vw で近似すると幅が合わず（476px vs 本番502px）、別物の比較になる。 */
+  .row { padding:40px 0 44px; border-top:1px solid #11131722 }
+  /* 🔴 cqw はコンテナ幅基準。本番の .hero-copy は**画面幅がコンテナ**なので、
+     ここでも左右パディングを持たない要素をコンテナにする。
+     行に padding を付けたままだと幅が縮み、68px（本番75px）になる。 */
+  .stage { container-type:inline-size; width:100% }
+  .inner { padding:0 5vw }
   .row:first-of-type { border-top:0 }
   .tag { display:flex; align-items:baseline; gap:14px; margin:0 0 22px }
   .tag i { font-style:normal; font:700 11px/1 Arial,sans-serif; letter-spacing:.16em;
@@ -25,12 +33,24 @@
   .tag b { font-size:14px; letter-spacing:.03em }
   .tag small { font-size:12px; color:#111317a0; letter-spacing:.02em }
 
-  /* 見出し。ここだけが案ごとに変わる */
-  .fv h2 { margin:0; font-size:clamp(38px,5.15vw,75px); line-height:1.247;
+  /* 見出し。ここだけが案ごとに変わる。
+     🔴 本番は #top h1 に scale:1 .8475（縦に潰す加工・2026-08-24の独自性）が
+        掛かっている。これを入れないと本番と別物になるので、必ず再現する。
+        行間1.24・負のmargin -.378em もセットで本番と同じ値。 */
+  /* 本番の .hero-copy h1 ＋ #top h1 を、指定ごとそのまま写した。
+     ⚠️ -webkit-text-stroke が線の太さを決めている。これが無いと別物に見える。 */
+  .fv h2 { color:#0a0a09;
+           -webkit-text-stroke:.025cqw currentColor;
+           letter-spacing:-.085em;
+           white-space:nowrap;
+           margin:0 0 -.378em;
            font-family:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
-           font-weight:600; letter-spacing:-.085em }
+           font-size:5.18cqw;
+           font-weight:600;
+           line-height:1.24;
+           scale:1 .8475; transform-origin:50% 0 }
   .fv h2 span { display:block }
-  .fv h2 .accent { color:var(--coral) }
+  .fv h2 .accent { color:var(--coral); -webkit-text-stroke:.025cqw currentColor }
   .fv .lead { margin:20px 0 0; font-size:15px; font-weight:700; letter-spacing:.01em; color:#111317c8 }
 
   /* --- 案ごとの差分 --- */
@@ -60,64 +80,60 @@
 <div class="page-head">
   <h1>FV見出しの書体比較</h1>
   <p>「採用サイトの、新しい持ち方。」を7パターン。<b>帯（WebGL）とレイアウトは触っていません</b>——見出しの字だけを変えています。
-     現状は 游明朝 / w600 / 字間 -.085em。<br/>
+     現状は 游明朝 / w600 / 字間 -.085em / <b>縦に潰す加工（scale 1×.8475）</b>。<br/>
+     ⚠️ 本番の指定（<b>縦に潰す scale 1×.8475 ／ 縁取り -webkit-text-stroke ／ 5.18cqw ／ 行間1.24</b>）を
+     そのまま写しています。最初これが抜けていて別物に見えていました。<br/>
+     ⚠️ 幅が本番より23px短いのは、本番FVだけに入っている約物の位置調整（行末の「、」「。」を右へ送る）が
+     この比較には無いためです。<b>書体の見え方の比較には影響しません</b>。<br/>
      並べて見比べて、番号で教えてください。組み合わせ（例「3の太さで、6の書体」）でも大丈夫です。</p>
 </div>
 
-<section class="row" id="t0">
-  <p class="tag"><i>0</i><b>いまのサイト</b><small>游明朝 ・ w600 ・ 字間 -.085em</small></p>
+<section class="row" id="t0"><div class="stage"><div class="inner"><p class="tag"><i>0</i><b>いまのサイト</b><small>游明朝 ・ w600 ・ 字間 -.085em</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
-</section>
+</div></div></section>
 
-<section class="row" id="t1">
-  <p class="tag"><i>1</i><b>字間を締める</b><small>-.085em → -.115em</small></p>
+<section class="row" id="t1"><div class="stage"><div class="inner"><p class="tag"><i>1</i><b>字間を締める</b><small>-.085em → -.115em</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">文字が塊になって重くなる。ロゴに近い佇まい。<b>ただし2行目が伸びるので折り返しに注意</b>（現状が既に上限に近い）。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t2">
-  <p class="tag"><i>2</i><b>字間をひらく</b><small>-.085em → -.035em</small></p>
+<section class="row" id="t2"><div class="stage"><div class="inner"><p class="tag"><i>2</i><b>字間をひらく</b><small>-.085em → -.035em</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">一字ずつが立って、上品で静かになる。「スタイリッシュ」がこちら寄りの意味なら本命。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t3">
-  <p class="tag"><i>3</i><b>ウェイトを上げる</b><small>w600 → w700</small></p>
+<section class="row" id="t3"><div class="stage"><div class="inner"><p class="tag"><i>3</i><b>ウェイトを上げる</b><small>w600 → w700</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">強く、主張が前に出る。帯が派手なので、負けないという意味では有効。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t4">
-  <p class="tag"><i>4</i><b>ウェイトを落とす</b><small>w600 → w400</small></p>
+<section class="row" id="t4"><div class="stage"><div class="inner"><p class="tag"><i>4</i><b>ウェイトを落とす</b><small>w600 → w400</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">明朝の線の細さが出て、いちばん「編集物」らしい。<b>細い＝弱いではなく、余白が効いて洗練に見える</b>。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t5">
-  <p class="tag"><i>5</i><b>細く＋字間をひらく</b><small>w400 ・ 字間 -.02em</small></p>
+<section class="row" id="t5"><div class="stage"><div class="inner"><p class="tag"><i>5</i><b>細く＋字間をひらく</b><small>w400 ・ 字間 -.02em</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">2と4の合わせ技。ファッション誌の見出しに近い。<b>いちばん「スタイリッシュ」という言葉に近いのはこれだと思う</b>。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t6">
-  <p class="tag"><i>6</i><b>ヒラギノ明朝を先に</b><small>書体だけ変更 ・ w600</small></p>
+<section class="row" id="t6"><div class="stage"><div class="inner"><p class="tag"><i>6</i><b>ヒラギノ明朝を先に</b><small>書体だけ変更 ・ w600</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">游明朝よりも横画が細く、縦画との差が大きい。線に強弱が出て華やか。<b>Macでしか出ない</b>（Windowsは游明朝に落ちる）。</p>
-</section>
+</div></div></section>
 
-<section class="row" id="t7">
-  <p class="tag"><i>7</i><b>Noto Serif JP を先に</b><small>書体だけ変更 ・ w500</small></p>
+<section class="row" id="t7"><div class="stage"><div class="inner"><p class="tag"><i>7</i><b>Noto Serif JP を先に</b><small>書体だけ変更 ・ w500</small></p>
   <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
   <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
   <p class="note">線の太さが均質で、現代的・端正。<b>WindowsでもAndroidでも同じ顔になる</b>のが最大の利点。</p>
-</section>
+</div></div></section>
 
 </body>
 </html>
