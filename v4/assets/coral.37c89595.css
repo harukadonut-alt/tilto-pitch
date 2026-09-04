@@ -7,7 +7,7 @@
       社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
       ここで変えるのは **CSSで塗っている面と文字だけ**。
 
-   ⚠️ このファイルは index-D5NZeMWX.754440a1.css の **後ろに** 読む。
+   ⚠️ このファイルは index-D5NZeMWX.37c89595.css の **後ろに** 読む。
       自前のレイアウト部分は @layer の外に書かれているので、
       同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
 
@@ -404,15 +404,15 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 /* 数字だけ少し大きく。単位（円〜・社1設計）と注記はそのまま */
 .price-value strong {
-    font-size: 4.62cqw
+    font-size: calc(4.62 * var(--fv-u))
 }
 
 .price-value--ink strong {
-    font-size: 4.92cqw
+    font-size: calc(4.92 * var(--fv-u))
 }
 
 .price-value {
-    height: 6.1cqw
+    height: calc(6.1 * var(--fv-u))
 }
 
 /* ⚠️ ほんの少しだけ透ける（.93）。帯は z-index:3、料金帯は 6 なので、
@@ -452,8 +452,8 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
     color: #fff;
     background: 0 0;
     grid-template-rows: 1fr 1fr;
-    gap: .75cqw;
-    padding: 1.15cqw 3.88cqw 1.15cqw 1.7cqw
+    gap: calc(.75 * var(--fv-u));
+    padding: calc(1.15 * var(--fv-u)) 3.88cqw calc(1.15 * var(--fv-u)) 1.7cqw
 }
 
 .pricing-cta-main {
@@ -544,7 +544,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
         padding: 18px 20px 0
     }
 
-    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.754440a1.js が別に作る。
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.37c89595.js が別に作る。
        🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
           （帯の停止）ので、動かさず隠すだけにする */
     .site-nav {
@@ -812,7 +812,7 @@ html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-dela
 
 
 /* ============================================================
-   SPのメニュー（2026-08-24）。DOMは sp-menu.754440a1.js が load 後に足す。
+   SPのメニュー（2026-08-24）。DOMは sp-menu.37c89595.js が load 後に足す。
    ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
    ============================================================ */
 .sp-menu-toggle,
@@ -2452,7 +2452,7 @@ html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; trans
     }
 }
 
-/* --- InkCursor（v3から移植。assets/cursor.754440a1.js が load 後にDOMを足す） --- */
+/* --- InkCursor（v3から移植。assets/cursor.37c89595.js が load 後にDOMを足す） --- */
 .ink-cursor {
     z-index: 9999;
     pointer-events: none;

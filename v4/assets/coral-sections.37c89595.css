@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.754440a1.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.37c89595.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.754440a1.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.37c89595.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.754440a1.css）。bands.754440a1.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.37c89595.css）。bands.37c89595.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.754440a1.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.37c89595.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1474,12 +1474,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
       28文字が収まる上限がある。大きくしすぎると1行から溢れる。
    ------------------------------------------------------------------ */
 .lead {
-    font-size: 1.16cqw
+    font-size: calc(1.16 * var(--fv-u))
 }
 
 /* 小見出しも一段上げる（10.1px は1440pxでは読みづらい） */
 .eyebrow {
-    font-size: .78cqw
+    font-size: calc(.78 * var(--fv-u))
 }
 
 @media (max-width: 700px) {
@@ -1496,20 +1496,20 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.754440a1.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.37c89595.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
-    .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
-    .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
-    .price-note { font-size: .72cqw }           /* 8.1 → 10.4px */
-    .price-value small { font-size: .62cqw }    /* 6.9 → 8.9px（税別） */
-    .pricing-cta-sub { font-size: .87cqw }      /* 11.2 → 12.5px */
+    .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
+    .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
+    .price-note { font-size: calc(.72 * var(--fv-u)) }           /* 8.1 → 10.4px */
+    .price-value small { font-size: calc(.62 * var(--fv-u)) }    /* 6.9 → 8.9px（税別） */
+    .pricing-cta-sub { font-size: calc(.87 * var(--fv-u)) }      /* 11.2 → 12.5px */
 }
 
 /* ── 03 プレビュー枠を一回り大きく、送りをゆっくりに（2026-08-31・社長指示） ──
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.754440a1.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.37c89595.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.754440a1.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.37c89595.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.754440a1.js が動かしている
-     ・motion.754440a1.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.37c89595.js が動かしている
+     ・motion.37c89595.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.754440a1.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.37c89595.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.754440a1.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.37c89595.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2461,7 +2461,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.754440a1.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.37c89595.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2498,7 +2498,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.754440a1.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.37c89595.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2632,8 +2632,10 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
        器基準で置いているこのラベルも一緒に 1.7vw 上がり、FVから降りてくるコーラルの帯
        （.reference-about:before・高さ56px）の真下に詰まった。社長「もう少し下に」。
        → 2.5vw 下げる。絶対位置は 30.08-24.44 = 5.64vw（1456pxで82px。元の71pxより少し下） */
-    .reference-about-facts:before { top: -24.44vw }
-    .reference-about-facts:after { top: -21.04vw }
+    /* 2026-09-05・社長「あと20px下げて」。1456pxで20px＝1.374vw ぶん下へ。
+       絶対位置は 30.08-23.07 = 7.01vw（1456pxで102px。帯の下端から46px） */
+    .reference-about-facts:before { top: -23.07vw }
+    .reference-about-facts:after { top: -19.67vw }
 
     .reference-about-facts p {
         color: #111111c4;
@@ -2678,10 +2680,10 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       02/03 の `--ink`（1 / 1）は 4.92cqw = 72px で、月額は 4.62cqw = 67px。
       桁数が多いぶん1文字が小さく見えるのに、指定まで小さかった。
    月額を 5.35cqw（約78px）に上げる。02/03 は据え置きで、主役が一番大きくなる。 */
-.price-card--monthly .price-value strong { font-size: 5.35cqw }
+.price-card--monthly .price-value strong { font-size: calc(5.35 * var(--fv-u)) }
 
 /* 単位「円〜（税別）」も少し上げて、数字とのバランスを保つ */
-.price-card--monthly .price-value span { font-size: 1.3cqw }
+.price-card--monthly .price-value span { font-size: calc(1.3 * var(--fv-u)) }
 
 @media (max-width: 900px) {
     .price-card--monthly .price-value strong { font-size: 50px }
@@ -2699,7 +2701,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.754440a1.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.37c89595.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -2810,7 +2812,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     margin: 2.1cqw 0 0;
     color: #282623;
     letter-spacing: .04em;
-    font-size: 1.06cqw;
+    font-size: calc(1.06 * var(--fv-u));
     font-weight: 800;
     white-space: nowrap
 }
@@ -2908,14 +2910,14 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ すべて cqw（FVの幅基準）。px直書きにしないこと。
    ⚠️ 注記は white-space:nowrap なので、大きくすると横にはみ出す。実測で確認する。 */
 @media (min-width: 701px) {
-    .price-label { font-size: .95cqw }
-    .price-label span { font-size: .98cqw }
-    .price-note { font-size: .86cqw }
-    .price-value span { font-size: 1.34cqw }
-    .price-value small { font-size: .80cqw }
+    .price-label { font-size: calc(.95 * var(--fv-u)) }
+    .price-label span { font-size: calc(.98 * var(--fv-u)) }
+    .price-note { font-size: calc(.86 * var(--fv-u)) }
+    .price-value span { font-size: calc(1.34 * var(--fv-u)) }
+    .price-value small { font-size: calc(.80 * var(--fv-u)) }
 }
 
-.price-card--monthly .price-value span { font-size: 1.55cqw }
+.price-card--monthly .price-value span { font-size: calc(1.55 * var(--fv-u)) }
 
 /* ── ビューアの読み込み中（2026-09-04の定例「表示が遅いのでロード中を入れる」）──
    実サイトをiframeで開くので、回線しだいで数秒かかる。空の白枠のままだと壊れて見える。
@@ -3002,7 +3004,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.754440a1.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.37c89595.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3050,4 +3052,29 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 @media (max-width: 900px) {
     .reference-about-facts { top: 460px }
     .reference-about { height: 740px }
+}
+
+/* ── FVを画面幅いっぱいに。文字の大きさは今のまま（2026-09-05・社長が案2を選択）──
+   FVは `width: min(100vw, 177.519svh)` で 1674:943 を保っていたため、
+   画面がそれより横長だと**画面幅より狭くなり、左右に地が残る**（1512×818で30pxずつ）。
+   前回コーラルの帯は塞いだが、その上はリボン（写真）が端の手前で止まって見えていた。
+
+   🔴 幅だけ広げると、**文字が cqw（＝枠の幅の1%）基準なので一緒に大きくなり**、
+      料金帯の注記とCTAが帯の下へはみ出す（1512×818で+3px、1920×900で+35px。実測）。
+   → 文字の基準を**枠の幅から切り離す**。`--fv-u` は「広げる前の枠の1%」で、
+      `min(1vw, 1.77519svh)` ＝ 元の `min(100vw, 177.519svh)` の1%と完全に一致する。
+      FV内の font-size は全部この単位に置き換えた（33ルール）。
+
+   ⚠️ ヘッダー（.brand / .site-nav / .header-cta）は**枠の外**にあり、
+      cqw が画面基準にフォールバックしていた。ここは元から画面幅に追従するので触っていない。
+   ⚠️ **横**の余白の cqw はそのまま（画面に合わせて伸びてほしい側）。
+      ただし**縦**の余白は別。料金帯は高さが「枠の高さの23%」で固定なのに、
+      中の縦padding が cqw だと枠幅で伸びて、1920×900で注記が22pxはみ出した。
+      次の6つだけ `--fv-u` に寄せてある（横の値は cqw のまま残す）:
+        .price-card padding-top 1.8 ／ .price-value height 5.6・6.1 ／ margin-top .58
+        ／ .pricing-cta gap .75・padding上下 1.15
+   ⚠️ 高さは従来どおり。縦長の画面では width も height も元の式と同じ値になる。 */
+.hero-canvas {
+    --fv-u: min(1vw, 1.77519svh);
+    width: 100vw
 }
