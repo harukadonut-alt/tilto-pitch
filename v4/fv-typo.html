@@ -61,7 +61,7 @@
 
 <div class="page-head">
   <h1>FV見出しの書体比較</h1>
-  <p>「採用サイトの、新しい持ち方。」を8パターン。<b>本番のFVをそのまま入れて、見出しの指定だけを差し替えています</b>——
+  <p>「採用サイトの、新しい持ち方。」を6パターン。<b>本番のFVをそのまま入れて、見出しの指定だけを差し替えています</b>——
      帯・リボン・レイアウト・配色は本番と同一です。現状は 游明朝 / w600 / 字間 -.085em /
      <b>縦に潰す加工（scale 1×.8475）</b>。<br/>
      ⚠️ 帯は<b>止めた状態</b>で表示します（本番が持っている「動きを止める」を、読み込み後に押しています）。<br/>
@@ -70,9 +70,8 @@
 </div>
 
 <nav class="jump" aria-label="案へ飛ぶ">
-  <a href="#t0">0 現状</a><a href="#t1">1 締める</a><a href="#t2">2 ひらく</a><a href="#t3">3 太く</a>
-  <a href="#t4">4 細く</a><a href="#t5">5 細く＋ひらく</a><a href="#t6">6 ヒラギノ</a><a href="#t7">7 Noto</a>
-  <span>推しは5</span>
+  <a href="#t0">0 現状</a><a href="#t2">2 ひらく</a><a href="#t3">3 太く</a>
+  <a href="#t4">4 細く</a><a href="#t6">6 ヒラギノ</a><a href="#t7">7 Noto</a>
 </nav>
 
 <p class="fallback">JavaScriptが切れているため、各案の枠を読み込めません。ブラウザの設定を戻すか、本番サイトで見比べてください。</p>
@@ -81,12 +80,6 @@
   <div class="inner"><p class="tag"><i>0</i><b>いまのサイト</b><small>游明朝 ・ w600 ・ 字間 -.085em</small></p></div>
   <div class="stage" data-on="0" data-css=""></div>
   <div class="inner"><p class="note">比較の基準。見出しの幅は1行目478px / 2行目483px（画面幅1456pxで実測。コピーの器は499px）。以下の案はこの数字との差で書いている。</p></div>
-</section>
-
-<section class="row" id="t1">
-  <div class="inner"><p class="tag"><i>1</i><b>字間を締める</b><small>-.085em → -.115em</small></p></div>
-  <div class="stage" data-on="0" data-css="letter-spacing:-.115em"></div>
-  <div class="inner"><p class="note">文字が塊になって重くなる。ロゴに近い佇まい。幅は 483 → <b>467px</b>（1456px幅で実測）。現状より16px縮むので、右の帯との間は広がる。</p></div>
 </section>
 
 <section class="row" id="t2">
@@ -105,12 +98,6 @@
   <div class="inner"><p class="tag"><i>4</i><b>ウェイトを落とす</b><small>w600 → w400</small></p></div>
   <div class="stage" data-on="0" data-css="font-weight:400"></div>
   <div class="inner"><p class="note">明朝の線の細さが出て、いちばん「編集物」らしい。<b>細い＝弱いではなく、余白が効いて洗練に見える</b>。幅は現状と同じ。</p></div>
-</section>
-
-<section class="row" id="t5">
-  <div class="inner"><p class="tag"><i>5</i><b>細く＋字間をひらく</b><small>w400 ・ 字間 -.02em</small></p></div>
-  <div class="stage" data-on="0" data-css="font-weight:400;letter-spacing:-.02em"></div>
-  <div class="inner"><p class="note">2と4の合わせ技。ファッション誌の見出しに近い。<b>いちばん「スタイリッシュ」という言葉に近いのはこれだと思う</b>。ただし8案でいちばん横に伸びる（483 → <b>517px</b>／器を18pxはみ出す）。帯との距離が詰まるので、そこだけ見てほしい。</p></div>
 </section>
 
 <section class="row" id="t6">
