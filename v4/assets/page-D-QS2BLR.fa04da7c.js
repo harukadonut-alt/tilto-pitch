@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.645bfbf9.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.645bfbf9.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.fa04da7c.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.fa04da7c.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.645bfbf9.js / rolldown-runtime-S-ySWqyJ.645bfbf9.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.fa04da7c.js / rolldown-runtime-S-ySWqyJ.fa04da7c.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1110,17 +1110,23 @@ var SR_INSIDE = {
     //      タイルと中身が別のサイトにならないよう、必ず同じ素材から作る
     '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 },
 
+    /* 🔴 `url` があるものは、ビューアで**実サイトをそのまま iframe で開く**（2026-09-04・社長指示）。
+       「せっかくアニメーションをつけているので、画像ではなく動きも見てほしい」。
+       ⚠️ url が無いものは従来どおり `site` の縦長画像にフォールバックする。
+          36〜38（医療・飲食・教育）と23（建設）はURLが未取得なので画像のまま。
+       ⚠️ 埋め込み可否は X-Frame-Options / CSP frame-ancestors を確認済み（5件とも制限なし）。
+
     /* 36〜38: 実際に組んだ3本。**動くサイトを全画面で撮った縦長1枚**。
        ⚠️ タイルの絵（showroom-*-real.webp）は、この縦長画像のFVと同じ素材。
           タイルと中身が別のサイトにならないよう、必ず同じ元から作ること。 */
     '36': { site: `./images/works/site-medical.webp`,   ratio: 1280 / 3914 },
     '37': { site: `./images/works/site-food.webp`,      ratio: 1280 / 3047 },
     '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940 },
-    '39': { site: `./images/works/site-it.webp`, ratio: 1280 / 3972 },
-    '40': { site: `./images/works/site-mfg.webp`, ratio: 1280 / 8323 },
-    '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216 },
-    '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712 },
-    '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225 }
+    '39': { site: `./images/works/site-it.webp`, ratio: 1280 / 3972, url: `https://akatsuki-systems-recruit.haruka-namasute.chatgpt.site` },
+    '40': { site: `./images/works/site-mfg.webp`, ratio: 1280 / 8323, url: `https://kimori-kagu-recruit.haruka-namasute.chatgpt.site` },
+    '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216, url: `https://keiso-waybill-recruit.haruka-namasute.chatgpt.site` },
+    '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712, url: `https://reignite-live-production.haruka-namasute.chatgpt.site` },
+    '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1217,7 +1223,17 @@ function Showroom() {
                     children: SR_FILTERS.map(name => (0, i.jsx)(`button`, {
                         type: `button`,
                         "aria-pressed": filter === name,
-                        onClick: () => setFilter(name),
+                        onClick: () => {
+                            setFilter(name);
+                            /* 🔴 業種を押したら、その業種の画面をそのまま開く（2026-09-04・社長指示）。
+                               「FVが強調されるのではなく、業種別のこの画面を出してほしい」。
+                               ⚠️ ALL と、作品が無い業種（士業・コンサル）は**開かない**。
+                                  rep が null のときに setPicked(null) で閉じる。 */
+                            let rep = name === `ALL` ? null
+                                : (SR_WORKS.find(x => x.inside && x.industry === name)
+                                    || SR_WORKS.find(x => x.industry === name) || null);
+                            setPicked(rep ? rep.id : null);
+                        },
                         children: name
                     }, name))
                 }),
@@ -1298,9 +1314,23 @@ function Showroom() {
                         className: `works-site`,
                         children: [(0, i.jsx)(`div`, {
                                 className: `works-site-frame`,
-                                children: (0, i.jsx)(`img`, { src: shown.inside.site, alt: shown.alt })
+                                "data-live": shown.inside.url ? `true` : `false`,
+                                children: shown.inside.url
+                                    ? (0, i.jsx)(`iframe`, {
+                                        src: shown.inside.url,
+                                        title: `${shown.title}（実際のサイト）`,
+                                        /* ⚠️ loading:"lazy" にしない。この枠はドロワーを開いたときだけ
+                                           描かれるので遅延の意味が無く、環境によっては**読み込みが
+                                           始まらないまま白いまま**になる（実測で発生した） */
+                                        referrerPolicy: `no-referrer`
+                                    })
+                                    : (0, i.jsx)(`img`, { src: shown.inside.site, alt: shown.alt })
                             }),
-                            (0, i.jsx)(`small`, { children: `SCROLL — 下まで見られます` })]
+                            (0, i.jsx)(`small`, {
+                                children: shown.inside.url
+                                    ? `実際に動くサイトです — 枠の中でスクロールできます`
+                                    : `SCROLL — 下まで見られます`
+                            })]
                     }) : (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
