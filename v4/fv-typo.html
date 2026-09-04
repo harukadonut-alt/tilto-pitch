@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>FV見出しの書体比較｜Tilto°</title>
+<link rel="icon" type="image/png" sizes="64x64" href="./favicon-64.png?v=1"/>
+<style>
+  :root { --paper:#f7f4ee; --sumi:#111317; --coral:#ff4d4f; }
+  * { box-sizing: border-box }
+  body { margin:0; background:var(--paper); color:var(--sumi);
+         font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; }
+
+  .page-head { padding:48px 5vw 8px; }
+  .page-head h1 { margin:0 0 10px; font-size:19px; letter-spacing:.04em }
+  .page-head p { margin:0; font-size:13px; line-height:1.9; color:#111317b0; max-width:70ch }
+  .page-head b { color:var(--coral) }
+
+  .row { padding:40px 5vw 44px; border-top:1px solid #11131722 }
+  .row:first-of-type { border-top:0 }
+  .tag { display:flex; align-items:baseline; gap:14px; margin:0 0 22px }
+  .tag i { font-style:normal; font:700 11px/1 Arial,sans-serif; letter-spacing:.16em;
+           color:var(--coral); border:1px solid var(--coral); padding:6px 9px; border-radius:2px }
+  .tag b { font-size:14px; letter-spacing:.03em }
+  .tag small { font-size:12px; color:#111317a0; letter-spacing:.02em }
+
+  /* 見出し。ここだけが案ごとに変わる */
+  .fv h2 { margin:0; font-size:clamp(38px,5.15vw,75px); line-height:1.247;
+           font-family:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+           font-weight:600; letter-spacing:-.085em }
+  .fv h2 span { display:block }
+  .fv h2 .accent { color:var(--coral) }
+  .fv .lead { margin:20px 0 0; font-size:15px; font-weight:700; letter-spacing:.01em; color:#111317c8 }
+
+  /* --- 案ごとの差分 --- */
+  /* 0 現状 */
+  /* 1 字間を締める */
+  #t1 h2 { letter-spacing:-.115em }
+  /* 2 字間をひらく */
+  #t2 h2 { letter-spacing:-.035em }
+  /* 3 ウェイトを上げる */
+  #t3 h2 { font-weight:700 }
+  /* 4 ウェイトを落とす（線を細く、明朝らしく） */
+  #t4 h2 { font-weight:400 }
+  /* 5 細く＋字間をひらく（いちばん端正） */
+  #t5 h2 { font-weight:400; letter-spacing:-.02em }
+  /* 6 ヒラギノ明朝を先に */
+  #t6 h2 { font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif }
+  /* 7 Noto Serif JP を先に（線の太さが均質） */
+  #t7 h2 { font-family:"Noto Serif JP","Yu Mincho","Hiragino Mincho ProN",serif; font-weight:500 }
+
+  .note { margin:18px 0 0; font-size:12px; line-height:1.85; color:#111317a0 }
+  .note code { font-family:ui-monospace,Menlo,monospace; font-size:11px;
+               background:#11131710; padding:2px 5px; border-radius:2px }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>FV見出しの書体比較</h1>
+  <p>「採用サイトの、新しい持ち方。」を7パターン。<b>帯（WebGL）とレイアウトは触っていません</b>——見出しの字だけを変えています。
+     現状は 游明朝 / w600 / 字間 -.085em。<br/>
+     並べて見比べて、番号で教えてください。組み合わせ（例「3の太さで、6の書体」）でも大丈夫です。</p>
+</div>
+
+<section class="row" id="t0">
+  <p class="tag"><i>0</i><b>いまのサイト</b><small>游明朝 ・ w600 ・ 字間 -.085em</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+</section>
+
+<section class="row" id="t1">
+  <p class="tag"><i>1</i><b>字間を締める</b><small>-.085em → -.115em</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">文字が塊になって重くなる。ロゴに近い佇まい。<b>ただし2行目が伸びるので折り返しに注意</b>（現状が既に上限に近い）。</p>
+</section>
+
+<section class="row" id="t2">
+  <p class="tag"><i>2</i><b>字間をひらく</b><small>-.085em → -.035em</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">一字ずつが立って、上品で静かになる。「スタイリッシュ」がこちら寄りの意味なら本命。</p>
+</section>
+
+<section class="row" id="t3">
+  <p class="tag"><i>3</i><b>ウェイトを上げる</b><small>w600 → w700</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">強く、主張が前に出る。帯が派手なので、負けないという意味では有効。</p>
+</section>
+
+<section class="row" id="t4">
+  <p class="tag"><i>4</i><b>ウェイトを落とす</b><small>w600 → w400</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">明朝の線の細さが出て、いちばん「編集物」らしい。<b>細い＝弱いではなく、余白が効いて洗練に見える</b>。</p>
+</section>
+
+<section class="row" id="t5">
+  <p class="tag"><i>5</i><b>細く＋字間をひらく</b><small>w400 ・ 字間 -.02em</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">2と4の合わせ技。ファッション誌の見出しに近い。<b>いちばん「スタイリッシュ」という言葉に近いのはこれだと思う</b>。</p>
+</section>
+
+<section class="row" id="t6">
+  <p class="tag"><i>6</i><b>ヒラギノ明朝を先に</b><small>書体だけ変更 ・ w600</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">游明朝よりも横画が細く、縦画との差が大きい。線に強弱が出て華やか。<b>Macでしか出ない</b>（Windowsは游明朝に落ちる）。</p>
+</section>
+
+<section class="row" id="t7">
+  <p class="tag"><i>7</i><b>Noto Serif JP を先に</b><small>書体だけ変更 ・ w500</small></p>
+  <div class="fv"><h2><span>採用サイトの、</span><span class="accent">新しい持ち方。</span></h2>
+  <p class="lead">つくって終わりにしない。月額で持ち、育てつづける採用サイト。</p></div>
+  <p class="note">線の太さが均質で、現代的・端正。<b>WindowsでもAndroidでも同じ顔になる</b>のが最大の利点。</p>
+</section>
+
+</body>
+</html>
