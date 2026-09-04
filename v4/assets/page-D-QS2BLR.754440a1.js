@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.d6b65e52.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.d6b65e52.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.754440a1.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.754440a1.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.d6b65e52.js / rolldown-runtime-S-ySWqyJ.d6b65e52.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.754440a1.js / rolldown-runtime-S-ySWqyJ.754440a1.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1632,15 +1632,16 @@ function x() {
                             id: `reference-about-title`,
                             children: [(0, i.jsxs)(`span`, {
                                 className: `hl-line`,
-                                children: [`つくる。`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `だけじゃない。`,
+                                children: [`「つくる」を`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `ゴールにしない。`,
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                             }),
                                 (0, i.jsx)(`br`, {}),
                                 (0, i.jsxs)(`span`, {
                                 className: `hl-line`,
-                                children: [`採用サイトを、`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `持ち育てる`,
+                                children: [`更新しながら`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `「育てる」`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `採用サイト。`,
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                             })]
                         }),
