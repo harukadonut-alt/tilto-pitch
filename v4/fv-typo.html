@@ -20,6 +20,13 @@
             text-decoration:none; border:1px solid #11131733; border-radius:2px;
             padding:7px 11px; transition:background .18s ease, color .18s ease }
   .jump a:hover { background:var(--coral); border-color:var(--coral); color:#fff }
+  /* 帯の動きの切り替え。番号と役割が違うので、右端に離して置く */
+  .jump button { margin-left:auto; font:700 12px/1 inherit; letter-spacing:.06em;
+                 color:#fff; background:var(--sumi); border:1px solid var(--sumi);
+                 border-radius:2px; padding:7px 12px; cursor:pointer;
+                 transition:background .18s ease, border-color .18s ease }
+  .jump button[aria-pressed="true"] { color:var(--sumi); background:#0000; border-color:#11131733 }
+  .jump button:hover { background:var(--coral); border-color:var(--coral); color:#fff }
 
   .row { padding:24px 0 30px; border-top:1px solid #11131722; scroll-margin-top:52px }
   .row:first-of-type { border-top:0 }
@@ -56,6 +63,7 @@
 <nav class="jump" aria-label="案へ飛ぶ">
   <a href="#t0">0 現状</a><a href="#t1">1 潰しなし</a><a href="#t2">2 ひらく</a><a href="#t3">3 太く</a>
   <a href="#t4">4 細く</a><a href="#t5">5 ヒラギノ</a><a href="#t6">6 Noto</a>
+  <button type="button" id="motion" aria-pressed="false">帯を止める</button>
 </nav>
 
 <p class="fallback">JavaScriptが切れているため、各案の枠を読み込めません。ブラウザの設定を戻すか、本番サイトで見比べてください。</p>
@@ -109,9 +117,36 @@
 
     var stages = [].slice.call(document.querySelectorAll('.stage'));
 
+    /* 🔴 既定は**動かしたまま**（本番と同じ）。
+       この比較の判断軸が「右の帯に乗っている大きな文字に目を持っていかれないか」
+       なので、止めた画で見比べると帯の文字が弱く見えて判断を誤る。
+       字面そのものを見たいときだけボタンで止める。 */
+    var running = true;
+    /* 状態を変えるたびに増やす。古い見張り（下の keepMotion）に降りてもらうため */
+    var gen = 0;
+
+    /* 枠の中の帯を、いまの running に合わせ続ける。
+       🔴 1回押して終わりにできない。SSRのHTMLにボタンが**先に**あるので
+          早すぎる click は押せてしまうが、そのあと React が hydrate して
+          自分の初期状態（動いている）で上書きしてしまう。
+          → **状態を毎回読み直して、食い違っていたら押す**。合っていれば触らないので、
+            成功したあとに押し戻すことはない。 */
+    function keepMotion(frame) {
+        var my = gen, tries = 0;
+        (function step() {
+            if (my !== gen) return;                 /* 状態が変わった。古い見張りは降りる */
+            var doc;
+            try { doc = frame.contentDocument } catch (e) { return }
+            var b = doc && doc.querySelector('.ribbon-toggle');
+            /* aria-pressed="true" ＝ 止まっている */
+            if (b && (b.getAttribute('aria-pressed') === 'true') === running) b.click();
+            if (++tries < 30) setTimeout(step, 400);
+        })();
+    }
+
     /* 枠の中の本番ページに手を入れる。同一オリジンなので触れる。
        ① 見出しの指定を差し替える（この比較で変えたい唯一のところ）
-       ② 「動きを止める」を押す（帯を静止させる）
+       ② 帯の動きをいまの状態に合わせる
        ③ 枠の中でスクロールできないようにする */
     function dress(frame, css) {
         var doc;
@@ -126,21 +161,18 @@
                 .map(function (d) { return d + ' !important' }).join(';') + '}';
             doc.head.appendChild(st);
         }
-        /* 🔴 1回押して終わりにすると効かない。SSRのHTMLにボタンが**先に**あるので
-           早すぎる click は押せてしまうが、そのあと React が hydrate して
-           自分の初期状態（動いている）で上書きしてしまう。
-           → **aria-pressed が true になるまで押し直す**。状態を毎回読むので、
-             成功したあとに押し戻すことはない。 */
-        var tries = 0;
-        (function press() {
-            var b = doc.querySelector('.ribbon-toggle');
-            if (b) {
-                if (b.getAttribute('aria-pressed') === 'true') return;   /* 止まった */
-                b.click();
-            }
-            if (++tries < 30) setTimeout(press, 400);
-        })();
+        keepMotion(frame);
     }
+
+    var motionBtn = document.getElementById('motion');
+    motionBtn.addEventListener('click', function () {
+        running = !running;
+        gen++;
+        motionBtn.textContent = running ? '帯を止める' : '帯を動かす';
+        motionBtn.setAttribute('aria-pressed', running ? 'false' : 'true');
+        /* いま載っている枠だけ追従させる。あとから載る枠は dress が拾う */
+        stages.forEach(function (st) { if (st.firstChild) keepMotion(st.firstChild) });
+    });
 
     function mount(stage) {
         if (stage.firstChild) return;
