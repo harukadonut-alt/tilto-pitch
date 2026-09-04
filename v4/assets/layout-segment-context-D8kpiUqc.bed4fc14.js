@@ -1,1 +1,0 @@
-import{r as e}from"./rolldown-runtime-S-ySWqyJ.bed4fc14.js";import{i as t}from"./framework-DjPHiq1u.bed4fc14.js";import{t as n}from"./index-DteDOMqj.bed4fc14.js";var r=e(t(),1);function i({segmentMap:e,children:t}){let i=n();return i?(0,r.createElement)(i.Provider,{value:e},t):t}export{i as LayoutSegmentProvider};
