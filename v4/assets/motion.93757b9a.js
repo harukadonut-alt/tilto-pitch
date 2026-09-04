@@ -216,8 +216,11 @@
                 }
                 st.setProperty('--bp-parallax-back', ((b - .5) * 8).toFixed(2) + 'px');
                 st.setProperty('--bp-parallax-front', ((b - .5) * -10).toFixed(2) + 'px');
+                /* 環の数字は「このページの進み＝05 / 07」（2026-09-05）。
+                   前は架空の 72.5% だったが、図面を「このページ自身」に揃えたので、
+                   **実在する数字**だけを出す。環の割合は 5/7＝71.4%（CSS側と一致させる） */
                 el.querySelectorAll('[data-kpi-number]').forEach(function (n) {
-                    n.textContent = (72.5 * kpi).toFixed(1) + '%';
+                    n.textContent = ('0' + Math.round(5 * kpi)).slice(-2) + ' / 07';
                 });
             }
         });

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.cb7925a1.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.cb7925a1.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.93757b9a.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.93757b9a.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.cb7925a1.js / rolldown-runtime-S-ySWqyJ.cb7925a1.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.93757b9a.js / rolldown-runtime-S-ySWqyJ.93757b9a.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2208,11 +2208,11 @@ function x() {
                                         }),
                                         (0, i.jsx)(`span`, {
                                             className: `bp-dim bp-dim-x`,
-                                            children: `1280`
+                                            children: `1674`
                                         }),
                                         (0, i.jsx)(`span`, {
                                             className: `bp-dim bp-dim-y`,
-                                            children: `720`
+                                            children: `943`
                                         })]
                                 }),
                                 (0, i.jsxs)(`div`, {
@@ -2231,28 +2231,28 @@ function x() {
                                             className: `bp-sitemap`,
                                             children: [(0, i.jsx)(`span`, {
                                                     className: `is-root`,
-                                                    children: `HOME`
+                                                    children: `TOP`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `MESSAGE`
+                                                    children: `01 ABOUT`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `ABOUT`
+                                                    children: `02 PROBLEMS`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `PEOPLE`
+                                                    children: `03 PROCESS`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `WORK`
+                                                    children: `04 CATALOG`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `ENVIRONMENT`
+                                                    children: `05 BLUEPRINT`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `STORY`
+                                                    children: `06 PRICE`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `RECRUIT`
+                                                    children: `07 CONTACT`
                                                 })]
                                         }),
                                         (0, i.jsx)(`svg`, {
@@ -2286,10 +2286,10 @@ function x() {
                                                             children: `Aa`
                                                         }),
                                                         (0, i.jsx)(`i`, {
-                                                            children: `明朝 / 56 / 1.18`
+                                                            children: `游明朝 / 75 / 1.24`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `Arial / 12 / 1.0`
+                                                            children: `Arial / 11 / 1.0`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2298,14 +2298,14 @@ function x() {
                                                             children: `ACTION`
                                                         }),
                                                         (0, i.jsx)(`span`, {
-                                                            children: `ENTRY　→`
+                                                            children: `表現事例を見る　↘`
                                                         }),
                                                         (0, i.jsx)(`span`, {
-                                                            children: `VIEW MORE　＋`
+                                                            children: `VIEW　→`
                                                         }),
                                                         (0, i.jsx)(`span`, {
                                                             className: `is-coral`,
-                                                            children: `CONTACT　→`
+                                                            children: `無料で相談してみる　↗`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2323,16 +2323,16 @@ function x() {
                                                             children: `NAVIGATION`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `ABOUT`
+                                                            children: `Tiltoとは`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `WORKS`
+                                                            children: `デザインカタログ`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `PEOPLE`
+                                                            children: `料金`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `RECRUIT`
+                                                            children: `無料で相談`
                                                         })]
                                                 })]
                                         })]
@@ -2343,7 +2343,7 @@ function x() {
                                     children: [(0, i.jsxs)(`div`, {
                                             className: `bp-plane-head`,
                                             children: [(0, i.jsx)(`b`, {
-                                                    children: `WIREFRAME / KEY PAGE`
+                                                    children: `WIREFRAME / TOP`
                                                 }),
                                                 (0, i.jsx)(`span`, {
                                                     children: `WF / 04`
@@ -2353,7 +2353,7 @@ function x() {
                                             className: `bp-wire-layout`,
                                             children: [(0, i.jsxs)(`div`, {
                                                     className: `bp-wire-nav`,
-                                                    children: [`TILTO° `,
+                                                    children: [`Tilto° `,
                                                         (0, i.jsx)(`i`, {}),
                                                         ` `,
                                                         (0, i.jsx)(`i`, {}),
@@ -2361,25 +2361,25 @@ function x() {
                                                         (0, i.jsx)(`i`, {}),
                                                         ` `,
                                                         (0, i.jsx)(`b`, {
-                                                            children: `ENTRY`
+                                                            children: `相談 ↗`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
                                                     className: `bp-wire-hero`,
                                                     children: [(0, i.jsxs)(`strong`, {
-                                                            children: [`採用サイトの`,
+                                                            children: [`採用サイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `「考え方」を変える。`]
+                                                                `新しい持ち方。`]
                                                         }),
                                                         (0, i.jsx)(`span`, {}),
                                                         (0, i.jsx)(`em`, {
-                                                            children: `SCROLL`
+                                                            children: `RIBBON / 44 SITES`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
                                                     className: `bp-wire-copy`,
                                                     children: [(0, i.jsx)(`b`, {
-                                                            children: `OUR MISSION`
+                                                            children: `PRICING STRIP / 01 02 03`
                                                         }),
                                                         (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {}),
@@ -2412,9 +2412,9 @@ function x() {
                                                             children: `CORE MESSAGE`
                                                         }),
                                                         (0, i.jsxs)(`strong`, {
-                                                            children: [`採用サイトの`,
+                                                            children: [`採用サイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `「考え方」を変える。`]
+                                                                `新しい持ち方。`]
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2422,11 +2422,11 @@ function x() {
                                                             children: `PROOF`
                                                         }),
                                                         (0, i.jsxs)(`p`, {
-                                                            children: [`理解をつくる。`,
+                                                            children: [`月額27,000円〜。`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `共感をつくる。`,
+                                                                `最短1週間。`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `行動をつくる。`]
+                                                                `1社1設計。`]
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2434,11 +2434,11 @@ function x() {
                                                             children: `ACTION`
                                                         }),
                                                         (0, i.jsxs)(`p`, {
-                                                            children: [`知る → 共感する`,
+                                                            children: [`知る → 見比べる`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `働く姿を想像する`,
+                                                                `料金を確かめる`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `応募する`]
+                                                                `無料で相談する`]
                                                         })]
                                                 })]
                                         })]
@@ -2446,83 +2446,23 @@ function x() {
                                 (0, i.jsxs)(`div`, {
                                     className: `bp-plane bp-visual`,
                                     "aria-hidden": `true`,
-                                    children: [(0, i.jsxs)(`div`, {
-                                            className: `bp-site-nav`,
-                                            children: [(0, i.jsx)(`b`, {
-                                                    children: `TILTO°`
-                                                }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `ABOUT　 SERVICE　 WORKS　 PEOPLE　 RECRUIT`
-                                                }),
-                                                (0, i.jsx)(`i`, {
-                                                    children: `ENTRY`
-                                                })]
-                                        }),
-                                        (0, i.jsxs)(`div`, {
-                                            className: `bp-site-hero`,
-                                            children: [(0, i.jsxs)(`div`, {
-                                                    children: [(0, i.jsx)(`small`, {
-                                                            children: `RECRUITMENT SITE / 2026`
-                                                        }),
-                                                        (0, i.jsxs)(`strong`, {
-                                                            children: [`採用サイトの`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `「持ち方」を変える。`]
-                                                        }),
-                                                        (0, i.jsxs)(`p`, {
-                                                            children: [`つくって終わらない。`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `成果まで、設計する。`]
-                                                        })]
-                                                }),
-                                                (0, i.jsxs)(`svg`, {
-                                                    viewbox: `0 0 300 240`,
-                                                    "aria-hidden": `true`,
-                                                    children: [(0, i.jsxs)(`g`, {
-                                                            className: `bp-cube`,
-                                                            children: [(0, i.jsx)(`path`, {
-                                                                    d: `M212 142L250 123L278 139L240 160Z`
-                                                                }),
-                                                                (0, i.jsx)(`path`, {
-                                                                    d: `M212 142V182L240 200V160Z`
-                                                                }),
-                                                                (0, i.jsx)(`path`, {
-                                                                    d: `M240 160L278 139V178L240 200Z`
-                                                                })]
-                                                        }),
-                                                        (0, i.jsx)(`path`, {
-                                                            className: `bp-branch`,
-                                                            d: `M20 205C75 175 86 104 148 30M73 168L37 128M100 130L166 98M129 76L91 41M149 54L211 32`
-                                                        }),
-                                                        (0, i.jsx)(`circle`, {
-                                                            cx: `37`,
-                                                            cy: `128`,
-                                                            r: `5`
-                                                        }),
-                                                        (0, i.jsx)(`circle`, {
-                                                            cx: `166`,
-                                                            cy: `98`,
-                                                            r: `5`
-                                                        }),
-                                                        (0, i.jsx)(`circle`, {
-                                                            cx: `91`,
-                                                            cy: `41`,
-                                                            r: `5`
-                                                        }),
-                                                        (0, i.jsx)(`circle`, {
-                                                            cx: `211`,
-                                                            cy: `32`,
-                                                            r: `5`
-                                                        })]
-                                                })]
+                                    /* 2026-09-05・社長指示「このサイトのことじゃんって分かるように」。
+                                       最上層は手組みのモックをやめ、**このページ自身のFVのスクショ**を置く。
+                                       画像は headless Chrome で 1674×943（FVの設計キャンバス）で撮ったもの。
+                                       FVの文言を変えたら撮り直すこと */
+                                    children: [(0, i.jsx)(`img`, {
+                                            className: `bp-site-shot`,
+                                            src: `./images/blueprint-top.webp`,
+                                            alt: ``,
+                                            loading: `lazy`
                                         }),
                                         (0, i.jsxs)(`div`, {
                                             className: `bp-site-foot`,
                                             children: [(0, i.jsx)(`span`, {
-                                                    children: `SCROLL TO EXPLORE`
+                                                    children: `THIS PAGE / TOP`
                                                 }),
                                                 (0, i.jsx)(`b`, {
-                                                    children: `01 / 07`
+                                                    children: `TILTO°`
                                                 })]
                                         })]
                                 }),
@@ -2614,7 +2554,7 @@ function x() {
                                                     children: `RESEARCH`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `市場・競合・ユーザーを読み解き、課題の本質を定義する。`
+                                                    children: `つくった後に課題がある。そこを狙うと決めた。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2623,7 +2563,7 @@ function x() {
                                                     children: `LANGUAGE`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `独自の言葉を設計し、メッセージの芯をつくる。`
+                                                    children: `月額・伴走・更新を「新しい持ち方」の一語に束ねた。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2632,7 +2572,7 @@ function x() {
                                                     children: `STRUCTURE`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `情報を整理し、伝わる順番と優先順位を設計する。`
+                                                    children: `知る→見比べる→確かめる→相談、の順に置いた。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2641,7 +2581,7 @@ function x() {
                                                     children: `INFORMATION ARCHITECTURE`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `情報の地図を描き、迷わずたどれる構造をつくる。`
+                                                    children: `7つの節を一本道にし、迷う分岐を作らない。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2650,7 +2590,7 @@ function x() {
                                                     children: `USER FLOW`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `行動の流れを設計し、次のアクションへ自然に導く。`
+                                                    children: `どの節からも、1クリックで「無料で相談」へ。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2659,7 +2599,7 @@ function x() {
                                                     children: `VISUAL`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `世界観を視覚化し、信頼と共感を生むデザインに。`
+                                                    children: `44の実物を帯に流し、言葉より先に幅を見せる。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2668,7 +2608,7 @@ function x() {
                                                     children: `MEASURE`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `指標を設計し、成果を正しく計測する。`
+                                                    children: `見る・見比べる・相談するの3点を、公開後に測る。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -2677,17 +2617,17 @@ function x() {
                                                     children: `IMPROVE`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `データから学び、仮説を立て、改善を積み重ねる。`
+                                                    children: `このページも月額の型で持ち、育てつづける。`
                                                 })]
                                         })]
                                 }),
                                 (0, i.jsxs)(`div`, {
                                     className: `bp-kpi`,
-                                    "aria-label": `応募から入社までの成果計測設計`,
+                                    "aria-label": `このページの計測設計`,
                                     children: [(0, i.jsxs)(`div`, {
                                             className: `bp-kpi-head`,
                                             children: [(0, i.jsx)(`b`, {
-                                                    children: `MEASURE / KPI FLOW`
+                                                    children: `MEASURE / THIS PAGE`
                                                 }),
                                                 (0, i.jsx)(`span`, {
                                                     children: `DATA / 08`
@@ -2699,57 +2639,57 @@ function x() {
                                                     className: `bp-kpi-funnel`,
                                                     children: [(0, i.jsxs)(`div`, {
                                                             children: [(0, i.jsx)(`span`, {
-                                                                    children: `ENTRY`
+                                                                    children: `TOP VIEW`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
                                                                     style: { "--value": `100%` }
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
-                                                                    children: `100`
+                                                                    children: `TOP`
                                                                 })]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
                                                             children: [(0, i.jsx)(`span`, {
-                                                                    children: `RECRUIT`
+                                                                    children: `CATALOG`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
                                                                     style: { "--value": `82%` }
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
-                                                                    children: `82`
+                                                                    children: `04`
                                                                 })]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
                                                             children: [(0, i.jsx)(`span`, {
-                                                                    children: `INTERVIEW`
+                                                                    children: `PRICE`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
                                                                     style: { "--value": `58%` }
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
-                                                                    children: `58`
+                                                                    children: `06`
                                                                 })]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
                                                             children: [(0, i.jsx)(`span`, {
-                                                                    children: `OFFER`
+                                                                    children: `CONTACT`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
                                                                     style: { "--value": `23%` }
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
-                                                                    children: `23`
+                                                                    children: `07`
                                                                 })]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
                                                             children: [(0, i.jsx)(`span`, {
-                                                                    children: `JOIN`
+                                                                    children: `SEND`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
                                                                     style: { "--value": `18%` }
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
-                                                                    children: `18`
+                                                                    children: `FORM`
                                                                 })]
                                                         })]
                                                 }),
@@ -2793,12 +2733,12 @@ function x() {
                                                         }),
                                                         (0, i.jsx)(`strong`, {
                                                             "data-kpi-number": `true`,
-                                                            children: `0.0%`
+                                                            children: `00 / 07`
                                                         }),
                                                         (0, i.jsxs)(`small`, {
-                                                            children: [`QUALIFIED`,
+                                                            children: [`THIS PAGE`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `ACTION`]
+                                                                `PROGRESS`]
                                                         })]
                                                 })]
                                         })]
@@ -2812,10 +2752,10 @@ function x() {
                                                     children: [(0, i.jsx)(`b`, {
                                                             children: `Aa`
                                                         }),
-                                                        `Noto Serif JP`,
+                                                        `游明朝 / Hiragino Mincho`,
                                                         (0, i.jsx)(`br`, {}),
                                                         (0, i.jsx)(`small`, {
-                                                            children: `Bold / Regular`
+                                                            children: `見出し ・ 500`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`span`, {
@@ -2825,7 +2765,7 @@ function x() {
                                                         `Arial`,
                                                         (0, i.jsx)(`br`, {}),
                                                         (0, i.jsx)(`small`, {
-                                                            children: `Regular`
+                                                            children: `英字・注記 ・ 700`
                                                         })]
                                                 })]
                                         }),
@@ -2844,13 +2784,13 @@ function x() {
                                                     children: [(0, i.jsx)(`i`, {
                                                             className: `is-paper`
                                                         }),
-                                                        `#FFFFFF`]
+                                                        `#F7F4EE`]
                                                 }),
                                                 (0, i.jsxs)(`span`, {
                                                     children: [(0, i.jsx)(`i`, {
                                                             className: `is-sumi`
                                                         }),
-                                                        `#111111`]
+                                                        `#111317`]
                                                 })]
                                         })]
                                 }),
