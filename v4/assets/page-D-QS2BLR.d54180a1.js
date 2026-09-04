@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.fa04da7c.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.fa04da7c.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.d54180a1.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.d54180a1.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.fa04da7c.js / rolldown-runtime-S-ySWqyJ.fa04da7c.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.d54180a1.js / rolldown-runtime-S-ySWqyJ.d54180a1.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1237,7 +1237,7 @@ function Showroom() {
                         children: name
                     }, name))
                 }),
-                (0, i.jsxs)(`h3`, { children: [`振れ幅そのものが、`, (0, i.jsx)(`br`, {}), `商品です。`] }),
+                (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
                     children: [`43の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
@@ -1630,7 +1630,7 @@ function x() {
                                 (0, i.jsxs)(`span`, {
                                 className: `hl-line`,
                                 children: [`採用サイトを、`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `持ち、育てる。`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `持ち育てる`,
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                             })]
                         }),

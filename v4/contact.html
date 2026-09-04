@@ -362,8 +362,20 @@ a { color: inherit }
             </div>
 
             <div class="cf-field">
-                <label for="cf-tel"><b>電話番号</b><span class="cf-any">OPTIONAL</span></label>
-                <input id="cf-tel" name="tel" type="tel" autocomplete="tel"/>
+                <label for="cf-tel"><b>電話番号</b><span class="cf-req">REQUIRED</span></label>
+                <input id="cf-tel" name="tel" type="tel" autocomplete="tel" required/>
+            </div>
+
+            <!-- 役職は任意。2026-09-04の定例で追加。
+                 ⚠️ 「契約・嘱託・派遣」は**入れない**（かずさんの指示）。決裁に関わる層だけ拾う -->
+            <div class="cf-field">
+                <label for="cf-role"><b>役職</b><span class="cf-any">OPTIONAL</span></label>
+                <select id="cf-role" name="role">
+                    <option value="">選んでください</option>
+                    <option>経営者・役員</option>
+                    <option>部長・課長／マネージャー</option>
+                    <option>一般社員／スタッフ</option>
+                </select>
             </div>
 
             <div class="cf-field">
