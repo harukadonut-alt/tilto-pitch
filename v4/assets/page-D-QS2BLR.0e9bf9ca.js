@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.497f8a1a.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.497f8a1a.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.0e9bf9ca.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.0e9bf9ca.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.497f8a1a.js / rolldown-runtime-S-ySWqyJ.497f8a1a.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.0e9bf9ca.js / rolldown-runtime-S-ySWqyJ.0e9bf9ca.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1098,7 +1098,14 @@ var SR_BASE = [
     { id: `43`, industry: `医療・福祉`, world: `CARE`, tone: `paper`,
       title: `いろんな人の暮らしが、重なってできている。`,
       image: `./images/works/showroom-care-real.webp`,
-      alt: `切り絵のような質感で介護職と利用者の暮らしを描いた介護事業所の採用サイトFV` }
+      alt: `切り絵のような質感で介護職と利用者の暮らしを描いた介護事業所の採用サイトFV` },
+
+    /* 44: 士業・コンサル（2026-09-05）。**これで9業種すべてが埋まった**。
+       押しても0件になる業種は無くなった。 */
+    { id: `44`, industry: `士業・コンサル`, world: `PROFESSIONALS`, tone: `paper`,
+      title: `専門性は、誰かの人生を動かす力になる。`,
+      image: `./images/works/showroom-law-real.webp`,
+      alt: `白いカーテンを背に横顔を捉えた人物と、縦組みの明朝の見出しを組んだ士業・コンサルの採用サイトFV` }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
@@ -1113,20 +1120,23 @@ var SR_INSIDE = {
     /* 🔴 `url` があるものは、ビューアで**実サイトをそのまま iframe で開く**（2026-09-04・社長指示）。
        「せっかくアニメーションをつけているので、画像ではなく動きも見てほしい」。
        ⚠️ url が無いものは従来どおり `site` の縦長画像にフォールバックする。
-          36〜38（医療・飲食・教育）と23（建設）はURLが未取得なので画像のまま。
-       ⚠️ 埋め込み可否は X-Frame-Options / CSP frame-ancestors を確認済み（5件とも制限なし）。
+          いま画像だけなのは **23（建設）だけ**。あれはサイトの実体が無く、
+          03で使っている縦長画像から起こしたものなので、URLは存在しない。
+       ⚠️ 埋め込み可否は X-Frame-Options / CSP frame-ancestors を確認済み（9件とも制限なし）。
+       ⚠️ `site` の画像は消さない。回線や埋め込み制限で iframe が出ないときの受け皿。
 
-    /* 36〜38: 実際に組んだ3本。**動くサイトを全画面で撮った縦長1枚**。
+    /* 36〜38: 実際に組んだ3本。2026-09-05に公開URLをもらって実サイトへ切り替えた。
        ⚠️ タイルの絵（showroom-*-real.webp）は、この縦長画像のFVと同じ素材。
           タイルと中身が別のサイトにならないよう、必ず同じ元から作ること。 */
-    '36': { site: `./images/works/site-medical.webp`,   ratio: 1280 / 3914 },
-    '37': { site: `./images/works/site-food.webp`,      ratio: 1280 / 3047 },
-    '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940 },
+    '36': { site: `./images/works/site-medical.webp`, ratio: 1280 / 3914, url: `https://akatsuki-nursing-recruit.haruka-namasute.chatgpt.site` },
+    '37': { site: `./images/works/site-food.webp`, ratio: 1280 / 3047, url: `https://totomori-recruit.haruka-namasute.chatgpt.site` },
+    '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940, url: `https://manabi-recruit-2026.haruka-namasute.chatgpt.site` },
     '39': { site: `./images/works/site-it.webp`, ratio: 1280 / 3972, url: `https://akatsuki-systems-recruit.haruka-namasute.chatgpt.site` },
     '40': { site: `./images/works/site-mfg.webp`, ratio: 1280 / 8323, url: `https://kimori-kagu-recruit.haruka-namasute.chatgpt.site` },
     '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216, url: `https://keiso-waybill-recruit.haruka-namasute.chatgpt.site` },
     '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712, url: `https://reignite-live-production.haruka-namasute.chatgpt.site` },
-    '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` }
+    '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` },
+    '44': { site: `./images/works/site-law.webp`, ratio: 1280 / 4245, url: `https://hayase-partners-recruitment.haruka-namasute.chatgpt.site` }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1239,13 +1249,13 @@ function Showroom() {
                 }),
                 (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
-                    children: [`43の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`44の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `43の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `44の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
