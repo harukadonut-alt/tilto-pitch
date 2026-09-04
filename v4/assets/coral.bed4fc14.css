@@ -1,0 +1,2596 @@
+/* ============================================================
+   Tilto° v4 FV — 配色の次案「Coral Red × Pure White」
+   2026-08-23 / 社長のカラー提案ボード（Coral Red #FF4D4F / Blush Pink #FFE6E8 /
+   Pure White #FFFFFF / Light Gray #F2F4F7 / Deep Charcoal #111317）を当てたもの。
+
+   🔴 帯（WebGLの上段・下段リボンとFV画像）には一切触っていない。
+      社長の指示「帯はそのまま」。輪郭・UV・GLSLの照明は既定のまま。
+      ここで変えるのは **CSSで塗っている面と文字だけ**。
+
+   ⚠️ このファイルは index-D5NZeMWX.bed4fc14.css の **後ろに** 読む。
+      自前のレイアウト部分は @layer の外に書かれているので、
+      同じセレクタを後ろに置けば詳細度をいじらずに勝てる（!important は使わない）。
+
+   ⚠️ 元の配色は温かいオフホワイト＋墨。影も茶系（#1d1612）だった。
+      地を純白にすると茶系の影が黄ばんで見えるので、影も寒色（#111317）へ寄せている。
+      「色を替える」は地・文字・影の3点セットで、どれか1つだと濁る。
+   ============================================================ */
+
+:root {
+    --paper: #fff;
+    --ink: #111317;
+
+    --coral: #ff4d4f;
+    --coral-deep: #e23c3f;
+    --blush: #ffe6e8;
+    --gray-100: #f2f4f7;
+    --gray-300: #e5e9f0;
+    --gray-400: #c3c9d2;
+    --gray-600: #5a626f;
+    --charcoal: #111317
+}
+
+/* ============================================================
+   イントロ「TILTED SLIT OPEN」（2026-08-24）
+
+   全面コーラル → 約11°傾いた細い切れ込み → その奥に動いているWebGL FV
+   → S字に大きく開く → 現在のFVへそのまま接続。約1.5秒。
+
+   🔴 **既存のFV／WebGLには一切触らない。** 上に色面を被せるだけ。
+      下のWebGLは最初から動き続けているので、終わったところで
+      止まったり跳ねたりしない（ループ速度も変えていない）。
+   🔴 **DOMを足していない。** `.hero-canvas` の ::before / ::after の2枚だけ。
+      このページは React が hydrate するので、要素を足すと消される恐れがある。
+      擬似要素なら React の管理外で安全。
+   ⚠️ S字は SVGマスクのデータURI。`mask-size: 100% 100%` と
+      `preserveAspectRatio="none"` で画面幅に追従する（pxを書かないので伸縮に強い）。
+   ⚠️ 2枚は同じ曲線を共有しているので、動かす前は隙間ゼロで画面を覆う。
+      離すほど曲線が見えてきて、細い線 → 大きなS字 に変わって見える。
+      パスを補間するより滑らかで、60fpsを保ちやすい。
+   ⚠️ パネルの箱は横160%（`inset: 0 -30%`）。斜めに逃げるとき、
+      横に動いたぶんで画面端が抜けないようにするため。
+   ============================================================ */
+.site-shell::before,
+.site-shell::after {
+    content: "";
+    z-index: 20;
+    background: var(--coral);
+    pointer-events: none;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+    /* 🔴 fixed＝画面基準。.hero-canvas の中に置くと、枠の overflow:hidden で
+       退場の途中に変な位置で切られる。横長画面でFVが画面より狭いときに
+       左右の数pxを覆えない問題も、これで一緒に消える */
+    position: fixed;
+    inset: 0 -30%;
+    will-change: transform
+}
+
+.site-shell::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 0 L 1600 0 L 1600 253 C 1180 300, 970 442, 720 566 C 470 690, 260 786, 0 750 Z'/%3E%3C/svg%3E");
+    animation: introTop 3.3s both
+}
+
+.site-shell::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M 0 750 C 260 786, 470 690, 720 566 C 970 442, 1180 300, 1600 253 L 1600 900 L 0 900 Z'/%3E%3C/svg%3E");
+    animation: introBottom 3.3s both
+}
+
+/* 15%(0.22s)まで静止 → 28%(0.42s)で髪の毛ほどの切れ込み
+   → 52%(0.78s)でS字が見える → 100%(1.5s)で斜めに退場。
+   最後だけ上品に減速させたいので、区間ごとにイージングを変えている。 */
+/* 退場は 1.72〜2.51秒。横の移動は 15% に抑えてある。
+   ⚠️ 24% まで動かすと、面の横余白（±30%）を食いつぶして
+      画面の左に面の直線の縁が入ってくる。15% なら最悪でも -15% で安全 */
+@keyframes introTop {
+      0%,
+     52% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     63% { transform: translate(6%, -48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     76%,
+    100% { transform: translate(15%, -122%) }
+}
+
+@keyframes introBottom {
+      0%,
+     52% { transform: none;                     animation-timing-function: cubic-bezier(.3, .6, .4, 1) }
+     63% { transform: translate(-6%, 48%);      animation-timing-function: cubic-bezier(.25, .9, .35, 1) }
+     76%,
+    100% { transform: translate(-15%, 122%) }
+}
+
+/* 帯は「アップで中央」から「今の位置へ右にずれる」。
+   🔴 `transform` ではなく単体の `scale` / `translate` / `rotate` を使う。
+      `.ribbon-scene` の `transform` は JS が --scene-rx/ry で触るので、
+      そこへ書き込むと取り合いになる。単体プロパティなら合成されるだけ。
+      `translate: -7% …` は今の位置より左＝そこから右へ寄っていく。
+   ⚠️ 80%（1.84秒）で通常の位置・サイズに着地させ、そこから固定。
+      イントロが終わった瞬間に跳ねない。 */
+@keyframes introRibbon {
+      0%,
+     52% { scale: 1.55; translate: -7% 2.5%; rotate: -.8deg }
+     88%,
+    100% { scale: 1;    translate: 0 0;      rotate: 0deg }
+}
+
+.ribbon-scene,
+.ribbon-cast-shadow-scene {
+    animation: introRibbon 3.3s cubic-bezier(.22, 1, .36, 1) both
+}
+
+/* 中央の Tilto°。onionion のように、まず名前だけを見せる。
+   ⚠️ DOMは足せない（React が hydrate する）ので、`.site-shell` の擬似要素に
+      `content` で置いている。書体はヘッダーのロゴと同じ Didot。 */
+body::after {
+    content: "Tilto\B0";
+    z-index: 21;
+    color: #fff;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(34px, 5vw, 92px);
+    font-weight: 500;
+    pointer-events: none;
+    place-items: center;
+    display: grid;
+    position: fixed;
+    inset: 0;
+    animation: introLogo 3.3s both
+}
+
+/* 3.3秒中: 0.3秒はコーラル一色（ロゴなし）→ 0.85秒かけてゆっくり出る →
+   1.72秒まで見せる → 2.0秒で消える（2026-08-24、社長の指示で2回ゆっくりに）。
+   字間の旅は .38em→.24em に縮めた。大きく動くと「演出」に、
+   小さく動くと「上品」に寄る */
+@keyframes introLogo {
+      0%,
+      9% { opacity: 0; letter-spacing: .24em; animation-timing-function: cubic-bezier(.16, .6, .2, 1) }
+     35% { opacity: 1; letter-spacing: -.03em }
+     52% { opacity: 1; letter-spacing: -.03em; animation-timing-function: cubic-bezier(.4, 0, .3, 1) }
+     60%,
+    100% { opacity: 0; letter-spacing: -.05em }
+}
+
+/* 終わったら描画からも完全に外す */
+html.intro-done .site-shell::before,
+html.intro-done .site-shell::after,
+html.intro-done body::after {
+    display: none
+}
+
+/* ?intro=0 で無効化（開発中の確認用） */
+html.no-intro .site-shell::before,
+html.no-intro .site-shell::after,
+html.no-intro body::after {
+    content: none
+}
+
+html.no-intro .ribbon-scene,
+html.no-intro .ribbon-cast-shadow-scene {
+    animation: none
+}
+
+/* 動きを減らす設定のときは、切れ込みも拡大もやらず、コーラルを短くフェードするだけ */
+@media (prefers-reduced-motion: reduce) {
+    .site-shell::before,
+    .site-shell::after,
+    body::after {
+        animation: introFade .35s ease-out both
+    }
+
+    .ribbon-scene,
+    .ribbon-cast-shadow-scene {
+        animation: none
+    }
+}
+
+@keyframes introFade {
+      0% { opacity: 1 }
+    100% { opacity: 0 }
+}
+
+/* SPだけ「つくって終わりにしない。」で改行する。
+   ⚠️ 幅の調整では折れない（2行目が18文字あるので、1行目を12文字で折る幅だと
+      2行目が3行に割れる）。<br> をSSRのHTMLとJSXの両方に入れて、
+      PCでは display:none で無効にしている */
+.lead-br {
+    display: none
+}
+
+/* 「採用サイトの、新しい持ち方。」を縦に潰す（2026-08-24、独自性のため）。
+   **縦横比を×1.18** ＝ 幅はそのままで高さを 1/1.18（.8475）にする。
+
+   ⚠️ `transform` ではなく**単体プロパティ `scale`** を使う。
+      このページは transform を別用途で使う箇所が多く、取り合いを避けるため。
+   ⚠️ 行間はベンダーの 1.15 → 1.24 に広げてある。
+      縦に潰すと行の間も一緒に詰まるので、その分を戻す狙い。
+   ⚠️ 見た目が縮んでも**箱の高さは元のまま**なので、余った分を負のmarginで詰める。
+      余り ＝ (1 - .8475) × 行間 × 行数 ＝ .1525 × 1.24em × 2行 ＝ .378em
+      （行間・行数が変わったら、この値も計算し直すこと） */
+#top h1 {
+    scale: 1 .8475;
+    transform-origin: 50% 0;
+    line-height: 1.24;
+    margin-bottom: -.378em
+}
+
+/* --- 地 --- */
+/* 🔴 hero-canvas は 1674:943 を保つので、横長で背の低い画面では
+   **画面幅より狭くなり、左右に数pxの地が残る**（1500x840で片側4px）。
+   そこが白いままだと「下段帯が右端で切れている」ように見える。
+   shell の地を hero と同じ組み合わせにして、切れ目を消す。 */
+.site-shell {
+    background: radial-gradient(circle at 52% 31%, #ffffffee, #0000 33%), radial-gradient(circle at 7% 23%, #ffe6e880, #0000 26%), linear-gradient(115deg, #fff 0%, #fbfcfd 47%, var(--gray-100) 100%)
+}
+
+/* 元は3段の温かいベージュ。純白→ごく薄いクールグレーに置き換え、
+   左上にだけ Blush Pink を薄く差して、白だけの平板さを避けている */
+.hero-canvas {
+    background: radial-gradient(circle at 52% 31%, #ffffffee, #0000 33%), radial-gradient(circle at 7% 23%, #ffe6e880, #0000 26%), linear-gradient(115deg, #fff 0%, #fbfcfd 47%, var(--gray-100) 100%)
+}
+
+/* --- ヘッダー --- */
+.brand {
+    color: var(--charcoal)
+}
+
+.site-nav a, .site-nav button {
+    color: var(--charcoal)
+}
+
+/* ボードの PRIMARY BUTTON がコーラル塗り＋白文字。行動色はコーラルで統一する。
+   hoverは色反転（地と文字を入れ替える）。白地の上でも輪郭が消えないよう、
+   反転時だけ同色の枠線を内側に敷く */
+.site-nav .header-cta {
+    color: #fff;
+    background: var(--coral);
+    transition: background .22s ease, color .22s ease, box-shadow .22s ease
+}
+
+.site-nav .header-cta:hover {
+    color: var(--coral);
+    background: #fff;
+    box-shadow: inset 0 0 0 1.5px var(--coral)
+}
+
+/* --- 見出しの帯めくり（givee.co.jp の動きを、この配色で） ---
+   givee は「色の違う帯を4枚重ねて、1枚ずつ右へ抜き、最後に文字が出る」作り。
+   実測: 各1秒 / 0.1秒ずらし / cubic-bezier(.19,1,.22,1) / 右端へ幅を詰める。
+   ここでは givee の 白・青・橙・黄 を、この配色の4色に置き換えている。
+
+   🔴 既定は scaleX(0)（＝帯なし）。アニメが動かない環境でも文字が隠れないため。
+      `both` で待機中だけ scaleX(1) になり、文字を覆う。
+   ⚠️ 一番上（DOMの最後）が最初に抜ける。色は
+      淡い→鮮やか→深い→黒 の順に現れ、最後に文字が出る。
+   ⚠️ 行は `white-space:nowrap` の block なので、帯は行の箱にぴったり合う。
+      文字が少しはみ出るぶんだけ inset を負にして覆いきる。 */
+#top h1 span {
+    position: relative
+}
+
+.hl-band {
+    pointer-events: none;
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
+    position: absolute;
+    inset: -.06em -.02em
+}
+
+.hl-band:nth-child(4) { background: var(--blush) }
+.hl-band:nth-child(3) { background: var(--coral) }
+.hl-band:nth-child(2) { background: var(--coral-deep) }
+.hl-band:nth-child(1) { background: var(--charcoal) }
+
+@keyframes hlWipe {
+    from { transform: scaleX(1) }
+    to   { transform: scaleX(0) }
+}
+
+#top h1 span .hl-band {
+    animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
+}
+
+#top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: 2.80s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: 2.91s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: 3.02s }
+#top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: 3.13s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: 2.90s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: 3.01s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: 3.12s }
+#top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: 3.23s }
+
+@media (prefers-reduced-motion: reduce) {
+    #top h1 span .hl-band { animation: none }
+}
+
+/* イントロを出さないときは、見出しもすぐ出す */
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(4) { animation-delay: .30s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(3) { animation-delay: .41s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(2) { animation-delay: .52s }
+html.no-intro #top h1 span:nth-of-type(1) .hl-band:nth-child(1) { animation-delay: .63s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(4) { animation-delay: .40s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(3) { animation-delay: .51s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(2) { animation-delay: .62s }
+html.no-intro #top h1 span:nth-of-type(2) .hl-band:nth-child(1) { animation-delay: .73s }
+
+/* --- 左のコピー --- */
+.eyebrow {
+    color: var(--gray-600)
+}
+
+.eyebrow-line {
+    background: var(--coral)
+}
+
+.eyebrow-dash {
+    background: var(--gray-400)
+}
+
+.hero-copy h1 {
+    color: var(--charcoal)
+}
+
+.hero-copy h1 .accent {
+    color: var(--coral)
+}
+
+.service-chip {
+    color: #fff;
+    background: var(--charcoal)
+}
+
+.service-chip b {
+    color: var(--coral)
+}
+
+/* --- 赤いリボン（SVG。WebGLの帯ではない） ---
+   元は茶寄りの赤（#8d2c20→#bd5238）。コーラルの階調に置き換える。
+   stop-color は presentation attribute なので、CSSから上書きできる */
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(1) {
+    stop-color: var(--coral-deep)
+}
+
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(2) {
+    stop-color: var(--coral)
+}
+
+.upper-red-ribbon #upperRibbonRed stop:nth-of-type(3) {
+    stop-color: #ff8a7d
+}
+
+.upper-red-ribbon {
+    filter: drop-shadow(0 2px 3px #ff4d4f1f)
+}
+
+/* --- 帯の影だけ寒色へ（帯そのものは無変更） ---
+   元の #1d1612xx は茶。純白の地では黄ばんで見える。濃さ（アルファ）は元のまま */
+.webgl-film {
+    filter: drop-shadow(4px 6px 4px #1113171f) drop-shadow(12px 16px 11px #1113172b) drop-shadow(32px 42px 42px #11131736)
+}
+
+.webgl-film--upper {
+    filter: drop-shadow(4px 6px 4px #11131721) drop-shadow(11px 15px 10px #1113172e) drop-shadow(30px 40px 40px #1113173b)
+}
+
+.webgl-film--lower {
+    filter: drop-shadow(3px 6px 4px #1113171c) drop-shadow(10px 17px 12px #11131729) drop-shadow(27px 43px 44px #11131736)
+}
+
+/* --- 料金帯：コーラルの地に白抜き --- */
+/* 左右の余白をそろえる。「01 月額」の左とCTAの右を同じ 3.88cqw に。
+   3.88% は `.hero-copy` の left と同じ値なので、見出し「採用サイトの、」と
+   「01 月額」が縦に揃う。
+   ⚠️ ベンダーは1枚目だけ padding-left:7.3cqw（=109px）、CTAの右は 1.7cqw（=25px）で
+      左右が4倍以上ずれていた */
+.price-card:first-child {
+    padding-left: 3.88cqw
+}
+
+.pricing-strip {
+    height: 23%;
+    /* CTAの列を広げる（ボタンの見た目の幅で +20%）。
+       列は 20.3% → 23.28%。他の3列は 0.9626倍して合計100%を保つ。
+       ⚠️ CTA列の中には左右のpadding（1.7cqw + 3.88cqw）があるので、
+          列を20%広げるとボタンは27%広くなる。ボタン基準で逆算した値がこれ */
+    grid-template-columns: 30.07% 21.89% 22.12% 25.92%
+}
+
+/* 数字だけ少し大きく。単位（円〜・社1設計）と注記はそのまま */
+.price-value strong {
+    font-size: 4.62cqw
+}
+
+.price-value--ink strong {
+    font-size: 4.92cqw
+}
+
+.price-value {
+    height: 6.1cqw
+}
+
+/* ⚠️ ほんの少しだけ透ける（.93）。帯は z-index:3、料金帯は 6 なので、
+   真下を流れる帯がうっすら見える。1.0にすると板に見え、下げすぎると文字が読めない */
+.pricing-strip {
+    background: rgba(255, 77, 79, .93);
+    border-top: 0
+}
+
+.price-card {
+    border-left: 1px solid #ffffff40
+}
+
+.price-label {
+    color: #ffffffe6
+}
+
+.price-value {
+    color: #fff
+}
+
+.price-value small {
+    color: #ffffffcc
+}
+
+.price-value--ink {
+    color: #fff
+}
+
+.price-note {
+    color: #ffffffe6
+}
+
+/* 地がコーラルになったので、CTAはコーラルでは沈む。
+   主CTA＝黒ベタ／副CTA＝白の輪郭、で序列をつける */
+.pricing-cta {
+    color: #fff;
+    background: 0 0;
+    grid-template-rows: 1fr 1fr;
+    gap: .75cqw;
+    padding: 1.15cqw 3.88cqw 1.15cqw 1.7cqw
+}
+
+.pricing-cta-main {
+    background: var(--charcoal);
+    border-bottom: 0;
+    padding: 0 1.5cqw;
+    transition: background .22s ease, color .22s ease
+}
+
+.pricing-cta-main:hover {
+    color: var(--charcoal);
+    background: #fff
+}
+
+.pricing-cta-sub {
+    color: #fff;
+    border: 1px solid #ffffff8c;
+    padding: 0 1.5cqw;
+    transition: background .22s ease, color .22s ease, border-color .22s ease
+}
+
+/* ベンダーの `.pricing-cta:hover { box-shadow: 白の内枠 }` を打ち消す（反転と混ざるため） */
+.pricing-cta:hover {
+    box-shadow: none
+}
+
+/* 副CTAは「コーラル地に白」の反転＝白地にコーラル */
+.pricing-cta-sub:hover {
+    color: var(--coral);
+    background: #fff;
+    border-color: #fff
+}
+
+
+
+.site-nav a:focus-visible, .site-nav button:focus-visible, .pricing-cta:focus-visible {
+    outline: 3px solid var(--coral-deep)
+}
+
+
+/* ============================================================
+   SP（700px以下）— 社長のモックに合わせた縦積み（2026-08-24）
+   ロゴ → 中央寄せのコピー → CTA2本 → 帯（大きめ・全幅） → SCROLL → 料金3枚縦積み
+
+   🔴 DOMは変えられない（Reactがhydrateする）ので、並び替えは
+      `.pricing-strip { display: contents }` ＋ flexの `order` でやる。
+      contents にすると料金3枚とCTAが .hero-canvas の直接の子として並び、
+      「CTAは帯の上、料金は帯の下」に分けて置ける。
+   ⚠️ 帯の描画領域は 150vw × 84.5vw（比1.775＝PCと同じ）。
+      比を変えると絵が縦横に潰れるので、大きくするときは両方を同じ倍率で。
+   ⚠️ 影用のcanvasはSPでは切る（画面が小さく効果が薄いわりにGPUを食う）。
+   ============================================================ */
+@media (max-width: 700px) {
+    /* 🔴 ベンダーの `body { overflow:hidden }` がスクロールを殺す。
+       PCは中身が画面ぴったりなので無害だったが、SPは縦に伸びるので閉じ込められる。
+       ⚠️ ここに `overflow-x: hidden` を書かない。片方の軸だけ切ると
+          もう片方が `auto` に計算され、body がスクロール容器になって
+          sticky が壊れる。横の切りは `.site-shell { overflow-x: clip }` に一本化した */
+    html,
+    body {
+        height: auto
+    }
+
+    .site-shell {
+        height: auto;
+        min-height: 100svh;
+        display: block;
+        overflow: visible
+    }
+
+    .hero-canvas {
+        aspect-ratio: auto;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        display: flex;
+        /* 同じ理由で hidden ではなく clip（スクロール容器を作らない） */
+        overflow-x: clip;
+        overflow-y: visible
+    }
+
+    /* ヘッダー: ロゴだけ。ナビは行き先がまだ無く、ハンバーガーは実体が無いので置かない */
+    .site-header {
+        position: relative;
+        inset: auto;
+        order: 0;
+        height: auto;
+        padding: 18px 20px 0
+    }
+
+    /* SPでは元のナビを丸ごと隠す。開閉メニューは sp-menu.bed4fc14.js が別に作る。
+       🔴 `.site-nav` の中の「カタログ」ボタンは React が onClick を持つ
+          （帯の停止）ので、動かさず隠すだけにする */
+    .site-nav {
+        display: none
+    }
+
+    .brand {
+        font-size: 30px
+    }
+
+    /* コピー: 中央寄せ */
+    #top.hero-copy {
+        position: relative;
+        inset: auto;
+        order: 1;
+        width: auto;
+        margin: 40px 22px 0;
+        text-align: center
+    }
+
+    /* モックに無いので出さない。見出しの前に小さな英字が挟まると、
+       スマホの狭い幅では主役（見出し）に入るまでが遠くなる */
+    .eyebrow {
+        display: none
+    }
+
+    /* ⚠️ 行末が「、」「。」なので、中央揃えだと**左に寄って見える**。
+       約物の幅（半角ぶん）を打ち消す量だけ右へ送る（2026-08-24、社長の指摘）。
+       3.2vw では足りず 5.6vw まで送った（＝375px幅で21px） */
+    #top h1 {
+        white-space: normal;
+        /* ⚠️ px指定なので画面幅が変わっても字間は一定。
+           em（-.05em＝43.5px時に-2.18px）から社長の指定値に変えた */
+        letter-spacing: -1.15px;
+        /* ⚠️ 縦圧縮の詰め量は行間で変わる。SPは 1.40em × 2行 × .1525 ＝ .427em */
+        margin: 16px 0 -.427em;
+        padding-left: 5.6vw;
+        font-size: 11.6vw;
+        line-height: 1.4
+    }
+
+    /* 「つくって終わりにしない。」で必ず改行する。
+       ⚠️ DOMを足せない（React）ので <br> は入れられない。
+          `max-width` で成り行き折り返しにすると端末幅で崩れるため、
+          句点のうしろに改行の機会を作る手が要る。
+          → 全体を inline-block の2段組にはできないので、
+            「幅を文の前半にぴたり合わせる」= 21文字ぶんの幅にして確実に折る */
+    .lead {
+        white-space: normal;
+        text-align: center;
+        margin: 16px auto 0;
+        font-size: 14.5px;
+        line-height: 1.9
+    }
+
+    .lead-br {
+        display: inline
+    }
+
+    /* モックではチップは黒い箱ではなく素のテキスト */
+    .service-chip {
+        color: var(--charcoal);
+        letter-spacing: .04em;
+        background: none;
+        margin: 18px auto 0;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 700
+    }
+
+    /* 料金の器をばらして並び替える */
+    .pricing-strip {
+        display: contents
+    }
+
+    /* CTA2本: コピーの下 */
+    /* モックより広すぎたので絞る。見出しの実測幅とそろえる */
+    .pricing-cta {
+        order: 2;
+        flex-direction: column;
+        gap: 11px;
+        width: min(78%, 300px);
+        margin: 26px auto 6px;
+        padding: 0;
+        display: flex
+    }
+
+    /* モックに合わせる: 文字は中央、矢印だけ右端。字体はゴシック。
+       ⚠️ PCは明朝＋両端寄せのままなので、ここはSP限定 */
+    .pricing-cta-main,
+    .pricing-cta-sub {
+        border-radius: 8px;
+        justify-content: center;
+        font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+        font-weight: 600;
+        letter-spacing: .02em;
+        min-height: 54px;
+        padding: 0 18px;
+        font-size: 15.5px;
+        position: relative
+    }
+
+    .pricing-cta-main b,
+    .pricing-cta-sub b {
+        font-size: 17px;
+        font-weight: 400;
+        position: absolute;
+        right: 18px
+    }
+
+    /* 🔴 副CTAの矢印はSSRでは「↘」。SPでは主とそろえて右上向きにする。
+       文字そのものを差し替えられない（Reactが持っている）ので、
+       元の字を消して ::after で「↗」を描く */
+    .pricing-cta-sub b {
+        text-indent: -9999px;
+        overflow: hidden;
+        width: 1em
+    }
+
+    .pricing-cta-sub b::after {
+        content: "↗";
+        text-indent: 0;
+        float: left
+    }
+
+    /* モックどおり: 主CTAはコーラル、副CTAは明るい地に黒の輪郭 */
+    .pricing-cta-main {
+        background: var(--coral)
+    }
+
+    .pricing-cta-sub {
+        color: var(--charcoal);
+        background: #fff;
+        border: 1.5px solid #11131766
+    }
+
+    /* 帯: 全幅より大きく描いて左右をトリミング */
+    /* 帯の絵は右側に寄っているので、箱を左へずらして左の余白を消す。
+       ⚠️ 175vw の箱を -37.5vw に置くと左右が均等（＝絵は右寄りに見える）。
+          -52vw で絵の左端が画面の左に着き、-64vw でさらに食い込ませている
+          （2026-08-24、社長の「もう少しさらに左に」） */
+    .ribbon-scene {
+        position: relative;
+        inset: auto;
+        order: 3;
+        width: 175vw;
+        height: 98.6vw;
+        margin: 10px 0 0 -64vw
+    }
+
+    .ribbon-cast-shadow-scene {
+        display: none
+    }
+
+    /* SCROLL（.pricing-strip の擬似要素。contents でも箱として出る）
+       ::before＝コーラルの山型（∨）、::after＝文字。orderで帯の直後に並べる */
+    /* 山型（∨）。ゆっくり上下に揺れて「下へ」を示す。
+       ⚠️ `transform` は rotate(45deg) を持っているので、揺れは
+          **単体プロパティ `translate`** で足す（取り合いにならない）。
+       ⚠️ margin-top は「帯の下端から山型の上端まで＝実測25px」になる値。
+          帯の絵は下側に透明な余白を持つので、箱どおりだと空きすぎる */
+    .pricing-strip::before {
+        content: "";
+        border-right: 2px solid var(--coral);
+        border-bottom: 2px solid var(--coral);
+        transform: rotate(45deg);
+        order: 4;
+        width: 11px;
+        height: 11px;
+        margin: -37px auto 2px;
+        animation: scrollNudge 1.9s ease-in-out infinite
+    }
+
+    @keyframes scrollNudge {
+          0%,
+         72%,
+        100% { translate: 0 0 }
+         28% { translate: 0 7px }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pricing-strip::before { animation: none }
+    }
+
+    .pricing-strip::after {
+        content: "SCROLL";
+        color: var(--charcoal);
+        letter-spacing: .3em;
+        text-align: center;
+        order: 4;
+        margin: 6px auto 26px;
+        font-size: 11px;
+        font-weight: 700
+    }
+
+    /* 料金3枚: 縦積みのコーラルカード */
+    .price-card {
+        background: rgba(255, 77, 79, .93);
+        border-left: 0;
+        border-top: 1px solid #ffffff40;
+        order: 5;
+        width: 100%;
+        padding: 22px 26px 26px
+    }
+
+    .price-label {
+        font-size: 12px
+    }
+
+    .price-label span {
+        margin-right: 12px;
+        font-size: 12px
+    }
+
+    .price-value {
+        height: auto;
+        margin: 8px 0 0
+    }
+
+    .price-value strong {
+        font-size: 44px
+    }
+
+    .price-value--ink strong {
+        font-size: 46px
+    }
+
+    .price-value span {
+        margin-left: 8px;
+        font-size: 14px
+    }
+
+    .price-value small {
+        font-size: 10px
+    }
+
+    .price-note {
+        white-space: normal;
+        margin: 10px 0 0;
+        font-size: 12px;
+        line-height: 1.8
+    }
+
+    .price-value {
+        white-space: normal
+    }
+
+    /* 位置合わせ用の変数はPCのレイアウト前提なのでゼロに */
+    .hero-canvas {
+        --ribbon-drop: 0px;
+        --lower-drop: 0px;
+        --ribbon-shift-x: 0px
+    }
+
+    /* イントロ: 縦長ページに切れ込み演出は合わないので、ロゴ→フェードだけに */
+    .site-shell::before,
+    .site-shell::after {
+        animation: introFade .6s ease-out 1.9s both
+    }
+
+    body::after {
+        font-size: 44px
+    }
+}
+
+
+/* ============================================================
+   SPのメニュー（2026-08-24）。DOMは sp-menu.bed4fc14.js が load 後に足す。
+   ⚠️ 700px以下でだけ出す。PCには一切出さない（display:none）
+   ============================================================ */
+.sp-menu-toggle,
+.sp-menu {
+    display: none
+}
+
+@media (max-width: 700px) {
+    /* --- 三本線のボタン --- */
+    .sp-menu-toggle {
+        z-index: 32;
+        background: none;
+        border: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7px;
+        width: 44px;
+        height: 30px;
+        padding: 0;
+        display: flex;
+        /* ⚠️ ヘッダーの子ではなく body 直下（Reactに消されないため）なので、
+           画面基準で置く。ヘッダーのロゴと高さをそろえてある */
+        position: fixed;
+        top: 16px;
+        right: 20px
+    }
+
+    .sp-menu-toggle i {
+        background: var(--charcoal);
+        width: 34px;
+        height: 2px;
+        margin-left: auto;
+        display: block;
+        transition: transform .34s cubic-bezier(.2, .8, .2, 1),
+                    opacity .2s ease,
+                    background-color .34s ease
+    }
+
+    /* 開いているあいだは地がコーラルなので、線は白に。
+       上下の線を中央へ寄せてXにし、真ん中は消す */
+    html.sp-menu-open .sp-menu-toggle i {
+        background: #fff
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:first-child {
+        transform: translateY(9px) rotate(45deg)
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:nth-child(2) {
+        opacity: 0
+    }
+
+    html.sp-menu-open .sp-menu-toggle i:last-child {
+        transform: translateY(-9px) rotate(-45deg)
+    }
+
+    /* --- 開くパネル --- */
+    .sp-menu {
+        z-index: 31;
+        background: var(--coral);
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 30px;
+        display: flex;
+        position: fixed;
+        inset: 0;
+        opacity: 0;
+        transform: translateY(-14px);
+        transition: opacity .34s ease, transform .34s cubic-bezier(.2, .8, .2, 1);
+        pointer-events: none
+    }
+
+    html.sp-menu-open .sp-menu {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto
+    }
+
+    .sp-menu__nav {
+        flex-direction: column;
+        display: flex
+    }
+
+    .sp-menu__nav a {
+        color: #fff;
+        border-bottom: 1px solid #ffffff45;
+        align-items: baseline;
+        gap: 16px;
+        padding: 22px 2px;
+        font-size: 21px;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        /* 1つずつ遅れて出す。開いたときだけ動かす */
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .3s ease, transform .3s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .sp-menu__nav a b {
+        color: #ffffffa8;
+        letter-spacing: .1em;
+        font-family: Didot, "Bodoni 72", Times New Roman, serif;
+        font-size: 13px;
+        font-weight: 500
+    }
+
+    html.sp-menu-open .sp-menu__nav a { opacity: 1; transform: none }
+    html.sp-menu-open .sp-menu__nav a:nth-child(1) { transition-delay: .10s }
+    html.sp-menu-open .sp-menu__nav a:nth-child(2) { transition-delay: .16s }
+    html.sp-menu-open .sp-menu__nav a:nth-child(3) { transition-delay: .22s }
+
+    /* 白抜きのCTA。地がコーラルなので、反転で最も目立つ */
+    .sp-menu__cta {
+        color: var(--coral);
+        background: #fff;
+        border-radius: 8px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        min-height: 56px;
+        margin: 34px 0 0;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .3s ease, transform .3s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    html.sp-menu-open .sp-menu__cta {
+        opacity: 1;
+        transform: none;
+        transition-delay: .3s
+    }
+
+    /* 開いているあいだは後ろを動かさない */
+    html.sp-menu-open,
+    html.sp-menu-open body {
+        overflow: hidden
+    }
+
+    /* パネル内のロゴ。ヘッダーのロゴはパネルの下に隠れる（重なり文脈の都合）ので、
+       同じ位置に白いロゴを置いて、開いてもロゴが消えないようにする */
+    .sp-menu__brand {
+        color: #fff;
+        letter-spacing: -.045em;
+        font-family: Didot, "Bodoni 72", Times New Roman, serif;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        position: absolute;
+        top: 18px;
+        left: 20px
+    }
+
+    /* ⚠️ ベンダーCSSの `.brand sup` は position:absolute を持つが、
+       ここは別クラスなので効かない。素の <sup> は行の上へ飛び出すので、
+       baseline 基準に戻してから持ち上げる */
+    .sp-menu__brand sup {
+        vertical-align: baseline;
+        margin-left: .06em;
+        font-size: .62em;
+        position: relative;
+        top: -.62em
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sp-menu,
+    .sp-menu__nav a,
+    .sp-menu__cta,
+    .sp-menu-toggle i {
+        transition-duration: .01ms
+    }
+}
+
+/* 「採用コンサルタント × AI × Web制作」の黒帯を少し低く（2026-08-24、社長の指示）。
+   上下の余白だけ詰める。左右と文字の大きさはそのまま。
+   高さ 44px → 30px（基準1440px幅のとき）。
+   ⚠️ 単位は cqw のまま。FV全体が cqw で組まれているので、px固定にすると
+      画面幅を変えたときにここだけ比率が崩れる。
+   ⚠️ SPではこのチップは黒帯ではなく素のテキストなので、この指定は当たらない */
+.service-chip {
+    padding-top: .29cqw;
+    padding-bottom: .31cqw
+}
+
+/* ============================================================
+   04 体験「その『なんとなく』から、つくります。」（2026-08-26）
+
+   v3 `#process` のコピーと骨格を引き継ぐ。ただし**墨画像5枚 1.2MB は持ち込まない**
+   （配信量を976KBに保つため）。漂う言葉が中央へ寄って像を結ぶ、という体験だけ移す。
+
+   ⚠️ 進行の合図は **`<html>` のクラス**で持つ。節の要素に付けると、
+      FVの「カタログ」ボタンで React が再描画したときに消される
+      （React が className を管理しているため）。
+   ============================================================ */
+.experience {
+    background: var(--paper);
+    padding: clamp(96px, 12vw, 200px) 0 clamp(96px, 12vw, 200px);
+    position: relative;
+    overflow: hidden
+}
+
+/* --- 漂う言葉 --- */
+.exp-cloud {
+    pointer-events: none;
+    position: absolute;
+    inset: clamp(40px, 5vw, 90px) clamp(16px, 4vw, 90px);
+    /* ⚠️ 演出なしのときは14語が全部くっきり出て、中央の文と重なって読みにくい。
+       地の模様として薄く敷く。演出があるときは下で1に戻す */
+    opacity: .42;
+    transition: scale 1.15s cubic-bezier(.22, 1, .36, 1), opacity .9s ease
+}
+
+html.exp-anim.exp-in .exp-cloud {
+    opacity: 1
+}
+
+.exp-thought {
+    color: #b6afa6;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    position: absolute;
+    translate: -50% -50%;
+    rotate: var(--tilt);
+    /* 出るときは各語がばらばらに、寄るときは揃って。遅延は下で配る */
+    transition: opacity .9s ease, translate 1.15s cubic-bezier(.22, 1, .36, 1),
+                filter .9s ease, color .9s ease
+}
+
+.exp-thought--1 { font-size: clamp(11px, 1.05vw, 15px) }
+.exp-thought--2 { font-size: clamp(12px, 1.28vw, 19px) }
+.exp-thought--3 { font-size: clamp(13px, 1.55vw, 23px) }
+
+/* 🔴 隠すのは `html.exp-anim` が付いたときだけ。
+   付かない（JSが動かない／動きを減らす設定）ときは素で読める */
+html.exp-anim .exp-thought {
+    opacity: 0
+}
+
+/* ① 節が見えたら、ばらばらに浮かび上がる */
+html.exp-anim.exp-in .exp-thought {
+    opacity: 1
+}
+
+/* ② さらに読み進めると、中央へ寄って薄まる＝像を結ぶ手前 */
+html.exp-anim.exp-gather .exp-thought {
+    color: #d8d2ca;
+    translate: calc(-50% + (50% - 1px) * 0) calc(-50% + 0px);
+    opacity: .5;
+    filter: blur(1.5px)
+}
+
+/* 中央へ寄せるのは個別にやる（left/top が要素ごとに違うため、
+   共通の translate では寄らない）。scale で全体を縮めて中央に集める */
+html.exp-anim.exp-gather .exp-cloud {
+    scale: .72;
+    transition: scale 1.15s cubic-bezier(.22, 1, .36, 1)
+}
+
+/* 出の遅延を配る。14語がいっせいに出ると「点滅」に見える */
+.exp-thought:nth-child(1)  { transition-delay: .00s }
+.exp-thought:nth-child(2)  { transition-delay: .07s }
+.exp-thought:nth-child(3)  { transition-delay: .14s }
+.exp-thought:nth-child(4)  { transition-delay: .21s }
+.exp-thought:nth-child(5)  { transition-delay: .28s }
+.exp-thought:nth-child(6)  { transition-delay: .35s }
+.exp-thought:nth-child(7)  { transition-delay: .42s }
+.exp-thought:nth-child(8)  { transition-delay: .49s }
+.exp-thought:nth-child(9)  { transition-delay: .56s }
+.exp-thought:nth-child(10) { transition-delay: .63s }
+.exp-thought:nth-child(11) { transition-delay: .70s }
+.exp-thought:nth-child(12) { transition-delay: .77s }
+.exp-thought:nth-child(13) { transition-delay: .84s }
+.exp-thought:nth-child(14) { transition-delay: .91s }
+
+/* 寄せるときは遅延を消して、揃って動かす */
+html.exp-anim.exp-gather .exp-thought {
+    transition-delay: 0s
+}
+
+/* --- 中央のことば --- */
+.exp-center {
+    text-align: center;
+    position: relative;
+    z-index: 1
+}
+
+.exp-step {
+    color: var(--coral);
+    letter-spacing: .06em;
+    margin: clamp(22px, 2.2vw, 34px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, 1.1vw, 16px);
+    font-style: normal;
+    font-weight: 600;
+    display: block
+}
+
+.exp-en {
+    color: #a49c92;
+    letter-spacing: .18em;
+    margin: clamp(10px, 1vw, 15px) 0 0;
+    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif;
+    display: block
+}
+
+.exp-title {
+    color: #0a0a09;
+    letter-spacing: -.03em;
+    margin: clamp(20px, 2vw, 32px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(27px, 4.1vw, 62px);
+    font-weight: 600;
+    line-height: 1.5
+}
+
+.exp-title em {
+    color: var(--coral);
+    font-style: normal
+}
+
+/* 中央のことばは、言葉が寄ってから像を結ぶ */
+.exp-center .sec-label,
+.exp-step,
+.exp-en,
+.exp-title,
+.exp-body {
+    transition: opacity .8s ease, translate .8s cubic-bezier(.22, 1, .36, 1)
+}
+
+html.exp-anim .exp-center .sec-label,
+html.exp-anim .exp-step,
+html.exp-anim .exp-en,
+html.exp-anim .exp-title,
+html.exp-anim .exp-body {
+    opacity: 0;
+    translate: 0 14px
+}
+
+.exp-center .sec-label {
+    justify-content: center
+}
+
+html.exp-anim.exp-gather .exp-center .sec-label { opacity: 1; translate: 0; transition-delay: .10s }
+html.exp-anim.exp-gather .exp-step             { opacity: 1; translate: 0; transition-delay: .18s }
+html.exp-anim.exp-gather .exp-en               { opacity: 1; translate: 0; transition-delay: .24s }
+html.exp-anim.exp-gather .exp-title            { opacity: 1; translate: 0; transition-delay: .32s }
+html.exp-anim.exp-gather .exp-body             { opacity: 1; translate: 0; transition-delay: .46s }
+
+.exp-body {
+    color: #56534e;
+    max-width: 34em;
+    margin: clamp(20px, 2vw, 32px) auto 0;
+    font-size: clamp(12.5px, 1.05vw, 15.5px);
+    line-height: 2.1
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-thought,
+    .exp-cloud,
+    .exp-center .sec-label,
+    .exp-step,
+    .exp-en,
+    .exp-title,
+    .exp-body {
+        transition-duration: .01ms
+    }
+}
+
+@media (max-width: 700px) {
+    .experience {
+        padding: 74px 0
+    }
+
+    /* ⚠️ 狭い画面では言葉が中央の文と重なって読めない。
+       数を減らし、さらに**上下の帯だけ**に追いやる（中央は空ける）。
+       薄さも上げる */
+    .exp-thought:nth-child(n+9) {
+        display: none
+    }
+
+    .exp-cloud {
+        opacity: .3
+    }
+
+    .exp-thought {
+        font-size: 11px !important
+    }
+
+    /* 上半分の語は上へ、下半分の語は下へ寄せる */
+    .exp-thought:nth-child(-n+4) {
+        top: 4% !important
+    }
+
+    .exp-thought:nth-child(n+5) {
+        top: 94% !important
+    }
+
+    .exp-title {
+        font-size: 25px;
+        line-height: 1.62
+    }
+
+    .exp-body {
+        font-size: 13px
+    }
+}
+
+/* ============================================================
+   05 表現ショールーム（2026-08-26）
+
+   v3 `#expression` の作例35件・分類・骨格を利用。
+   🔴 **一覧＝アトラス1枚（663KB）/ 拡大＝押した1枚だけ個別に取りに行く。**
+      個別35枚をそのまま並べると初回に3.95MB読む。押さない人は1枚も余計に読まない。
+   ⚠️ アトラスは `background-position` で切り出す。カードは `<button>` のままなので、
+      **クリック・hover・キーボード操作は普通のHTMLと同じ**。
+   ⚠️ 6列6行なので `background-size: 600% 600%`、位置は `k/(6-1) × 100%` 刻み。
+      列数を変えたらこの2つを両方直す（`docs/build-showroom-atlas.py` が値を出す）。
+   ============================================================ */
+.showcase {
+    background: #f4f1ec;
+    justify-self: stretch;
+    width: auto;
+    padding: clamp(78px, 9vw, 150px) 0 clamp(84px, 9.5vw, 158px);
+    overflow: hidden
+}
+
+.sw-lead {
+    max-width: 40em
+}
+
+/* --- 分類の切り替え --- */
+.sw-filters {
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: clamp(24px, 2.6vw, 40px) 0 0;
+    display: flex
+}
+
+.sw-filters button {
+    color: #56534e;
+    cursor: pointer;
+    background: #0000;
+    border: 1px solid #d5d0c8;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: clamp(11px, .86vw, 13px);
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease
+}
+
+.sw-filters button:hover {
+    border-color: var(--coral);
+    color: var(--coral)
+}
+
+.sw-filters button[aria-pressed="true"] {
+    color: #fff;
+    background: var(--charcoal);
+    border-color: var(--charcoal)
+}
+
+/* --- 流れる2レーン --- */
+.sw-marquee {
+    gap: clamp(26px, 3vw, 46px);
+    margin: clamp(30px, 3.4vw, 54px) 0 0;
+    display: grid
+}
+
+.sw-lane {
+    overflow: hidden
+}
+
+.sw-track {
+    --sw-gap: clamp(18px, 1.8vw, 30px);
+    align-items: flex-start;
+    gap: var(--sw-gap);
+    width: max-content;
+    display: flex;
+    animation: swLeft 62s linear infinite
+}
+
+.sw-lane--2 .sw-track {
+    animation-name: swRight;
+    animation-duration: 74s
+}
+
+.sw-group {
+    gap: var(--sw-gap);
+    flex: none;
+    display: flex
+}
+
+@keyframes swLeft {
+      0% { translate: 0 }
+    100% { translate: calc(-50% - var(--sw-gap) / 2) }
+}
+
+@keyframes swRight {
+      0% { translate: calc(-50% - var(--sw-gap) / 2) }
+    100% { translate: 0 }
+}
+
+/* どれかに触れているあいだは止める。読ませたいので */
+.sw-lane:hover .sw-track,
+.sw-lane:focus-within .sw-track {
+    animation-play-state: paused
+}
+
+/* --- 1件のカード --- */
+.sw-item {
+    text-align: left;
+    cursor: pointer;
+    background: #0000;
+    border: 0;
+    flex: none;
+    flex-direction: column;
+    gap: 9px;
+    width: var(--sw-w, clamp(300px, 30vw, 460px));
+    padding: 0;
+    display: flex;
+    rotate: var(--sw-rot, 0deg);
+    transition: opacity .28s ease, translate .4s cubic-bezier(.2, .8, .2, 1)
+}
+
+.sw-item--wide    { --sw-w: clamp(360px, 36vw, 560px); --sw-rot: -.9deg }
+.sw-item--compact { --sw-w: clamp(260px, 24vw, 370px); --sw-rot: 1.05deg }
+.sw-item--tall    { --sw-w: clamp(290px, 27vw, 410px); --sw-rot: -1.35deg }
+.sw-item--medium  { --sw-w: clamp(320px, 30vw, 450px); --sw-rot: .65deg }
+
+.sw-meta {
+    color: #a49c92;
+    letter-spacing: .12em;
+    align-items: baseline;
+    gap: 9px;
+    font: 700 clamp(8.5px, .7vw, 10px)/1 Arial, sans-serif;
+    display: flex
+}
+
+.sw-meta b {
+    color: #56534e;
+    letter-spacing: .04em;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+    font-size: clamp(10px, .8vw, 11.5px)
+}
+
+/* 🔴 ここがアトラスの切り出し。要素は普通の span なので当たり判定は変わらない */
+.sw-visual {
+    aspect-ratio: 3/2;
+    background-image: url("../images/showroom-atlas.webp");
+    background-size: 600% 600%;
+    background-repeat: no-repeat;
+    border: 1px solid #dbd5cc;
+    width: 100%;
+    display: block;
+    box-shadow: 6px 9px 20px #32271a1f;
+    transition: box-shadow .4s ease, filter .4s ease
+}
+
+.sw-item:hover .sw-visual,
+.sw-item:focus-visible .sw-visual {
+    filter: saturate(1.06);
+    box-shadow: 10px 16px 32px #32271a2e
+}
+
+.sw-item:hover,
+.sw-item:focus-visible {
+    translate: 0 -6px
+}
+
+.sw-view {
+    color: #a49c92;
+    align-items: center;
+    gap: 5px;
+    font-size: clamp(10px, .78vw, 11.5px);
+    display: flex;
+    transition: color .25s ease
+}
+
+.sw-view i {
+    color: var(--coral);
+    font-style: normal
+}
+
+.sw-item:hover .sw-view {
+    color: var(--coral)
+}
+
+/* 分類で絞ったとき。消さずに薄くして流れを保つ手もあるが、
+   数が多いと読めないので出し入れする */
+.sw-item[data-off="1"] {
+    display: none
+}
+
+/* --- 拡大（ライトボックス）。押した1枚だけを取りに行く --- */
+.sw-box {
+    z-index: 20000;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    background: #0f0d0ce8;
+    place-items: center;
+    padding: clamp(16px, 4vw, 56px);
+    display: grid;
+    position: fixed;
+    inset: 0;
+    animation: swFade .24s ease both
+}
+
+@keyframes swFade {
+      0% { opacity: 0 }
+    100% { opacity: 1 }
+}
+
+.sw-box__inner {
+    width: min(1220px, 94vw);
+    position: relative
+}
+
+.sw-box__inner img {
+    object-fit: contain;
+    background: #0d0c0b;
+    width: 100%;
+    max-height: calc(92vh - 48px);
+    display: block;
+    box-shadow: 0 30px 90px #00000080
+}
+
+.sw-box__meta {
+    color: #f2ece3;
+    letter-spacing: .14em;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    height: 34px;
+    font: 700 9px/1 Arial, sans-serif;
+    display: flex
+}
+
+.sw-box__meta b {
+    color: var(--coral)
+}
+
+.sw-box__meta em {
+    color: #ffffff8a;
+    letter-spacing: .02em;
+    flex: 1;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: right
+}
+
+.sw-box__close {
+    color: #1c1a18;
+    letter-spacing: .12em;
+    cursor: pointer;
+    background: #f8f3eb;
+    border: 0;
+    padding: 10px 13px;
+    font: 700 9px/1 Arial, sans-serif;
+    position: absolute;
+    top: 44px;
+    right: 8px
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sw-track {
+        animation: none
+    }
+
+    .sw-box {
+        animation: none
+    }
+}
+
+@media (max-width: 700px) {
+    .showcase {
+        padding: 62px 0 66px
+    }
+
+    .sw-item--wide    { --sw-w: 76vw }
+    .sw-item--compact { --sw-w: 60vw }
+    .sw-item--tall    { --sw-w: 64vw }
+    .sw-item--medium  { --sw-w: 70vw }
+
+    .sw-filters {
+        gap: 6px
+    }
+
+    .sw-box__close {
+        top: 40px;
+        right: 6px
+    }
+}
+
+/* ============================================================
+   06 成果にこだわる（設計図オービット）（2026-08-26）
+
+   v3 `#strategy` をそのまま利用。**描画は `assets/bim.js`（無改造でコピー）**。
+   Canvas 2Dの自前平行投影で、完成した採用サイトが4枚の設計シートに分解されていく。
+
+   🔴 **節を画面より十分高くすること。** `bim.js` は
+      `section.offsetHeight > innerHeight * 1.25` でスクロール送りかどうかを判断し、
+      満たさないと「一度だけ組み上げて終わり」に落ちる。
+   ⚠️ 確認用に `#bim=0.45` をURLに付けると、その進行度で固定描画できる
+      （ヘッドレスはスクロール位置を持てないので、これで撮る）。
+   ============================================================ */
+.bim-transition {
+    background: #fdfcf9;
+    border-top: 1px solid #d5d0c8;
+    border-bottom: 1px solid #d5d0c8;
+    justify-self: stretch;
+    width: auto;
+    height: 320vh;
+    min-height: 2100px;
+    position: relative
+}
+
+.bim-sticky {
+    /* 上は固定ヘッダーが無いので、v3より詰めてよい */
+    flex-direction: column;
+    height: 100vh;
+    min-height: 560px;
+    padding: clamp(64px, 8vh, 96px) 5vw clamp(16px, 2.4vh, 26px);
+    display: flex;
+    position: sticky;
+    top: 0;
+    overflow: hidden
+}
+
+.bim-head {
+    z-index: 2;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 26px;
+    /* ⚠️ 見出しは他の節と同じ1080pxの帯に揃える（実測: これが無いと左右72pxで
+       他の節の180pxとずれる）。図（canvas）は sticky 全面のままでよい */
+    width: min(1080px, 84vw);
+    margin-inline: auto;
+    display: flex;
+    position: relative
+}
+
+.bim-head small {
+    color: var(--coral);
+    letter-spacing: .2em;
+    font: 700 clamp(9px, .74vw, 11px)/1 Arial, sans-serif
+}
+
+.bim-head h2 {
+    color: #1c1a17;
+    letter-spacing: .01em;
+    margin: clamp(8px, 1.4vh, 14px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(24px, 2.7vw, 42px);
+    font-weight: 600;
+    line-height: 1.45
+}
+
+.bim-lead {
+    color: #5c554b;
+    letter-spacing: .04em;
+    text-align: right;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, .88vw, 13px);
+    line-height: 2
+}
+
+/* 図とヘッダーのあいだの余白を作るだけの器。canvasは sticky 全面に広がる
+   （図がヘッダーの裏まで届くのが v3 の意図） */
+.bim-stage {
+    flex: 1;
+    min-height: 0;
+    margin-top: clamp(6px, 1.4vh, 14px);
+    position: static
+}
+
+/* トレペの方眼。線はCanvas、面はここ */
+.bim-stage::before {
+    content: "";
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, #1d1b1809 0 1px, #0000 1px 64px),
+                repeating-linear-gradient(90deg, #1d1b1809 0 1px, #0000 1px 64px);
+    position: absolute;
+    inset: 0
+}
+
+.bim-canvas {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0
+}
+
+@media (max-width: 700px) {
+    /* 🔴 SPは高さを持たせない。持たせると図だけで3画面ぶんになる。
+       bim.js は実寸で判断するので、低くすれば自動で「一度だけ組み上げる」に落ちる */
+    .bim-transition {
+        height: auto;
+        min-height: 0
+    }
+
+    .bim-sticky {
+        height: auto;
+        min-height: 0;
+        padding: 58px 22px 26px;
+        position: relative;
+        overflow: visible
+    }
+
+    .bim-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px
+    }
+
+    .bim-head h2 {
+        font-size: 23px
+    }
+
+    .bim-lead {
+        text-align: left
+    }
+
+    .bim-stage {
+        flex: none;
+        height: 100vw;
+        max-height: 470px;
+        margin-top: 12px
+    }
+}
+
+/* ============================================================
+   折り返しの質（2026-08-27、社長の「微妙な改行がないか」）
+
+   実測で見つかったぶら下がり: exp-body「す。」/ plan-row「運用」/
+   solve-body「を制作」/ sw-lead「トではありません。」（単語の途中）。
+
+   - `text-wrap: balance` … 行の長さを均す。2行の短文で「1行目満杯＋2行目2文字」を
+     「半々の2行」にする。Chrome/Safari/Firefoxとも対応
+   - `text-wrap: pretty` … 長文の最終行のぶら下がりだけ直す。未対応ブラウザでは無害
+   - `word-break: auto-phrase` … 日本語を文節で折る（「サイ/ト」と割らない）。
+     Chromeのみ。未対応では無害
+   ⚠️ balance は**中身が2〜3行の短文だけ**に当てる。長い本文に当てると
+      全行が均されて版面が変わりすぎる
+   ============================================================ */
+.about-lead,
+.faq-list details p,
+.foot-lead,
+.price-note {
+    /* ⚠️ pretty のぶら下がり回避は単語単位で働くので、単語境界の無い日本語では
+       auto-phrase（文節折り・Chrome）と組にしないと効かない。実測で確認した */
+    text-wrap: pretty;
+    word-break: auto-phrase
+}
+
+.solve-body,
+.exp-body,
+.sw-lead,
+.col-lead,
+.plan-note,
+.faq-list details p span,
+.worries-list li,
+.solve-title,
+.exp-title,
+.worries-title {
+    /* SPで .worries-title が「い。」だけぶら下がっていた。
+       1行に収まる幅（PC）では balance は何もしないので、共通で当ててよい */
+    text-wrap: balance;
+    word-break: auto-phrase
+}
+
+/* ============================================================
+   06 PRICE / FAQ ＋ 07 LET'S TALK（2026-08-27）
+
+   社長のカンプ（GPT Imageで生成）を実装したもの。**高さは指定値**:
+   06 = 400px / 07 = 546px（幅1440pxのとき）。
+   🔴 カンプに混ざっていた架空の情報は入れていない（社長承認）:
+      株式会社TILTO → 株式会社Savor Flow ／ 住所・電話は載せない ／
+      FAQ「成果が出なかった場合」は根拠が無いので承認済みの設問に差し替え ／
+      行き先の無い JOURNAL は置かない。
+   ============================================================ */
+.sr-only {
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden
+}
+
+/* 節番号（06 / PRICE / FAQ）。カンプは番号が大きく、下に分類が小さく入る */
+.sec-no {
+    margin: 0;
+    line-height: 1.35;
+    display: block
+}
+
+.sec-no b {
+    color: var(--charcoal);
+    letter-spacing: .02em;
+    font: 700 clamp(15px, 1.25vw, 19px)/1 Arial, sans-serif;
+    display: block
+}
+
+.sec-no span {
+    color: var(--charcoal);
+    letter-spacing: .1em;
+    margin-top: 5px;
+    font: 700 clamp(9px, .76vw, 11.5px)/1 Arial, sans-serif;
+    display: block
+}
+
+.sec-no--light b,
+.sec-no--light span {
+    color: #fff
+}
+
+/* --- 06 --- */
+.plan {
+    background: #f2f1ee;
+    justify-self: stretch;
+    width: auto;
+    /* 高さ400px（1440px幅のとき）。中身が増えたら伸びてよいので min-height */
+    /* 高さ400px（1440px幅）＝27.8vw。中身が増えたら伸びてよいので min-height。
+       ⚠️ 高さを決めているのはFAQ5行。数字を小さくしても縮まない */
+    min-height: 27.8vw;
+    padding: clamp(24px, 2.5vw, 38px) 0
+}
+
+.plan-inner {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+    gap: clamp(30px, 4vw, 72px);
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: grid
+}
+
+/* 🔴 数字が大きいので、列からはみ出さないよう閉じ込める。
+   `min-width: 0` だけでは足りず、`overflow: hidden` まで要る
+   （はみ出すと右のFAQ列に重なる。2026-08-27に踏んだ） */
+.plan-left {
+    min-width: 0;
+    overflow: hidden
+}
+
+/* 数字の2連。あいだに縦罫を引く（カンプどおり） */
+.plan-figs {
+    align-items: flex-end;
+    gap: clamp(16px, 2.1vw, 36px);
+    margin: clamp(14px, 1.6vw, 26px) 0 0;
+    display: flex;
+    flex-wrap: nowrap
+}
+
+.plan-figs > * {
+    min-width: 0
+}
+
+.pfig {
+    align-items: baseline;
+    gap: clamp(6px, .7vw, 12px);
+    display: flex
+}
+
+/* 「初期費用」側は左に縦罫。カンプでは数字の帯の高さいっぱいに伸びる */
+.pfig--init {
+    border-left: 1px solid #cfcbc4;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding-left: clamp(20px, 2.6vw, 46px)
+}
+
+.pfig--init .pfig-num,
+.pfig--init .pfig-unit {
+    display: inline-block
+}
+
+.pfig-cap {
+    color: var(--charcoal);
+    letter-spacing: .04em;
+    flex-shrink: 0;
+    font-size: clamp(13px, 1.15vw, 17px);
+    font-weight: 700
+}
+
+.pfig-cap--top {
+    margin-bottom: clamp(4px, .5vw, 8px);
+    display: block
+}
+
+/* カンプの数字はゴシックの極太。明朝ではない */
+.pfig-num {
+    color: var(--charcoal);
+    letter-spacing: -.045em;
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-size: clamp(58px, 8.9vw, 128px);
+    font-weight: 700;
+    line-height: .82;
+    display: inline-block
+}
+
+.pfig-num--coral {
+    color: #e8261e
+}
+
+.pfig-unit {
+    color: var(--charcoal);
+    font-size: clamp(15px, 1.6vw, 24px);
+    font-weight: 700
+}
+
+.pfig-unit em {
+    color: var(--charcoal);
+    letter-spacing: .06em;
+    margin-top: 6px;
+    font: 700 clamp(10px, .95vw, 14px)/1 Arial, sans-serif;
+    font-style: normal;
+    display: block
+}
+
+.plan-note {
+    color: #6d6a64;
+    margin: clamp(14px, 1.6vw, 26px) 0 0;
+    font-size: clamp(10.5px, .87vw, 13px);
+    line-height: 1.75
+}
+
+/* --- FAQ（右列） --- */
+.faq-col {
+    min-width: 0
+}
+
+.faq-head {
+    color: var(--charcoal);
+    letter-spacing: .1em;
+    border-bottom: 1px solid #cfcbc4;
+    margin: 0;
+    padding-bottom: clamp(8px, .9vw, 13px);
+    font: 700 clamp(11px, .95vw, 14px)/1 Arial, sans-serif
+}
+
+.faq-list details {
+    border-bottom: 1px solid #dedad3
+}
+
+.faq-list summary {
+    cursor: pointer;
+    align-items: baseline;
+    gap: clamp(7px, .8vw, 12px);
+    padding: clamp(7px, .8vw, 12px) 0;
+    list-style: none;
+    display: flex
+}
+
+.faq-list summary::-webkit-details-marker {
+    display: none
+}
+
+.faq-list summary b {
+    color: var(--charcoal);
+    flex-shrink: 0;
+    font: 700 clamp(9.5px, .8vw, 12px)/1.7 Arial, sans-serif
+}
+
+.faq-list summary strong {
+    color: var(--charcoal);
+    flex: 1;
+    font-size: clamp(11px, .93vw, 14px);
+    font-weight: 700;
+    line-height: 1.7
+}
+
+/* ＋ と − は罫で描く（字形の差が出ないので揃う） */
+.faq-list summary i {
+    border-top: 1.5px solid var(--charcoal);
+    flex-shrink: 0;
+    width: 13px;
+    height: 1.5px;
+    margin-top: .55em;
+    position: relative
+}
+
+.faq-list summary i::after {
+    content: "";
+    background: var(--charcoal);
+    width: 1.5px;
+    height: 13px;
+    transition: opacity .2s ease;
+    position: absolute;
+    top: -7.5px;
+    left: 5.75px
+}
+
+.faq-list details[open] summary i::after {
+    opacity: 0
+}
+
+.faq-list details p {
+    align-items: baseline;
+    gap: clamp(7px, .8vw, 12px);
+    margin: 0 0 clamp(8px, .9vw, 13px);
+    display: flex
+}
+
+.faq-list details p b {
+    color: var(--charcoal);
+    flex-shrink: 0;
+    font: 700 clamp(9.5px, .8vw, 12px)/1.8 Arial, sans-serif
+}
+
+.faq-list details p span {
+    color: #4a4741;
+    flex: 1;
+    font-size: clamp(10.5px, .87vw, 13px);
+    line-height: 1.8
+}
+
+.faq-more {
+    color: #a09c95;
+    letter-spacing: .04em;
+    text-align: right;
+    margin: clamp(8px, .9vw, 13px) 0 0;
+    font: 400 clamp(10px, .82vw, 12.5px)/1 Arial, sans-serif
+}
+
+/* --- 07 LET'S TALK --- */
+.site-foot {
+    /* カンプの赤。ブランドのコーラルより深い */
+    background: #e8261e;
+    justify-self: stretch;
+    width: auto;
+    min-height: 37.9vw;
+    padding: clamp(28px, 3.05vw, 46px) 0 clamp(20px, 2.2vw, 34px);
+    display: flex;
+    flex-direction: column
+}
+
+.foot-inner {
+    flex-direction: column;
+    flex: 1;
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: flex
+}
+
+.foot-main {
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(24px, 3vw, 56px);
+    flex: 1;
+    margin: clamp(10px, 1.2vw, 20px) 0 0;
+    display: flex
+}
+
+.foot-title {
+    color: #fff;
+    letter-spacing: -.02em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(38px, 6.6vw, 96px);
+    font-weight: 600;
+    line-height: 1.28
+}
+
+/* 黒い箱のCTA。カンプは角丸なしの矩形 */
+.foot-cta {
+    color: #fff;
+    background: var(--charcoal);
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(30px, 4vw, 74px);
+    width: min(480px, 34vw);
+    min-height: clamp(78px, 9vw, 132px);
+    padding: 0 clamp(20px, 2.4vw, 38px);
+    font-size: clamp(13px, 1.15vw, 17px);
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    transition: background-color .22s ease, color .22s ease
+}
+
+.foot-cta span {
+    font-size: clamp(16px, 1.5vw, 22px);
+    font-weight: 400
+}
+
+.foot-cta:hover {
+    color: var(--charcoal);
+    background: #fff
+}
+
+.foot-bottom {
+    align-items: center;
+    gap: clamp(14px, 2vw, 34px);
+    margin: clamp(18px, 2.2vw, 36px) 0 0;
+    display: flex
+}
+
+.foot-brand {
+    color: #fff;
+    letter-spacing: -.045em;
+    flex-shrink: 0;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(24px, 2.3vw, 34px);
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none
+}
+
+.foot-brand sup {
+    vertical-align: baseline;
+    margin-left: .06em;
+    font-size: .62em;
+    position: relative;
+    top: -.62em
+}
+
+.foot-nav {
+    gap: clamp(12px, 1.7vw, 30px);
+    display: flex
+}
+
+.foot-nav a {
+    color: #fff;
+    letter-spacing: .06em;
+    text-decoration: none;
+    font: 700 clamp(9.5px, .82vw, 12.5px)/1 Arial, sans-serif;
+    transition: opacity .2s ease
+}
+
+.foot-nav a:hover {
+    opacity: .7
+}
+
+.foot-corp {
+    color: #ffffffdb;
+    flex-direction: column;
+    flex: 1;
+    gap: 3px;
+    margin-left: auto;
+    font-size: clamp(9.5px, .78vw, 11.5px);
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-end
+}
+
+.foot-corp b {
+    font-weight: 700
+}
+
+.foot-corp a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff59
+}
+
+.foot-corp a:hover {
+    border-color: #fff
+}
+
+.foot-copy {
+    color: #ffffffc4;
+    flex-shrink: 0;
+    font-size: clamp(9px, .74vw, 11px)
+}
+
+@media (max-width: 700px) {
+    .plan {
+        min-height: 0;
+        padding: 46px 0
+    }
+
+    .plan-inner {
+        grid-template-columns: 1fr;
+        gap: 38px;
+        width: calc(100% - 44px)
+    }
+
+    .plan-figs {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px
+    }
+
+    .pfig--init {
+        border-top: 1px solid #cfcbc4;
+        border-left: 0;
+        width: 100%;
+        padding: 20px 0 0
+    }
+
+    .pfig-num {
+        font-size: 82px
+    }
+
+    .site-foot {
+        min-height: 0;
+        padding: 46px 0 24px
+    }
+
+    .foot-inner {
+        width: calc(100% - 44px)
+    }
+
+    .foot-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 26px
+    }
+
+    .foot-title {
+        font-size: 40px
+    }
+
+    .foot-cta {
+        justify-content: space-between;
+        width: 100%;
+        min-height: 66px
+    }
+
+    .foot-bottom {
+        flex-wrap: wrap;
+        gap: 12px
+    }
+
+    .foot-corp {
+        align-items: flex-start;
+        flex-basis: 100%;
+        margin-left: 0
+    }
+}
+
+/* ============================================================
+   01 ABOUT TILTO° ＋ 02 PROBLEMS WE SOLVE（2026-08-27・カンプ実装）
+
+   社長がGPT Imageで作ったカンプの実装。**高さは指定値**:
+   01 = 520px / 02 = 620px（幅1440pxのとき）。
+   ⚠️ 02は「高い」「遅い」「成果が見えない」を**画面いっぱいの明朝**で置き、
+      赤い斜線で添え書きへ結ぶ。文字が主役なので、はみ出しは切って構わない。
+   ============================================================ */
+.about {
+    background: #fbfaf8;
+    justify-self: stretch;
+    width: auto;
+    min-height: 36.1vw;
+    padding: clamp(30px, 3.3vw, 50px) 0;
+    display: flex;
+    align-items: center
+}
+
+.about-inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    gap: clamp(14px, 1.6vw, 26px) clamp(20px, 2.6vw, 46px);
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: grid
+}
+
+.about-inner .sec-no {
+    grid-area: 1 / 1 / 2 / 3
+}
+
+/* 縦組みの TILTO°。カンプでは見出しの左に添う */
+.about-rail {
+    color: var(--charcoal);
+    letter-spacing: .22em;
+    writing-mode: vertical-rl;
+    align-self: center;
+    margin: 0;
+    font: 700 clamp(9px, .78vw, 11.5px)/1 Arial, sans-serif;
+    grid-area: 2 / 1 / 3 / 2
+}
+
+.about-main {
+    align-self: center;
+    grid-area: 2 / 2 / 3 / 3
+}
+
+.about-title {
+    color: var(--charcoal);
+    letter-spacing: -.01em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 400;
+    line-height: 1.45
+}
+
+/* 「つくる。」だけ大きく、「だけじゃない。」は一段小さい（カンプどおり） */
+.at-1 {
+    font-size: clamp(34px, 4.65vw, 67px)
+}
+
+.at-2 {
+    font-size: clamp(26px, 3.5vw, 50px)
+}
+
+.at-3 {
+    font-size: clamp(30px, 4.1vw, 59px)
+}
+
+.about-lead {
+    color: #4a4741;
+    letter-spacing: .01em;
+    margin: clamp(14px, 1.7vw, 28px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11.5px, .95vw, 14px);
+    line-height: 1.9
+}
+
+/* 右上の仕様リスト。罫線で区切る */
+.about-specs {
+    align-self: start;
+    width: min(240px, 19vw);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    grid-area: 2 / 3 / 3 / 4
+}
+
+.about-specs li {
+    border-bottom: 1px solid #c9c5be;
+    justify-content: space-between;
+    gap: 10px;
+    padding: clamp(9px, 1vw, 15px) 0;
+    display: flex
+}
+
+.about-specs li:first-child {
+    padding-top: 0
+}
+
+.about-specs b,
+.about-specs span {
+    color: var(--charcoal);
+    letter-spacing: .06em;
+    font: 700 clamp(9px, .78vw, 11.5px)/1.4 Arial, sans-serif
+}
+
+/* --- 02 --- */
+.worries {
+    background: #050505;
+    justify-self: stretch;
+    width: auto;
+    min-height: 43.1vw;
+    padding: clamp(22px, 2.4vw, 36px) 0 clamp(16px, 1.8vw, 28px);
+    display: flex;
+    /* 大きな明朝が左右にはみ出すので切る。clip はスクロール容器を作らない */
+    overflow-x: clip
+}
+
+.worries-inner {
+    flex-direction: column;
+    width: min(1330px, 92vw);
+    margin-inline: auto;
+    display: flex
+}
+
+.prob-row {
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: clamp(10px, 1.4vw, 26px);
+    margin: clamp(4px, .6vw, 10px) 0 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    position: relative
+}
+
+.prob {
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    position: relative
+}
+
+/* 画面いっぱいの明朝。カンプでは端が切れるほど大きい */
+.prob-word {
+    color: #fff;
+    letter-spacing: -.02em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(56px, 11.4vw, 164px);
+    font-weight: 400;
+    line-height: 1.02
+}
+
+/* 3つ目だけ縦組み（カンプどおり） */
+/* ⚠️ 縦組みは「成果が見えない」7文字が1列に入る大きさにする。
+   大きすぎると折り返して2列になり、節の高さを食い尽くす（2026-08-27に踏んだ） */
+.prob--3 .prob-word {
+    writing-mode: vertical-rl;
+    font-size: clamp(28px, 4.2vw, 60px);
+    line-height: 1.04;
+    white-space: nowrap
+}
+
+/* 大きな和文からはみ出させる。1つ目と2つ目は左端・中央に食い込む */
+.prob--1 {
+    margin-left: clamp(-40px, -3.6vw, -20px)
+}
+
+/* 赤い斜線。添え書きへ結ぶ */
+.prob-line {
+    background: #e8261e;
+    transform-origin: 0 0;
+    width: clamp(90px, 11vw, 168px);
+    height: 1px;
+    position: absolute;
+    rotate: -20deg
+}
+
+.prob--1 .prob-line { top: 34%; left: calc(100% - clamp(30px, 3.4vw, 52px)) }
+.prob--2 .prob-line { top: 30%; left: calc(100% - clamp(30px, 3.4vw, 52px)) }
+.prob--3 .prob-line { top: 58%; right: calc(100% - clamp(20px, 2.4vw, 36px)); left: auto;
+                      rotate: 8deg; width: clamp(60px, 7vw, 106px) }
+
+/* ⚠️ 大きな和文の上に乗せない。斜線の先（文字の右上）に置く。
+   `left` を文字幅より右に取るのが要点 */
+.prob-note {
+    color: #ffffffe0;
+    white-space: nowrap;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(10.5px, .92vw, 13.5px);
+    line-height: 1.85;
+    position: absolute;
+    top: clamp(4px, .6vw, 10px);
+    left: calc(100% + clamp(10px, 1.4vw, 24px))
+}
+
+.prob--3 .prob-note {
+    top: auto;
+    bottom: clamp(44px, 5.2vw, 80px);
+    left: auto;
+    right: calc(100% + clamp(10px, 1.4vw, 24px))
+}
+
+.prob-tag {
+    color: #e8261e;
+    letter-spacing: .06em;
+    margin: clamp(8px, 1vw, 16px) 0 0;
+    font: 700 clamp(9px, .8vw, 12px)/1.65 Arial, sans-serif
+}
+
+.prob--3 .prob-tag {
+    text-align: right;
+    position: absolute;
+    bottom: clamp(4px, .5vw, 9px);
+    right: calc(100% + clamp(10px, 1.4vw, 24px))
+}
+
+.prob-closing {
+    color: #e8261e;
+    letter-spacing: .02em;
+    text-align: center;
+    margin: clamp(8px, 1vw, 18px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(22px, 3.35vw, 48px);
+    font-weight: 400
+}
+
+@media (max-width: 700px) {
+    .about {
+        min-height: 0;
+        padding: 52px 0
+    }
+
+    .about-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 24px;
+        width: calc(100% - 44px)
+    }
+
+    .about-inner .sec-no { grid-area: auto }
+    .about-rail { display: none }
+    .about-main { grid-area: auto }
+    .about-specs { grid-area: auto; width: 100% }
+
+    .at-1 { font-size: 30px }
+    .at-2 { font-size: 23px }
+    .at-3 { font-size: 26px }
+
+    .worries {
+        min-height: 0;
+        padding: 48px 0 34px
+    }
+
+    .worries-inner {
+        width: calc(100% - 44px)
+    }
+
+    /* 3つを横に並べると読めないので縦積み。斜線は畳む */
+    .prob-row {
+        flex-direction: column;
+        gap: 30px
+    }
+
+    .prob--1 { margin-left: 0 }
+
+    .prob-word { font-size: 62px }
+    .prob--3 .prob-word { writing-mode: horizontal-tb; font-size: 48px }
+
+    .prob-line { display: none }
+
+    .prob-note,
+    .prob--3 .prob-note {
+        margin: 6px 0 0;
+        position: static;
+        inset: auto
+    }
+
+    .prob--3 .prob-tag {
+        text-align: left;
+        position: static;
+        inset: auto
+    }
+
+    .prob-closing {
+        font-size: 24px;
+        margin-top: 26px
+    }
+}
+
+/* --- InkCursor（v3から移植。assets/cursor.bed4fc14.js が load 後にDOMを足す） --- */
+.ink-cursor {
+    z-index: 9999;
+    pointer-events: none;
+    position: fixed;
+    inset: 0
+}
+
+.ink-cursor__ball {
+    opacity: 0;
+    mix-blend-mode: difference;
+    will-change: transform;
+    transition: opacity .18s;
+    position: fixed;
+    top: 0;
+    left: 0
+}
+
+.ink-cursor__ball.is-visible {
+    opacity: 1
+}
+
+.ink-cursor__ball svg {
+    display: block;
+    overflow: visible
+}
+
+.ink-cursor__ball circle {
+    fill: #fff
+}
+
+.ink-cursor__ball--big {
+    z-index: 2
+}
+
+.ink-cursor__ball--small {
+    z-index: 3
+}
+
+.ink-cursor__ball--big svg {
+    transform-origin: 50%;
+    transition: transform .28s cubic-bezier(.2, .78, .18, 1)
+}
+
+/* 丸の中の文字（VIEW / TALK / STOP …）。v3の値をそのまま踏襲。
+   ⚠️ この :after は**丸のdivに付く**ので、svgの拡大（2.1〜3.35倍）とは
+      別に動く。だから丸が開いても文字は7pxのまま読める大きさで出る。
+   ⚠️ 黒文字なのは difference 合成のため。白い丸は背景を反転させるが、
+      黒(0,0,0)は背景をそのまま通すので、文字だけ「抜けて」見える。 */
+.ink-cursor__ball--big::after {
+    content: attr(data-label);
+    color: #000;
+    letter-spacing: .08em;
+    opacity: 0;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    font: 900 7px/1 Arial, sans-serif;
+    transition: opacity .18s, transform .28s cubic-bezier(.2, .78, .18, 1);
+    display: grid;
+    position: absolute;
+    inset: 0;
+    transform: scale(.45)
+}
+
+/* 文字があるときだけ出す（空なら出さない） */
+.ink-cursor__ball--big.is-hovering:not([data-label=""])::after {
+    opacity: 1;
+    transform: scale(1)
+}
+
+.ink-cursor__ball--big.is-pressed::after {
+    transform: scale(.82)
+}
+
+/* リンクの上でひらき、CTAの上ではもっと大きく（v3は一律3.35。差をつけるのがv4の変更点） */
+.ink-cursor__ball--big.is-hovering svg {
+    transform: scale(2.1)
+}
+
+.ink-cursor__ball--big.is-hovering.is-cta svg {
+    transform: scale(3.35)
+}
+
+.ink-cursor__ball--big.is-pressed svg {
+    transform: scale(1.75)
+}
+
+.ink-cursor__ball--big.is-pressed.is-cta svg {
+    transform: scale(2.75)
+}
+
+/* タッチ端末では出さない（JS側でも止めているが、CSSでも保険） */
+@media (hover: none), (pointer: coarse) {
+    .ink-cursor {
+        display: none
+    }
+}
+
+/* PCのとき帯を5%縮小（2026-08-24、社長の指示）。
+   🔴 `scale` ではやらない。イントロの introRibbon が `scale` を動かすので
+      取り合いになり、終わりで 1 に戻されて縮小が消える。
+   `.ribbon-scene` は `position:absolute; inset:0` なので、箱を 2.5% ずつ
+   内側へ寄せれば 95% になる。canvasはその大きさで描き直されるため、
+   拡大縮小より絵が綺麗に出る。
+   ⚠️ SPは箱の作りが違う（relative + 175vw）ので、PCだけに当てる */
+@media (min-width: 701px) {
+    .ribbon-scene,
+    .ribbon-cast-shadow-scene {
+        /* ⚠️ ベンダーが `width:100%; height:100%` を明示しているので、
+           inset だけでは縮まない。高さも明示して縮める。
+           🔴 **横は端まで伸ばす（100%）。** 98%にすると左右に地が見えてしまう
+              （2026-08-24、社長の指摘。95%のときは片側36pxも空いていた）。
+              帯の絵はもともと画面の外まで続いているので、横は切らないのが正しい。
+              結果として絵は横に2%だけ伸びるが、曲面の抽象画なので見て分からない */
+        width: 100%;
+        height: 98%;
+        inset: 1% 0
+    }
+}
+
+
+/* SPのとき、メインコピーが出そろってから帯が現れる（2026-08-24、社長の指示）。
+   見出しの帯めくりは 2.80s から始まり、最後の1本が 3.23s + .9s ＝ 4.13s で終わる。
+   その終わりぎわ 3.9s から帯を立ち上げる。
+   ⚠️ `html:not(.no-intro)` で書く。`?intro=0` のときに帯が3.9秒消えたままに
+      なるのを防ぐため（打ち消しの規則を後ろに置く手だと、SPのメディアクエリの
+      ほうが後にあって勝ってしまう） */
+@media (max-width: 700px) {
+    html:not(.no-intro) .ribbon-scene,
+    html:not(.no-intro) .ribbon-cast-shadow-scene {
+        animation: spRibbonIn .95s cubic-bezier(.22, 1, .36, 1) 3.9s both
+    }
+}
+
+@keyframes spRibbonIn {
+      0% { opacity: 0; translate: 0 7% }
+    100% { opacity: 1; translate: 0 0 }
+}
+
+/* 動きを減らす設定のときは待たせない */
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+    html:not(.no-intro) .ribbon-scene,
+    html:not(.no-intro) .ribbon-cast-shadow-scene {
+        animation: none
+    }
+}
+
