@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.ecd86892.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.bf187f91.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.ecd86892.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.bf187f91.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.ecd86892.css）。bands.ecd86892.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.bf187f91.css）。bands.bf187f91.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.ecd86892.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.bf187f91.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.ecd86892.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.bf187f91.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: .81cqw }          /* 9.1 → 11.7px */
     .price-label span { font-size: .84cqw }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.ecd86892.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.bf187f91.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.ecd86892.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.bf187f91.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.ecd86892.js が動かしている
-     ・motion.ecd86892.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.bf187f91.js が動かしている
+     ・motion.bf187f91.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.ecd86892.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.bf187f91.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.ecd86892.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.bf187f91.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2331,10 +2331,10 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
 .works-lane-2 .works-track { animation-name: works-flow-left }
 
-.works-lane-1 .works-track { animation-duration: 359s }
-.works-lane-2 .works-track { animation-duration: 257s }
-.works-lane-3 .works-track { animation-duration: 165s }
-.works-lane-4 .works-track { animation-duration: 128s }
+.works-lane-1 .works-track { animation-duration: 392s }
+.works-lane-2 .works-track { animation-duration: 281s }
+.works-lane-3 .works-track { animation-duration: 202s }
+.works-lane-4 .works-track { animation-duration: 143s }
 
 /* 沈み: 4階調に振り直す */
 .works-lane-1 .works-tile {
@@ -2366,7 +2366,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     animation-play-state: paused
 }
 
-.works-lane-4:has(.works-tile:hover) .works-track { animation-duration: 128s }
+.works-lane-4:has(.works-tile:hover) .works-track { animation-duration: 143s }
 
 /* 節の高さ ＝ いちばん下のタイルの下端 ＋ 上の余白と同じ47px（+10%後に実測830） */
 .works-showroom {
@@ -2439,28 +2439,29 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ 速さを変えるときは、この4行だけを書き換えること（上の古い規則は触らず負けさせる） */
 /* 🔴 レーンの尺は**この末尾のブロックが正**（2017行あたりの指定は上書きされて効かない）。
    枚数を変えたら、**流れる距離が変わるので尺も同率で変える**こと。変えないと速さが上がる。
-   2026-09-04: 実サイト3本を足して 9/9/9/8 → 10/10/9/9 枚。
-     lane1 ×1.121 → 320→359s ／ lane2 ×1.120 → 230→257s
+   2026-09-04: 実サイト3本を足して 9/9/9/8 → 10/10/9/9 枚、
+     さらに公開URLの5本を足して 10/10/9/9 → **11/11/11/10 枚**。
+     lane1 320→359→392s ／ lane2 230→257→281s ／ lane3 165→202s ／ lane4 115→128→143s
      lane3 変化なし → 165s   ／ lane4 ×1.116 → 115→128s
    ⚠️ 3か所（通常・hover・ドロワー中）で**同じ値**にする。再生中に尺が変わると帯が飛ぶ。 */
 .works-lane-1 .works-track,
 .works-lane-1:has(.works-tile:hover) .works-track,
-.works-showroom[data-drawer-open="true"] .works-lane-1 .works-track { animation-duration: 359s }
+.works-showroom[data-drawer-open="true"] .works-lane-1 .works-track { animation-duration: 392s }
 
 .works-lane-2 .works-track,
 .works-lane-2:has(.works-tile:hover) .works-track,
-.works-showroom[data-drawer-open="true"] .works-lane-2 .works-track { animation-duration: 257s }
+.works-showroom[data-drawer-open="true"] .works-lane-2 .works-track { animation-duration: 281s }
 
 .works-lane-3 .works-track,
 .works-lane-3:has(.works-tile:hover) .works-track,
-.works-showroom[data-drawer-open="true"] .works-lane-3 .works-track { animation-duration: 165s }
+.works-showroom[data-drawer-open="true"] .works-lane-3 .works-track { animation-duration: 202s }
 
 .works-lane-4 .works-track,
 .works-lane-4:has(.works-tile:hover) .works-track,
-.works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 128s }
+.works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 143s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.ecd86892.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.bf187f91.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2497,7 +2498,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.ecd86892.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.bf187f91.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は

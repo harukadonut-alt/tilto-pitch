@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.ecd86892.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.ecd86892.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.bf187f91.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.bf187f91.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.ecd86892.js / rolldown-runtime-S-ySWqyJ.ecd86892.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.bf187f91.js / rolldown-runtime-S-ySWqyJ.bf187f91.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1073,7 +1073,32 @@ var SR_BASE = [
     { id: `38`, industry: `教育`, world: `EDUCATION`, tone: `paper`,
       title: `人の可能性に、火をつける仕事。`,
       image: `./images/works/showroom-education-real.webp`,
-      alt: `明るい教室で講師が生徒の手元をのぞき込み、笑顔で教えている教育企業の採用サイトFV` }
+      alt: `明るい教室で講師が生徒の手元をのぞき込み、笑顔で教えている教育企業の採用サイトFV` },
+
+    /* ── 39〜43: 公開URLから取り込んだ5本（2026-09-04）──────────────────
+       ファイルで受け取れなかったので、社長の公開サイトを直接撮っている。
+       ⚠️ これも**架空の会社**。「実例」「実績」と書かないこと。
+       ⚠️ 士業・コンサルはまだ作品が無い（フィルターを押しても0件）。 */
+    { id: `39`, industry: `IT・テック`, world: `SYSTEMS`, tone: `sumi`,
+      title: `そのコードは、誰かの未来を静かに変えていく。`,
+      image: `./images/works/showroom-it-real.webp`,
+      alt: `夜のオフィスで3画面のコードに向かうエンジニアの背中を撮ったIT企業の採用サイトFV` },
+    { id: `40`, industry: `製造・小売`, world: `FURNITURE / CRAFT`, tone: `sumi`,
+      title: `受け継ぐだけじゃない。次の百年を、この手でつくる。`,
+      image: `./images/works/showroom-mfg-real.webp`,
+      alt: `工房で木を削る職人の手元を大きく捉えた家具製作所の採用サイトFV` },
+    { id: `41`, industry: `物流・運輸`, world: `WAYBILL`, tone: `paper`,
+      title: `届くまでを、仕事にする。`,
+      image: `./images/works/showroom-logi-real.webp`,
+      alt: `送り状を模した紙面に大きな001とWAYBILLの文字を組んだ物流企業の採用サイトFV` },
+    { id: `42`, industry: `エンタメ`, world: `LIVE PRODUCTION`, tone: `sumi`,
+      title: `現場で、ぶっ壊れろ。`,
+      image: `./images/works/showroom-ent-real.webp`,
+      alt: `ライブでマイクを握るボーカルと蛍光色の見出しを重ねたライブ制作会社の採用サイトFV` },
+    { id: `43`, industry: `医療・福祉`, world: `CARE`, tone: `paper`,
+      title: `いろんな人の暮らしが、重なってできている。`,
+      image: `./images/works/showroom-care-real.webp`,
+      alt: `切り絵のような質感で介護職と利用者の暮らしを描いた介護事業所の採用サイトFV` }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
@@ -1090,7 +1115,12 @@ var SR_INSIDE = {
           タイルと中身が別のサイトにならないよう、必ず同じ元から作ること。 */
     '36': { site: `./images/works/site-medical.webp`,   ratio: 1280 / 3914 },
     '37': { site: `./images/works/site-food.webp`,      ratio: 1280 / 3047 },
-    '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940 }
+    '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940 },
+    '39': { site: `./images/works/site-it.webp`, ratio: 1280 / 3972 },
+    '40': { site: `./images/works/site-mfg.webp`, ratio: 1280 / 8323 },
+    '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216 },
+    '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712 },
+    '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225 }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1193,13 +1223,13 @@ function Showroom() {
                 }),
                 (0, i.jsxs)(`h3`, { children: [`振れ幅そのものが、`, (0, i.jsx)(`br`, {}), `商品です。`] }),
                 (0, i.jsxs)(`p`, {
-                    children: [`38の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`43の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `38の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `43の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
