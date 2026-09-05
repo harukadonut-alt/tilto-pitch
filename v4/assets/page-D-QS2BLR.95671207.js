@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.37c89595.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.37c89595.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.95671207.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.95671207.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.37c89595.js / rolldown-runtime-S-ySWqyJ.37c89595.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.95671207.js / rolldown-runtime-S-ySWqyJ.95671207.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2229,39 +2229,77 @@ function x() {
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
-                                            className: `bp-sitemap`,
-                                            children: [(0, i.jsx)(`span`, {
+                                            className: `bp-spine`,
+                                            children: [(0, i.jsx)(`i`, {className: `bp-spine-line`}),
+                                                (0, i.jsxs)(`span`, {
                                                     className: `is-root`,
-                                                    children: `TOP`
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `TOP`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `FV`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `01 ABOUT`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `01`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `ABOUT`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `02 PROBLEMS`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `02`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `PROBLEMS`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `03 PROCESS`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `03`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `PROCESS`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `04 CATALOG`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `04`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `CATALOG`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `05 BLUEPRINT`
+                                                (0, i.jsxs)(`span`, {
+                                                    className: `is-here`,
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `05`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `BLUEPRINT`
+                                                        }),
+                                                        (0, i.jsx)(`em`, {
+                                                            children: `いまここ`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `06 PRICE`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `06`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `PRICE`
+                                                        })]
                                                 }),
-                                                (0, i.jsx)(`span`, {
-                                                    children: `07 CONTACT`
+                                                (0, i.jsxs)(`span`, {
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `07`
+                                                        }),
+                                                        (0, i.jsx)(`small`, {
+                                                            children: `CONTACT`
+                                                        })]
                                                 })]
-                                        }),
-                                        (0, i.jsx)(`svg`, {
-                                            viewbox: `0 0 660 230`,
-                                            preserveaspectratio: `none`,
-                                            children: (0, i.jsx)(`path`, {
-                                                    d: `M330 12V43M78 43H582M78 43V69M246 43V69M414 43V69M582 43V69M78 102V132M246 102V132M414 102V132M582 102V132M78 132H414M246 132V158M414 132V158`
-                                                })
                                         })]
                                 }),
                                 (0, i.jsxs)(`div`, {
@@ -2299,14 +2337,16 @@ function x() {
                                                             children: `ACTION`
                                                         }),
                                                         (0, i.jsx)(`span`, {
-                                                            children: `表現事例を見る　↘`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `VIEW　→`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            className: `is-coral`,
+                                                            className: `is-fill`,
                                                             children: `無料で相談してみる　↗`
+                                                        }),
+                                                        (0, i.jsx)(`span`, {
+                                                            className: `is-ink`,
+                                                            children: `無料で相談してみる　↗`
+                                                        }),
+                                                        (0, i.jsx)(`span`, {
+                                                            className: `is-line`,
+                                                            children: `表現事例を見る　↘`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2316,24 +2356,32 @@ function x() {
                                                         }),
                                                         (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {}),
+                                                        (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {})]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
-                                                    className: `bp-ui-menu`,
+                                                    className: `bp-ui-chips`,
                                                     children: [(0, i.jsx)(`small`, {
-                                                            children: `NAVIGATION`
+                                                            children: `CATALOG FILTER`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `Tiltoとは`
+                                                            className: `is-on`,
+                                                            children: `ALL`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `デザインカタログ`
+                                                            children: `IT・テック`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `料金`
+                                                            children: `医療・福祉`
                                                         }),
                                                         (0, i.jsx)(`b`, {
-                                                            children: `無料で相談`
+                                                            children: `飲食`
+                                                        }),
+                                                        (0, i.jsx)(`b`, {
+                                                            children: `教育`
+                                                        }),
+                                                        (0, i.jsx)(`b`, {
+                                                            children: `士業`
                                                         })]
                                                 })]
                                         })]
@@ -2351,46 +2399,90 @@ function x() {
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
-                                            className: `bp-wire-layout`,
+                                            className: `bp-wire-fv`,
                                             children: [(0, i.jsxs)(`div`, {
-                                                    className: `bp-wire-nav`,
-                                                    children: [`Tilto° `,
+                                                    className: `bp-wire-head`,
+                                                    children: [(0, i.jsx)(`b`, {
+                                                            children: `Tilto°`
+                                                        }),
                                                         (0, i.jsx)(`i`, {}),
-                                                        ` `,
                                                         (0, i.jsx)(`i`, {}),
-                                                        ` `,
                                                         (0, i.jsx)(`i`, {}),
-                                                        ` `,
-                                                        (0, i.jsx)(`b`, {
-                                                            children: `相談 ↗`
+                                                        (0, i.jsx)(`em`, {
+                                                            children: `無料で相談してみる ↗`
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
-                                                    className: `bp-wire-hero`,
-                                                    children: [(0, i.jsxs)(`strong`, {
+                                                    className: `bp-wire-copy2`,
+                                                    children: [(0, i.jsx)(`small`, {
+                                                            children: `RECRUITING SITE STUDIO — TILTO°`
+                                                        }),
+                                                        (0, i.jsxs)(`strong`, {
                                                             children: [`採用サイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `新しい持ち方。`]
+                                                                (0, i.jsx)(`span`, {
+                                                                    children: `新しい持ち方。`
+                                                                })]
                                                         }),
-                                                        (0, i.jsx)(`span`, {}),
-                                                        (0, i.jsx)(`em`, {
-                                                            children: `RIBBON / 44 SITES`
+                                                        (0, i.jsx)(`p`, {
+                                                            children: `プロと作る新しい採用サイト`
+                                                        }),
+                                                        (0, i.jsxs)(`b`, {
+                                                            children: [`採用コンサルタント`,
+                                                                (0, i.jsx)(`i`, {
+                                                                    children: `×`
+                                                                }),
+                                                                `Web制作`]
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
-                                                    className: `bp-wire-copy`,
-                                                    children: [(0, i.jsx)(`b`, {
-                                                            children: `PRICING STRIP / 01 02 03`
-                                                        }),
+                                                    className: `bp-wire-ribbon`,
+                                                    children: [(0, i.jsx)(`i`, {}),
+                                                        (0, i.jsx)(`i`, {}),
+                                                        (0, i.jsx)(`i`, {}),
+                                                        (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {}),
                                                         (0, i.jsx)(`i`, {})]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
-                                                    className: `bp-wire-cards`,
-                                                    children: [(0, i.jsx)(`span`, {}),
-                                                        (0, i.jsx)(`span`, {}),
-                                                        (0, i.jsx)(`span`, {})]
+                                                    className: `bp-wire-strip`,
+                                                    children: [(0, i.jsxs)(`span`, {
+                                                            children: [(0, i.jsx)(`small`, {
+                                                                    children: `01 月額`
+                                                                }),
+                                                                (0, i.jsxs)(`b`, {
+                                                                    children: [`27,000`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `円〜`
+                                                                        })]
+                                                                })]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            children: [(0, i.jsx)(`small`, {
+                                                                    children: `02 制作期間`
+                                                                }),
+                                                                (0, i.jsxs)(`b`, {
+                                                                    children: [`1`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `週間〜`
+                                                                        })]
+                                                                })]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            children: [(0, i.jsx)(`small`, {
+                                                                    children: `03 制作スタイル`
+                                                                }),
+                                                                (0, i.jsxs)(`b`, {
+                                                                    children: [`1`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `社1設計`
+                                                                        })]
+                                                                })]
+                                                        }),
+                                                        (0, i.jsx)(`em`, {
+                                                            children: `無料で相談してみる ↗`
+                                                        })]
                                                 })]
                                         })]
                                 }),
@@ -2415,7 +2507,9 @@ function x() {
                                                         (0, i.jsxs)(`strong`, {
                                                             children: [`採用サイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
-                                                                `新しい持ち方。`]
+                                                                (0, i.jsx)(`span`, {
+                                                                    children: `新しい持ち方。`
+                                                                })]
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2423,11 +2517,25 @@ function x() {
                                                             children: `PROOF`
                                                         }),
                                                         (0, i.jsxs)(`p`, {
-                                                            children: [`月額27,000円〜。`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `最短1週間。`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `1社1設計。`]
+                                                            className: `bp-ct-nums`,
+                                                            children: [(0, i.jsxs)(`b`, {
+                                                                    children: [`27,000`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `円〜`
+                                                                        })]
+                                                                }),
+                                                                (0, i.jsxs)(`b`, {
+                                                                    children: [`1`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `週間〜`
+                                                                        })]
+                                                                }),
+                                                                (0, i.jsxs)(`b`, {
+                                                                    children: [`1`,
+                                                                        (0, i.jsx)(`i`, {
+                                                                            children: `社1設計`
+                                                                        })]
+                                                                })]
                                                         })]
                                                 }),
                                                 (0, i.jsxs)(`div`, {
@@ -2435,11 +2543,19 @@ function x() {
                                                             children: `ACTION`
                                                         }),
                                                         (0, i.jsxs)(`p`, {
-                                                            children: [`知る → 見比べる`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `料金を確かめる`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `無料で相談する`]
+                                                            className: `bp-ct-flow`,
+                                                            children: [(0, i.jsx)(`span`, {
+                                                                    children: `Tiltoとは`
+                                                                }),
+                                                                (0, i.jsx)(`span`, {
+                                                                    children: `デザインカタログ`
+                                                                }),
+                                                                (0, i.jsx)(`span`, {
+                                                                    children: `料金`
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `無料で相談してみる ↗`
+                                                                })]
                                                         })]
                                                 })]
                                         })]

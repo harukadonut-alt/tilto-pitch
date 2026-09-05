@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.37c89595.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.95671207.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.37c89595.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.95671207.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.37c89595.css）。bands.37c89595.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.95671207.css）。bands.95671207.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.37c89595.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.95671207.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.37c89595.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.95671207.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.37c89595.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.95671207.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.37c89595.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.95671207.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.37c89595.js が動かしている
-     ・motion.37c89595.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.95671207.js が動かしている
+     ・motion.95671207.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.37c89595.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.95671207.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.37c89595.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.95671207.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2461,7 +2461,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.37c89595.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.95671207.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2498,7 +2498,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.37c89595.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.95671207.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2701,7 +2701,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.37c89595.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.95671207.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3004,7 +3004,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.37c89595.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.95671207.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3078,3 +3078,80 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     --fv-u: min(1vw, 1.77519svh);
     width: 100vw
 }
+
+/* ── 05 中間の4面を「このページで見た部品」で組み直した（2026-09-05・社長指示「既視感」）───
+   図面の文言は前回このページに揃えたが、絵は汎用の設計図（箱に×・Aa・木構造）のままだった。
+   読者が05に着くまでに**すでに見ているもの**——斜めの帯、コーラルの料金帯、黒いチップ、
+   3つの数字（27,000 / 1 / 1）、04の絞り込みチップ、幕の4色——を各面の絵にする。
+   🔴 SSRとJSXは**同じHTMLから機械生成**している（手で2重に書かない。hydrationのズレ防止）。
+   ⚠️ 面は小さい（1456pxで WF 436×177 / CT 474×188 / UI 531×229 / IA 626×260、頭23px込み）。
+      文字は 4.5〜9px。これ以上盛らない。 */
+
+/* IA / 02 ── 一本道。いまここ */
+.bp-spine { position: absolute; inset: 23px 22px 0; display: grid; grid-template-columns: repeat(8, 1fr);
+            align-content: center; padding-top: 18px }
+.bp-spine-line { position: absolute; left: 6%; right: 6%; top: calc(50% - 6px); height: 1px; background: #f7f4ee66 }
+.bp-spine span { position: relative; display: grid; justify-items: center; gap: 4px; padding-top: 16px; text-align: center }
+.bp-spine span::before { content: ''; position: absolute; top: 0; left: calc(50% - 3px); width: 7px; height: 7px;
+                         border-radius: 50%; border: 1px solid var(--bp-paper); background: var(--bp-black) }
+.bp-spine b { font: 700 7px/1 Arial, sans-serif; letter-spacing: .1em; color: var(--bp-coral) }
+.bp-spine .is-root b { color: var(--bp-paper) }
+.bp-spine small { font: 700 5px/1 Arial, sans-serif; letter-spacing: .12em; color: #f7f4eeb3 }
+.bp-spine em { font: 700 5px/1 Arial, sans-serif; letter-spacing: .08em; color: var(--bp-coral); font-style: normal }
+.bp-spine .is-here::before { background: var(--bp-coral); border-color: var(--bp-coral); box-shadow: 0 0 0 3px #ff4d4f33 }
+.bp-spine .is-here small { color: var(--bp-paper) }
+
+/* UI / 03 ── 実物のボタン・幕の4色・絞り込みチップ */
+.bp-ui-buttons span { border: 1px solid #f7f4ee8c; margin: 5px 0; padding: 5px 6px; font: 700 5.5px/1 Arial, sans-serif; display: block; letter-spacing: .04em }
+.bp-ui-buttons .is-fill { background: var(--bp-coral); border-color: var(--bp-coral); color: var(--bp-paper) }
+.bp-ui-buttons .is-ink  { background: #000; border-color: #f7f4ee55; color: var(--bp-paper) }
+.bp-ui-buttons .is-line { color: var(--bp-paper) }
+/* 幕の4色（hl-band の抜ける順: 淡い→鮮やか→深い→黒） */
+.bp-ui-color i { border: 1px solid var(--bp-paper); height: 14px; margin-bottom: 5px; display: block }
+.bp-ui-color i:nth-of-type(1) { background: #ffe6e8 }
+.bp-ui-color i:nth-of-type(2) { background: var(--bp-coral); border-color: var(--bp-coral) }
+.bp-ui-color i:nth-of-type(3) { background: #e23c3f; border-color: #e23c3f }
+.bp-ui-color i:nth-of-type(4) { background: #111317 }
+.bp-ui-chips b { display: inline-block; margin: 0 3px 4px 0; padding: 3px 6px; border: 1px solid #f7f4ee66; border-radius: 999px;
+                 font: 700 5px/1 Arial, sans-serif; letter-spacing: .06em; color: var(--bp-paper) }
+.bp-ui-chips .is-on { background: var(--bp-paper); border-color: var(--bp-paper); color: var(--bp-black) }
+
+/* WF / 04 ── このページのFVの縮図 */
+.bp-wire-fv { position: absolute; inset: 23px 0 0; overflow: hidden; color: #111317 }
+.bp-wire-head { display: flex; align-items: center; gap: 6px; height: 15px; padding: 0 8px; border-bottom: 1px solid #11131733 }
+.bp-wire-head b { font: 700 6px/1 Arial, sans-serif; letter-spacing: -.02em; margin-right: auto }
+.bp-wire-head i { width: 14px; height: 1px; background: #11131755 }
+.bp-wire-head em { margin-left: 4px; padding: 3px 5px; background: var(--bp-coral); color: var(--bp-paper);
+                   font: 700 4.5px/1 Arial, sans-serif; font-style: normal; letter-spacing: .04em }
+.bp-wire-copy2 { position: absolute; left: 8px; top: 24px; width: 44% }
+.bp-wire-copy2 small { display: block; font: 700 4px/1 Arial, sans-serif; letter-spacing: .12em; color: #111317b3; padding-left: 12px; position: relative }
+.bp-wire-copy2 small::before { content: ''; position: absolute; left: 0; top: 1.5px; width: 9px; height: 1px; background: var(--bp-coral) }
+.bp-wire-copy2 strong { display: block; margin-top: 6px; font: 500 clamp(9px, .72vw, 11px)/1.22 Yu Mincho, Hiragino Mincho ProN, serif; letter-spacing: -.05em }
+.bp-wire-copy2 strong span { color: var(--bp-coral) }
+.bp-wire-copy2 p { margin: 5px 0 0; font: 700 4.5px/1 Arial, sans-serif; letter-spacing: .04em }
+.bp-wire-copy2 b { display: inline-block; margin-top: 4px; padding: 2.5px 4px; background: #10100f; color: var(--bp-paper);
+                   font: 700 4.5px/1 Arial, sans-serif; letter-spacing: .02em }
+.bp-wire-copy2 b i { color: var(--bp-coral); font-style: normal; margin: 0 3px }
+.bp-wire-ribbon { position: absolute; left: 46%; right: -8%; top: 22%; height: 34%; display: flex; gap: 3px; align-items: center;
+                  rotate: -7deg; transform-origin: 0 50% }
+.bp-wire-ribbon i { flex: 1; height: 100%; border: 1px solid #11131766; background: #11131714 }
+.bp-wire-ribbon i:nth-child(2n) { height: 82% }
+.bp-wire-ribbon i:nth-child(3n) { background: #ff4d4f22; border-color: #ff4d4f88 }
+.bp-wire-strip { position: absolute; left: 0; right: 0; bottom: 0; height: 33%; background: rgba(255, 77, 79, .93); color: var(--bp-paper);
+                 display: grid; grid-template-columns: 30% 21% 23% 26%; align-items: center; padding: 0 8px }
+.bp-wire-strip small { display: block; font: 700 4px/1 Arial, sans-serif; letter-spacing: .1em; opacity: .9 }
+.bp-wire-strip b { display: block; margin-top: 3px; font: 700 9px/1 Arial, sans-serif; letter-spacing: -.02em }
+.bp-wire-strip b i { font: 700 4.5px/1 Arial, sans-serif; font-style: normal; margin-left: 2px }
+.bp-wire-strip em { justify-self: end; padding: 5px 6px; background: #10100f; color: var(--bp-paper);
+                    font: 700 5px/1 Arial, sans-serif; font-style: normal; letter-spacing: .04em; white-space: nowrap }
+
+/* CT / 05 ── 見出しの2行目はコーラル・数字は料金帯の顔・導線は実ボタン */
+.bp-content-map strong span { color: var(--bp-coral) }
+.bp-ct-nums { display: grid; gap: 5px; margin: 9px 0 0 }
+.bp-ct-nums b { font: 700 clamp(11px, 1.05vw, 16px)/1 Arial, sans-serif; letter-spacing: -.02em; color: var(--bp-paper) }
+.bp-ct-nums b i { font: 700 5.5px/1 Arial, sans-serif; font-style: normal; margin-left: 3px; color: #f7f4eeb3 }
+.bp-ct-flow { display: grid; gap: 7px; margin: 9px 0 0; justify-items: start }
+.bp-ct-flow span, .bp-ct-flow em { position: relative; padding: 3px 6px; border: 1px solid #f7f4ee66; font: 700 5.5px/1 Arial, sans-serif;
+                                   font-style: normal; letter-spacing: .04em; color: var(--bp-paper); white-space: nowrap }
+.bp-ct-flow span::after { content: '↓'; position: absolute; left: 4px; bottom: -8px; font: 700 6px/1 Arial, sans-serif; color: var(--bp-coral) }
+.bp-ct-flow em { background: var(--bp-coral); border-color: var(--bp-coral) }
