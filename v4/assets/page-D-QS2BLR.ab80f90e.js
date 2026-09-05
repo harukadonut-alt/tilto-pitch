@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.46e84ebe.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.46e84ebe.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.ab80f90e.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.ab80f90e.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.46e84ebe.js / rolldown-runtime-S-ySWqyJ.46e84ebe.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.ab80f90e.js / rolldown-runtime-S-ySWqyJ.ab80f90e.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1105,23 +1105,28 @@ var SR_BASE = [
     { id: `44`, industry: `士業・コンサル`, world: `PROFESSIONALS`, tone: `paper`,
       title: `専門性は、誰かの人生を動かす力になる。`,
       image: `./images/works/showroom-law-real.webp`,
-      alt: `白いカーテンを背に横顔を捉えた人物と、縦組みの明朝の見出しを組んだ士業・コンサルの採用サイトFV` }
+      alt: `白いカーテンを背に横顔を捉えた人物と、縦組みの明朝の見出しを組んだ士業・コンサルの採用サイトFV` },
+
+    /* 45: 建設・不動産の実サイト（2026-09-05 公開URLをもらった）。
+       ⚠️ これで「画像だけ」だった建設(23)の役目は終わり。23のタイルは残すが SR_INSIDE から外した */
+    { id: `45`, industry: `建設・不動産`, world: `URBAN DEVELOPMENT`, tone: `sumi`,
+      title: `まだ、地図にない景色を。`,
+      image: `./images/works/showroom-city-real.webp`,
+      alt: `夜の高層ビル群と低層の商業施設を見上げる写真に白いゴシックの見出しを重ねた都市開発会社の採用サイトFV` }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
    増やし方: images/works-full/ に縦長の画像を1枚置いて、ここに1行足すだけ。
    ⚠️ 無い作品にうっかり書かない。押しても中身が出ない扱いになる。 */
 var SR_INSIDE = {
-    // 建設・不動産「この街は、誰かの仕事でできている。」← 03で使っている縦長のサイト。
-    //   ⚠️ タイルの絵は、この縦長画像のFV部分を切り出したもの。
-    //      タイルと中身が別のサイトにならないよう、必ず同じ素材から作る
-    '23': { site: `./images/section03-site.webp`, ratio: 1280 / 1229 },
+    /* ⚠️ 23（建設「この街は、誰かの仕事でできている。」）は 2026-09-05 に外した。
+       03で使っている縦長画像から起こした「画像だけ」の中身で、実サイトの45が来たので役目を終えた。
+       タイル23を押すと、同じ業種の45（実サイト）が開く */
 
     /* 🔴 `url` があるものは、ビューアで**実サイトをそのまま iframe で開く**（2026-09-04・社長指示）。
        「せっかくアニメーションをつけているので、画像ではなく動きも見てほしい」。
        ⚠️ url が無いものは従来どおり `site` の縦長画像にフォールバックする。
-          いま画像だけなのは **23（建設）だけ**。あれはサイトの実体が無く、
-          03で使っている縦長画像から起こしたものなので、URLは存在しない。
+          2026-09-05 現在、url の無いものは無い（23は外した）。
        ⚠️ 埋め込み可否は X-Frame-Options / CSP frame-ancestors を確認済み（9件とも制限なし）。
        ⚠️ `site` の画像は消さない。回線や埋め込み制限で iframe が出ないときの受け皿。
 
@@ -1136,7 +1141,8 @@ var SR_INSIDE = {
     '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216, url: `https://keiso-waybill-recruit.haruka-namasute.chatgpt.site` },
     '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712, url: `https://reignite-live-production.haruka-namasute.chatgpt.site` },
     '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` },
-    '44': { site: `./images/works/site-law.webp`, ratio: 1280 / 4245, url: `https://hayase-partners-recruitment.haruka-namasute.chatgpt.site` }
+    '44': { site: `./images/works/site-law.webp`, ratio: 1280 / 4245, url: `https://hayase-partners-recruitment.haruka-namasute.chatgpt.site` },
+    '45': { site: `./images/works/site-city.webp`, ratio: 1280 / 9162, url: `https://city-redevelopment-careers.haruka-namasute.chatgpt.site` }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1249,13 +1255,13 @@ function Showroom() {
                 }),
                 (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
-                    children: [`44の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`45の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `44の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `45の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
@@ -2775,7 +2781,7 @@ function x() {
                                                     children: `VISUAL`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `44の実物を帯に流し、言葉より先に幅を見せる。`
+                                                    children: `45の実物を帯に流し、言葉より先に幅を見せる。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
