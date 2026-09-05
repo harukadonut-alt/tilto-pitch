@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.95671207.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.46e84ebe.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.95671207.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.46e84ebe.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.95671207.css）。bands.95671207.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.46e84ebe.css）。bands.46e84ebe.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.95671207.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.46e84ebe.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.95671207.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.46e84ebe.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.95671207.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.46e84ebe.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.95671207.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.46e84ebe.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.95671207.js が動かしている
-     ・motion.95671207.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.46e84ebe.js が動かしている
+     ・motion.46e84ebe.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.95671207.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.46e84ebe.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.95671207.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.46e84ebe.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2461,7 +2461,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.95671207.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.46e84ebe.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2498,7 +2498,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.95671207.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.46e84ebe.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2701,7 +2701,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.95671207.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.46e84ebe.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3004,7 +3004,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.95671207.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.46e84ebe.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3155,3 +3155,217 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
                                    font-style: normal; letter-spacing: .04em; color: var(--bp-paper); white-space: nowrap }
 .bp-ct-flow span::after { content: '↓'; position: absolute; left: 4px; bottom: -8px; font: 700 6px/1 Arial, sans-serif; color: var(--bp-coral) }
 .bp-ct-flow em { background: var(--bp-coral); border-color: var(--bp-coral) }
+
+/* ── 02 BEFORE の見出し／02b AFTER の節（2026-09-05・0904定例 かずさん）────
+   メモ: 「このページが『私たちが解決する課題』に該当する。before⇒after形式で
+   コピー『採用サイトは、ハードルが高い。』／具体的な悩み4つ／Tiltoならできること4つ を入れたい」
+
+   組み方:
+   ・BEFORE(02) は黒い紙に巨大明朝。ここは触らず、左上に見出しだけ足した
+   ・AFTER は**同じ版面・同じ単位(--u)・同じ明朝で、色を反転**（黒→紙）。
+     悩み→解決 の切り替わりを、色の反転ひとつで見せる
+   ・4つの悩みは AFTER 側の各項目の上に小さく置き、赤線で消す（02の「赤入れ」の続き）。
+     その下に大きな答え（27,000円〜／1週間／伴走／オリジナルデザイン）。
+     BEFOREの3語と1対1にせず、4つの悩みを4つの答えに対応させている
+   ⚠️ 金額はメモの「月2万円〜」ではなく、サイト全体に合わせて 27,000円〜 にした
+   ------------------------------------------------------------------ */
+.reference-problems-head {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    top: calc(var(--u) * 2.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--pb-black);
+    translate: 0 calc((1 - var(--pb-black)) * 10px)
+}
+
+.reference-problems-head b,
+.reference-after-head b {
+    color: var(--tone-coral);
+    letter-spacing: .24em;
+    margin-bottom: calc(var(--u) * .75);
+    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
+    display: block
+}
+
+.reference-problems-head span,
+.reference-after-head span {
+    color: #f7f4ee;
+    letter-spacing: .01em;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(18px, calc(var(--u) * 2.1), 31px);
+    font-weight: 500;
+    line-height: 1.2;
+    display: block
+}
+
+.reference-after {
+    /* 🔴 親(main)はグリッド。gpt-sections.46e84ebe.css は節名を列挙して stretch している
+       (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
+       新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
+    justify-self: stretch;
+    width: auto;
+    /* 🔴 --tone-* も gpt-sections.46e84ebe.css が節名を列挙して定義している。ここに無いと
+       var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
+    --tone-coral: #ff4d4f;
+    --tone-paper: #f7f4ee;
+    --tone-sumi: #111;
+    --tone-rule: #1111113d;
+    --u: min(1vw, 14.87px);
+    /* 🔴 既定値は「着地後」。JS無効・reduced-motion でもそのまま読める */
+    --af-head: 1;
+    --af-1: 1;
+    --af-2: 1;
+    --af-3: 1;
+    --af-4: 1;
+    color: #111;
+    background: var(--tone-paper, #f7f4ee);
+    border-top: 0;
+    border-bottom: 1px solid #111;
+    height: clamp(560px, 41.7vw, 620px);
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    font-feature-settings: "palt";
+    position: relative;
+    overflow: hidden;
+    isolation: isolate
+}
+
+.reference-after-head {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    top: calc(var(--u) * 2.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--af-head);
+    translate: 0 calc((1 - var(--af-head)) * 10px)
+}
+
+.reference-after-head span { color: #111 }
+
+.after-item {
+    margin: 0;
+    position: absolute;
+    opacity: var(--af);
+    translate: 0 calc((1 - var(--af)) * 18px)
+}
+
+.after-item-cost   { --af: var(--af-1); top: calc(var(--u) * 8.6); left: calc(var(--u) * 5.02) }
+.after-item-speed  { --af: var(--af-2); top: calc(var(--u) * 8.6); left: calc(var(--u) * 46) }
+.after-item-pro    { --af: var(--af-3); top: calc(var(--u) * 25);  left: calc(var(--u) * 46) }
+.after-item-design { --af: var(--af-4); top: calc(var(--u) * 6);   right: calc(var(--u) * 3.6); display: grid; justify-items: end; text-align: right }
+
+/* 悩みの声。小さく、赤線で消す */
+.after-item q {
+    quotes: "「" "」";
+    color: #11111180;
+    margin: 0 0 calc(var(--u) * .9);
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    font-weight: 500;
+    line-height: 1.7;
+    white-space: nowrap;
+    width: fit-content;
+    display: block;
+    position: relative
+}
+
+/* 赤線は背景で引く。⚠️ q::after を使うと閉じ括弧「」」（close-quote）が消える。
+   ⚠️ background ショートハンドの `位置 / calc(var()*…)` は落ちたので、ロングハンドで書く */
+.after-item q {
+    background-image: linear-gradient(var(--tone-coral), var(--tone-coral));
+    background-repeat: no-repeat;
+    background-position: 0 54%;
+    background-size: calc(var(--af) * 100%) 1px
+}
+
+/* 答え。02の巨大文字と同じ明朝・同じ詰め */
+.after-item strong {
+    color: #111;
+    letter-spacing: -.06em;
+    white-space: nowrap;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: calc(var(--u) * 6.4);
+    font-weight: 500;
+    line-height: .9;
+    display: block
+}
+
+.after-item strong em {
+    letter-spacing: 0;
+    margin-right: .22em;
+    font-size: .36em;
+    font-style: normal
+}
+
+.after-item strong span {
+    letter-spacing: 0;
+    margin-left: .06em;
+    font-size: .42em
+}
+
+.after-item-design strong {
+    letter-spacing: -.08em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--u) * 5);
+    line-height: 1.03;
+    height: calc(var(--u) * 26)
+}
+
+.after-item p {
+    color: #111111e6;
+    margin: calc(var(--u) * 1) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    font-weight: 500;
+    line-height: 1.7
+}
+
+.after-item-design p { margin-top: calc(var(--u) * 1.1) }
+
+@media (max-width: 900px) {
+    .reference-problems-head {
+        position: static;
+        margin: 0 0 30px;
+        translate: none
+    }
+
+    .reference-after {
+        height: auto;
+        padding: 72px 22px 40px
+    }
+
+    .reference-after-head,
+    .after-item {
+        position: static;
+        inset: auto;
+        translate: none
+    }
+
+    .reference-after-head { margin-bottom: 36px }
+
+    .after-item { margin-bottom: 34px }
+
+    /* ⚠️ Chromeは block の子にも justify-self を効かせる。end のままだと
+       SPで子が右寄せ＋縮んで右にはみ出す */
+    .after-item-design {
+        display: block;
+        justify-items: start;
+        text-align: left
+    }
+
+    .after-item q,
+    .after-item p {
+        white-space: normal;
+        font-size: 13px
+    }
+
+    .after-item strong { font-size: 15vw }
+
+    .after-item-design strong {
+        writing-mode: horizontal-tb;
+        font-size: 15vw;
+        line-height: 1.14;
+        height: auto
+    }
+}

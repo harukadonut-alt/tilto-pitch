@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.95671207.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.95671207.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.46e84ebe.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.46e84ebe.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.95671207.js / rolldown-runtime-S-ySWqyJ.95671207.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.46e84ebe.js / rolldown-runtime-S-ySWqyJ.46e84ebe.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1672,10 +1672,12 @@ function x() {
             className: `reference-problems`,
             "data-motion": `problems-story`,
             "aria-labelledby": `reference-problems-title`,
-            children: [                (0, i.jsx)(`h2`, {
-                    id: `reference-problems-title`,
-                    className: `sr-only`,
-                    children: `採用サイトで解決する3つの問題`
+            children: [                (0, i.jsxs)(`h2`, {id: `reference-problems-title`,
+                    className: `reference-problems-head`,
+                    children: [(0, i.jsx)(`b`, {children: `BEFORE`
+                    }),
+                    (0, i.jsx)(`span`, {children: `採用サイトは、ハードルが高い。`
+                    })]
                 }),
                 (0, i.jsxs)(`article`, {
                     className: `reference-problem reference-problem-high`,
@@ -1740,6 +1742,63 @@ function x() {
                     children: [`SCROLL`,
                         (0, i.jsx)(`i`, {})]
                 })]
+        }),
+        (0, i.jsxs)(`section`, {className: `reference-after`,
+            "data-motion": `after-story`,
+            "aria-labelledby": `reference-after-title`,
+            children: [(0, i.jsxs)(`h2`, {id: `reference-after-title`,
+                className: `reference-after-head`,
+                children: [(0, i.jsx)(`b`, {children: `AFTER`
+                }),
+                (0, i.jsx)(`span`, {children: `Tiltoならできること`
+                })]
+            }),
+            (0, i.jsxs)(`article`, {className: `after-item after-item-cost`,
+                children: [(0, i.jsx)(`q`, {children: `採用サイトに何十万円、何百万円もかけられない`
+                }),
+                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `月額`
+                    }),
+                    `27,000`,
+                    (0, i.jsx)(`span`, {children: `円〜`
+                    })]
+                }),
+                (0, i.jsx)(`p`, {children: `採用サイト制作の初期投資を抑える`
+                })]
+            }),
+            (0, i.jsxs)(`article`, {className: `after-item after-item-speed`,
+                children: [(0, i.jsx)(`q`, {children: `制作会社に頼むと完成まで何ヶ月もかかる`
+                }),
+                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `最短`
+                    }),
+                    `1週間`]
+                }),
+                (0, i.jsxs)(`p`, {children: [`30分程度のお打ち合わせ後、`,
+                    (0, i.jsx)(`br`, {}),
+                    `最短1週間でサイトをご提案`]
+                })]
+            }),
+            (0, i.jsxs)(`article`, {className: `after-item after-item-pro`,
+                children: [(0, i.jsx)(`q`, {children: `せっかく作っても、本当に応募が増えるのか分からない`
+                }),
+                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `採用のプロが`
+                    }),
+                    `伴走`]
+                }),
+                (0, i.jsxs)(`p`, {children: [`採用ブランディング・採用マーケティングの`,
+                    (0, i.jsx)(`br`, {}),
+                    `視点から設計`]
+                })]
+            }),
+            (0, i.jsxs)(`article`, {className: `after-item after-item-design`,
+                children: [(0, i.jsx)(`q`, {children: `どんなデザインにすればいいのか分からない`
+                }),
+                (0, i.jsxs)(`strong`, {children: [`オリジナル`,
+                    (0, i.jsx)(`br`, {}),
+                    `デザイン`]
+                }),
+                (0, i.jsx)(`p`, {children: `自社の特色・強みを活かしたデザインを制作`
+                })]
+            })]
         }),
         (0, i.jsx)(`section`, {
             className: `process-section`,

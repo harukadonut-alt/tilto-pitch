@@ -133,6 +133,17 @@
                 if (closing > .06) wipe(el.querySelector('.reference-problems-statement'), 'pb');
             }
 
+            // 02b AFTER: 見出し → 27,000円〜（左上）→ 1週間（中央上）→ 伴走（中央下）→ オリジナルデザイン（右）
+            //   02と同じ「seen 0.10〜0.65 に畳む」区間。順に出して一斉フェードを避ける
+            if (kind === 'after-story') {
+                var pa = clamp((seen - .1) / .55);
+                st.setProperty('--af-head', ramp(0, .18, pa).toFixed(4));
+                st.setProperty('--af-1', ramp(.12, .32, pa).toFixed(4));
+                st.setProperty('--af-2', ramp(.24, .44, pa).toFixed(4));
+                st.setProperty('--af-3', ramp(.36, .56, pa).toFixed(4));
+                st.setProperty('--af-4', ramp(.46, .68, pa).toFixed(4));
+            }
+
             // 03 体験: 紙が散らばった状態 → 整理 → サイトの形になる
             if (kind === 'fusion-story') {
                 var p = clamp(-box.top / Math.max(1, box.height - vh));
