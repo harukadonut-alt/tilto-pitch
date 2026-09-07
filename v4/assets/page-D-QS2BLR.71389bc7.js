@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.ab80f90e.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.ab80f90e.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.71389bc7.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.71389bc7.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.ab80f90e.js / rolldown-runtime-S-ySWqyJ.ab80f90e.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.71389bc7.js / rolldown-runtime-S-ySWqyJ.71389bc7.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1768,7 +1768,9 @@ function x() {
                     (0, i.jsx)(`span`, {children: `円〜`
                     })]
                 }),
-                (0, i.jsx)(`p`, {children: `採用サイト制作の初期投資を抑える`
+                (0, i.jsxs)(`p`, {children: [`大きな制作費を、月額に。`,
+                    (0, i.jsx)(`br`, {}),
+                    `採用サイトの初期投資を抑える`]
                 })]
             }),
             (0, i.jsxs)(`article`, {className: `after-item after-item-speed`,
@@ -1778,7 +1780,7 @@ function x() {
                     }),
                     `1週間`]
                 }),
-                (0, i.jsxs)(`p`, {children: [`30分程度のお打ち合わせ後、`,
+                (0, i.jsxs)(`p`, {children: [`30分程度のお打ち合わせから、`,
                     (0, i.jsx)(`br`, {}),
                     `最短1週間でサイトをご提案`]
                 })]
@@ -1786,23 +1788,23 @@ function x() {
             (0, i.jsxs)(`article`, {className: `after-item after-item-pro`,
                 children: [(0, i.jsx)(`q`, {children: `せっかく作っても、本当に応募が増えるのか分からない`
                 }),
-                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `採用のプロが`
-                    }),
+                (0, i.jsxs)(`strong`, {children: [`プロが`,
+                    (0, i.jsx)(`br`, {}),
                     `伴走`]
                 }),
-                (0, i.jsxs)(`p`, {children: [`採用ブランディング・採用マーケティングの`,
+                (0, i.jsxs)(`p`, {children: [`採用のプロが設計し、`,
                     (0, i.jsx)(`br`, {}),
-                    `視点から設計`]
+                    `公開後も更新しつづける`]
                 })]
             }),
-            (0, i.jsxs)(`article`, {className: `after-item after-item-design`,
-                children: [(0, i.jsx)(`q`, {children: `どんなデザインにすればいいのか分からない`
+            (0, i.jsxs)(`p`, {className: `reference-after-statement`,
+                children: [(0, i.jsx)(`b`, {children: `BUILD, THEN GROW.`
                 }),
-                (0, i.jsxs)(`strong`, {children: [`オリジナル`,
-                    (0, i.jsx)(`br`, {}),
-                    `デザイン`]
-                }),
-                (0, i.jsx)(`p`, {children: `自社の特色・強みを活かしたデザインを制作`
+                (0, i.jsxs)(`span`, {children: [`つくって終わりにしない。`,
+                    (0, i.jsx)(`br`, {className: `sp-only`}),
+                    `育てる採用サイト`,
+                    (0, i.jsx)(`i`, {children: `。`
+                    })]
                 })]
             })]
         }),
