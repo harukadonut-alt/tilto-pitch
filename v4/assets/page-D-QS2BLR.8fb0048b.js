@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.8fa67672.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.8fa67672.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.8fb0048b.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.8fb0048b.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.8fa67672.js / rolldown-runtime-S-ySWqyJ.8fa67672.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.8fb0048b.js / rolldown-runtime-S-ySWqyJ.8fb0048b.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2839,19 +2839,19 @@ function x() {
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M197 206H231L288 331`
+                                            d: `M197 206H231L341 341`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M104 378V412L243 664`
+                                            d: `M197 330H231L408 473`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M904 103V137L949 306`
+                                            d: `M904 103V137L879 296`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M836 238H802L491 397`
+                                            d: `M836 238H802L442 397`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
@@ -2872,22 +2872,22 @@ function x() {
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `288`,
-                                                    cy: `331`,
+                                                    cx: `341`,
+                                                    cy: `341`,
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `243`,
-                                                    cy: `664`,
+                                                    cx: `408`,
+                                                    cy: `473`,
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `949`,
-                                                    cy: `306`,
+                                                    cx: `879`,
+                                                    cy: `296`,
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `491`,
+                                                    cx: `442`,
                                                     cy: `397`,
                                                     r: `4`
                                                 }),
