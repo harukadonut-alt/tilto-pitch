@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6b82fcef.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6b82fcef.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3ab34908.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3ab34908.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.6b82fcef.js / rolldown-runtime-S-ySWqyJ.6b82fcef.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3ab34908.js / rolldown-runtime-S-ySWqyJ.3ab34908.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2657,7 +2657,127 @@ function x() {
                                                                     children: `無料で相談してみる ↗`
                                                                 })]
                                                         })]
-                                                })]
+                                                }),
+                                    (0, i.jsxs)(`div`, {
+                                        className: `bp-ct-spec`,
+                                        children: [
+                                            (0, i.jsx)(`small`, {
+                                                children: `SPEC`
+                                            }),
+                                            (0, i.jsxs)(`pre`, {
+                                                className: `bp-ct-code`,
+                                                children: [
+                                                    (0, i.jsx)(`b`, {
+                                                        children: `:root`
+                                                    }),
+                                                    `{
+  --fv-u: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `min(1vw, 1.77519svh)`
+                                                    }),
+                                                    `;
+  --coral: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `#ff4d4f`
+                                                    }),
+                                                    `;
+}
+`,
+                                                    (0, i.jsx)(`b`, {
+                                                        children: `h1`
+                                                    }),
+                                                    `{
+  font-size: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `calc(5.18 * var(--fv-u))`
+                                                    }),
+                                                    `;
+  letter-spacing: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `-.085em`
+                                                    }),
+                                                    `;
+  line-height: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `1.24`
+                                                    }),
+                                                    `;
+}
+`,
+                                                    (0, i.jsx)(`b`, {
+                                                        children: `.hl-band`
+                                                    }),
+                                                    `{
+  transform: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `scaleX(0)`
+                                                    }),
+                                                    `;
+  transform-origin: `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `100% 50%`
+                                                    }),
+                                                    `;
+}
+`,
+                                                    (0, i.jsx)(`b`, {
+                                                        children: `@media`
+                                                    }),
+                                                    `(width >= `,
+                                                    (0, i.jsx)(`em`, {
+                                                        children: `1001px`
+                                                    }),
+                                                    `){ … }`
+                                                ]
+                                            }),
+                                            (0, i.jsxs)(`ul`, {
+                                                className: `bp-ct-facts`,
+                                                children: [
+                                                    (0, i.jsxs)(`li`, {
+                                                        children: [
+                                                            (0, i.jsx)(`b`, {
+                                                                children: `07`
+                                                            }),
+                                                            (0, i.jsx)(`span`, {
+                                                                children: `SECTIONS`
+                                                            })
+                                                        ]
+                                                    }),
+                                                    (0, i.jsxs)(`li`, {
+                                                        children: [
+                                                            (0, i.jsx)(`b`, {
+                                                                children: `45`
+                                                            }),
+                                                            (0, i.jsx)(`span`, {
+                                                                children: `SAMPLES`
+                                                            })
+                                                        ]
+                                                    }),
+                                                    (0, i.jsxs)(`li`, {
+                                                        children: [
+                                                            (0, i.jsx)(`b`, {
+                                                                children: `09`
+                                                            }),
+                                                            (0, i.jsx)(`span`, {
+                                                                children: `INDUSTRIES`
+                                                            })
+                                                        ]
+                                                    }),
+                                                    (0, i.jsxs)(`li`, {
+                                                        children: [
+                                                            (0, i.jsx)(`b`, {
+                                                                children: `05`
+                                                            }),
+                                                            (0, i.jsx)(`span`, {
+                                                                children: `BREAKPOINTS`
+                                                            })
+                                                        ]
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    })
+                                ]
                                         })]
                                 }),
                                 (0, i.jsxs)(`div`, {
@@ -2851,11 +2971,26 @@ function x() {
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
-                                            className: `bp-kpi-body`,
-                                            children: [(0, i.jsxs)(`div`, {
+                                    className: `bp-kpi-body`,
+                                    children: [
+                                        (0, i.jsxs)(`div`, {
+                                            className: `bp-kpi-col`,
+                                            children: [
+                                                (0, i.jsxs)(`p`, {
+                                                    className: `bp-kpi-cap`,
+                                                    children: [
+                                                        `FUNNEL `,
+                                                        (0, i.jsx)(`b`, {
+                                                            children: `／ 設計値`
+                                                        })
+                                                    ]
+                                                }),
+                                                (0, i.jsxs)(`div`, {
                                                     className: `bp-kpi-funnel`,
-                                                    children: [(0, i.jsxs)(`div`, {
-                                                            children: [(0, i.jsx)(`span`, {
+                                                    children: [
+                                                        (0, i.jsxs)(`div`, {
+                                                            children: [
+                                                                (0, i.jsx)(`span`, {
                                                                     children: `TOP VIEW`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
@@ -2863,10 +2998,12 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
                                                                     children: `TOP`
-                                                                })]
+                                                                })
+                                                            ]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
-                                                            children: [(0, i.jsx)(`span`, {
+                                                            children: [
+                                                                (0, i.jsx)(`span`, {
                                                                     children: `CATALOG`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
@@ -2874,10 +3011,12 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
                                                                     children: `04`
-                                                                })]
+                                                                })
+                                                            ]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
-                                                            children: [(0, i.jsx)(`span`, {
+                                                            children: [
+                                                                (0, i.jsx)(`span`, {
                                                                     children: `PRICE`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
@@ -2885,10 +3024,12 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
                                                                     children: `06`
-                                                                })]
+                                                                })
+                                                            ]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
-                                                            children: [(0, i.jsx)(`span`, {
+                                                            children: [
+                                                                (0, i.jsx)(`span`, {
                                                                     children: `CONTACT`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
@@ -2896,10 +3037,12 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
                                                                     children: `07`
-                                                                })]
+                                                                })
+                                                            ]
                                                         }),
                                                         (0, i.jsxs)(`div`, {
-                                                            children: [(0, i.jsx)(`span`, {
+                                                            children: [
+                                                                (0, i.jsx)(`span`, {
                                                                     children: `SEND`
                                                                 }),
                                                                 (0, i.jsx)(`i`, {
@@ -2907,34 +3050,189 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`b`, {
                                                                     children: `FORM`
-                                                                })]
-                                                        })]
+                                                                })
+                                                            ]
+                                                        })
+                                                    ]
+                                                }),
+                                                (0, i.jsx)(`div`, {
+                                                    className: `bp-kpi-log`,
+                                                    "aria-hidden": `true`,
+                                                    children: (0, i.jsxs)(`i`, {
+    children: [
+        (0, i.jsx)(`span`, {
+            children: `GET / 200 · section=01 about`
+        }),
+        (0, i.jsx)(`span`, {
+            children: `scroll 0.42 → --bp-wire 0.61`
+        }),
+        (0, i.jsx)(`span`, {
+            children: `filter=ALL · tiles=45 · lanes=4`
+        }),
+        (0, i.jsx)(`span`, {
+            children: `industry=09 · inside=09`
+        }),
+        (0, i.jsx)(`span`, {
+            children: `vw 1440 · bp 1001 · dpr 2`
+        }),
+        (0, i.jsx)(`span`, {
+            children: `paint 05/07 · leaders 8/8`
+        })
+    ]
+})
+                                                })
+                                            ]
+                                        }),
+                                        (0, i.jsxs)(`div`, {
+                                            className: `bp-kpi-col`,
+                                            children: [
+                                                (0, i.jsxs)(`p`, {
+                                                    className: `bp-kpi-cap`,
+                                                    children: [
+                                                        `SCROLL REACH `,
+                                                        (0, i.jsx)(`b`, {
+                                                            children: `／ 01–07`
+                                                        })
+                                                    ]
+                                                }),
+                                                (0, i.jsxs)(`div`, {
+                                                    className: `bp-kpi-bars`,
+                                                    children: [
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `96%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `01`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `78%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `02`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `64%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `03`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `88%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `04`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `71%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `05`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `54%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `06`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`span`, {
+                                                            style: { "--v": `38%` },
+                                                            children: [
+                                                                (0, i.jsx)(`i`, {
+
+                                                                }),
+                                                                (0, i.jsx)(`em`, {
+                                                                    children: `07`
+                                                                })
+                                                            ]
+                                                        })
+                                                    ]
                                                 }),
                                                 (0, i.jsxs)(`svg`, {
                                                     className: `bp-chart`,
-                                                    viewbox: `0 0 220 102`,
+                                                    viewBox: `0 0 220 102`,
                                                     "aria-hidden": `true`,
-                                                    children: [(0, i.jsx)(`path`, {
+                                                    children: [
+                                                        (0, i.jsx)(`path`, {
                                                             className: `bp-chart-grid`,
                                                             d: `M0 18H220M0 50H220M0 82H220M22 0V102M82 0V102M142 0V102M202 0V102`
                                                         }),
                                                         (0, i.jsx)(`path`, {
+                                                            className: `bp-chart-line2`,
+                                                            pathLength: `1`,
+                                                            d: `M6 92L45 84L82 88L118 66L157 70L194 44L216 49`
+                                                        }),
+                                                        (0, i.jsx)(`path`, {
                                                             className: `bp-chart-line`,
-                                                            pathlength: `1`,
+                                                            pathLength: `1`,
                                                             d: `M6 87L45 73L82 77L118 47L157 54L194 17L216 25`
                                                         }),
                                                         (0, i.jsx)(`circle`, {
                                                             cx: `194`,
                                                             cy: `17`,
                                                             r: `3.5`
-                                                        })]
+                                                        })
+                                                    ]
                                                 }),
+                                                (0, i.jsxs)(`p`, {
+                                                    className: `bp-kpi-axis`,
+                                                    children: [
+                                                        (0, i.jsx)(`span`, {
+                                                            children: `01`
+                                                        }),
+                                                        (0, i.jsx)(`span`, {
+                                                            children: `03`
+                                                        }),
+                                                        (0, i.jsx)(`span`, {
+                                                            children: `05`
+                                                        }),
+                                                        (0, i.jsx)(`span`, {
+                                                            children: `07`
+                                                        })
+                                                    ]
+                                                })
+                                            ]
+                                        }),
+                                        (0, i.jsxs)(`div`, {
+                                            className: `bp-kpi-col bp-kpi-col--side`,
+                                            children: [
                                                 (0, i.jsxs)(`div`, {
                                                     className: `bp-score`,
-                                                    children: [(0, i.jsxs)(`svg`, {
-                                                            viewbox: `0 0 96 96`,
+                                                    children: [
+                                                        (0, i.jsxs)(`svg`, {
+                                                            viewBox: `0 0 96 96`,
                                                             "aria-hidden": `true`,
-                                                            children: [(0, i.jsx)(`circle`, {
+                                                            children: [
+                                                                (0, i.jsx)(`circle`, {
                                                                     className: `bp-score-base`,
                                                                     cx: `48`,
                                                                     cy: `48`,
@@ -2942,23 +3240,77 @@ function x() {
                                                                 }),
                                                                 (0, i.jsx)(`circle`, {
                                                                     className: `bp-score-value`,
-                                                                    pathlength: `100`,
+                                                                    pathLength: `100`,
                                                                     cx: `48`,
                                                                     cy: `48`,
                                                                     r: `36`
-                                                                })]
+                                                                })
+                                                            ]
                                                         }),
                                                         (0, i.jsx)(`strong`, {
                                                             "data-kpi-number": `true`,
                                                             children: `00 / 07`
                                                         }),
                                                         (0, i.jsxs)(`small`, {
-                                                            children: [`THIS PAGE`,
-                                                                (0, i.jsx)(`br`, {}),
-                                                                `PROGRESS`]
-                                                        })]
-                                                })]
-                                        })]
+                                                            children: [
+                                                                `THIS PAGE`,
+                                                                (0, i.jsx)(`br`, {
+
+                                                                }),
+                                                                `PROGRESS`
+                                                            ]
+                                                        })
+                                                    ]
+                                                }),
+                                                (0, i.jsxs)(`dl`, {
+                                                    className: `bp-kpi-facts`,
+                                                    children: [
+                                                        (0, i.jsxs)(`div`, {
+                                                            children: [
+                                                                (0, i.jsx)(`dt`, {
+                                                                    children: `SAMPLES`
+                                                                }),
+                                                                (0, i.jsx)(`dd`, {
+                                                                    children: `45`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`div`, {
+                                                            children: [
+                                                                (0, i.jsx)(`dt`, {
+                                                                    children: `INDUSTRY`
+                                                                }),
+                                                                (0, i.jsx)(`dd`, {
+                                                                    children: `09`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`div`, {
+                                                            children: [
+                                                                (0, i.jsx)(`dt`, {
+                                                                    children: `PLANES`
+                                                                }),
+                                                                (0, i.jsx)(`dd`, {
+                                                                    children: `06`
+                                                                })
+                                                            ]
+                                                        }),
+                                                        (0, i.jsxs)(`div`, {
+                                                            children: [
+                                                                (0, i.jsx)(`dt`, {
+                                                                    children: `NOTES`
+                                                                }),
+                                                                (0, i.jsx)(`dd`, {
+                                                                    children: `08`
+                                                                })
+                                                            ]
+                                                        })
+                                                    ]
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })]
                                 }),
                                 (0, i.jsxs)(`div`, {
                                     className: `bp-design-system`,

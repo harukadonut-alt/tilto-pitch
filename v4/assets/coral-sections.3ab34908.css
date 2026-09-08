@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.6b82fcef.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.3ab34908.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.6b82fcef.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.3ab34908.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.6b82fcef.css）。bands.6b82fcef.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.3ab34908.css）。bands.3ab34908.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.6b82fcef.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.3ab34908.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.6b82fcef.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.3ab34908.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.6b82fcef.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.3ab34908.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.6b82fcef.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.3ab34908.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.6b82fcef.js が動かしている
-     ・motion.6b82fcef.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.3ab34908.js が動かしている
+     ・motion.3ab34908.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.6b82fcef.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.3ab34908.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.6b82fcef.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.3ab34908.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2462,7 +2462,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.6b82fcef.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.3ab34908.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2499,7 +2499,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.6b82fcef.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.3ab34908.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2702,7 +2702,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.6b82fcef.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.3ab34908.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3027,7 +3027,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.6b82fcef.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.3ab34908.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3223,12 +3223,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.6b82fcef.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.3ab34908.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.6b82fcef.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.3ab34908.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3590,4 +3590,159 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
         min-width: clamp(148px, 16vw, 280px);
         max-width: min(88vw, 420px)
     }
+}
+
+/* ============================================================
+   05 図面 — CT/05 と DATA/08 を作り込む（2026-09-08）
+
+   狙い: この2枚は「読ませる」ためではなく、**緻密に考えて作った気配**を出す面。
+   細かい字・実物のコード・複数のグラフを敷き詰めて、密度そのものを見せる。
+
+   🔴 出す数字は**このページに実在するものだけ**。
+      07=節の数（ABOUT〜CONTACT）／45=ショールームのタイル数／09=業種数
+      05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
+      コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
+      ⚠️ motion.3ab34908.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+         ここに数字を足すときも同じ線を守ること。
+   ============================================================ */
+
+/* ── CT / 05 ───────────────────────────────────────────── */
+/* 4列に増やしたぶん1列目が痩せて「採用サイトの、」が4行に折れた。
+   列の配分を戻し、見出しも一段落として2行に収める（実測で 15.84px → 12.6px） */
+.bp-content-map { grid-template-columns: 1.32fr .72fr .78fr 1.18fr; gap: 8px }
+.bp-content-map strong { margin-top: 9px; font-size: clamp(9px, .86vw, 15px) }
+
+.bp-ct-spec { display: flex; flex-direction: column; min-width: 0 }
+
+.bp-ct-code {
+    flex: 1;
+    margin: 8px 0 0;
+    overflow: hidden;
+    color: #f7f4ee8f;
+    font: 400 clamp(4.2px, .33vw, 6.2px)/1.55 ui-monospace, Menlo, Consolas, monospace;
+    white-space: pre;
+    letter-spacing: .01em
+}
+.bp-ct-code b { color: var(--bp-coral); font-weight: 700 }
+.bp-ct-code em { color: var(--bp-paper); font-style: normal }
+
+.bp-ct-facts {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 8px;
+    margin: 8px 0 0;
+    padding: 7px 0 0;
+    border-top: 1px solid #f7f4ee29;
+    list-style: none;
+    display: grid
+}
+.bp-ct-facts li { align-items: baseline; gap: 4px; display: flex }
+.bp-ct-facts b { color: var(--bp-paper); font: 700 clamp(8px, .62vw, 11px)/1 Arial, sans-serif }
+.bp-ct-facts span { color: #f7f4ee8c; letter-spacing: .08em; font: 700 4.2px/1 Arial, sans-serif }
+
+/* ── DATA / 08 ─────────────────────────────────────────── */
+/* 🔴 中身を増やしたので面が足りない。実測: 中身123px に対し器は 107px しかなかった。
+   面を 15.8% → 20.5% に伸ばし、それでも溢れたぶんは切る（切らないと下の面に字が散る）。 */
+.bp-kpi { overflow: hidden }
+@media (width>=1001px) { .bp-kpi { height: 20.5%; top: 73.5% } }
+.bp-score svg { width: min(52px, 3.6vw) }
+.bp-score strong { top: 32% }
+.bp-kpi-body { grid-template-columns: 1fr 1.15fr .62fr; gap: 10px }
+
+.bp-kpi-col { display: flex; flex-direction: column; min-width: 0 }
+.bp-kpi-col--side { justify-content: space-between; align-items: center }
+
+.bp-kpi-cap {
+    color: #f7f4ee8c;
+    letter-spacing: .12em;
+    margin: 0 0 6px;
+    font: 700 4.4px/1 Arial, sans-serif
+}
+.bp-kpi-cap b { color: var(--bp-coral) }
+
+.bp-kpi-funnel { flex: none }
+
+/* 走り続けるログ。中身は**このページの実際の状態**の書式に寄せてある */
+.bp-kpi-log {
+    flex: 1;
+    min-height: 0;
+    margin-top: 7px;
+    padding-top: 6px;
+    border-top: 1px solid #f7f4ee1f;
+    overflow: hidden
+}
+.bp-kpi-log i {
+    animation: bpLogRoll 11s steps(6) infinite;
+    font-style: normal;
+    display: block
+}
+.bp-kpi-log span {
+    color: #f7f4ee6b;
+    white-space: nowrap;
+    font: 400 4.1px/1.9 ui-monospace, Menlo, monospace;
+    display: block
+}
+@keyframes bpLogRoll { to { transform: translateY(-100%) } }
+
+/* 節ごとの到達。棒はスクロールに連れて立ち上がる（--bp-kpi 0→1） */
+.bp-kpi-bars {
+    grid-template-columns: repeat(7, 1fr);
+    align-items: end;
+    gap: 3px;
+    height: 26px;
+    margin-bottom: 6px;
+    display: grid
+}
+.bp-kpi-bars span { grid-template-rows: 1fr auto; height: 100%; display: grid }
+.bp-kpi-bars i {
+    background: #f7f4eea3;
+    align-self: end;
+    height: var(--v);
+    transform: scaleY(var(--bp-kpi));
+    transform-origin: 50% 100%;
+    display: block
+}
+.bp-kpi-bars span:nth-child(5) i { background: var(--bp-coral) }
+.bp-kpi-bars em {
+    color: #f7f4ee6b;
+    text-align: center;
+    margin-top: 2px;
+    font: 700 3.8px/1 Arial, sans-serif;
+    font-style: normal
+}
+
+.bp-kpi-axis {
+    justify-content: space-between;
+    margin: 3px 0 0;
+    display: flex
+}
+.bp-kpi-axis span { color: #f7f4ee52; font: 700 3.8px/1 Arial, sans-serif }
+
+/* 2本目の折れ線。1本目より薄くして、追っている線が複数あることだけを見せる */
+.bp-chart-line2 {
+    fill: none;
+    stroke: #f7f4ee6b;
+    stroke-width: 1px;
+    stroke-dasharray: 1;
+    stroke-dashoffset: var(--bp-chart-offset)
+}
+
+.bp-kpi-facts {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 7px;
+    width: 100%;
+    margin: 0;
+    display: grid
+}
+.bp-kpi-facts div { justify-content: space-between; align-items: baseline; gap: 3px; display: flex }
+.bp-kpi-facts dt { color: #f7f4ee7a; letter-spacing: .06em; font: 700 3.8px/1 Arial, sans-serif }
+.bp-kpi-facts dd { color: var(--bp-paper); margin: 0; font: 700 6px/1 Arial, sans-serif }
+
+@media (prefers-reduced-motion: reduce) {
+    .bp-kpi-log i { animation: none }
+}
+
+/* 狭い画面では図面ごと畳んでいるので、ここは触らない */
+@media (width<=900px) {
+    .bp-content-map { grid-template-columns: 1fr }
+    .bp-ct-spec, .bp-kpi-log, .bp-kpi-bars, .bp-kpi-axis, .bp-kpi-facts { display: none }
 }
