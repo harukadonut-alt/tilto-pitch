@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6fb38131.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6fb38131.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.a09abdc9.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.a09abdc9.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.6fb38131.js / rolldown-runtime-S-ySWqyJ.6fb38131.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.a09abdc9.js / rolldown-runtime-S-ySWqyJ.a09abdc9.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1116,17 +1116,22 @@ var SR_BASE = [
 
     /* 🔴 46・47 は**実在の受託案件**。2026-09-08 にかずさん経由で両社から掲載承認（Slack）。
        client を持つ作品だけ「CLIENT WORK」として社名と制作時期を出し、表現サンプルと区別する。
+       🔴 date は**年.月まで**で揃える（2026-09-09 社長）。日まで書けるのはフリコネだけで、
+          ベビレンタは先方FB待ちで納品日が未確定。粗い側に合わせないと粒度が揃わない。
+          「納品」「制作」の語も落とした。ベビレンタはまだ納品前で、語を残すと結局揃わないため。
+       🔴 社名に「様」は付けない。ここは宛名ではなく実績の掲載欄で、読み手は第三者。
+          同じ画面に並ぶ45の表現サンプルとの扱いの差が、敬意の差に見えるのも避ける。
        ⚠️ client の無い作品に「実績」と書かない（SR_BASE 冒頭の約束はそのまま生きている） */
     { id: `46`, industry: `IT・テック`, world: `CONNECT YOUR CAREER`, tone: `paper`,
       title: `エンジニアのキャリアを、会社都合で決めない。`,
       image: `./images/works/showroom-fricone-real.webp`,
       alt: `白と水色の背景にノートPCで作業する若手エンジニアの写真と、太いゴシックの見出しを組んだ採用サイトFV`,
-      client: { name: `フリーランスコネクト株式会社`, date: `2026.07.29 納品` } },
+      client: { name: `フリーランスコネクト株式会社`, date: `2026.07` } },
     { id: `47`, industry: `製造・小売`, world: `BABY GOODS RENTAL`, tone: `sumi`,
       title: `子育てを、もっと軽やかに。`,
       image: `./images/works/showroom-babyrenta-real.webp`,
       alt: `明るいオフィスでテーブルを囲んで話す3人の写真に、白い明朝の見出しを重ねた採用サイトFV`,
-      client: { name: `株式会社ベビレンタ`, date: `2026.08 制作` } }
+      client: { name: `株式会社ベビレンタ`, date: `2026.08` } }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
