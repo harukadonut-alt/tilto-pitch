@@ -24,11 +24,16 @@
    右＝記入欄。テキストはすべてこちら側（プライバシーポリシー、Savor Flow、著作権表示）。
    🔴 写真の左下に植物の暗部（明度8）があり、黒い字がそのままでは沈む。
       左ほど濃い覆いを重ねて、字が乗る左7割だけを持ち上げている（--veil）。
-      縦位置と覆いは実測で決めた（design/principles.md 基準18）。
-        ・縦位置 90% … 壁に貼った写真の密集を文字の裏から外す。11段階を測って最も静かだった
-        ・覆い .78→.48 … 文字が乗る範囲の「柄の騒がしさ」を 66→25 に落とし、最低コントラストは8.36
+      縦位置・覆い・白い板の3つは実測で決めた（design/principles.md 基準18）。
+        ・縦位置 12% … 見出しが白壁に乗り（暗部196）、上にランプ、下に机が両方入る位置
+        ・覆い .42→.14 … モックのように写真をくっきり出す。見出しはこれでコントラスト6.7
+        ・白い板 … リードと3つの事実の裏は植物の暗部（65）で、覆いでは足りない。
+          板の中はコントラスト12.7。**覆いを濃くする代わりに板で解く**のが要点で、
+          覆いを濃くすると写真ぜんぶが白ちゃけてモックから離れる。
+          🔴 板は内側の余白ぶん**左へ引き出してある**。そうしないと板の中の字だけが
+             右へずれて、見出しと左端が揃わなくなる（基準15の①で必ず出る）
       ⚠️ ズームで柄を避ける案も測ったが、机・マグ・ランプが画面から消えて構図が死んだので採らない。
-      写真を差し替えたら、この2つを測り直すこと。
+      写真を差し替えたら、この3つを測り直すこと。
    ============================================================ */
 * { box-sizing: border-box }
 
@@ -64,7 +69,7 @@ a { color: inherit }
 
 /* --- 左：写真と、3つの事実 --- */
 .cf-visual {
-    background: #e8e6e2 url("./images/contact-desk.webp") 50% 90% / cover no-repeat;
+    background: #e8e6e2 url("./images/contact-desk.webp") 50% 12% / cover no-repeat;
     flex-direction: column;
     justify-content: center;
     height: 100vh;
@@ -78,7 +83,7 @@ a { color: inherit }
 /* 字が乗る左側だけを持ち上げる覆い。右へ抜けるほど写真が素で出る */
 .cf-visual:before {
     background: linear-gradient(100deg,
-        #faf9f7c7 0%, #faf9f7b3 40%, #faf9f799 76%, #faf9f77a 100%);
+        #faf9f76b 0%, #faf9f74d 40%, #faf9f738 76%, #faf9f723 100%);
     position: absolute;
     inset: 0;
     content: ""
@@ -117,7 +122,7 @@ a { color: inherit }
     font: 700 clamp(7.5px, .62vw, 9.5px)/1.72 Arial, sans-serif
 }
 
-.cf-say { width: min(100%, 428px) }
+.cf-say { width: min(100%, 470px) }
 
 .cf-label {
     color: var(--coral);
@@ -129,30 +134,45 @@ a { color: inherit }
 .cf-title {
     letter-spacing: -.035em;
     margin: 0;
+    /* 🔴 太さは実測で決めた。Yu Mincho の 500 では写真に負けて読めなかった。
+       700 で Demibold の実体が当たる（合成ボールドではない）ので輪郭が保たれる */
     font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(38px, 4.4vw, 66px);
-    font-weight: 500;
-    line-height: 1.28
+    font-size: clamp(42px, 6.5vw, 96px);
+    font-weight: 700;
+    line-height: 1.24
 }
 
 .cf-title span { color: var(--coral) }
 
 .cf-lead {
     color: #111111d6;
-    margin: clamp(20px, 2.2vw, 34px) 0 0;
+    margin: 0;
     font-size: clamp(12.5px, 1.02vw, 15px);
     line-height: 2.06
 }
 
+/* 半透明の白い板。写真の上で字が沈むのを、覆いを濃くする代わりにこれで解く。
+   🔴 覆いを濃くすると写真ぜんぶが白ちゃけるが、板なら**字のある所だけ**を持ち上げられる。
+      板の内側で、いちばん暗い「初期費用 0円」の裏でもコントラスト12.7。 */
+.cf-plate {
+    --pp: clamp(18px, 1.9vw, 28px);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    background: #ffffffb8;
+    width: min(100%, calc(430px + var(--pp) * 2));
+    margin: clamp(22px, 2.4vw, 36px) 0 0 calc(-1 * var(--pp));
+    padding: var(--pp) var(--pp) calc(var(--pp) * .55)
+}
+
 /* 書いてよいのは決まっている事実だけ */
 .cf-facts {
-    margin: clamp(30px, 3.6vw, 54px) 0 0;
+    margin: clamp(18px, 2vw, 30px) 0 0;
     padding: 0;
     list-style: none
 }
 
 .cf-facts li {
-    border-bottom: 1px solid #11111129;
+    border-bottom: 1px solid #1111112e;
     justify-content: space-between;
     align-items: baseline;
     gap: 16px;
@@ -171,6 +191,8 @@ a { color: inherit }
     font-weight: 500;
     line-height: 1
 }
+
+.cf-facts li:last-child { border-bottom: 0 }
 
 .cf-facts em {
     font-size: .6em;
@@ -390,6 +412,13 @@ a { color: inherit }
 
     .cf-say { width: 100% }
 
+    /* 狭い画面では板を左端まで抜く。半端に8pxだけ残ると、ふちの汚れに見える */
+    .cf-plate {
+        width: calc(100% + var(--pad));
+        margin-left: calc(-1 * var(--pad));
+        padding-left: var(--pad)
+    }
+
     .cf-title { font-size: clamp(32px, 8.6vw, 46px) }
 
     .cf-panel {
@@ -427,17 +456,19 @@ a { color: inherit }
         <div class="cf-say">
             <p class="cf-label">CONTACT</p>
             <h1 class="cf-title">まずは、<br/><span>話してみる。</span></h1>
-            <p class="cf-lead">
-                まだ「なんとなく」で大丈夫です。<br/>
-                言葉になる前の段階からご一緒します。<br/>
-                原稿や写真が手元になくても始められます。
-            </p>
+            <div class="cf-plate">
+                <p class="cf-lead">
+                    まだ「なんとなく」で大丈夫です。<br/>
+                    言葉になる前の段階からご一緒します。<br/>
+                    原稿や写真が手元になくても始められます。
+                </p>
 
-            <ul class="cf-facts">
-                <li><b>MONTHLY</b><span>27,000<em> 円 / 月</em></span></li>
-                <li><b>INITIAL COST</b><span>0<em> 円</em></span></li>
-                <li><b>PROPOSAL</b><span>最短 1<em> 週間</em></span></li>
-            </ul>
+                <ul class="cf-facts">
+                    <li><b>MONTHLY</b><span>27,000<em> 円 / 月</em></span></li>
+                    <li><b>INITIAL COST</b><span>0<em> 円</em></span></li>
+                    <li><b>PROPOSAL</b><span>最短 1<em> 週間</em></span></li>
+                </ul>
+            </div>
         </div>
     </aside>
 
