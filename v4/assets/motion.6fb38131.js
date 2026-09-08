@@ -247,7 +247,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.8d082ff1.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.6fb38131.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;
