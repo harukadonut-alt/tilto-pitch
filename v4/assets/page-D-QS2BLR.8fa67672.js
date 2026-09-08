@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.ee952f0f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.ee952f0f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.8fa67672.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.8fa67672.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.ee952f0f.js / rolldown-runtime-S-ySWqyJ.ee952f0f.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.8fa67672.js / rolldown-runtime-S-ySWqyJ.8fa67672.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1112,7 +1112,21 @@ var SR_BASE = [
     { id: `45`, industry: `建設・不動産`, world: `URBAN DEVELOPMENT`, tone: `sumi`,
       title: `まだ、地図にない景色を。`,
       image: `./images/works/showroom-city-real.webp`,
-      alt: `夜の高層ビル群と低層の商業施設を見上げる写真に白いゴシックの見出しを重ねた都市開発会社の採用サイトFV` }
+      alt: `夜の高層ビル群と低層の商業施設を見上げる写真に白いゴシックの見出しを重ねた都市開発会社の採用サイトFV` },
+
+    /* 🔴 46・47 は**実在の受託案件**。2026-09-08 にかずさん経由で両社から掲載承認（Slack）。
+       client を持つ作品だけ「CLIENT WORK」として社名と制作時期を出し、表現サンプルと区別する。
+       ⚠️ client の無い作品に「実績」と書かない（SR_BASE 冒頭の約束はそのまま生きている） */
+    { id: `46`, industry: `IT・テック`, world: `CONNECT YOUR CAREER`, tone: `paper`,
+      title: `エンジニアのキャリアを、会社都合で決めない。`,
+      image: `./images/works/showroom-fricone-real.webp`,
+      alt: `白と水色の背景にノートPCで作業する若手エンジニアの写真と、太いゴシックの見出しを組んだ採用サイトFV`,
+      client: { name: `フリーランスコネクト株式会社`, date: `2026.07.29 納品` } },
+    { id: `47`, industry: `製造・小売`, world: `BABY GOODS RENTAL`, tone: `sumi`,
+      title: `子育てを、もっと軽やかに。`,
+      image: `./images/works/showroom-babyrenta-real.webp`,
+      alt: `明るいオフィスでテーブルを囲んで話す3人の写真に、白い明朝の見出しを重ねた採用サイトFV`,
+      client: { name: `株式会社ベビレンタ`, date: `2026.08 制作` } }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
@@ -1142,7 +1156,13 @@ var SR_INSIDE = {
     '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712, url: `https://reignite-live-production.haruka-namasute.chatgpt.site` },
     '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` },
     '44': { site: `./images/works/site-law.webp`, ratio: 1280 / 4245, url: `https://hayase-partners-recruitment.haruka-namasute.chatgpt.site` },
-    '45': { site: `./images/works/site-city.webp`, ratio: 1280 / 9162, url: `https://city-redevelopment-careers.haruka-namasute.chatgpt.site` }
+    '45': { site: `./images/works/site-city.webp`, ratio: 1280 / 9162, url: `https://city-redevelopment-careers.haruka-namasute.chatgpt.site` },
+    /* 46: フリコネの本番（先方のドメインで公開済み）。X-Frame-Options / CSP なしを 2026-09-08 に確認 */
+    '46': { site: `./images/works/site-fricone.webp`, ratio: 1280 / 8139, url: `https://www.freelance-connect.co.jp/recruit/` },
+    /* 47: ベビレンタは先方ドメインの公開URLが**まだ無い**（2026-09-08）。うちの公開用ステージング
+       （Cloudflare Pages）を指している。中身はローカルの index.html と一致を確認済み。
+       ⚠️ 先方が自社ドメインで公開したら url をそちらへ差し替えること */
+    '47': { site: `./images/works/site-babyrenta.webp`, ratio: 1280 / 12699, url: `https://babyrenta-recruit.pages.dev/` }
 };
 
 var SR_WORKS = SR_BASE.map((w, k) => ({
@@ -1246,7 +1266,8 @@ function Showroom() {
                                ⚠️ ALL と、作品が無い業種（士業・コンサル）は**開かない**。
                                   rep が null のときに setPicked(null) で閉じる。 */
                             let rep = name === `ALL` ? null
-                                : (SR_WORKS.find(x => x.inside && x.industry === name)
+                                : (SR_WORKS.find(x => x.client && x.industry === name)   /* 実績があればまずそれ（2026-09-08） */
+                                    || SR_WORKS.find(x => x.inside && x.industry === name)
                                     || SR_WORKS.find(x => x.industry === name) || null);
                             setPicked(rep ? rep.id : null);
                         },
@@ -1255,13 +1276,13 @@ function Showroom() {
                 }),
                 (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
-                    children: [`45の表現サンプルを、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`45の表現サンプルと、2つの制作実績を、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `45の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `47の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
@@ -1287,12 +1308,14 @@ function Showroom() {
                                 "data-tone": w.tone,
                                 "data-selected": picked === w.id ? `true` : `false`,
                                 "data-inside": w.inside ? `true` : `false`,
+                                "data-client": w.client ? `true` : `false`,
                                 tabIndex: copy === 1 ? -1 : 0,
                                 onClick: () => setPicked(w.id),
                                 "aria-label": `${w.industry}「${w.title}」の詳細を見る`,
                                 children: [(0, i.jsx)(`img`, { src: w.image, alt: ``, loading: `lazy` }),
                                     (0, i.jsxs)(`span`, {
-                                        children: [(0, i.jsxs)(`small`, { children: [w.industry, ` / `, w.world] }),
+                                        children: [w.client ? (0, i.jsx)(`em`, { className: `works-badge`, children: `CLIENT WORK` }) : null,
+                                            (0, i.jsxs)(`small`, { children: [w.industry, ` / `, w.world] }),
                                             (0, i.jsx)(`b`, { children: w.title }),
                                             (0, i.jsx)(`i`, { children: `VIEW →` })]
                                     })]
@@ -1320,9 +1343,11 @@ function Showroom() {
                 children: [/* 見出しは1本のバーに畳む。主役は下の作品なので、文字に高さを使わない */
                     (0, i.jsxs)(`div`, {
                         className: `works-drawer-head`,
-                        children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
+                        children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: shown.client ? `CLIENT WORK` : `EXPRESSION SAMPLE` }),
                             (0, i.jsx)(`h3`, { children: shown.title }),
-                            (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] })]
+                            (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] }),
+                            /* 実績だけ社名と制作時期を出す。表現サンプルには出ない（null） */
+                            shown.client ? (0, i.jsxs)(`p`, { className: `works-drawer-client`, children: [shown.client.name, ` ／ `, shown.client.date] }) : null]
                     }),
                     /* 中身まで見られる作品は、スクロールできる枠でサイト全体を見せる。
                        それ以外はFV1枚。⚠️ 縦長画像が無い作品にこの枠を出さない（空になる） */
@@ -2936,7 +2961,7 @@ function x() {
                                                     children: `VISUAL`
                                                 }),
                                                 (0, i.jsx)(`p`, {
-                                                    children: `45の実物を帯に流し、言葉より先に幅を見せる。`
+                                                    children: `47の実物を帯に流し、言葉より先に幅を見せる。`
                                                 })]
                                         }),
                                         (0, i.jsxs)(`div`, {
@@ -3067,10 +3092,10 @@ function x() {
             children: `scroll 0.42 → --bp-wire 0.61`
         }),
         (0, i.jsx)(`span`, {
-            children: `filter=ALL · tiles=45 · lanes=4`
+            children: `filter=ALL · tiles=47 · lanes=4`
         }),
         (0, i.jsx)(`span`, {
-            children: `industry=09 · inside=09`
+            children: `industry=09 · inside=11`
         }),
         (0, i.jsx)(`span`, {
             children: `vw 1440 · bp 1001 · dpr 2`
