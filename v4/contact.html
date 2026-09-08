@@ -124,21 +124,19 @@ a { color: inherit }
 
 .cf-say { width: min(100%, 470px) }
 
-.cf-label {
-    color: var(--coral);
-    letter-spacing: .32em;
-    margin: 0 0 clamp(16px, 1.6vw, 24px);
-    font: 700 clamp(11px, .95vw, 14px)/1 Arial, sans-serif
-}
-
+/* 🔴 トップページのFVの見出しと**同じ寸法・同じ太さ**に揃えてある。
+   問い合わせページの見出しがトップより目立つのはおかしい、という判断（2026-09-08 社長）。
+   数値は index の .hero-copy h1 を実測して写した:
+     font-size calc(5.18 * min(1vw, 1.77519svh)) / weight 600 / letter-spacing -.085em
+   ⚠️ 行間は CSS に 1.15 と書いてあるが、実際に効いているのは 1.24（別の規則が上書きしている）。
+      **書いてある値ではなく実測値**に合わせること。
+   ⚠️ トップ側を変えたらここも変える。片方だけ動かすと、また大小が食い違う。 */
 .cf-title {
-    letter-spacing: -.035em;
+    letter-spacing: -.085em;
     margin: 0;
-    /* 🔴 太さは実測で決めた。Yu Mincho の 500 では写真に負けて読めなかった。
-       700 で Demibold の実体が当たる（合成ボールドではない）ので輪郭が保たれる */
     font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(42px, 6.5vw, 96px);
-    font-weight: 700;
+    font-size: calc(5.18 * min(1vw, 1.77519svh));
+    font-weight: 600;
     line-height: 1.24
 }
 
@@ -159,9 +157,12 @@ a { color: inherit }
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
     background: #ffffffb8;
-    width: min(100%, calc(430px + var(--pp) * 2));
-    margin: clamp(22px, 2.4vw, 36px) 0 0 calc(-1 * var(--pp));
-    padding: var(--pp) var(--pp) calc(var(--pp) * .55)
+    width: min(100%, calc(430px + var(--pp)));
+    /* 🔴 板の左端＝見出しの左端。左へ引き出すのも、左の内側余白も入れない。
+       どちらを入れても「板のふち」と「文字の左端」がずれて見える（2026-09-08 社長の指摘）。
+       上下と右だけ余白を持たせる。 */
+    margin: clamp(22px, 2.4vw, 36px) 0 0;
+    padding: var(--pp) var(--pp) calc(var(--pp) * .55) 0
 }
 
 /* 書いてよいのは決まっている事実だけ */
@@ -412,14 +413,7 @@ a { color: inherit }
 
     .cf-say { width: 100% }
 
-    /* 狭い画面では板を左端まで抜く。半端に8pxだけ残ると、ふちの汚れに見える */
-    .cf-plate {
-        width: calc(100% + var(--pad));
-        margin-left: calc(-1 * var(--pad));
-        padding-left: var(--pad)
-    }
-
-    .cf-title { font-size: clamp(32px, 8.6vw, 46px) }
+    .cf-title { font-size: clamp(30px, 6.4vw, 52px) }
 
     .cf-panel {
         min-height: 0;
@@ -434,6 +428,12 @@ a { color: inherit }
     .cf-vert { display: none }
 
     .cf-form, .cf-foot { width: 100% }
+}
+
+/* トップページのSP（@media max-width:700px の #top h1）と同じ寸法にする。
+   ただし中央寄せの送り（padding-left: 5.6vw）は、こちらが左揃えなので入れない */
+@media (max-width: 700px) {
+    .cf-title { letter-spacing: -1.15px; font-size: 11.6vw; line-height: 1.4 }
 }
 
 @media (max-width: 480px) {
@@ -454,7 +454,6 @@ a { color: inherit }
         </a>
 
         <div class="cf-say">
-            <p class="cf-label">CONTACT</p>
             <h1 class="cf-title">まずは、<br/><span>話してみる。</span></h1>
             <div class="cf-plate">
                 <p class="cf-lead">
