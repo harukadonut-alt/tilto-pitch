@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.5fe0da0d.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.996042e1.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -20,7 +20,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.5fe0da0d.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.996042e1.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +756,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.5fe0da0d.css）。bands.5fe0da0d.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.996042e1.css）。bands.996042e1.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +842,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.5fe0da0d.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.996042e1.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1496,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.5fe0da0d.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.996042e1.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1509,7 +1509,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.5fe0da0d.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.996042e1.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1647,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.5fe0da0d.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.996042e1.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1875,12 +1875,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.5fe0da0d.js が動かしている
-     ・motion.5fe0da0d.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.996042e1.js が動かしている
+     ・motion.996042e1.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.5fe0da0d.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.996042e1.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2226,7 +2226,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.5fe0da0d.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.996042e1.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2462,7 +2462,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.5fe0da0d.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.996042e1.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2499,7 +2499,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.5fe0da0d.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.996042e1.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2702,7 +2702,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.5fe0da0d.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.996042e1.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3005,7 +3005,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.5fe0da0d.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.996042e1.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3201,12 +3201,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.5fe0da0d.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.996042e1.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.5fe0da0d.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.996042e1.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3427,4 +3427,62 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
        図面そのものが主役で、注釈の中身は「05 デザインの前に、設計がある。」の本文が担う */
     .bp-board { right: -14px }
     .bp-note, .bp-leaders { display: none }
+}
+
+
+/* ============================================================
+   05 図面 — 2026-09-08 の直し（社長: 「もっと奥行きを。後ろに倒れて細くなる感じ」）
+
+   (1) 面に**本物の遠近**を入れた。
+       これまでは rotate(6deg) skewX(-4deg) の2Dのせん断だけで、
+       平べったい紙が並んでいるようにしか見えなかった。
+       .bp-board には最初から perspective:1200px が入っていたのに、
+       子が2D変形しかしていないので**一度も効いていなかった**。
+       rotateX で奥へ倒し、rotateY で横にも振ると、遠い辺が短くなって奥行きが出る。
+       🔴 translateY の calc はスクロール連動なので**1文字も触っていない**。
+          入れ替えたのは rotate/skew の2つだけ（機械置換）。
+       ⚠️ 引き出し線（.bp-leaders）は固定座標で面を指しているので、
+          倒す角度を大きくすると線の先が面から外れる。14deg / -10deg はその手前。
+
+   (2) FVの縮図の見出しを大きく太く。5.5px相当では何と書いてあるか読めなかった。
+
+   (3) 帯を「縦長の四角の行列」から**曲がった帯**に変えた。
+       実物のFVは写真が曲線の帯になって流れているのに、縮図は細長い長方形が
+       横一列に並んでいるだけで、別物になっていた。
+       SVGで中心線を3次ベジェにし、半幅を手前15→奥4.5と細めて遠近を付けてある。
+       中心線 P=(-16,36)(70,14)(160,40)(283,14) / 半幅 15→4.5 / タイル8枚。
+       作り直すときは scratchpad の band.py と同じ式で座標を焼き直す。
+   ============================================================ */
+
+/* (2) FVの縮図の見出し */
+/* 面の上下はFVの面とCONTENTの面に挟まれていて、見えるのは斜め72pxの窓だけ。
+   見出しはその窓に収まるところまで下げる（24px → 34px。実測で決めた） */
+.bp-wire-copy2 { width: 50%; top: 34px }
+.bp-wire-copy2 strong { margin-top: 7px;
+    font: 700 clamp(11px, .96vw, 16px)/1.18 Yu Mincho, Hiragino Mincho ProN, serif;
+    letter-spacing: -.045em }
+.bp-wire-copy2 p { margin-top: 6px }
+
+/* (3) 曲がった帯。見出しを広げたぶん右へ寄せ、面の中で上へ上げて背を高くした
+   （下は CONTENT の面に隠れるので、隠れない上半分に置く） */
+.bp-wire-ribbon { display: block; overflow: visible;
+    left: 54%; right: -10%; top: 32%; height: 42% }
+.bp-band-cell { fill: #11131714; stroke: #11131766; stroke-width: .7; vector-effect: non-scaling-stroke }
+.bp-band-cell.is-on { fill: #ff4d4f26; stroke: #ff4d4f8c }
+.bp-band-edge { fill: none; stroke: #111317; stroke-width: 1.1; vector-effect: non-scaling-stroke }
+
+@media (width>=1001px) {
+    /* (1) 奥行き。置換したのは rotate/skew だけで、translateY の calc は原文のまま */
+    .bp-base { transform: translateY(calc((1 - var(--bp-foundation)) * 35px - var(--bp-foundation) * 4px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-foundation) * .03)) }
+    .bp-information { transform: translateY(calc((1 - var(--bp-information)) * 45px - var(--bp-information) * 10px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-information) * .03)) }
+    .bp-ui { transform: translateY(calc((1 - var(--bp-ui)) * 50px - var(--bp-ui) * 12px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-ui) * .03)) }
+    .bp-wireframe { transform: translateY(calc((1 - var(--bp-wire)) * 60px - var(--bp-wire) * 16px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-wire) * .03)) }
+    .bp-content { transform: translateY(calc((1 - var(--bp-content)) * 60px - var(--bp-content) * 23px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-content) * .03)) }
+    .bp-visual { transform: translateY(calc((1 - var(--bp-visual)) * 75px - var(--bp-visual) * 32px + var(--bp-parallax-front))) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) scale(calc(.97 + var(--bp-visual) * .03)) }
+    .bp-kpi { transform: translateY(calc((1 - var(--bp-kpi)) * 18px)) rotateZ(6deg) rotateY(-8deg) rotateX(18deg) }
+    .bp-kpi { transform-origin: 50% 100% }
+
+    /* 奥へ倒したぶん面が縦に縮んで、WFの面が CONTENT の面にほぼ隠れた。
+       WFだけ 31.5% → 25% へ上げて、帯と見出しが見えるところまで出す */
+    .bp-wireframe { top: 25% }
 }

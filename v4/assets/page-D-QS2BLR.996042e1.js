@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.5fe0da0d.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.5fe0da0d.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.996042e1.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.996042e1.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.5fe0da0d.js / rolldown-runtime-S-ySWqyJ.5fe0da0d.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.996042e1.js / rolldown-runtime-S-ySWqyJ.996042e1.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -2502,17 +2502,50 @@ function x() {
                                                                 `Web制作`]
                                                         })]
                                                 }),
-                                                (0, i.jsxs)(`div`, {
-                                                    className: `bp-wire-ribbon`,
-                                                    children: [(0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {}),
-                                                        (0, i.jsx)(`i`, {})]
-                                                }),
-                                                (0, i.jsxs)(`div`, {
+                                                (0, i.jsxs)(`svg`, {
+                                className: `bp-wire-ribbon`,
+                                viewBox: `0 0 267 52`,
+                                preserveAspectRatio: `none`,
+                                "aria-hidden": `true`,
+                                children: [
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M-19.7 21.5L-12.8 20.1L-5.9 18.9L1 17.8L7.8 17L14.7 16.2L18.3 43.4L12.1 44.5L5.9 45.8L-0.2 47.2L-6.3 48.8L-12.3 50.5Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M14.7 16.2L21.6 15.7L28.4 15.2L35.3 14.9L42.2 14.7L49.1 14.6L50.3 39.3L43.8 39.9L37.3 40.6L30.9 41.4L24.6 42.3L18.3 43.4Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell is-on`,
+                                    d: `M49.1 14.6L56 14.6L63 14.6L69.9 14.7L76.9 14.9L84 15.2L84 37.3L77.1 37.6L70.3 37.9L63.5 38.3L56.9 38.8L50.3 39.3Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M84 15.2L91 15.4L98.1 15.7L105.3 16.1L112.5 16.4L119.7 16.8L119.5 36.2L112.3 36.4L105.1 36.6L98 36.8L90.9 37L84 37.3Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M119.7 16.8L127 17.1L134.4 17.4L141.8 17.7L149.3 17.9L156.9 18.1L157.1 35L149.4 35.3L141.8 35.6L134.3 35.8L126.9 36.1L119.5 36.2Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell is-on`,
+                                    d: `M156.9 18.1L164.6 18.3L172.3 18.4L180.2 18.4L188.1 18.4L196.1 18.2L196.9 32.4L188.8 33.1L180.7 33.7L172.7 34.2L164.9 34.7L157.1 35Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M196.1 18.2L204.2 17.9L212.4 17.6L220.7 17.1L229.1 16.5L237.6 15.7L239.1 27.3L230.5 28.6L221.9 29.7L213.5 30.7L205.1 31.6L196.9 32.4Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-cell`,
+                                    d: `M237.6 15.7L246.3 14.8L255 13.8L263.9 12.6L272.9 11.2L282.1 9.6L283.9 18.4L274.7 20.5L265.7 22.5L256.7 24.2L247.8 25.8L239.1 27.3Z`
+                                }),
+                                (0, i.jsx)(`path`, {
+                                    className: `bp-band-edge`,
+                                    d: `M-19.7 21.5L-12.8 20.1L-5.9 18.9L1 17.8L7.8 17L14.7 16.2L21.6 15.7L28.4 15.2L35.3 14.9L42.2 14.7L49.1 14.6L56 14.6L63 14.6L69.9 14.7L76.9 14.9L84 15.2L91 15.4L98.1 15.7L105.3 16.1L112.5 16.4L119.7 16.8L127 17.1L134.4 17.4L141.8 17.7L149.3 17.9L156.9 18.1L164.6 18.3L172.3 18.4L180.2 18.4L188.1 18.4L196.1 18.2L204.2 17.9L212.4 17.6L220.7 17.1L229.1 16.5L237.6 15.7L246.3 14.8L255 13.8L263.9 12.6L272.9 11.2L282.1 9.6L283.9 18.4L274.7 20.5L265.7 22.5L256.7 24.2L247.8 25.8L239.1 27.3L230.5 28.6L221.9 29.7L213.5 30.7L205.1 31.6L196.9 32.4L188.8 33.1L180.7 33.7L172.7 34.2L164.9 34.7L157.1 35L149.4 35.3L141.8 35.6L134.3 35.8L126.9 36.1L119.5 36.2L112.3 36.4L105.1 36.6L98 36.8L90.9 37L84 37.3L77.1 37.6L70.3 37.9L63.5 38.3L56.9 38.8L50.3 39.3L43.8 39.9L37.3 40.6L30.9 41.4L24.6 42.3L18.3 43.4L12.1 44.5L5.9 45.8L-0.2 47.2L-6.3 48.8L-12.3 50.5Z`
+                                })]
+                                }),
+                            (0, i.jsxs)(`div`, {
                                                     className: `bp-wire-strip`,
                                                     children: [(0, i.jsxs)(`span`, {
                                                             children: [(0, i.jsx)(`small`, {
@@ -2673,11 +2706,11 @@ function x() {
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M841 249H802L754 304`
+                                            d: `M841 249H800L730 215`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
-                                            d: `M831 393H792L744 278`
+                                            d: `M831 393H788L660 264`
                                         }),
                                         (0, i.jsx)(`path`, {
                                             pathlength: `1`,
@@ -2709,13 +2742,13 @@ function x() {
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `754`,
-                                                    cy: `304`,
+                                                    cx: `730`,
+                                                    cy: `215`,
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
-                                                    cx: `744`,
-                                                    cy: `278`,
+                                                    cx: `660`,
+                                                    cy: `264`,
                                                     r: `4`
                                                 }),
                                                 (0, i.jsx)(`circle`, {
