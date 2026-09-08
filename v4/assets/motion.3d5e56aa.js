@@ -243,3 +243,29 @@
     window.addEventListener('scroll', request, { passive: true });
     window.addEventListener('resize', request);
 })();
+
+/* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
+   CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
+   枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
+   （2026-09-08。経緯は coral-sections.3d5e56aa.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+(function () {
+    var VW = 1440;
+    if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;
+    var ro = new ResizeObserver(function (entries) {
+        entries.forEach(function (en) {
+            var w = en.contentRect.width;
+            if (w > 0) en.target.style.setProperty('--sf', (w / VW).toFixed(4));
+        });
+    });
+    var seen = new WeakSet();
+    function attach(root) {
+        (root.querySelectorAll ? root.querySelectorAll('.works-site-frame[data-live="true"]') : []).forEach(function (f) {
+            if (seen.has(f)) return; seen.add(f); ro.observe(f);
+            f.style.setProperty('--sf', (f.clientWidth / VW).toFixed(4));
+        });
+    }
+    new MutationObserver(function (muts) {
+        muts.forEach(function (mu) { mu.addedNodes.forEach(function (n) { if (n.nodeType === 1) attach(n); }); });
+    }).observe(document.body, { childList: true, subtree: true });
+    attach(document);
+})();
