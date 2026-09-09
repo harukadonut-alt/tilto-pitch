@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.eba31ac8.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.eba31ac8.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.de484cbc.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.de484cbc.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.eba31ac8.js / rolldown-runtime-S-ySWqyJ.eba31ac8.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.de484cbc.js / rolldown-runtime-S-ySWqyJ.de484cbc.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1238,8 +1238,17 @@ function Showroom() {
     /* 右の列は「選んだタイルと同じ業種のFVを**全部**」（2026-09-01・社長指示）。
        前は業種に関係なく、ずらし幅 1,2,4,5 で4点だけ拾っていた。
        ⚠️ 数を決め打ちしない。業種ごとの点数が増えたらそのぶん増える（列はスクロールする） */
-    let related = (0, r.useMemo)(() => !work ? []
-        : SR_WORKS.filter(w => w.industry === work.industry), [work]);
+    /* 🔴 2026-09-09・社長指示「上から下まで見られる（＝実際に動く）ものを上に、優先的に。
+       複数あればクリックで切り替え。ファーストビュー画像だけのものはその下に続ける」。
+       ⚠️ 元の配列は並べ替えない（SR_WORKS は帯やフィルタでも使う）。ここで2つに分ける。 */
+    let related = (0, r.useMemo)(() => {
+        if (!work) return { live: [], still: [] };
+        let all = SR_WORKS.filter(w => w.industry === work.industry);
+        return {
+            live:  all.filter(w => w.inside && w.inside.url),
+            still: all.filter(w => !(w.inside && w.inside.url))
+        };
+    }, [work]);
 
     (0, r.useEffect)(() => {
         if (!work) return;
@@ -1389,7 +1398,25 @@ function Showroom() {
                       SSRには出ないので、index.html を触らなくてもhydrationはズレない */
                 className: `works-rail`,
                 children: [(0, i.jsxs)(`small`, { className: `works-rail-head`, children: [`RELATED — `, work.industry] }),
-                    ...related.map(other => (0, i.jsxs)(`figure`, {
+                    /* ── 上：実際に動くサイト。押すと左の枠がそのサイトに切り替わる ── */
+                    related.live.length
+                        ? (0, i.jsx)(`small`, { className: `works-rail-group`, children: `実際に動くサイト` })
+                        : null,
+                    ...related.live.map(other => (0, i.jsxs)(`button`, {
+                        type: `button`,
+                        className: `works-rail-item works-rail-item--live`,
+                        /* いま左に出ているものに印。押した作品ではなく**表示中**で判定する
+                           （縦長が無い作品を開くと、左は同じ業種の別のサイトになるため） */
+                        "data-current": shown && other.id === shown.id ? `true` : `false`,
+                        onClick: () => setPicked(other.id),
+                        children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
+                            (0, i.jsx)(`span`, { children: other.title })]
+                    }, other.id)),
+                    /* ── 下：ファーストビューの絵だけのもの。参照するだけで押しても変わらない ── */
+                    related.still.length
+                        ? (0, i.jsx)(`small`, { className: `works-rail-group`, children: `ファーストビューのみ` })
+                        : null,
+                    ...related.still.map(other => (0, i.jsxs)(`figure`, {
                         className: `works-rail-item`,
                         "data-current": other.id === work.id ? `true` : `false`,
                         children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
@@ -1784,7 +1811,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.eba31ac8.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.de484cbc.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
