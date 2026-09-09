@@ -59,6 +59,15 @@
         return t * t * (3 - 2 * t);
     };
 
+    /* 出す・沈めるを「静かに」効かせる版。
+       cubic-bezier(0.22, 1, 0.36, 1) の当たりを easeOutCubic で近似している
+       （t=.5 で 0.875 対 0.87 / t=.75 で 0.984 対 0.96）。
+       ⚠️ easeOutQuint まで強めるとスクラブが「跳ねた」ように見える。ここで止める */
+    var ease = function (from, to, v) {
+        var t = clamp((v - from) / Math.max(1e-4, to - from));
+        return 1 - Math.pow(1 - t, 3);
+    };
+
     /* 幕を「文字が現れるのに合わせて」剥がす係。
        ⚠️ 一度付けたら外さない。戻ってまた下りたときに毎回引き直すとうるさい */
     var wiped = new Set();
@@ -108,40 +117,27 @@
                 root.style.setProperty('--hero-bridge-progress', hero.toFixed(4));
             }
 
-            // 02 お悩み: 黒がせり上がる → 高い（左）→ 遅い（中央）→ 成果が見えない（右）
-            //   ⚠️ 視線が左→中央→右に流れるよう、区間をずらして重ねてある。
-            //      同時に動かすと「一斉フェードイン」になって安っぽくなる
-            if (kind === 'problems-story') {
-                /* ⚠️ `seen` をそのまま使うと、着地コピーが出そろうのが seen=0.92 になり、
-                   そのとき節はもう画面の上へ抜けている（下の計算で確認済み）。
-                   節が画面にちゃんと乗っている seen 0.10〜0.65 に物語を畳み込む。
-                   0.65 の時点で節の上端が画面上端の少し上、着地コピーが画面中ほどに来る。 */
-                var pb = clamp((seen - .1) / .55);
-                st.setProperty('--pb-black', ramp(0, .15, pb).toFixed(4));
-                st.setProperty('--pb-high', ramp(.15, .35, pb).toFixed(4));
-                st.setProperty('--pb-slow', ramp(.25, .50, pb).toFixed(4));
-                st.setProperty('--pb-result', ramp(.40, .65, pb).toFixed(4));
-                st.setProperty('--pb-note-1', ramp(.55, .68, pb).toFixed(4));
-                st.setProperty('--pb-note-2', ramp(.60, .73, pb).toFixed(4));
-                st.setProperty('--pb-note-3', ramp(.65, .78, pb).toFixed(4));
-                // 赤入れは左から引かれる（transform-origin: 0）
-                st.setProperty('--pb-line-1', ramp(.58, .72, pb).toFixed(4));
-                st.setProperty('--pb-line-2', ramp(.66, .80, pb).toFixed(4));
-                st.setProperty('--pb-line-mid', ramp(.62, .76, pb).toFixed(4));
-                var closing = ramp(.75, .92, pb);
-                st.setProperty('--pb-closing', closing.toFixed(4));
-                if (closing > .06) wipe(el.querySelector('.reference-problems-statement'), 'pb');
-            }
-
-            // 02b AFTER: 見出し → 27,000円〜（左上）→ 1週間（中央上）→ 伴走（中央下）→ オリジナルデザイン（右）
-            //   02と同じ「seen 0.10〜0.65 に畳む」区間。順に出して一斉フェードを避ける
-            if (kind === 'after-story') {
-                var pa = clamp((seen - .1) / .55);
-                st.setProperty('--af-head', ramp(0, .18, pa).toFixed(4));
-                st.setProperty('--af-1', ramp(.12, .32, pa).toFixed(4));
-                st.setProperty('--af-2', ramp(.24, .44, pa).toFixed(4));
-                st.setProperty('--af-3', ramp(.36, .56, pa).toFixed(4));
-                st.setProperty('--af-4', ramp(.46, .68, pa).toFixed(4));
+            /* 02 ハードル: 課題が主役 → 背景へ沈む → Tilto°の合図 → 解決策が手前に立つ
+               ⚠️ 使うのは `seen`（節が画面を通り過ぎた割合）ではなく**ピン留めの進み具合**。
+                  節は200vhで中の舞台が100svhの sticky なので、`-box.top / (height - vh)` の
+                  0→1 が、貼り付いている間とちょうど一致する。
+                  スクロールを止めた位置と見え方が1対1になる（scrub）。
+               ⚠️ 区間は重ねてある。そろえると「一斉フェードイン」になって安っぽい。 */
+            if (kind === 'hurdles-story') {
+                var ph = clamp(-box.top / Math.max(1, box.height - vh));
+                /* 0.00〜0.18 は課題を読ませる時間。ここでは何も動かさない */
+                st.setProperty('--hu-sink',    ease(.18, .40, ph).toFixed(4));  // 課題が背景へ沈む
+                st.setProperty('--hu-line',    ease(.30, .48, ph).toFixed(4));  // コーラルの線が上から伸びる
+                st.setProperty('--hu-brand',   ease(.34, .48, ph).toFixed(4));  // Tilto°（切り替えの合図）
+                st.setProperty('--hu-1',       ease(.42, .64, ph).toFixed(4));  // 月額 27,000円〜
+                st.setProperty('--hu-2',       ease(.52, .74, ph).toFixed(4));  // 最短 1週間
+                st.setProperty('--hu-3',       ease(.62, .84, ph).toFixed(4));  // 公開後も、改善しつづける。
+                st.setProperty('--hu-note-1',  ease(.50, .70, ph).toFixed(4));
+                st.setProperty('--hu-note-2',  ease(.60, .80, ph).toFixed(4));
+                st.setProperty('--hu-note-3',  ease(.70, .90, ph).toFixed(4));
+                st.setProperty('--hu-closing', ease(.78, .92, ph).toFixed(4));
+                /* 0.92〜1.00 は全部1のまま。完成形を保ったままピンが外れる。
+                   🔴 外れる直前に消さない。見せてから隠すのは不親切 */
             }
 
             // 03 体験: 紙が散らばった状態 → 整理 → サイトの形になる
@@ -247,7 +243,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.29aa9942.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.10a93a76.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;

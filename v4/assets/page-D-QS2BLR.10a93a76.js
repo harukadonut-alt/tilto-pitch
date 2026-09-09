@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.29aa9942.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.29aa9942.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.10a93a76.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.10a93a76.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.29aa9942.js / rolldown-runtime-S-ySWqyJ.29aa9942.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.10a93a76.js / rolldown-runtime-S-ySWqyJ.10a93a76.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1704,139 +1704,91 @@ function x() {
                         })]
                 })]
         }),
-        (0, i.jsxs)(`section`, {
-            className: `reference-problems`,
-            "data-motion": `problems-story`,
-            "aria-labelledby": `reference-problems-title`,
-            children: [                (0, i.jsxs)(`h2`, {id: `reference-problems-title`,
-                    className: `reference-problems-head`,
-                    children: [(0, i.jsx)(`b`, {children: `BEFORE`
+        (0, i.jsx)(`section`, {
+            className: `reference-hurdles`,
+            "data-motion": `hurdles-story`,
+            "aria-labelledby": `reference-hurdles-title`,
+            children: (0, i.jsxs)(`div`, {
+                className: `hu-stage`,
+                children: [
+                    (0, i.jsxs)(`h2`, {
+                        id: `reference-hurdles-title`,
+                        className: `hu-head`,
+                        children: [`採用サイトのハードルを、ひとつずつなくす`,
+                            (0, i.jsx)(`i`, { children: `。` })]
                     }),
-                    (0, i.jsx)(`span`, {children: `採用サイトは、ハードルが高い。`
-                    })]
-                }),
-                (0, i.jsxs)(`article`, {
-                    className: `reference-problem reference-problem-high`,
-                    children: [(0, i.jsx)(`strong`, {
-                            children: `高い`
-                        }),
-                        (0, i.jsxs)(`p`, {
-                            children: [`制作費が大きく、`,
-                                (0, i.jsx)(`br`, {}),
-                                `踏み出せない。`]
-                        }),
-                        (0, i.jsx)(`i`, {
-                            "aria-hidden": `true`
-                        })]
-                }),
-                (0, i.jsxs)(`article`, {
-                    className: `reference-problem reference-problem-late`,
-                    children: [(0, i.jsx)(`strong`, {
-                            children: `遅い`
-                        }),
-                        (0, i.jsxs)(`p`, {
-                            children: [`公開までに`,
-                                (0, i.jsx)(`br`, {}),
-                                `時間がかかりすぎる。`]
-                        }),
-                        (0, i.jsx)(`i`, { "aria-hidden": `true` })]
-                }),
-                (0, i.jsxs)(`article`, {
-                    className: `reference-problem reference-problem-result`,
-                    children: [(0, i.jsxs)(`strong`, {
-                            children: [`成果が`,
-                                (0, i.jsx)(`br`, {}),
-                                `見えない`]
-                        }),
-                        (0, i.jsxs)(`p`, {
-                            children: [`つくっても、`,
-                                (0, i.jsx)(`br`, {}),
-                                `その先が見えない。`]
-                        }),
-                        (0, i.jsx)(`i`, {
-                            "aria-hidden": `true`
-                        })]
-                }),
-                (0, i.jsxs)(`p`, {
-                    className: `reference-problems-statement`,
-                    children: [(0, i.jsx)(`b`, {
-                            children: `RETHINK THE RECRUITMENT SITE.`
-                        }),
-                        (0, i.jsxs)(`span`, {
-                            children: (0, i.jsxs)(`span`, {
-                                className: `hl-line`,
-                                children: [`採用サイトの常識を、`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `更新する`,
-                                    (0, i.jsx)(`i`, { children: `。` }),
-                                    (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
-                            })
-                        })]
-                }),
-                (0, i.jsxs)(`span`, {
-                    className: `reference-problems-scroll`,
-                    "aria-hidden": `true`,
-                    children: [`SCROLL`,
-                        (0, i.jsx)(`i`, {})]
-                })]
-        }),
-        (0, i.jsxs)(`section`, {className: `reference-after`,
-            "data-motion": `after-story`,
-            "aria-labelledby": `reference-after-title`,
-            children: [(0, i.jsxs)(`h2`, {id: `reference-after-title`,
-                className: `reference-after-head`,
-                children: [(0, i.jsx)(`b`, {children: `AFTER`
-                }),
-                (0, i.jsx)(`span`, {children: `Tiltoならできること`
-                })]
-            }),
-            (0, i.jsxs)(`article`, {className: `after-item after-item-cost`,
-                children: [(0, i.jsx)(`q`, {children: `採用サイトに何十万円、何百万円もかけられない`
-                }),
-                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `月額`
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-issue hu-issue-cost`,
+                        children: [(0, i.jsx)(`strong`, { children: `高い。` }),
+                            (0, i.jsxs)(`span`, {
+                                children: [`制作費が大きく、`, (0, i.jsx)(`br`, {}), `踏み出せない。`]
+                            })]
                     }),
-                    `27,000`,
-                    (0, i.jsx)(`span`, {children: `円〜`
-                    })]
-                }),
-                (0, i.jsxs)(`p`, {children: [`大きな制作費を、月額に。`,
-                    (0, i.jsx)(`br`, {}),
-                    `採用サイトの初期投資を抑える`]
-                })]
-            }),
-            (0, i.jsxs)(`article`, {className: `after-item after-item-speed`,
-                children: [(0, i.jsx)(`q`, {children: `制作会社に頼むと完成まで何ヶ月もかかる`
-                }),
-                (0, i.jsxs)(`strong`, {children: [(0, i.jsx)(`em`, {children: `最短`
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-issue hu-issue-slow`,
+                        children: [(0, i.jsx)(`strong`, { children: `遅い。` }),
+                            (0, i.jsxs)(`span`, {
+                                children: [`公開までに`, (0, i.jsx)(`br`, {}), `時間がかかりすぎる。`]
+                            })]
                     }),
-                    `1週間`]
-                }),
-                (0, i.jsxs)(`p`, {children: [`30分程度のお打ち合わせから、`,
-                    (0, i.jsx)(`br`, {}),
-                    `最短1週間でサイトをご提案`]
-                })]
-            }),
-            (0, i.jsxs)(`article`, {className: `after-item after-item-pro`,
-                children: [(0, i.jsx)(`q`, {children: `せっかく作っても、本当に応募が増えるのか分からない`
-                }),
-                (0, i.jsxs)(`strong`, {children: [`プロが`,
-                    (0, i.jsx)(`br`, {}),
-                    `伴走`]
-                }),
-                (0, i.jsxs)(`p`, {children: [`採用のプロが設計し、`,
-                    (0, i.jsx)(`br`, {}),
-                    `公開後も更新しつづける`]
-                })]
-            }),
-            (0, i.jsxs)(`p`, {className: `reference-after-statement`,
-                children: [(0, i.jsx)(`b`, {children: `BUILD, THEN GROW.`
-                }),
-                (0, i.jsxs)(`span`, {children: [`つくって終わりにしない。`,
-                    (0, i.jsx)(`br`, {className: `sp-only`}),
-                    `育てる採用サイト`,
-                    (0, i.jsx)(`i`, {children: `。`
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-issue hu-issue-end`,
+                        children: [(0, i.jsx)(`strong`, { children: `つくって終わり。` }),
+                            (0, i.jsxs)(`span`, {
+                                children: [`つくっても、`, (0, i.jsx)(`br`, {}), `その先が見えない。`]
+                            })]
+                    }),
+                    (0, i.jsxs)(`div`, {
+                        className: `hu-switch`,
+                        children: [(0, i.jsx)(`i`, { "aria-hidden": `true` }),
+                            (0, i.jsxs)(`b`, {
+                                children: [`Tilto`, (0, i.jsx)(`sup`, { children: `°` })]
+                            })]
+                    }),
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-answer hu-answer-price`,
+                        children: [(0, i.jsx)(`strong`, {
+                                children: (0, i.jsxs)(`span`, {
+                                    children: [(0, i.jsx)(`em`, { children: `月額` }), `27,000`,
+                                        (0, i.jsx)(`u`, { children: `円〜` })]
+                                })
+                            }),
+                            (0, i.jsxs)(`small`, {
+                                children: [`初期費用0円。`, (0, i.jsx)(`br`, {}), `大きな制作費を、毎月の運用費へ。`]
+                            }),
+                            (0, i.jsx)(`i`, { "aria-hidden": `true` })]
+                    }),
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-answer hu-answer-speed`,
+                        children: [(0, i.jsx)(`strong`, {
+                                children: (0, i.jsxs)(`span`, {
+                                    children: [(0, i.jsx)(`em`, { children: `最短` }), `1週間`]
+                                })
+                            }),
+                            (0, i.jsxs)(`small`, {
+                                children: [`30分程度のお打ち合わせから、`, (0, i.jsx)(`br`, {}), `最短1週間でご提案。`]
+                            }),
+                            (0, i.jsx)(`i`, { "aria-hidden": `true` })]
+                    }),
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-answer hu-answer-grow`,
+                        children: [(0, i.jsx)(`strong`, {
+                                children: (0, i.jsxs)(`span`, {
+                                    children: [`公開後も、`, (0, i.jsx)(`br`, {}), `改善しつづける`,
+                                        (0, i.jsx)(`b`, { children: `。` })]
+                                })
+                            }),
+                            (0, i.jsxs)(`small`, {
+                                children: [`公開後も、`, (0, i.jsx)(`br`, {}), `更新・改善まで伴走。`]
+                            }),
+                            (0, i.jsx)(`i`, { "aria-hidden": `true` })]
+                    }),
+                    (0, i.jsxs)(`p`, {
+                        className: `hu-closing`,
+                        children: [`つくって終わりにしない。育てる採用サイト`,
+                            (0, i.jsx)(`i`, { children: `。` })]
                     })]
-                })]
-            })]
+            })
         }),
         (0, i.jsx)(`section`, {
             className: `process-section`,

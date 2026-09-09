@@ -1,9 +1,16 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.29aa9942.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.10a93a76.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
+
+/* 🔴 2026-09-09: このファイルの `.reference-problems*` / `.reference-problem*` /
+   `.reference-after*` / `.after-item*` は、**もう使っていない**（マークアップを消した）。
+   02は末尾の `.reference-hurdles` に作り直してある。
+   残してあるのは、刷新したばかりで戻す可能性があるから。落ち着いたら消すこと
+   （案件TODOに行を立ててある）。⚠️ `.hl-line` / `.hl-band` は03・05でも使うので消さない。
+   ------------------------------------------------------------------ */
 
 /* ── 02 私たちが解決するお悩み ────────────────────────────────
    役割は**緊張のセクション**。01の静かな白のあとに空気を変える。
@@ -20,7 +27,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.29aa9942.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.10a93a76.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -756,7 +763,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.29aa9942.css）。bands.29aa9942.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.10a93a76.css）。bands.10a93a76.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -842,7 +849,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.29aa9942.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.10a93a76.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1496,7 +1503,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.29aa9942.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.10a93a76.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1509,7 +1516,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.29aa9942.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.10a93a76.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1647,7 +1654,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.29aa9942.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.10a93a76.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1879,12 +1886,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.29aa9942.js が動かしている
-     ・motion.29aa9942.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.10a93a76.js が動かしている
+     ・motion.10a93a76.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.29aa9942.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.10a93a76.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2230,7 +2237,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.29aa9942.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.10a93a76.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2468,7 +2475,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.29aa9942.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.10a93a76.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2505,7 +2512,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.29aa9942.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.10a93a76.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2708,7 +2715,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.29aa9942.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.10a93a76.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3033,7 +3040,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.29aa9942.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.10a93a76.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3229,12 +3236,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.29aa9942.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.10a93a76.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.29aa9942.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.10a93a76.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3608,7 +3615,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
       05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
       コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
-      ⚠️ motion.29aa9942.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+      ⚠️ motion.10a93a76.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
          ここに数字を足すときも同じ線を守ること。
    ============================================================ */
 
@@ -3790,7 +3797,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
       中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
-      縮小率は motion.29aa9942.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+      縮小率は motion.10a93a76.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
    右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
    ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
    ============================================================ */
@@ -3905,4 +3912,479 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     /* 書体・色の見本（Aa 游明朝／COLOR）は板の左端にあり、板を左から置いたことで画面の外に半分出た。
        0.6倍では読めない大きさなので、スマホでは出さない（削ぎ落とす側に倒す） */
     .bp-design-system { display: none }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   02 採用サイトのハードルを、ひとつずつなくす。（2026-09-09 全面刷新）
+
+   これまで「BEFORE（.reference-problems）」と「AFTER（.reference-after）」の
+   2つの節に分かれていたものを、**1つのピン留めした節**に畳んだ。
+   社長のリファレンス画像は、その最終フレーム。
+
+   ── この節が伝えること ─────────────────────────────────
+   最初に課題を主役として読ませ、スクロールに合わせて課題を背景へ沈め、
+   その**手前に**解決策を立ち上げる。主役が入れ替わったことを、
+   説明文ではなく **明度・大きさ・前後関係・出てくる順番** だけで伝える。
+   🔴 「BEFORE」「AFTER」の文字は使わない。ラベルで説明したら負け。
+
+   ── 色の決まり（守る）─────────────────────────────────
+   ・地は墨 #111317（サイトの墨。25箇所で使っている値）
+   ・紙白 #fff
+   ・コーラル #ff4d4f は **細線・短い斜線・句点・Tilto° だけ**。
+     見出しにも数字にも使わない（赤い巨大数字は禁止）
+   ・沈んだあとの課題は、画面上で #303236 前後に見えること
+     🔴 色と不透明度の**両方**を動かすので、色だけを #303236 にすると
+        不透明度をかけた後に真っ黒になる。色は #8f9297 まで、
+        不透明度は .26 まで動かして、掛け合わせで #323438 に着地させている
+        （地 #111317 との合成を実測して決めた値。どちらか片方を変えたら計算し直す）
+
+   ── 寸法の単位 ────────────────────────────────────
+   `--hu-u`。`min(1vw, 1.75svh)` で**幅と高さの小さいほう**に付いていく。
+   ⚠️ 素の vw だけで組むと、背の低い画面（ノートPC）で文字が縦にはみ出す。
+   位置は % で置く（舞台が 100svh なので、高さに追従させる必要がある）。
+
+   ── 動き ────────────────────────────────────────
+   節を 200vh にして、中の舞台を 100svh で sticky。
+   スクロール量を 0〜1 の progress にして motion.10a93a76.js が `--hu-*` を書く（scrub）。
+   🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
+   ────────────────────────────────────────────────── */
+.reference-hurdles {
+    /* 🔴 親(main)はグリッド。gpt-sections.10a93a76.css は節名を列挙して stretch しているが、
+       新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
+    justify-self: stretch;
+    width: auto;
+
+    --hu-u: min(1vw, 1.75svh);
+    --hu-coral: #ff4d4f;
+    --hu-paper: #fff;
+    --hu-sumi: #111317;
+
+    /* 動きの既定値＝着地後 */
+    --hu-sink: 1;
+    --hu-line: 1;
+    --hu-brand: 1;
+    --hu-1: 1;
+    --hu-2: 1;
+    --hu-3: 1;
+    --hu-note-1: 1;
+    --hu-note-2: 1;
+    --hu-note-3: 1;
+    --hu-closing: 1;
+
+    background: var(--hu-sumi);
+    height: 200vh;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    font-feature-settings: "palt";
+    letter-spacing: .025em;
+    position: relative
+}
+
+.reference-hurdles * { box-sizing: border-box }
+
+/* 舞台。ここがピン留めされる。
+   ⚠️ 地の色は節と舞台の**両方**に置く。舞台だけだと、ピンが外れた
+      下端の 100vh が地なしになって次の白が透ける */
+.hu-stage {
+    background: var(--hu-sumi);
+    height: 100svh;
+    min-height: 560px;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    isolation: isolate
+}
+
+/* ── 見出し。小さく、左上に置くだけ ── */
+.hu-head {
+    z-index: 6;
+    color: var(--hu-paper);
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(14px, calc(var(--hu-u) * 1.55), 24px);
+    font-weight: 500;
+    letter-spacing: .02em;
+    line-height: 1.5;
+    position: absolute;
+    top: 3.2%;
+    left: 3.8%
+}
+
+.hu-head i {
+    color: var(--hu-coral);
+    font-style: normal
+}
+
+/* ── 課題。最初は紙白の主役、やがて背景の残像になる ──────────────
+   🔴 色は rgb() の各成分を calc で動かしている。--hu-sink 0→1 で
+      (255,255,255) → (143,146,151)。不透明度は 1 → .26。
+      掛け合わせで、地 #111317 の上に #323438 として見える。 */
+.hu-issue {
+    z-index: 2;
+    color: rgb(calc(255 - 112 * var(--hu-sink))
+               calc(255 - 109 * var(--hu-sink))
+               calc(255 - 104 * var(--hu-sink)));
+    opacity: calc(1 - var(--hu-sink) * .74);
+    margin: 0;
+    position: absolute
+}
+
+.hu-issue strong {
+    letter-spacing: -.11em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .84;
+    display: block;
+    transform-origin: 0 50%;
+    /* 沈むときの小さな移動と縮み。派手にしない */
+    translate: 0 calc(var(--hu-sink) * -8px);
+    scale: calc(1 - var(--hu-sink) * .02)
+}
+
+/* 課題の補足。小さいので、沈むとほぼ見えなくなる。それでよい */
+/* 🔴 補足は沈んだら**消える**まで落とす。大見出しと違って残像として効かず、
+   同じあたりに立つ解決策の補足と重なって読めなくなるだけだった（実測で確認） */
+.hu-issue span {
+    opacity: calc(1 - var(--hu-sink) * .96);
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, calc(var(--hu-u) * 1.02), 15px);
+    font-weight: 500;
+    line-height: 1.75;
+    display: block;
+    margin-top: calc(var(--hu-u) * 1.1)
+}
+
+/* 高い。 — 左端で断ち切る */
+.hu-issue-cost { top: 8%; left: calc(var(--hu-u) * -3.4) }
+.hu-issue-cost strong { font-size: calc(var(--hu-u) * 14.6) }
+.hu-issue-cost span { margin-left: calc(var(--hu-u) * 2.2) }
+
+/* 遅い。 — 中央。コーラルの細線の手前まで */
+.hu-issue-slow { top: 15.5%; left: 35.2% }
+.hu-issue-slow strong { font-size: calc(var(--hu-u) * 13.2) }
+.hu-issue-slow span { margin-left: calc(var(--hu-u) * .4) }
+
+/* つくって終わり。 — 縦組みで右端を断ち切る */
+.hu-issue-end { top: 1.5%; right: calc(var(--hu-u) * -1.2) }
+
+.hu-issue-end strong {
+    letter-spacing: -.07em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--hu-u) * 5.4);
+    line-height: 1.04;
+    translate: calc(var(--hu-sink) * 8px) 0
+}
+
+/* 3つ目の補足は、縦組みの真下に置く。
+   ⚠️ 最初の一瞬（課題が主役の間）だけ読めればよい。沈めば見えなくなるし、
+      そのころには同じあたりに解決策の補足が立っている（画像もそうなっている） */
+.hu-issue-end span {
+    text-align: right;
+    width: max-content;
+    margin-top: 0;
+    position: absolute;
+    top: calc(var(--hu-u) * 47);
+    right: calc(var(--hu-u) * 2.6)
+}
+
+/* ── 切り替えの合図。細いコーラル線と Tilto° ────────────────
+   線は上から下へ伸びる。transform-origin: top ＋ scaleY */
+.hu-switch {
+    z-index: 4;
+    position: absolute;
+    top: 6%;
+    bottom: 9%;
+    left: 49.8%
+}
+
+.hu-switch i {
+    background: var(--hu-coral);
+    transform-origin: 50% 0;
+    width: 1px;
+    display: block;
+    height: 100%;
+    scale: 1 var(--hu-line)
+}
+
+/* 🔴 Arial・コーラル・字間広め。大きな見出しにはしない。
+   これは主役ではなく、**主語が変わった合図**の札 */
+.hu-switch b {
+    color: var(--hu-coral);
+    letter-spacing: .22em;
+    white-space: nowrap;
+    font: 400 clamp(10px, calc(var(--hu-u) * 1.12), 16px)/1 Arial, sans-serif;
+    position: absolute;
+    top: 11%;
+    left: calc(var(--hu-u) * 1.2);
+    opacity: var(--hu-brand);
+    translate: 0 calc((1 - var(--hu-brand)) * 8px)
+}
+
+/* ⚠️ b に字間 .22em が付いているので、sup の前にも隙間が入って
+   「Tilto  °」と離れて見えた。sup 側で字間を戻し、少し引き寄せる */
+.hu-switch b sup {
+    vertical-align: top;
+    letter-spacing: 0;
+    margin-left: -.16em;
+    font-size: .86em
+}
+
+/* ── 解決策。課題の手前に立ち上がる ────────────────────────
+   🔴 下から立ち上がるのは clip-path ではなく **入れ物の overflow: hidden**。
+      clip-path はSafariで transform と合わせると描画が飛ぶことがある */
+.hu-answer {
+    z-index: 7;
+    color: var(--hu-paper);
+    margin: 0;
+    position: absolute
+}
+
+.hu-answer strong {
+    letter-spacing: -.05em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .92;
+    display: block;
+    overflow: hidden
+}
+
+.hu-answer strong > span {
+    display: block;
+    opacity: var(--hu-in);
+    translate: 0 calc((1 - var(--hu-in)) * 32px)
+}
+
+/* 「月額」「最短」は数字より小さく。同じ行に置く */
+.hu-answer em {
+    font-size: .42em;
+    font-style: normal;
+    letter-spacing: -.02em;
+    margin-right: .18em
+}
+
+/* 「円〜」 */
+.hu-answer u {
+    font-size: .52em;
+    text-decoration: none;
+    letter-spacing: -.04em
+}
+
+/* 補足。短い斜線と一緒に、静かに出す */
+.hu-answer small {
+    color: #ffffffd1;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, calc(var(--hu-u) * 1.02), 15px);
+    font-weight: 500;
+    line-height: 1.75;
+    display: block;
+    position: absolute;
+    opacity: var(--hu-note);
+    translate: 0 calc((1 - var(--hu-note)) * 10px)
+}
+
+/* 短い斜線。コーラルを使ってよい数少ない場所 */
+.hu-answer i {
+    background: var(--hu-coral);
+    transform-origin: 0 50%;
+    height: 1px;
+    width: calc(var(--hu-u) * 3.4);
+    position: absolute;
+    rotate: -52deg;
+    scale: var(--hu-note) 1
+}
+
+/* 月額 27,000円〜 — 左。いちばん強い視線の入口 */
+.hu-answer-price {
+    --hu-in: var(--hu-1);
+    --hu-note: var(--hu-note-1);
+    top: 33%;
+    left: 3.2%
+}
+
+.hu-answer-price strong { font-size: calc(var(--hu-u) * 8.6) }
+.hu-answer-price small { top: calc(100% + var(--hu-u) * 1.4); left: calc(var(--hu-u) * 7.4) }
+.hu-answer-price i { top: calc(100% + var(--hu-u) * 2.2); left: calc(var(--hu-u) * 4.4) }
+
+/* 最短 1週間 — 中央。料金と横並びにせず、少し下へずらす */
+.hu-answer-speed {
+    --hu-in: var(--hu-2);
+    --hu-note: var(--hu-note-2);
+    top: 53%;
+    left: 39.2%
+}
+
+.hu-answer-speed strong { font-size: calc(var(--hu-u) * 8.6) }
+.hu-answer-speed small { top: calc(100% + var(--hu-u) * 1.4); left: calc(var(--hu-u) * 7.6) }
+.hu-answer-speed i { top: calc(100% + var(--hu-u) * 2.2); left: calc(var(--hu-u) * 4.6) }
+
+/* 公開後も、改善しつづける。 — 右。縦組みで、右端を断ち切る。
+   🔴 課題の縦組み（つくって終わり。）の**手前**に重ねる。これが
+      「課題が沈み、その手前に解決が立つ」の一番はっきり出る所 */
+.hu-answer-grow {
+    --hu-in: var(--hu-3);
+    --hu-note: var(--hu-note-3);
+    top: 4.5%;
+    right: 9.4%
+}
+
+/* ⚠️ 27,000 より強くしない。3つ目の焦点であって、視線の入口ではない
+   （5.6u だと料金より目立って主役が入れ替わった。実測して 4.7u に下げた） */
+.hu-answer-grow strong {
+    letter-spacing: -.07em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--hu-u) * 4.7);
+    line-height: 1.1;
+    height: calc(var(--hu-u) * 40)
+}
+
+.hu-answer-grow strong > span { translate: calc((1 - var(--hu-in)) * 28px) 0 }
+
+/* 句点だけコーラル */
+.hu-answer-grow b {
+    color: var(--hu-coral);
+    font-weight: inherit
+}
+
+.hu-answer-grow small { top: calc(100% + var(--hu-u) * 1.6); right: 0; width: max-content; text-align: left }
+.hu-answer-grow i { top: calc(100% + var(--hu-u) * 2.4); right: calc(var(--hu-u) * 9.6) }
+
+/* ── 締め。左下に小さく ── */
+.hu-closing {
+    z-index: 8;
+    color: var(--hu-paper);
+    letter-spacing: .01em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(19px, calc(var(--hu-u) * 2.45), 38px);
+    font-weight: 500;
+    line-height: 1.35;
+    position: absolute;
+    bottom: 6.5%;
+    left: 3.8%;
+    opacity: var(--hu-closing);
+    translate: 0 calc((1 - var(--hu-closing)) * 12px)
+}
+
+.hu-closing i {
+    color: var(--hu-coral);
+    font-style: normal
+}
+
+/* ── SP: 長いピン留めはしない。ふつうの縦スクロールで成立させる ──────
+   課題は最初から沈んだ色。Tilto° と細線を挟んで、解決策を紙白で縦に並べる */
+@media (max-width: 900px) {
+    .reference-hurdles {
+        --hu-u: min(3.1vw, 12px);
+        height: auto
+    }
+
+    .hu-stage {
+        height: auto;
+        min-height: 0;
+        padding: 84px 22px 52px;
+        position: static
+    }
+
+    .hu-head,
+    .hu-issue,
+    .hu-answer,
+    .hu-closing {
+        position: static;
+        inset: auto
+    }
+
+    .hu-head { margin-bottom: 40px; font-size: clamp(15px, 4.4vw, 21px) }
+
+    /* SPは最初から沈んだ色で置く（読ませるのは解決策のほう） */
+    .hu-issue {
+        --hu-sink: 1;
+        margin-bottom: 26px
+    }
+
+    .hu-issue strong {
+        font-size: 17vw;
+        translate: none;
+        scale: none
+    }
+
+    /* 縦組みは幅を食うので横組みに戻す */
+    .hu-issue-end strong {
+        writing-mode: horizontal-tb;
+        font-size: 13vw;
+        translate: none
+    }
+
+    .hu-issue span { display: none }
+
+    /* 合図。線は横に1本引く */
+    .hu-switch {
+        align-items: center;
+        gap: 14px;
+        margin: 30px 0 34px;
+        display: flex;
+        position: static
+    }
+
+    .hu-switch b {
+        position: static;
+        opacity: 1;
+        translate: none
+    }
+
+    .hu-switch i {
+        flex: 1;
+        height: 1px;
+        width: auto;
+        scale: none
+    }
+
+    .hu-answer {
+        border-top: 1px solid #ffffff1f;
+        margin-bottom: 30px;
+        padding-top: 26px
+    }
+
+    .hu-answer strong { font-size: 13vw }
+    .hu-answer strong > span { translate: none; opacity: 1 }
+
+    /* 右の縦組みも横組みに。読みづらさを作らない */
+    .hu-answer-grow strong {
+        writing-mode: horizontal-tb;
+        height: auto;
+        font-size: 10.4vw;
+        line-height: 1.3
+    }
+
+    .hu-answer-grow strong > span { translate: none }
+
+    .hu-answer small {
+        margin-top: 14px;
+        position: static;
+        opacity: 1;
+        translate: none;
+        width: auto;
+        text-align: left
+    }
+
+    .hu-answer i { display: none }
+
+    .hu-closing {
+        margin-top: 8px;
+        font-size: clamp(21px, 6.6vw, 30px)
+    }
+}
+
+/* 🔴 reduced-motion のフォールバック。
+   ここは**この節の高さ指定より後ろ**に置くこと。前に置くと、
+   メディアクエリは詳細度を上げないので後ろの無条件指定に負ける
+   （2026-09-01に03で実際に起きた事故。上の注記を読む） */
+@media (prefers-reduced-motion: reduce) {
+    .reference-hurdles { height: auto }
+
+    .hu-stage {
+        height: auto;
+        min-height: 100svh;
+        position: static
+    }
 }
