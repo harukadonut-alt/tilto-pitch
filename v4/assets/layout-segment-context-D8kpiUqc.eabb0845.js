@@ -1,1 +1,0 @@
-import{r as e}from"./rolldown-runtime-S-ySWqyJ.eabb0845.js";import{i as t}from"./framework-DjPHiq1u.eabb0845.js";import{t as n}from"./index-DteDOMqj.eabb0845.js";var r=e(t(),1);function i({segmentMap:e,children:t}){let i=n();return i?(0,r.createElement)(i.Provider,{value:e},t):t}export{i as LayoutSegmentProvider};
