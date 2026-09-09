@@ -125,7 +125,19 @@
                ⚠️ 区間は重ねてある。そろえると「一斉フェードイン」になって安っぽい。 */
             if (kind === 'hurdles-story') {
                 var ph = clamp(-box.top / Math.max(1, box.height - vh));
-                /* 0.00〜0.18 は課題を読ませる時間。ここでは何も動かさない */
+
+                /* 🔴 課題の3つは「ピン留めが始まる前」＝節が下から上がってくる間に、
+                   ひとつずつ出す（2026-09-09 社長「一つずつ表示されるように戻して」）。
+                   ⚠️ ここで ph を使ってはいけない。ph は貼り付いてから 0→1 なので、
+                      節が上がってくる間はずっと 0 のまま＝**真っ黒な板が滑り込んでくる**。
+                   pre は「節の上端が画面の下から上端まで来る間」の 0→1。
+                   pre が 1 になる瞬間＝ピンが始まる瞬間で、3つとも出そろっている。 */
+                var pre = clamp((vh - box.top) / Math.max(1, vh));
+                st.setProperty('--hu-e1', ease(.16, .46, pre).toFixed(4));   // 高い。
+                st.setProperty('--hu-e2', ease(.40, .70, pre).toFixed(4));   // 遅い。
+                st.setProperty('--hu-e3', ease(.64, .94, pre).toFixed(4));   // つくって終わり。
+
+                /* 0.00〜0.18 は3つを読ませる時間。ここでは何も動かさない */
                 st.setProperty('--hu-sink',    ease(.18, .40, ph).toFixed(4));  // 課題が背景へ沈む
                 st.setProperty('--hu-line',    ease(.30, .48, ph).toFixed(4));  // コーラルの線が上から伸びる
                 st.setProperty('--hu-brand',   ease(.34, .48, ph).toFixed(4));  // Tilto°（切り替えの合図）
@@ -243,7 +255,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.10a93a76.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.a677a9c5.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.10a93a76.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.10a93a76.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.a677a9c5.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.a677a9c5.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.10a93a76.js / rolldown-runtime-S-ySWqyJ.10a93a76.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.a677a9c5.js / rolldown-runtime-S-ySWqyJ.a677a9c5.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1731,12 +1731,12 @@ function x() {
                                 children: [`公開までに`, (0, i.jsx)(`br`, {}), `時間がかかりすぎる。`]
                             })]
                     }),
-                    (0, i.jsxs)(`p`, {
+                    (0, i.jsx)(`p`, {
                         className: `hu-issue hu-issue-end`,
-                        children: [(0, i.jsx)(`strong`, { children: `つくって終わり。` }),
-                            (0, i.jsxs)(`span`, {
-                                children: [`つくっても、`, (0, i.jsx)(`br`, {}), `その先が見えない。`]
-                            })]
+                        children: (0, i.jsxs)(`strong`, {
+                            children: [(0, i.jsx)(`span`, { children: `つくって` }),
+                                (0, i.jsx)(`span`, { children: `終わり。` })]
+                        })
                     }),
                     (0, i.jsxs)(`div`, {
                         className: `hu-switch`,

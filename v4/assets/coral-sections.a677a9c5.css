@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.10a93a76.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.a677a9c5.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -27,7 +27,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.10a93a76.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.a677a9c5.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -763,7 +763,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.10a93a76.css）。bands.10a93a76.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.a677a9c5.css）。bands.a677a9c5.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -849,7 +849,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.10a93a76.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.a677a9c5.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1503,7 +1503,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.10a93a76.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.a677a9c5.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1516,7 +1516,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.10a93a76.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.a677a9c5.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1654,7 +1654,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.10a93a76.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.a677a9c5.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1886,12 +1886,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.10a93a76.js が動かしている
-     ・motion.10a93a76.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.a677a9c5.js が動かしている
+     ・motion.a677a9c5.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.10a93a76.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.a677a9c5.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2237,7 +2237,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.10a93a76.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.a677a9c5.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2475,7 +2475,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.10a93a76.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.a677a9c5.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2512,7 +2512,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.10a93a76.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.a677a9c5.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2715,7 +2715,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.10a93a76.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.a677a9c5.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3040,7 +3040,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.10a93a76.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.a677a9c5.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3236,12 +3236,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.10a93a76.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.a677a9c5.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.10a93a76.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.a677a9c5.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3615,7 +3615,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
       05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
       コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
-      ⚠️ motion.10a93a76.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+      ⚠️ motion.a677a9c5.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
          ここに数字を足すときも同じ線を守ること。
    ============================================================ */
 
@@ -3797,7 +3797,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
       中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
-      縮小率は motion.10a93a76.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+      縮小率は motion.a677a9c5.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
    右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
    ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
    ============================================================ */
@@ -3945,11 +3945,11 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    ── 動き ────────────────────────────────────────
    節を 200vh にして、中の舞台を 100svh で sticky。
-   スクロール量を 0〜1 の progress にして motion.10a93a76.js が `--hu-*` を書く（scrub）。
+   スクロール量を 0〜1 の progress にして motion.a677a9c5.js が `--hu-*` を書く（scrub）。
    🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
    ────────────────────────────────────────────────── */
 .reference-hurdles {
-    /* 🔴 親(main)はグリッド。gpt-sections.10a93a76.css は節名を列挙して stretch しているが、
+    /* 🔴 親(main)はグリッド。gpt-sections.a677a9c5.css は節名を列挙して stretch しているが、
        新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
     justify-self: stretch;
     width: auto;
@@ -3960,6 +3960,9 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     --hu-sumi: #111317;
 
     /* 動きの既定値＝着地後 */
+    --hu-e1: 1;
+    --hu-e2: 1;
+    --hu-e3: 1;
     --hu-sink: 1;
     --hu-line: 1;
     --hu-brand: 1;
@@ -4023,7 +4026,8 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     color: rgb(calc(255 - 112 * var(--hu-sink))
                calc(255 - 109 * var(--hu-sink))
                calc(255 - 104 * var(--hu-sink)));
-    opacity: calc(1 - var(--hu-sink) * .74);
+    /* --hu-e = ひとつずつ出てくるぶん ／ --hu-sink = 背景へ沈むぶん。掛け合わせる */
+    opacity: calc(var(--hu-e) * (1 - var(--hu-sink) * .74));
     margin: 0;
     position: absolute
 }
@@ -4036,15 +4040,18 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     line-height: .84;
     display: block;
     transform-origin: 0 50%;
-    /* 沈むときの小さな移動と縮み。派手にしない */
-    translate: 0 calc(var(--hu-sink) * -8px);
+    /* 出てくるときの持ち上がり ＋ 沈むときの小さな移動。派手にしない */
+    translate: 0 calc(var(--hu-sink) * -8px + (1 - var(--hu-e)) * 20px);
     scale: calc(1 - var(--hu-sink) * .02)
 }
 
 /* 課題の補足。小さいので、沈むとほぼ見えなくなる。それでよい */
 /* 🔴 補足は沈んだら**消える**まで落とす。大見出しと違って残像として効かず、
    同じあたりに立つ解決策の補足と重なって読めなくなるだけだった（実測で確認） */
-.hu-issue span {
+/* ⚠️ **直接の子だけ**に効かせる。`.hu-issue span` と書くと、
+   `strong` の中に入れた列の span（つくって／終わり。）まで拾って、
+   巨大文字が 14.7px に縮む（2026-09-09 実際にそうなった） */
+.hu-issue > span {
     opacity: calc(1 - var(--hu-sink) * .96);
     font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
     font-size: clamp(11px, calc(var(--hu-u) * 1.02), 15px);
@@ -4055,36 +4062,49 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* 高い。 — 左端で断ち切る */
-.hu-issue-cost { top: 8%; left: calc(var(--hu-u) * -3.4) }
-.hu-issue-cost strong { font-size: calc(var(--hu-u) * 14.6) }
-.hu-issue-cost span { margin-left: calc(var(--hu-u) * 2.2) }
+/* 🔴 器は見出しと同じ左端（3.8%）に置き、**巨大文字だけ**を負のマージンで左へ食み出させる。
+   器ごと左へ出すと、下にぶら下がる補足文まで一緒に画面外へ切れる
+   （2026-09-09 社長の画面で「制作費が大きく」の「制」「踏」が切れていた） */
+.hu-issue-cost { --hu-e: var(--hu-e1); top: 8%; left: 3.8% }
+.hu-issue-cost strong { font-size: calc(var(--hu-u) * 14.6); margin-left: calc(var(--hu-u) * -5.6) }
 
 /* 遅い。 — 中央。コーラルの細線の手前まで */
-.hu-issue-slow { top: 15.5%; left: 35.2% }
+.hu-issue-slow { --hu-e: var(--hu-e2); top: 15.5%; left: 35.2% }
 .hu-issue-slow strong { font-size: calc(var(--hu-u) * 13.2) }
 .hu-issue-slow span { margin-left: calc(var(--hu-u) * .4) }
 
 /* つくって終わり。 — 縦組みで右端を断ち切る */
-.hu-issue-end { top: 1.5%; right: calc(var(--hu-u) * -1.2) }
+/* 🔴 右端で断ち切りすぎていた（2026-09-09 社長「あまりにも見えなさすぎる」）。
+   端から離して、ほぼ全部が読める位置に寄せた */
+.hu-issue-end { --hu-e: var(--hu-e3); top: 1.5%; right: 2.6% }
 
 .hu-issue-end strong {
     letter-spacing: -.07em;
     writing-mode: vertical-rl;
     font-size: calc(var(--hu-u) * 5.4);
     line-height: 1.04;
-    translate: calc(var(--hu-sink) * 8px) 0
+    /* 8文字ぶんの高さと、段差ぶんを足した列の幅 */
+    width: calc(var(--hu-u) * 7.4);
+    height: calc(var(--hu-u) * 41);
+    position: relative;
+    translate: calc(var(--hu-sink) * 8px + (1 - var(--hu-e3)) * 26px) 0
 }
 
-/* 3つ目の補足は、縦組みの真下に置く。
-   ⚠️ 最初の一瞬（課題が主役の間）だけ読めればよい。沈めば見えなくなるし、
-      そのころには同じあたりに解決策の補足が立っている（画像もそうなっている） */
-.hu-issue-end span {
-    text-align: right;
-    width: max-content;
-    margin-top: 0;
+/* 🔴 「つくって」と「終わり。」は**列をずらす**（リファレンス画像の再現）。
+   読みは上から下へ続くが、後半だけ列が少し左にずれて段差になる。
+   ⚠️ 縦書きの素の block 積みでは、2つ目が**横に並んで**しまって「続き」に見えない。
+      だから2つとも絶対配置にして、下へ続けつつ左へ .62u ずらしている。
+   ⚠️ 送り幅は「字の大きさ × (1 + 字間)」。字間 -.07em なので1文字 5.022u。
+      4文字ぶん＝20.2u が段差の位置。**字の大きさか字間を変えたらここも計算し直す** */
+.hu-issue-end strong > span {
     position: absolute;
-    top: calc(var(--hu-u) * 47);
-    right: calc(var(--hu-u) * 2.6)
+    top: 0;
+    right: 0
+}
+
+.hu-issue-end strong > span + span {
+    top: calc(var(--hu-u) * 20.2);
+    right: calc(var(--hu-u) * 1.8)
 }
 
 /* ── 切り替えの合図。細いコーラル線と Tilto° ────────────────
@@ -4225,7 +4245,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     --hu-in: var(--hu-3);
     --hu-note: var(--hu-note-3);
     top: 4.5%;
-    right: 9.4%
+    right: 13.5%
 }
 
 /* ⚠️ 27,000 より強くしない。3つ目の焦点であって、視線の入口ではない
@@ -4308,14 +4328,31 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
         scale: none
     }
 
-    /* 縦組みは幅を食うので横組みに戻す */
+    /* ⚠️ PCで「高い。」を左へ食み出させている負のマージンを、SPでは戻す。
+       戻さないと画面の左端で「高」が切れる（2026-09-09 実測） */
+    .hu-issue-cost strong { margin-left: -.06em }
+
+    /* 縦組みは幅を食うので横組みに戻す。
+       ⚠️ PCで2列の段差を作るために span を絶対配置にしてあるので、
+          ここで**必ず流し込みに戻す**。戻さないと2つの列が重なって読めない */
     .hu-issue-end strong {
         writing-mode: horizontal-tb;
         font-size: 13vw;
+        width: auto;
+        height: auto;
+        position: static;
         translate: none
     }
 
-    .hu-issue span { display: none }
+    .hu-issue-end strong > span,
+    .hu-issue-end strong > span + span {
+        margin: 0;
+        display: inline;
+        position: static;
+        inset: auto
+    }
+
+    .hu-issue > span { display: none }
 
     /* 合図。線は横に1本引く */
     .hu-switch {
