@@ -213,7 +213,9 @@ a { color: inherit }
     background: var(--paper);
     flex-direction: column;
     min-height: 100vh;
-    padding: var(--pad) clamp(58px, 5.4vw, 96px) 0 var(--pad);
+    /* 🔴 右の余白は、もとは右端の縦組み（IDEAS FOR A BETTER TOMORROW）の場所だった。
+       2026-09-09 に縦組みを消したので、左と同じ余白まで詰めて記入欄を右へ広げている */
+    padding: var(--pad) var(--pad) 0;
     display: flex;
     position: relative
 }
@@ -229,27 +231,7 @@ a { color: inherit }
 
 .cf-back:hover { color: var(--coral) }
 
-/* 右端の縦組み。飾りなので読めなくても困らない位置に置く */
-.cf-vert {
-    color: #11111199;
-    letter-spacing: .34em;
-    writing-mode: vertical-rl;
-    font: 700 clamp(8px, .68vw, 10px)/1 Arial, sans-serif;
-    position: absolute;
-    top: clamp(96px, 11vw, 176px);
-    right: clamp(22px, 1.9vw, 34px)
-}
-
-.cf-vert:before {
-    background: var(--coral);
-    width: 1px;
-    height: clamp(40px, 5vw, 78px);
-    margin: 0 auto clamp(14px, 1.4vw, 22px);
-    display: block;
-    content: ""
-}
-
-.cf-form { width: min(100%, 620px); margin: 0 }
+.cf-form { width: min(100%, 760px); margin: 0 }
 
 /* 記入欄のかたまり。PC（左右2枚組みになる幅）では短い項目を2列にする。
    1列に7段積むと、左の板（画面に貼り付いて動かない）に対して右だけが
@@ -407,7 +389,7 @@ a { color: inherit }
     justify-content: space-between;
     align-items: baseline;
     gap: 10px 26px;
-    width: min(100%, 620px);
+    width: min(100%, 760px);
     margin-top: clamp(44px, 5vw, 76px);
     padding: clamp(18px, 1.9vw, 26px) 0 var(--pad);
     display: flex
@@ -457,9 +439,6 @@ a { color: inherit }
         margin-bottom: clamp(22px, 4vw, 34px)
     }
 
-    /* 飾りの縦組みは、狭い画面では入力欄に重なるので出さない */
-    .cf-vert { display: none }
-
     .cf-form, .cf-foot { width: 100% }
 }
 
@@ -507,7 +486,6 @@ a { color: inherit }
     <!-- 右：記入欄と、文字ぜんぶ -->
     <main class="cf-panel">
         <a class="cf-back" href="./index.html">← サイトへ戻る</a>
-        <span class="cf-vert" aria-hidden="true">IDEAS FOR A BETTER TOMORROW</span>
 
         <!-- 🔴 やることは**1行だけ**。下の access_key の value に、
              web3forms.com で受け取ったアクセスキーを貼る。それだけで
@@ -532,12 +510,7 @@ a { color: inherit }
 
             <div class="cf-fields">
 
-            <div class="cf-field">
-                <label for="cf-company"><b>会社名</b><span class="cf-any">OPTIONAL</span></label>
-                <input id="cf-company" name="company" type="text" autocomplete="organization"/>
-            </div>
-
-            <div class="cf-field">
+            <div class="cf-field cf-wide">
                 <label for="cf-name"><b>お名前</b><span class="cf-req">REQUIRED</span></label>
                 <input id="cf-name" name="name" type="text" autocomplete="name" required/>
             </div>
@@ -552,8 +525,11 @@ a { color: inherit }
                 <input id="cf-tel" name="tel" type="tel" autocomplete="tel" required/>
             </div>
 
-            <!-- 役職は任意。2026-09-04の定例で追加。
-                 ⚠️ 「契約・嘱託・派遣」は**入れない**（かずさんの指示）。決裁に関わる層だけ拾う -->
+            <div class="cf-field">
+                <label for="cf-company"><b>会社名</b><span class="cf-any">OPTIONAL</span></label>
+                <input id="cf-company" name="company" type="text" autocomplete="organization"/>
+            </div>
+
             <div class="cf-field">
                 <label for="cf-role"><b>役職</b><span class="cf-any">OPTIONAL</span></label>
                 <select id="cf-role" name="role">
@@ -564,7 +540,7 @@ a { color: inherit }
                 </select>
             </div>
 
-            <div class="cf-field">
+            <div class="cf-field cf-wide">
                 <label for="cf-kind"><b>ご相談の種類</b><span class="cf-any">OPTIONAL</span></label>
                 <select id="cf-kind" name="kind">
                     <option value="">選んでください</option>
