@@ -18,7 +18,7 @@
        03 AFTER / 02の着地 / 05の見出しは **初期 opacity 0** で、
        節のスクロール進捗に合わせて後から現れる。IntersectionObserver は
        透明でも「見えている」と判定するので、文字が出る前に幕が剥がれ切ってしまう。
-       この3つは motion.5c7732e2.js が進捗を見て `hl-in` を付ける（HL_BY_SCROLL）。
+       この3つは motion.eba31ac8.js が進捗を見て `hl-in` を付ける（HL_BY_SCROLL）。
        🔴 **節の名前を変えたら、このリストも直す。**2026-09-09、02を
           `.reference-problems-statement` から `.hu-closing` に作り直したとき
           ここを直し忘れて、締めのコピーが**透明なうちに幕だけ剥がれていた**

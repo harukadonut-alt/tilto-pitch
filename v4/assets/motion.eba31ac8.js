@@ -50,6 +50,59 @@
         window.addEventListener('resize', req);
     })();
 
+    /* ── ビューアの「読み込み中」の覆いを、iframeが読み終わったら外す係 ──────────
+       🔴 これは演出ではなく**壊れて見えないための表示**。
+          iframe は中身が来る前から自分の白い地を塗るので、覆いを裏に置くと隠れてしまう。
+          覆いはCSSで前面に出してあり、ここは「読み終わった合図」を付けるだけ。
+       ⚠️ reduced-motion でも外さないと覆いが残りっぱなしになるので、
+          **下の早期returnより前**に置いている。ヘッダーの板と同じ理由。
+       ⚠️ DOMは足さない。属性を1つ付けるだけ（v4のReactに巻き込まれないため）。 */
+    (function () {
+        var FRAME = '.works-site-frame[data-live="true"] iframe';
+        function done(fr) {
+            var box = fr.parentElement;
+            if (box) box.setAttribute('data-loaded', 'true');
+        }
+        function watch(fr) {
+            /* 同じサイトを見ている間は何もしない。別のサイトに載せ替わったら覆いを戻す */
+            if (fr.dataset.loadSrc === fr.src) return;
+            fr.dataset.loadSrc = fr.src;
+            var box = fr.parentElement;
+            if (box) box.removeAttribute('data-loaded');
+
+            if (!fr.dataset.loadBound) {
+                fr.dataset.loadBound = '1';
+                fr.addEventListener('load', function () { done(fr) });
+                fr.addEventListener('error', function () { done(fr) });
+            }
+            /* 保険。load が来ない環境でも、いつまでも覆いを出したままにしない */
+            clearTimeout(+fr.dataset.loadTimer || 0);
+            fr.dataset.loadTimer = setTimeout(function () { done(fr) }, 25000);
+
+            /* 既に読み終わっていることもある（戻ってきたときなど）。
+               🔴 `readyState === 'complete'` だけで判断してはいけない。**差し込んだ直後の
+                  iframe は about:blank を持っていて、それが最初から complete** なので、
+                  読み込みが始まる前に覆いを外してしまう（2026-09-09 実測で30msで外れた）。
+                  行き先のURLが入っているときだけ「読み終わった」とみなす。
+               ⚠️ 別ドメインの contentDocument は触ると例外になるので必ず包む */
+            try {
+                var doc = fr.contentDocument;
+                if (doc && doc.readyState === 'complete' && doc.URL && doc.URL !== 'about:blank') done(fr);
+            } catch (e) { /* 別ドメイン。load イベントを待てばよい */ }
+        }
+        function scan() {
+            Array.prototype.forEach.call(document.querySelectorAll(FRAME), watch);
+        }
+        scan();
+        if (!('MutationObserver' in window)) return;
+        var queued = 0;
+        new MutationObserver(function () {
+            /* 引き出しの開け閉めでDOMがよく動くので、1フレームに1回に束ねる */
+            if (queued) return;
+            queued = requestAnimationFrame(function () { queued = 0; scan() });
+        }).observe(document.body, { childList: true, subtree: true });
+    })();
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var clamp = function (v) { return Math.min(1, Math.max(0, v)) };
@@ -275,7 +328,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.5c7732e2.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.eba31ac8.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;
