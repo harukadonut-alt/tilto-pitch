@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.b91df215.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.5c7732e2.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -27,7 +27,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.b91df215.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.5c7732e2.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -763,7 +763,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.b91df215.css）。bands.b91df215.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.5c7732e2.css）。bands.5c7732e2.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -854,7 +854,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.b91df215.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.5c7732e2.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1508,7 +1508,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.b91df215.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.5c7732e2.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1521,7 +1521,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.b91df215.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.5c7732e2.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1659,7 +1659,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.b91df215.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.5c7732e2.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1891,12 +1891,12 @@ html.hd-stuck .site-nav { font-size: .72vw }
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.b91df215.js が動かしている
-     ・motion.b91df215.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.5c7732e2.js が動かしている
+     ・motion.5c7732e2.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.b91df215.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.5c7732e2.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2242,7 +2242,7 @@ html.hd-stuck .site-nav { font-size: .72vw }
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.b91df215.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.5c7732e2.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2480,7 +2480,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.b91df215.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.5c7732e2.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2517,7 +2517,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.b91df215.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.5c7732e2.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2724,7 +2724,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.b91df215.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.5c7732e2.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -2847,7 +2847,11 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 @media (max-width: 900px) {
-    .service-tag { margin-top: 22px; font-size: 13px }
+    /* 🔴 `width: max-content` の塊なので、`text-align: center` だけでは中央に来ない
+       （箱の中で中央そろえになるだけで、箱そのものが左に寄っている）。
+       下のチップは `margin: 18px auto` で中央に来ていたが、こちらは 0 のままだった。
+       実測（390px）: 文字の中心 110px（画面の中心は195px）→ 2026-09-09 社長「左寄せで違和感」 */
+    .service-tag { margin-top: 22px; margin-inline: auto; font-size: 13px }
     .service-chip { margin-top: 12px }
 }
 
@@ -3068,7 +3072,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.b91df215.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.5c7732e2.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3271,12 +3275,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.b91df215.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.5c7732e2.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.b91df215.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.5c7732e2.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3650,7 +3654,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
       05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
       コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
-      ⚠️ motion.b91df215.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+      ⚠️ motion.5c7732e2.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
          ここに数字を足すときも同じ線を守ること。
    ============================================================ */
 
@@ -3832,7 +3836,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
       中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
-      縮小率は motion.b91df215.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+      縮小率は motion.5c7732e2.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
    右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
    ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
    ============================================================ */
@@ -3903,57 +3907,8 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
           FVの右端は画面幅の 78% あたりに来る（375/390/430 で実測） */
     .bp-board { left: -10vw; right: auto; transform-origin: 0 100%; transform: scale(.6) }
 
-    /* ⑥ 05 図面: 注釈8つは畳んだままだが、「一つひとつ見ている」ことは分かるように、
-          見出し（RESEARCH…）だけを小さく出し、図面へ向く薄い線を添える。
-          ⚠️ パソコン用の引き出し線（SVG）は面の位置がパソコンの座標なので、
-             スマホでは別の場所を指してしまう。SVGは使わず、札に短い線を持たせる */
-    .bp-note {
-        display: block;
-        width: auto;
-        margin: 0;
-        padding: 3px 6px;
-        background: #0b0b0bcc;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-        transform: none;
-        opacity: 1
-    }
-    .bp-note p { display: none }
-    .bp-note b {
-        white-space: nowrap;
-        letter-spacing: .1em;
-        font-size: 6.5px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        gap: 6px
-    }
-    .bp-note b::after {
-        content: '';
-        width: 22px;
-        height: 1px;
-        background: #f7f4ee;
-        opacity: .38;
-        flex: none
-    }
-    /* 右側の札は線を左へ */
-    .bp-note-flow b, .bp-note-visual b, .bp-note-measure b, .bp-note-improve b { flex-direction: row-reverse }
-    /* 位置は板の左右の縁に沿って上から並べる（板は画面より広いので、画面内に入る値） */
-    /* ⚠️ 板は layout 上 165vw 幅で、それを .6 に縮めて見せている。left/right の % は
-          縮める前の幅に対して効くので、右の札は left を 100% 超えにして translateX で戻す */
-    .bp-note-research     { left: 13%; right: auto; top: 10% }
-    .bp-note-language     { left: 13%; right: auto; top: 26% }
-    .bp-note-structure    { left: 13%; right: auto; top: 42% }
-    .bp-note-architecture { left: 13%; right: auto; top: 58% }
-    .bp-note-flow         { left: 104%; right: auto; top: 18%; transform: translateX(-100%) }
-    .bp-note-visual       { left: 104%; right: auto; top: 34%; transform: translateX(-100%) }
-    .bp-note-measure      { left: 104%; right: auto; top: 50%; transform: translateX(-100%) }
-    .bp-note-improve      { left: 104%; right: auto; top: 66%; transform: translateX(-100%) }
-    .bp-leaders { display: none }
-
-    /* 書体・色の見本（Aa 游明朝／COLOR）は板の左端にあり、板を左から置いたことで画面の外に半分出た。
-       0.6倍では読めない大きさなので、スマホでは出さない（削ぎ落とす側に倒す） */
-    .bp-design-system { display: none }
+    /* ⑥ 05 図面の注釈は、**1000px以下ぜんぶ**を同じ扱いにした（2026-09-09）。
+          → このファイルの末尾「05 注釈は1000px以下ぜんぶ畳む」へ移した。ここには置かない */
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -3987,11 +3942,11 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    ── 動き ────────────────────────────────────────
    節を 200vh にして、中の舞台を 100svh で sticky。
-   スクロール量を 0〜1 の progress にして motion.b91df215.js が `--hu-*` を書く（scrub）。
+   スクロール量を 0〜1 の progress にして motion.5c7732e2.js が `--hu-*` を書く（scrub）。
    🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
    ────────────────────────────────────────────────── */
 .reference-hurdles {
-    /* 🔴 親(main)はグリッド。gpt-sections.b91df215.css は節名を列挙して stretch しているが、
+    /* 🔴 親(main)はグリッド。gpt-sections.5c7732e2.css は節名を列挙して stretch しているが、
        新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
     justify-self: stretch;
     width: auto;
@@ -4394,12 +4349,16 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
         font-size: clamp(15px, 4.4vw, 21px)
     }
 
-    /* SPは最初から沈んだ色で置く（読ませるのは解決策のほう） */
-    .hu-issue {
-        --hu-sink: 1;
-        margin-bottom: 26px
-    }
+    /* 🔴 沈む演出はSPでも残す（2026-09-09 社長「白くなってグレーになる演出は
+       スマホでも維持して」）。以前は最初から沈んだ色（--hu-sink: 1）で置いていたが、
+       それだと課題が主役だった瞬間が無く、ただ薄い字が並んでいるだけに見えていた。
+       ⚠️ --hu-sink は motion.5c7732e2.js が入れる。SPはピン留めしないので、
+          **最後の課題（つくって終わり。）が画面の上へ抜けるあいだ**を進み具合にしている。
+       ⚠️ JS無効・reduced-motion では既定の 1（沈んだ色）のまま。読めるので問題ない */
+    .hu-issue { margin-bottom: 26px }
 
+    /* ⚠️ 動きは切って**色だけ**変える。縦に積むSPでは、字が上下に動くと
+       隣の行とぶつかって落ち着かない */
     .hu-issue strong {
         font-size: 17vw;
         translate: none;
@@ -4511,4 +4470,81 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 @media (max-width: 363px) {
     .reference-about-facts { top: 394px }
     .reference-about { height: 625px }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   05 注釈は1000px以下ぜんぶ畳む（2026-09-09 社長「右足と左足が切れているのが気になる」）
+
+   🔴 これまで畳んでいたのは **700px以下だけ**だった。
+      701〜1000px（タブレット）では、注釈が**パソコン用の座標のまま**出ていて、
+      右の4つ（INFORMATION ARCHITECTURE / USER FLOW / VISUAL / MEASURE / IMPROVE）が
+      画面の右へ 27〜34px はみ出して文字が切れていた（789px で実測）。
+   ⚠️ 傾けて重ねるパソコンの組みは **1001px以上だけ**。
+      それ未満は同じ「畳んだ札」で扱いをそろえる。
+   ────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+    /* 注釈8つは畳むが、「一つひとつ見ている」ことは分かるように、「一つひとつ見ている」ことは分かるように、
+       見出し（RESEARCH…）だけを小さく出し、図面へ向く薄い線を添える。
+       ⚠️ パソコン用の引き出し線（SVG）は面の位置がパソコンの座標なので、
+          畳んだ札とは別の場所を指してしまう。SVGは使わず、札に短い線を持たせる */
+    .bp-note {
+        display: block;
+        width: auto;
+        margin: 0;
+        padding: 3px 6px;
+        background: #0b0b0bcc;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        transform: none;
+        opacity: 1
+    }
+    .bp-note p { display: none }
+    .bp-note b {
+        white-space: nowrap;
+        letter-spacing: .1em;
+        font-size: 6.5px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px
+    }
+    .bp-note b::after {
+        content: '';
+        width: 22px;
+        height: 1px;
+        background: #f7f4ee;
+        opacity: .38;
+        flex: none
+    }
+    /* 右側の札は線を左へ */
+    .bp-note-flow b, .bp-note-visual b, .bp-note-measure b, .bp-note-improve b { flex-direction: row-reverse }
+    /* 位置は板の左右の縁に沿って上から並べる（板は画面より広いので、画面内に入る値） */
+    /* ⚠️ 板は layout 上 165vw 幅で、それを .6 に縮めて見せている。left/right の % は
+          縮める前の幅に対して効くので、右の札は left を 100% 超えにして translateX で戻す */
+    /* ⚠️ %は板の幅に効く。板は幅も倍率も画面幅で変わるので、**両端に余裕を持たせた値**にする。
+       13% / 104% だと 700px で左が11px、701〜1000px で右が27〜36px はみ出していた。
+       96%でもまだ3〜4px 残ったので 94%（実測で追い込んだ値）。 */
+    .bp-note-research     { left: 20%; right: auto; top: 10% }
+    .bp-note-language     { left: 20%; right: auto; top: 26% }
+    .bp-note-structure    { left: 20%; right: auto; top: 42% }
+    .bp-note-architecture { left: 20%; right: auto; top: 58% }
+    .bp-note-flow         { left: 94%; right: auto; top: 18%; transform: translateX(-100%) }
+    .bp-note-visual       { left: 94%; right: auto; top: 34%; transform: translateX(-100%) }
+    .bp-note-measure      { left: 94%; right: auto; top: 50%; transform: translateX(-100%) }
+    .bp-note-improve      { left: 94%; right: auto; top: 66%; transform: translateX(-100%) }
+    .bp-leaders { display: none }
+
+    /* 書体・色の見本（Aa 游明朝／COLOR）は板の左端にある。
+       🔴 1000px以下では**リード文「デザインの前に、設計がある。」に 180px 重なる**（実測）。
+          縮んでいて読める大きさでもないので、この帯では出さない（削ぎ落とす側に倒す）。
+       ⚠️ 1001px以上（傾けて重ねる組み）では出す。あちらは重ならない */
+    .bp-design-system { display: none }
+}
+
+/* 🔴 901〜1000px だけ、板が右へ 12vw も出ていて面（レイヤー）の右が切れていた。
+   ≤900px には `right: -4vw` の直しが入っていたが、この帯だけ素の値のままだった。
+   実測（1000px）: いちばん下の面の右端が 1031px で、画面より31px 外。
+   ⚠️ 700px以下は `left: -10vw / right: auto` で置いているので、**この帯だけ**に効かせる。 */
+@media (min-width: 701px) and (max-width: 1000px) {
+    .bp-board { right: -4vw }
 }

@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.b91df215.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.b91df215.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.5c7732e2.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.5c7732e2.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.b91df215.js / rolldown-runtime-S-ySWqyJ.b91df215.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.5c7732e2.js / rolldown-runtime-S-ySWqyJ.5c7732e2.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1784,7 +1784,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.b91df215.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.5c7732e2.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {

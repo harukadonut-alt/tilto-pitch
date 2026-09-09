@@ -85,6 +85,7 @@
     function draw() {
         frame = 0;
         var vh = window.innerHeight;
+        var vw = window.innerWidth;
         var scrollable = Math.max(1, document.documentElement.scrollHeight - vh);
         root.style.setProperty('--page-progress', clamp(window.scrollY / scrollable).toFixed(4));
 
@@ -138,7 +139,22 @@
                 st.setProperty('--hu-e3', ease(.64, .94, pre).toFixed(4));   // つくって終わり。
 
                 /* 0.00〜0.18 は3つを読ませる時間。ここでは何も動かさない */
-                st.setProperty('--hu-sink',    ease(.18, .40, ph).toFixed(4));  // 課題が背景へ沈む
+                /* 🔴 沈む進み具合だけは、PCとSPで測り方を変える。
+                   PCはピン留め中の ph でよいが、SPは**ピン留めしない**（節がふつうに流れる）ので、
+                   ph は節の高さと画面の高さの差で決まってしまい、体感と合わない。
+                   SPでは「最後の課題（つくって終わり。）が画面の上へ抜けるあいだ」を進み具合にする。
+                   ⚠️ 課題を読ませてから沈める順番はPCと同じ。合図（線とTilto°）より先に沈み切る */
+                var sink = ease(.18, .40, ph);
+                if (vw <= 900) {
+                    var lastIssue = el.querySelector('.hu-issue-end');
+                    if (lastIssue) {
+                        var lb = lastIssue.getBoundingClientRect().bottom;
+                        /* 78%から始めると、まだ読める位置なのに色が抜けはじめていた（実測）。
+                           62%＝ちょうど読み終わるあたりから沈め、20%で沈み切る */
+                        sink = ease(0, 1, clamp((vh * .62 - lb) / Math.max(1, vh * .42)));
+                    }
+                }
+                st.setProperty('--hu-sink',    sink.toFixed(4));                // 課題が背景へ沈む
                 st.setProperty('--hu-line',    ease(.30, .48, ph).toFixed(4));  // コーラルの線が上から伸びる
                 st.setProperty('--hu-brand',   ease(.34, .48, ph).toFixed(4));  // Tilto°（切り替えの合図）
                 st.setProperty('--hu-1',       ease(.42, .64, ph).toFixed(4));  // 月額 27,000円〜
@@ -259,7 +275,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.b91df215.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.5c7732e2.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;
