@@ -70,6 +70,8 @@
     --paper: #faf9f7;
     --line: #1111111f;
     --pad: clamp(26px, 3.6vw, 60px);
+    /* 本文の面の左右余白。contact.html と同じ値にする（送信の前後で画面が飛ばないように） */
+    --cf-pad-x: clamp(32px, 6.4vw, 110px);
 }
 
 html { -webkit-text-size-adjust: 100% }
@@ -236,9 +238,8 @@ a { color: inherit }
     background: var(--paper);
     flex-direction: column;
     min-height: 100vh;
-    /* 🔴 右の余白は、もとは右端の縦組み（IDEAS FOR A BETTER TOMORROW）の場所だった。
-       2026-09-09 に縦組みを消したので、左と同じ余白まで詰めて記入欄を右へ広げている */
-    padding: var(--pad) var(--pad) 0;
+    /* ⚠️ contact.html と同じ余白。片方だけ変えると送信の前後で画面が飛ぶ */
+    padding: var(--pad) var(--cf-pad-x) 0;
     display: flex;
     position: relative
 }
@@ -334,6 +335,23 @@ a { color: inherit }
     flex: 1;
     width: min(100%, 760px)
 }
+
+/* 🔴 送信先が未設定のあいだ、contact.html から ?preview=1 で来たときだけ出す。
+   押せるボタンにした代わりに、**届いていないことをこちら側でも言う**。
+   送信先が決まってキーを貼ったら、この経路自体が無くなる（実送信になる） */
+.th-preview {
+    color: var(--coral);
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 clamp(20px, 2.2vw, 32px);
+    padding: clamp(11px, 1.1vw, 16px) clamp(13px, 1.3vw, 19px);
+    border: 1px solid var(--coral);
+    font-size: clamp(11.5px, .94vw, 14px);
+    line-height: 1.8;
+    display: flex
+}
+
+.th-preview b { font-weight: 700 }
 
 .th-kicker {
     color: var(--coral);
@@ -435,6 +453,7 @@ a { color: inherit }
         <a class="cf-back" href="./index.html">&#8592;&nbsp;&nbsp;サイトへ戻る</a>
 
         <div class="th-body">
+            <p class="th-preview" hidden><i>※</i><span>これは<b>表示の確認用</b>です。送信先の設定がまだなので、<b>実際には送信されていません</b>。</span></p>
             <p class="th-kicker">RECEIVED</p>
             <h2 class="th-head">送信が完了しました。</h2>
             <p class="th-note">
@@ -468,5 +487,14 @@ a { color: inherit }
 
 </div>
 
+<script>
+/* contact.html から「まだ送信されない」経路で来たときだけ、上の注記を出す。
+   ⚠️ DOMは足さない。既にある要素の hidden を外すだけ */
+(function () {
+    if (!/[?&]preview=1\b/.test(location.search)) return;
+    var n = document.querySelector('.th-preview');
+    if (n) n.hidden = false;
+})();
+</script>
 </body>
 </html>

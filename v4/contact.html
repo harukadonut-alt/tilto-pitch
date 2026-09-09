@@ -47,6 +47,10 @@
     --paper: #faf9f7;
     --line: #1111111f;
     --pad: clamp(26px, 3.6vw, 60px);
+    /* 記入欄の面の左右余白。写真面の --pad より広い */
+    --cf-pad-x: clamp(32px, 6.4vw, 110px);
+    /* 2列に組むときの列間。お名前の幅を出すのにも使う */
+    --cf-gap: clamp(16px, 1.7vw, 26px);
 }
 
 html { -webkit-text-size-adjust: 100% }
@@ -213,9 +217,11 @@ a { color: inherit }
     background: var(--paper);
     flex-direction: column;
     min-height: 100vh;
-    /* 🔴 右の余白は、もとは右端の縦組み（IDEAS FOR A BETTER TOMORROW）の場所だった。
-       2026-09-09 に縦組みを消したので、左と同じ余白まで詰めて記入欄を右へ広げている */
-    padding: var(--pad) var(--pad) 0;
+    /* 🔴 左右の余白は、左の写真面（--pad）より広く取る。
+       右端の縦組みを消したあと --pad まで詰めたら「余白が少ない」と言われたので、
+       左右そろえて広げ、そのぶん記入欄を狭くした（2026-09-09 社長）。
+       ⚠️ 左右は必ず同じ値にする。片方だけ広げると記入欄が中心から外れる */
+    padding: var(--pad) var(--cf-pad-x) 0;
     display: flex;
     position: relative
 }
@@ -247,10 +253,18 @@ a { color: inherit }
 @media (min-width: 901px) {
     .cf-fields {
         grid-template-columns: 1fr 1fr;
-        column-gap: clamp(16px, 1.7vw, 26px)
+        column-gap: var(--cf-gap)
     }
 
     .cf-fields > .cf-wide { grid-column: 1 / -1 }
+
+    /* 🔴 お名前は「左上に、下のメールアドレスと同じ幅で、その行に1つだけ」。
+       段だけ全幅にして次の項目を次の行へ送り、**見た目の幅は半分**にする。
+       ⚠️ `grid-column: 1` だけにすると、メールアドレスが同じ行の右へ回ってしまう */
+    .cf-fields > .cf-half {
+        grid-column: 1 / -1;
+        width: calc(50% - var(--cf-gap) / 2)
+    }
 }
 
 .cf-field { margin-bottom: 0 }
@@ -366,6 +380,8 @@ a { color: inherit }
     display: flex
 }
 
+.cf-pending b { font-weight: 700 }
+
 .cf-pending i {
     color: var(--coral);
     flex-shrink: 0;
@@ -440,6 +456,9 @@ a { color: inherit }
     }
 
     .cf-form, .cf-foot { width: 100% }
+
+    /* 1列に積む幅では、お名前も他と同じ全幅にする */
+    .cf-fields > .cf-half { width: auto }
 }
 
 /* トップページのSP（@media max-width:700px の #top h1）と同じ寸法にする。
@@ -510,7 +529,7 @@ a { color: inherit }
 
             <div class="cf-fields">
 
-            <div class="cf-field cf-wide">
+            <div class="cf-field cf-half">
                 <label for="cf-name"><b>お名前</b><span class="cf-req">REQUIRED</span></label>
                 <input id="cf-name" name="name" type="text" autocomplete="name" required/>
             </div>
@@ -560,7 +579,7 @@ a { color: inherit }
 
             <button class="cf-send" type="submit" disabled>送信する<b aria-hidden="true">→</b></button>
 
-            <p class="cf-pending"><i>※</i><span>このページは仮です。送信先の設定が済みしだい、このボタンが有効になります。</span></p>
+            <p class="cf-pending"><i>※</i><span>送信先の設定がまだ済んでいません。いまボタンを押しても<b>送信はされません</b>（画面の確認だけできます）。</span></p>
             <p class="cf-result" role="status" hidden></p>
         </form>
 
@@ -589,8 +608,24 @@ a { color: inherit }
     var pending = form.querySelector('.cf-pending');
     var result = form.querySelector('.cf-result');
     var ready = key && key.value && key.value !== 'PASTE_ACCESS_KEY_HERE';
+    var thanks = new URL('./thanks.html', location.href).href;
 
-    if (!ready) return;              /* 仮のまま。disabled と注記を残す */
+    /* ── アクセスキーがまだ無いとき ──────────────────────────────
+       🔴 押せるようにはする（社長が送信完了ページまで見られるように）。
+          ただし**送信はしない**し、届いたと誤解させない:
+            ・注記に「送信はされません」と出したまま
+            ・完了ページへは ?preview=1 を付けて飛ばし、向こうでも同じ注記を出す
+          ⚠️ ここを「素通りで完了ページへ」にしてはいけない。
+             押せるのに届かないフォームは、届いたと思わせるので最も悪い。
+       ⚠️ 必須の3つは素のブラウザ検証にそのまま任せる（submit は通ったときだけ起きる） */
+    if (!ready) {
+        btn.disabled = false;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            location.href = thanks + '?preview=1';
+        });
+        return;
+    }
 
     btn.disabled = false;
     if (pending) pending.remove();
@@ -598,7 +633,6 @@ a { color: inherit }
     /* 素のPOST用に置いてある redirect を、いま開いている場所を基準に組み直す。
        公開先が変わっても、書き換え忘れで別サイトへ飛ばさないようにするため */
     var back = form.querySelector('[name="redirect"]');
-    var thanks = new URL('./thanks.html', location.href).href;
     if (back) back.value = thanks;
 
     form.addEventListener('submit', function (e) {
