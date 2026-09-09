@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.9c6f8b73.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.9c6f8b73.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.eabb0845.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.eabb0845.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.9c6f8b73.js / rolldown-runtime-S-ySWqyJ.9c6f8b73.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.eabb0845.js / rolldown-runtime-S-ySWqyJ.eabb0845.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1675,16 +1675,15 @@ function x() {
                                 (0, i.jsx)(`br`, {}),
                                 (0, i.jsxs)(`span`, {
                                 className: `hl-line`,
-                                children: [`更新しながら`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `「育てる」`,
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `採用サイト。`,
+                                children: [(0, i.jsx)(`em`, { children: `「育てる」` }),
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `採用サイト`,
+                                    (0, i.jsx)(`b`, { children: `。` }),
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                             })]
                         }),
                         (0, i.jsxs)(`p`, {
-                            children: [`公開して終わりにしない。`, (0, i.jsx)(`br`, { className: `sp-only` }),
-                                `採用の変化とともに、`, (0, i.jsx)(`br`, { className: `sp-only` }),
-                                `更新し、改善しつづける。`]
+                            children: [`採用の変化に合わせて、`, (0, i.jsx)(`br`, { className: `sp-only` }),
+                                `更新・改善しつづける。`]
                         })]
                 }),
                 (0, i.jsxs)(`div`, {
@@ -1694,13 +1693,10 @@ function x() {
                        要素ごと消すとラベルも消えるので注意。
                        中身は 2026-09-03 に社長指示でサービス説明を入れた（元は空） */
                     children: [(0, i.jsx)(`p`, {
-                            children: `Tiltoは、採用マーケティングを行う株式会社Savor Flowが提供する、新しい採用ブランディングサービスです。`
+                            children: `Tiltoは、採用マーケティング会社Savor Flowが提供する、採用ブランディングサービスです。`
                         }),
                         (0, i.jsx)(`p`, {
-                            children: `従来の採用サイトが抱えていた「高い」「時間がかかる」「成果につながるか分からない」という課題を、AIを制作プロセスに取り入れることで解消。経験豊富な採用コンサルタントとデザイナーが伴走し、企業ごとの特色や強みを活かしたオリジナルの採用サイトを、月2.7万円〜制作します。`
-                        }),
-                        (0, i.jsx)(`p`, {
-                            children: `さらに、12ヶ月ご契約いただいた場合は、無料でデザインの再制作も行います。`
+                            children: `AIを制作プロセスに取り入れ、採用コンサルタントとデザイナーが、サイトの制作から公開後の改善まで伴走します。`
                         })]
                 })]
         }),
@@ -1788,7 +1784,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.9c6f8b73.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.eabb0845.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
