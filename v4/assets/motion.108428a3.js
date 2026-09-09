@@ -147,7 +147,11 @@
                 st.setProperty('--hu-note-1',  ease(.50, .70, ph).toFixed(4));
                 st.setProperty('--hu-note-2',  ease(.60, .80, ph).toFixed(4));
                 st.setProperty('--hu-note-3',  ease(.70, .90, ph).toFixed(4));
-                st.setProperty('--hu-closing', ease(.78, .92, ph).toFixed(4));
+                var huClosing = ease(.78, .92, ph);
+                st.setProperty('--hu-closing', huClosing.toFixed(4));
+                /* 締めのコピーだけ、01・03・05と同じ「幕を剥がす」演出をかける。
+                   ⚠️ wipe は Set で1回だけ。戻ってまた下りるたびに引き直すとうるさい */
+                if (huClosing > .06) wipe(el.querySelector('.hu-closing'), 'hu');
                 /* 0.92〜1.00 は全部1のまま。完成形を保ったままピンが外れる。
                    🔴 外れる直前に消さない。見せてから隠すのは不親切 */
             }
@@ -255,7 +259,7 @@
 /* ビューアの実サイト枠: iframe を 1440px 幅で描いて、枠の幅に合わせて縮める。
    CSS は「枠の幅 ÷ 1440」を計算できないので、ここで --sf を入れる。
    枠はドロワーを開いたときだけ DOM に現れるので、現れたら ResizeObserver を付ける。
-   （2026-09-08。経緯は coral-sections.a677a9c5.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
+   （2026-09-08。経緯は coral-sections.108428a3.css の「ビューアの枠を『ノートパソコンの画面』にする」） */
 (function () {
     var VW = 1440;
     if (!('ResizeObserver' in window) || !('MutationObserver' in window)) return;
