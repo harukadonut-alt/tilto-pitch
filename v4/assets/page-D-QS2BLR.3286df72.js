@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3cd755c3.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3cd755c3.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3286df72.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3286df72.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.3cd755c3.js / rolldown-runtime-S-ySWqyJ.3cd755c3.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3286df72.js / rolldown-runtime-S-ySWqyJ.3286df72.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1157,7 +1157,7 @@ var SR_INSIDE = {
     '38': { site: `./images/works/site-education.webp`, ratio: 1280 / 2940, url: `https://manabi-recruit-2026.haruka-namasute.chatgpt.site` },
     '39': { site: `./images/works/site-it.webp`, ratio: 1280 / 3972, url: `https://akatsuki-systems-recruit.haruka-namasute.chatgpt.site` },
     '40': { site: `./images/works/site-mfg.webp`, ratio: 1280 / 8323, url: `https://kimori-kagu-recruit.haruka-namasute.chatgpt.site` },
-    '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3216, url: `https://keiso-waybill-recruit.haruka-namasute.chatgpt.site` },
+    '41': { site: `./images/works/site-logi.webp`, ratio: 1280 / 3446, url: `https://keiso-waybill-recruit.haruka-namasute.chatgpt.site` },
     '42': { site: `./images/works/site-ent.webp`, ratio: 1280 / 3712, url: `https://reignite-live-production.haruka-namasute.chatgpt.site` },
     '43': { site: `./images/works/site-care.webp`, ratio: 1280 / 4225, url: `https://tsunagu-care-recruit.haruka-namasute.chatgpt.site` },
     '44': { site: `./images/works/site-law.webp`, ratio: 1280 / 4245, url: `https://hayase-partners-recruitment.haruka-namasute.chatgpt.site` },
@@ -3619,7 +3619,10 @@ function x() {
                         (0, i.jsxs)(`address`, {
                             children: [`株式会社Savor Flow`,
                                 (0, i.jsx)(`br`, {}),
-                                `hello@tilto.jp`]
+                                (0, i.jsx)(`a`, {
+                                    href: `mailto:k.toyoda@savorflow.co.jp`,
+                                    children: `k.toyoda@savorflow.co.jp`
+                                })]
                         }),
                         (0, i.jsx)(`small`, {
                             children: `© 2026 TILTO° All Rights Reserved.`

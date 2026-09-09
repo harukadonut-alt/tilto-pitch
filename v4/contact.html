@@ -521,6 +521,11 @@ a { color: inherit }
         <form class="cf-form" action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="PASTE_ACCESS_KEY_HERE"/>
             <input type="hidden" name="subject" value="Tilto° サイトからのご相談"/>
+            <!-- JSが動かない環境の行き先。web3forms が素のPOSTのあとここへ返す。
+                 🔴 絶対URLしか受け付けないので、いまの公開先を直に書いてある。
+                    独自ドメインに移したら**ここも直す**。JSが動く環境では、
+                    下のスクリプトがこの値を今いる場所基準で上書きするので影響しない。 -->
+            <input type="hidden" name="redirect" value="https://harukadonut-alt.github.io/tilto-pitch/v4/thanks.html"/>
             <input type="hidden" name="from_name" value="Tilto° お問い合わせフォーム"/>
             <!-- 迷惑メール除け。人には見えない。埋まっていたら弾かれる -->
             <input type="checkbox" name="botcheck" tabindex="-1" aria-hidden="true" style="display:none"/>
@@ -614,6 +619,12 @@ a { color: inherit }
     btn.disabled = false;
     if (pending) pending.remove();
 
+    /* 素のPOST用に置いてある redirect を、いま開いている場所を基準に組み直す。
+       公開先が変わっても、書き換え忘れで別サイトへ飛ばさないようにするため */
+    var back = form.querySelector('[name="redirect"]');
+    var thanks = new URL('./thanks.html', location.href).href;
+    if (back) back.value = thanks;
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         btn.disabled = true;
@@ -629,12 +640,14 @@ a { color: inherit }
         }).then(function (r) { return r.json(); })
           .then(function (d) {
               if (d && d.success) {
+                  /* 成功したら送信完了ページへ。
+                     🔴 replace で行く（push しない）。戻るボタンで記入済みのフォームに
+                        帰ってきて、二重に送ってしまうのを防ぐ */
                   form.reset();
-                  result.textContent = 'ありがとうございます。内容を受け取りました。追ってご連絡します。';
-                  result.className = 'cf-result is-ok';
-              } else {
-                  throw new Error('ng');
+                  location.replace(thanks);
+                  return;
               }
+              throw new Error('ng');
           })
           .catch(function () {
               result.textContent = 'うまく送信できませんでした。お手数ですが、時間をおいてもう一度お試しください。';

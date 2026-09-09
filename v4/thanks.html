@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="robots" content="noindex,nofollow"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>送信ありがとうございます｜Tilto°</title>
+<meta name="description" content="ご相談を受け取りました。担当者よりご連絡いたします。"/>
+
+<!-- 🔴 2026-09-09 ファビコンのA/B比較中。トップ=A案（Tが手前）／問い合わせとこのページ=B案（丸が手前）。
+     このページは問い合わせの続きなので contact.html と同じ側を持たせている。
+     決まったら3ページとも同じ1案に戻し、使わない側の favicon-?-64.png / apple-touch-icon-?.png を消すこと。
+     経緯は docs/2026-09-06_faviconプロンプト.md -->
+<link rel="icon" type="image/png" sizes="64x64" href="./favicon-b-64.png?v=2"/><link rel="apple-touch-icon" href="./apple-touch-icon-b.png?v=2"/>
+<style>
+/* ============================================================
+   送信ありがとうございますページ
+
+   ── どこから来るか ──────────────────────────────
+   contact.html のフォームが送信に成功したときの行き先。2つの道がある。
+     1. JSが動く … fetch で送ってから location.replace でここへ来る
+     2. JSが動かない … web3forms の hidden `redirect` がここへ返す
+   🔴 どちらの道でも来られるようにしておくこと。片方だけだと、
+      JSを切っている人が web3forms の素の完了画面に飛ばされる。
+
+   ── 書いてよいこと ──────────────────────────────
+   🔴 **返信までの日数を書かない。** 「2営業日以内」などは決まっていない。
+      決まっていないことを書くと、守れなかったときに信用を失う。
+      いま書けるのは「担当者からメールで連絡する」までで、それは事実。
+      日数を出すかどうかは社長の判断（TODOの判断待ちに置いてある）。
+
+   ── 組み方 ────────────────────────────────────
+   contact.html と**同じ左右2枚組**。左の写真・覆い・白い板・見出しの寸法は
+   すべて contact.html から**そのまま持ってきている**（実測で決めた値なので触らない）。
+   ⚠️ contact.html 側の左半分を変えたら、このページも同じだけ変える。
+      片方だけ動かすと、送信の前後で画面が飛ぶ。
+   ============================================================ */
+
+/* ============================================================
+   ご相談ページ
+
+   🔴 まだ送信先が決まっていない。
+      GitHub Pages は静的なので、フォームを実際に飛ばすには
+      web3forms のアクセスキーが要る。**送信先のメールアドレスも未確定**。
+      決まったら access_key の value を差し替えるだけで動く（下の注記を読む）。
+      ⚠️ それまでは**送信できるように見せない**。押せるのに何も起きない
+         問い合わせフォームは、届いたと思わせてしまうので最も悪い。
+
+   ── 組み方（2026-09-08 に左右2枚組へ組み替え）─────────────
+   左＝写真を敷いて **スクロールしても動かない**（position: sticky）。
+        載せるのは「まずは、話してみる。」と、月額・初期費用・期間の3つだけ。
+   右＝記入欄。テキストはすべてこちら側（プライバシーポリシー、Savor Flow、著作権表示）。
+   🔴 写真の左下に植物の暗部（明度8）があり、黒い字がそのままでは沈む。
+      左ほど濃い覆いを重ねて、字が乗る左7割だけを持ち上げている（--veil）。
+      縦位置・覆い・白い板の3つは実測で決めた（design/principles.md 基準18）。
+        ・縦位置 12% … 見出しが白壁に乗り（暗部196）、上にランプ、下に机が両方入る位置
+        ・覆い .42→.14 … モックのように写真をくっきり出す。見出しはこれでコントラスト6.7
+        ・白い板 … リードと3つの事実の裏は植物の暗部（65）で、覆いでは足りない。
+          板の中はコントラスト12.7。**覆いを濃くする代わりに板で解く**のが要点で、
+          覆いを濃くすると写真ぜんぶが白ちゃけてモックから離れる。
+          🔴 板は内側の余白ぶん**左へ引き出してある**。そうしないと板の中の字だけが
+             右へずれて、見出しと左端が揃わなくなる（基準15の①で必ず出る）
+      ⚠️ ズームで柄を避ける案も測ったが、机・マグ・ランプが画面から消えて構図が死んだので採らない。
+      写真を差し替えたら、この3つを測り直すこと。
+   ============================================================ */
+* { box-sizing: border-box }
+
+:root {
+    --ink: #111;
+    --coral: #ff4d4f;
+    --paper: #faf9f7;
+    --line: #1111111f;
+    --pad: clamp(26px, 3.6vw, 60px);
+}
+
+html { -webkit-text-size-adjust: 100% }
+
+body {
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    font-feature-settings: "palt";
+    letter-spacing: .025em
+}
+
+a { color: inherit }
+
+/* --- 2枚組。左は動かず、右だけ流れる --- */
+.cf-shell {
+    grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+    align-items: start;
+    min-height: 100vh;
+    display: grid
+}
+
+/* --- 左：写真と、3つの事実 --- */
+.cf-visual {
+    background: #e8e6e2 url("./images/contact-desk.webp") 50% 12% / cover no-repeat;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: var(--pad);
+    display: flex;
+    position: sticky;
+    top: 0;
+    overflow: hidden
+}
+
+/* 字が乗る左側だけを持ち上げる覆い。右へ抜けるほど写真が素で出る */
+.cf-visual:before {
+    background: linear-gradient(100deg,
+        #faf9f76b 0%, #faf9f74d 40%, #faf9f738 76%, #faf9f723 100%);
+    position: absolute;
+    inset: 0;
+    content: ""
+}
+
+.cf-visual > * { position: relative }
+
+.cf-brand {
+    align-items: flex-start;
+    gap: 14px;
+    text-decoration: none;
+    display: flex;
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad)
+}
+
+.cf-brand i {
+    letter-spacing: -.045em;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-size: clamp(28px, 2.5vw, 38px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: .9
+}
+
+.cf-brand i sup {
+    vertical-align: top;
+    margin-left: .06em;
+    font-size: .62em
+}
+
+.cf-brand small {
+    letter-spacing: .17em;
+    padding-top: .35em;
+    font: 700 clamp(7.5px, .62vw, 9.5px)/1.72 Arial, sans-serif
+}
+
+.cf-say { width: min(100%, 470px) }
+
+/* 🔴 トップページのFVの見出しと**同じ寸法・同じ太さ**に揃えてある。
+   問い合わせページの見出しがトップより目立つのはおかしい、という判断（2026-09-08 社長）。
+   数値は index の .hero-copy h1 を実測して写した:
+     font-size calc(5.18 * min(1vw, 1.77519svh)) / weight 600 / letter-spacing -.085em
+   ⚠️ 行間は CSS に 1.15 と書いてあるが、実際に効いているのは 1.24（別の規則が上書きしている）。
+      **書いてある値ではなく実測値**に合わせること。
+   ⚠️ トップ側を変えたらここも変える。片方だけ動かすと、また大小が食い違う。 */
+.cf-title {
+    letter-spacing: -.085em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: calc(5.18 * min(1vw, 1.77519svh));
+    font-weight: 600;
+    line-height: 1.24
+}
+
+.cf-title span { color: var(--coral) }
+
+.cf-lead {
+    color: #111111d6;
+    margin: 0;
+    font-size: clamp(12.5px, 1.02vw, 15px);
+    line-height: 2.06
+}
+
+/* 半透明の白い板。写真の上で字が沈むのを、覆いを濃くする代わりにこれで解く。
+   🔴 覆いを濃くすると写真ぜんぶが白ちゃけるが、板なら**字のある所だけ**を持ち上げられる。
+      板の内側で、いちばん暗い「初期費用 0円」の裏でもコントラスト12.7。 */
+.cf-plate {
+    --pp: clamp(18px, 1.9vw, 28px);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    background: #ffffffb8;
+    width: min(100%, calc(430px + var(--pp) * 2));
+    /* 🔴 板の左端＝見出しの左端（左へ引き出さない）。そのうえで**内側に余白を持たせる**。
+       2026-09-08 に社長から2回指摘があり、両方を満たす形がこれ:
+         1回目「板の左端が見出しの左端と合っていない」→ 左へ引き出すのをやめた
+         2回目「テキストの左に余白がない」→ 左の内側余白を戻した
+       結果、板の中の字は板のふちから var(--pp) だけ内側に入る。
+       ⚠️ そのぶん、リードと料金の字は見出しより内側にずれる。これは意図した段差で、
+          左右チェック（基準15の①）が⚠️を出すが、直さないこと。 */
+    margin: clamp(22px, 2.4vw, 36px) 0 0;
+    padding: var(--pp) var(--pp) calc(var(--pp) * .55)
+}
+
+/* 書いてよいのは決まっている事実だけ */
+.cf-facts {
+    margin: clamp(18px, 2vw, 30px) 0 0;
+    padding: 0;
+    list-style: none
+}
+
+.cf-facts li {
+    border-bottom: 1px solid #1111112e;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: clamp(11px, 1.25vw, 19px) 0;
+    display: flex
+}
+
+.cf-facts b {
+    letter-spacing: .13em;
+    font: 700 clamp(8.5px, .78vw, 11px)/1.4 Arial, Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif
+}
+
+.cf-facts span {
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(16px, 1.5vw, 23px);
+    font-weight: 500;
+    line-height: 1
+}
+
+.cf-facts li:last-child { border-bottom: 0 }
+
+.cf-facts em {
+    font-size: .6em;
+    font-style: normal
+}
+
+/* --- 右：記入欄と、文字ぜんぶ --- */
+.cf-panel {
+    background: var(--paper);
+    flex-direction: column;
+    min-height: 100vh;
+    padding: var(--pad) clamp(58px, 5.4vw, 96px) 0 var(--pad);
+    display: flex;
+    position: relative
+}
+
+.cf-back {
+    letter-spacing: .12em;
+    align-self: flex-end;
+    margin-bottom: clamp(28px, 3.4vw, 56px);
+    font: 700 clamp(9.5px, .82vw, 12px)/1 Arial, Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    text-decoration: none;
+    transition: color .2s
+}
+
+.cf-back:hover { color: var(--coral) }
+
+/* 右端の縦組み。飾りなので読めなくても困らない位置に置く */
+.cf-vert {
+    color: #11111199;
+    letter-spacing: .34em;
+    writing-mode: vertical-rl;
+    font: 700 clamp(8px, .68vw, 10px)/1 Arial, sans-serif;
+    position: absolute;
+    top: clamp(96px, 11vw, 176px);
+    right: clamp(22px, 1.9vw, 34px)
+}
+
+.cf-vert:before {
+    background: var(--coral);
+    width: 1px;
+    height: clamp(40px, 5vw, 78px);
+    margin: 0 auto clamp(14px, 1.4vw, 22px);
+    display: block;
+    content: ""
+}
+
+
+/* --- 右のいちばん下。文字はぜんぶこちら側 --- */
+.cf-foot {
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px 26px;
+    width: min(100%, 620px);
+    margin-top: clamp(44px, 5vw, 76px);
+    padding: clamp(18px, 1.9vw, 26px) 0 var(--pad);
+    display: flex
+}
+
+.cf-foot small {
+    color: #111111a8;
+    font-size: clamp(9.5px, .8vw, 11.5px);
+    line-height: 1.7
+}
+
+.cf-foot nav { gap: 22px; display: flex }
+
+.cf-foot a {
+    border-bottom: 1px solid #1111113d;
+    text-decoration: none;
+    transition: color .2s, border-color .2s
+}
+
+.cf-foot a:hover { color: var(--coral); border-color: var(--coral) }
+
+/* --- 縦に積む幅 --- */
+@media (max-width: 900px) {
+    .cf-shell { grid-template-columns: 1fr }
+
+    .cf-visual {
+        height: auto;
+        min-height: 84vh;
+        padding: calc(var(--pad) + 62px) var(--pad) calc(var(--pad) + 8px);
+        position: static
+    }
+
+    .cf-visual:before {
+        background: linear-gradient(168deg, #faf9f7c7 0%, #faf9f7a3 52%, #faf9f770 100%)
+    }
+
+    .cf-say { width: 100% }
+
+    .cf-title { font-size: clamp(30px, 6.4vw, 52px) }
+
+    .cf-panel {
+        min-height: 0;
+        padding: var(--pad) var(--pad) 0
+    }
+
+    .cf-back {
+        margin-bottom: clamp(22px, 4vw, 34px)
+    }
+
+    /* 飾りの縦組みは、狭い画面では入力欄に重なるので出さない */
+    .cf-vert { display: none }
+
+    .th-body, .cf-foot { width: 100% }
+}
+
+/* トップページのSP（@media max-width:700px の #top h1）と同じ寸法にする。
+   ただし中央寄せの送り（padding-left: 5.6vw）は、こちらが左揃えなので入れない */
+@media (max-width: 700px) {
+    .cf-title { letter-spacing: -1.15px; font-size: 11.6vw; line-height: 1.4 }
+}
+
+@media (max-width: 480px) {
+    .cf-foot { flex-direction: column; align-items: flex-start }
+    .cf-foot nav { gap: 18px }
+}
+
+/* --- 右：受け取りましたと、次に見るもの --- */
+
+/* 中身が少ないので、余ったぶんを伸ばしてフッターを下に落とす。
+   ⚠️ 縦に積む幅（900px以下）では .cf-panel の min-height が 0 になるので
+      これは効かない。そちらは .cf-foot の margin-top が受け持つ */
+.th-body {
+    flex: 1;
+    width: min(100%, 620px)
+}
+
+.th-kicker {
+    color: var(--coral);
+    letter-spacing: .16em;
+    margin: 0;
+    font: 700 clamp(9.5px, .82vw, 12px)/1 Arial, sans-serif
+}
+
+.th-kicker--sub {
+    color: #11111199;
+    margin-top: clamp(38px, 4.4vw, 68px)
+}
+
+/* 左の大見出しより小さく。ここは「もう終わった」ことの確認で、主役ではない */
+.th-head {
+    letter-spacing: -.04em;
+    margin: clamp(12px, 1.3vw, 20px) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(21px, 2.1vw, 32px);
+    font-weight: 500;
+    line-height: 1.5
+}
+
+.th-note {
+    color: #111111c4;
+    margin: clamp(14px, 1.5vw, 22px) 0 0;
+    font-size: clamp(12.5px, 1.02vw, 15px);
+    line-height: 2.06
+}
+
+.th-links {
+    border-top: 1px solid var(--line);
+    margin-top: clamp(14px, 1.5vw, 22px);
+    display: block
+}
+
+.th-links a {
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+    gap: 4px 18px;
+    padding: clamp(16px, 1.8vw, 26px) 0;
+    text-decoration: none;
+    transition: color .2s;
+    display: grid;
+    grid-template-columns: 1fr auto
+}
+
+.th-links b {
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(15px, 1.35vw, 21px);
+    font-weight: 500
+}
+
+.th-links span {
+    color: #111111a8;
+    grid-column: 1;
+    font-size: clamp(11.5px, .94vw, 13.5px);
+    line-height: 1.85
+}
+
+/* 🔴 列を書かないと自動配置で矢印が1列目に入り、見出しが右へ弾かれる。
+   grid-column を明示すること（2026-09-09 実際にそうなった） */
+.th-links i {
+    color: var(--coral);
+    grid-area: 1 / 2 / span 2 / 3;
+    align-self: center;
+    font-style: normal;
+    font-size: clamp(17px, 1.6vw, 24px)
+}
+
+.th-links a:hover { color: var(--coral) }
+</style>
+</head>
+<body>
+
+<div class="cf-shell">
+
+    <!-- 左：contact.html と同じ。送信の前後で画面が飛ばないようにしている -->
+    <aside class="cf-visual">
+        <a class="cf-brand" href="./index.html">
+            <i>Tilto<sup>°</sup></i>
+            <small>RECRUITMENT<br/>CREATIVE<br/>STUDIO</small>
+        </a>
+
+        <div class="cf-say">
+            <h1 class="cf-title">ありがとう<br/><span>ございます。</span></h1>
+            <div class="cf-plate">
+                <p class="cf-lead">
+                    ご相談の内容を、たしかに受け取りました。<br/>
+                    担当者より、ご記入いただいたメールアドレス宛に<br/>
+                    ご連絡いたします。
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 右：文字はぜんぶこちら側 -->
+    <main class="cf-panel">
+        <a class="cf-back" href="./index.html">&#8592;&nbsp;&nbsp;サイトへ戻る</a>
+        <span class="cf-vert" aria-hidden="true">IDEAS FOR A BETTER TOMORROW</span>
+
+        <div class="th-body">
+            <p class="th-kicker">RECEIVED</p>
+            <h2 class="th-head">送信が完了しました。</h2>
+            <p class="th-note">
+                返信が届かないときは、迷惑メールフォルダをご確認ください。<br/>
+                書き足したいことが出てきた場合は、もう一度フォームからお送りいただいて問題ありません。
+            </p>
+
+            <p class="th-kicker th-kicker--sub">お待ちいただくあいだに</p>
+            <nav class="th-links" aria-label="サイト内の見どころ">
+                <a href="./index.html#expression">
+                    <b>制作イメージ</b>
+                    <span>業種ごとの表現サンプルと、実際に動くサイト。</span>
+                    <i aria-hidden="true">&#8594;</i>
+                </a>
+                <a href="./index.html#price">
+                    <b>料金とよくある質問</b>
+                    <span>月額と、契約期間・原稿・公開までのお答え。</span>
+                    <i aria-hidden="true">&#8594;</i>
+                </a>
+            </nav>
+        </div>
+
+        <footer class="cf-foot">
+            <small>&copy; 2026 TILTO&deg; All Rights Reserved.</small>
+            <nav>
+                <small><a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></small>
+                <small><a href="https://savorflow.co.jp/" target="_blank" rel="noopener">株式会社Savor Flow</a></small>
+            </nav>
+        </footer>
+    </main>
+
+</div>
+
+</body>
+</html>
