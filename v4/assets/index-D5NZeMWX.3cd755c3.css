@@ -760,7 +760,7 @@ button, a {
     overflow:hidden
 }
 
-@media (aspect-ratio<=4/3) {
+@media (max-aspect-ratio: 4/3) {
     .site-shell {
         place-items:start center
     }

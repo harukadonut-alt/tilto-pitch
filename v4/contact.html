@@ -191,7 +191,7 @@ a { color: inherit }
 
 .cf-facts b {
     letter-spacing: .13em;
-    font: 700 clamp(8.5px, .78vw, 11px)/1.4 Arial, sans-serif
+    font: 700 clamp(8.5px, .78vw, 11px)/1.4 Arial, Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif
 }
 
 .cf-facts span {
@@ -222,7 +222,7 @@ a { color: inherit }
     letter-spacing: .12em;
     align-self: flex-end;
     margin-bottom: clamp(28px, 3.4vw, 56px);
-    font: 700 clamp(9.5px, .82vw, 12px)/1 Arial, sans-serif;
+    font: 700 clamp(9.5px, .82vw, 12px)/1 Arial, Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
     text-decoration: none;
     transition: color .2s
 }
@@ -251,7 +251,27 @@ a { color: inherit }
 
 .cf-form { width: min(100%, 620px); margin: 0 }
 
-.cf-field { margin-bottom: clamp(18px, 2vw, 30px) }
+/* 記入欄のかたまり。PC（左右2枚組みになる幅）では短い項目を2列にする。
+   1列に7段積むと、左の板（画面に貼り付いて動かない）に対して右だけが
+   長いトンネルになり、目が下に落ちるだけの面になっていた。
+   2列にすると 会社名/お名前・メール/電話・役職/種類 が意味の対で並び、
+   段が4つに減る。ご相談の内容だけ全幅（.cf-wide）。
+   ⚠️ 隙間は margin ではなく gap で持つ。列をまたいでも段の高さが揃う。 */
+.cf-fields {
+    row-gap: clamp(18px, 2vw, 30px);
+    display: grid
+}
+
+@media (min-width: 901px) {
+    .cf-fields {
+        grid-template-columns: 1fr 1fr;
+        column-gap: clamp(16px, 1.7vw, 26px)
+    }
+
+    .cf-fields > .cf-wide { grid-column: 1 / -1 }
+}
+
+.cf-field { margin-bottom: 0 }
 
 .cf-field > label {
     align-items: baseline;
@@ -260,9 +280,11 @@ a { color: inherit }
     display: flex
 }
 
+/* 🔴 Arial だけだと日本語の字が拾えず、Windowsでは MS ゴシック等に落ちる。
+   本文と同じ和文の指定を後ろに足して、どのOSでも同じ書体で出す（2026-09-09） */
 .cf-field > label > b {
     letter-spacing: .06em;
-    font: 700 clamp(11px, .88vw, 13.5px)/1 Arial, sans-serif
+    font: 700 clamp(11px, .88vw, 13.5px)/1 Arial, Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif
 }
 
 .cf-req {
@@ -284,7 +306,10 @@ a { color: inherit }
     -webkit-appearance: none;
     appearance: none;
     background: #fff;
-    border: 1px solid #11111133;
+    /* 🔴 ふちの濃さ。#111 の20%（コントラスト1.56）では枠が見えず、
+       どこが記入欄か分からなかった。50%にして白地に対して3.54、
+       紙色に対して3.37 ＝ 操作部品の輪郭に要る3.0を満たす（2026-09-09 実測） */
+    border: 1px solid #11111180;
     border-radius: 0;
     width: 100%;
     padding: clamp(11px, 1.1vw, 16px) clamp(12px, 1.2vw, 18px);
@@ -325,7 +350,7 @@ a { color: inherit }
     gap: 20px;
     width: 100%;
     min-height: clamp(60px, 5.4vw, 80px);
-    margin-top: clamp(6px, 1vw, 14px);
+    margin-top: clamp(24px, 2.6vw, 38px);
     padding: 0 clamp(20px, 2.2vw, 34px);
     font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
     font-size: clamp(15px, 1.3vw, 20px);
@@ -500,6 +525,8 @@ a { color: inherit }
             <!-- 迷惑メール除け。人には見えない。埋まっていたら弾かれる -->
             <input type="checkbox" name="botcheck" tabindex="-1" aria-hidden="true" style="display:none"/>
 
+            <div class="cf-fields">
+
             <div class="cf-field">
                 <label for="cf-company"><b>会社名</b><span class="cf-any">OPTIONAL</span></label>
                 <input id="cf-company" name="company" type="text" autocomplete="organization"/>
@@ -543,10 +570,12 @@ a { color: inherit }
                 </select>
             </div>
 
-            <div class="cf-field">
+            <div class="cf-field cf-wide">
                 <label for="cf-body"><b>ご相談の内容</b><span class="cf-any">OPTIONAL</span></label>
                 <textarea id="cf-body" name="message" placeholder="いま困っていること、採用で伝えたいこと、決まっていないことなど。箇条書きでかまいません。"></textarea>
             </div>
+
+            </div><!-- /.cf-fields -->
 
             <button class="cf-send" type="submit" disabled>送信する<b aria-hidden="true">→</b></button>
 
