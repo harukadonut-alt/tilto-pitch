@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.3a02d558.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.3a02d558.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.6a464381.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.6a464381.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.3a02d558.js / rolldown-runtime-S-ySWqyJ.3a02d558.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.6a464381.js / rolldown-runtime-S-ySWqyJ.6a464381.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1204,6 +1204,18 @@ var SR_LANE_TILES = [
     [6, 7]    // 手前 … 572 / 660px（2026-09-01 +10%・社長指示）
 ];
 
+/* 右の一覧に出す小さい絵（横640px）。帯のタイルは最大660pxまで使うので大きい絵が要るが、
+   一覧は最大296px表示。**その業種の全点を一度に読む**場所なので、ここだけ軽い絵にする。
+   🔴 一覧はクライアント側だけで描く要素（SSRに出ない）ので、ここを変えても
+      ハイドレーションはずれない。帯のタイルは index.html にも出るので触らない。
+   ⚠️ `-sm` は resize-showroom.py が作る。作品を足したら流し直すこと。
+   ⚠️ 万一 -sm が無くても元の絵に落ちるよう、置換できたときだけ差し替える */
+function railImg(src) {
+    return typeof src === `string` && src.endsWith(`.webp`)
+        ? src.replace(/\.webp$/, `-sm.webp`)
+        : src;
+}
+
 var SR_TILES = [
     { width: 112, height: 63, gap: 14, y: 6, rotate: -1.1 },
     { width: 130, height: 73, gap: 18, y: -6, rotate: 1.3 },
@@ -1406,7 +1418,7 @@ function Showroom() {
                            （縦長が無い作品を開くと、左は同じ業種の別のサイトになるため） */
                         "data-current": shown && other.id === shown.id ? `true` : `false`,
                         onClick: () => setPicked(other.id),
-                        children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
+                        children: [(0, i.jsx)(`img`, { src: railImg(other.image), alt: other.alt, loading: `lazy` }),
                             (0, i.jsx)(`span`, { children: other.title })]
                     }, other.id)),
                     /* ── 下：ファーストビューの絵だけのもの。参照するだけで押しても変わらない ──
@@ -1419,7 +1431,7 @@ function Showroom() {
                     ...related.still.map(other => (0, i.jsxs)(`figure`, {
                         className: `works-rail-item`,
                         "data-current": other.id === work.id ? `true` : `false`,
-                        children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
+                        children: [(0, i.jsx)(`img`, { src: railImg(other.image), alt: other.alt, loading: `lazy` }),
                             /* 業種は上の見出しに出したので、ここは作品名（全部違う） */
                             (0, i.jsx)(`figcaption`, { children: other.title })]
                     }, other.id))]
@@ -1811,7 +1823,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.3a02d558.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.6a464381.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
@@ -1890,6 +1902,7 @@ function x() {
                             "aria-label": `散らばった相談資料が整理され、完成した採用サイトへ変わる様子`,
                             children: [(0, i.jsx)(`img`, {
                                     className: `process-before-reference`,
+                                    loading: `lazy`,
                                     src: `./images/section03-before.webp`,
                                     alt: `付箋、手書きメモ、写真、ワイヤーフレームが散らばった制作途中の状態`
                                 }),
@@ -1906,7 +1919,8 @@ function x() {
                                             "data-keep": `true`,
                                             style: { left: `39%`, top: `14%` },
                                             children: [(0, i.jsx)(`img`, {
-                                                    src: `./images/section03-before.webp`,
+                                                    loading: `lazy`,
+                                    src: `./images/section03-before.webp`,
                                                     alt: ``
                                                 }),
                                                 (0, i.jsx)(`b`, {
@@ -2040,7 +2054,8 @@ function x() {
                                             "data-keep": `false`,
                                             style: { left: `81%`, top: `78%` },
                                             children: [(0, i.jsx)(`img`, {
-                                                    src: `./images/section03-before.webp`,
+                                                    loading: `lazy`,
+                                    src: `./images/section03-before.webp`,
                                                     alt: ``
                                                 }),
                                                 (0, i.jsx)(`b`, {
@@ -2128,7 +2143,8 @@ function x() {
                                                     className: `process-site-scroll`,
                                                     children: (0, i.jsx)(`img`, {
                                                             className: `process-final-image`,
-                                                            src: `./images/section03-site.webp`,
+                                                            loading: `lazy`,
+                                    src: `./images/section03-site.webp`,
                                                             alt: `高架下に立つ作業員の写真に「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイト。その下に「仕事は、誰かの日常につながっている。」の節が続く`
                                                         })
                                                 })]
