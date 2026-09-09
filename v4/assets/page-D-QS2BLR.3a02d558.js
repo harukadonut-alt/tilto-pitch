@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.de484cbc.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.de484cbc.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3a02d558.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3a02d558.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.de484cbc.js / rolldown-runtime-S-ySWqyJ.de484cbc.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3a02d558.js / rolldown-runtime-S-ySWqyJ.3a02d558.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1399,9 +1399,6 @@ function Showroom() {
                 className: `works-rail`,
                 children: [(0, i.jsxs)(`small`, { className: `works-rail-head`, children: [`RELATED — `, work.industry] }),
                     /* ── 上：実際に動くサイト。押すと左の枠がそのサイトに切り替わる ── */
-                    related.live.length
-                        ? (0, i.jsx)(`small`, { className: `works-rail-group`, children: `実際に動くサイト` })
-                        : null,
                     ...related.live.map(other => (0, i.jsxs)(`button`, {
                         type: `button`,
                         className: `works-rail-item works-rail-item--live`,
@@ -1412,9 +1409,12 @@ function Showroom() {
                         children: [(0, i.jsx)(`img`, { src: other.image, alt: other.alt, loading: `lazy` }),
                             (0, i.jsx)(`span`, { children: other.title })]
                     }, other.id)),
-                    /* ── 下：ファーストビューの絵だけのもの。参照するだけで押しても変わらない ── */
-                    related.still.length
-                        ? (0, i.jsx)(`small`, { className: `works-rail-group`, children: `ファーストビューのみ` })
+                    /* ── 下：ファーストビューの絵だけのもの。参照するだけで押しても変わらない ──
+                       🔴 見出しは付けない（2026-09-10 社長「ラベルはいらない。薄く線引きする程度に」）。
+                          押せる/押せないの区別は、この細い線とホバーの反応だけで伝える。
+                       ⚠️ 線は**両方あるときだけ**引く。片側しか無い業種で宙に浮いた線が出る */
+                    related.live.length && related.still.length
+                        ? (0, i.jsx)(`span`, { className: `works-rail-split`, "aria-hidden": `true` })
                         : null,
                     ...related.still.map(other => (0, i.jsxs)(`figure`, {
                         className: `works-rail-item`,
@@ -1811,7 +1811,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.de484cbc.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.3a02d558.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
