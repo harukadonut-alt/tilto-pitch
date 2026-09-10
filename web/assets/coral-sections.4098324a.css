@@ -1,0 +1,4696 @@
+/* ============================================================
+   うちで作り直した節（移植したGPT製のCSSより後に読む）
+
+   assets/gpt-sections.4098324a.css は「向こうのサイトから機械で抜いたCSS」で、
+   cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
+   ============================================================ */
+
+/* 🔴 2026-09-09: このファイルの `.reference-problems*` / `.reference-problem*` /
+   `.reference-after*` / `.after-item*` は、**もう使っていない**（マークアップを消した）。
+   02は末尾の `.reference-hurdles` に作り直してある。
+   残してあるのは、刷新したばかりで戻す可能性があるから。落ち着いたら消すこと
+   （案件TODOに行を立ててある）。⚠️ `.hl-line` / `.hl-band` は03・05でも使うので消さない。
+   ------------------------------------------------------------------ */
+
+/* ── 02 私たちが解決するお悩み ────────────────────────────────
+   役割は**緊張のセクション**。01の静かな白のあとに空気を変える。
+   ⚠️ ページ最大の山は04ショールーム。ここは「強いが最大ではない」で止める。
+      巨大文字で黒を埋め尽くさず、**黒い空間に巨大文字が置かれている**印象にする。
+
+   前版から: 遅い22→16.6 / 高い20.2→13.2 / 成果8.9→6.0（単位u）、
+   赤い線 3→2本、英字の補助ラベル3つを削除、着地コピーを中央の巨大コーラルから左下の小組みに。
+
+   ⚠️ 寸法の単位は `--u`。`min(1vw, …)` で**節の高さと一緒に頭打ち**にしてある。
+      素の vw だけで組むと、広い画面で高さだけ clamp されて文字がはみ出す（前版がそうだった）。
+   ------------------------------------------------------------------ */
+.reference-problems {
+    /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
+    --u: min(1vw, 14.87px);
+
+    /* 🔴 動きの既定値は「着地後」。motion.4098324a.js が動かない場合
+       （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
+    --pb-black: 1;
+    --pb-high: 1;
+    --pb-slow: 1;
+    --pb-result: 1;
+    --pb-note-1: 1;
+    --pb-note-2: 1;
+    --pb-note-3: 1;
+    --pb-line-1: 1;
+    --pb-line-2: 1;
+    --pb-closing: 1;
+
+    color: #f7f4ee;
+    background: #111;
+    border-bottom: 1px solid var(--tone-coral);
+    height: clamp(560px, 41.7vw, 620px);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate
+}
+
+/* 黒い紙面が下からせり上がる。白い面が上へ抜けて、黒が下から出てくる。
+   ⚠️ scaleY で畳むと文字が潰れて見えるので、translate で抜く */
+.reference-problems::before {
+    content: "";
+    z-index: 8;
+    pointer-events: none;
+    background: var(--tone-paper);
+    translate: 0 calc(var(--pb-black) * -100%);
+    position: absolute;
+    inset: 0
+}
+
+.reference-problems-label {
+    color: #f7f4ee;
+    top: calc(var(--u) * 2.6);
+    opacity: var(--pb-black)
+}
+
+.reference-problem {
+    position: absolute;
+    inset: 0
+}
+
+.reference-problem strong {
+    color: #f7f4ee;
+    letter-spacing: -.12em;
+    white-space: nowrap;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .82;
+    display: block;
+    position: absolute
+}
+
+/* 補助説明。小さく散らす */
+.reference-problem p {
+    color: #f7f4eee6;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    line-height: 1.7;
+    position: absolute
+}
+
+/* 編集者の赤入れ。細く鋭く、2本だけ */
+.reference-problem i {
+    background: var(--tone-coral);
+    transform-origin: 0 50%;
+    height: 1px;
+    position: absolute
+}
+
+/* --- 左: 高い（少し小さめ・左端で切れたまま） --- */
+.reference-problem-high strong {
+    font-size: calc(var(--u) * 13.2);
+    top: calc(var(--u) * 9.4);
+    left: calc(var(--u) * -1.4);
+    opacity: var(--pb-high);
+    translate: calc((1 - var(--pb-high)) * -100px) 0
+}
+
+.reference-problem-high p {
+    top: calc(var(--u) * 21.2);
+    left: calc(var(--u) * 5.6);
+    opacity: var(--pb-note-1);
+    translate: 0 calc((1 - var(--pb-note-1)) * 14px)
+}
+
+.reference-problem-high i {
+    width: calc(var(--u) * 8.3);
+    top: calc(var(--u) * 20.8);
+    left: calc(var(--u) * 14.2);
+    rotate: -30deg;
+    scale: var(--pb-line-1) 1
+}
+
+/* --- 中央: 遅い（主役） --- */
+.reference-problem-late strong {
+    font-size: calc(var(--u) * 16.6);
+    top: calc(var(--u) * 8);
+    left: calc(var(--u) * 36.5);
+    transform-origin: 50% 100%;
+    opacity: var(--pb-slow);
+    scale: calc(.94 + var(--pb-slow) * .06);
+    translate: 0 calc((1 - var(--pb-slow)) * 32px)
+}
+
+.reference-problem-late p {
+    top: calc(var(--u) * 22.6);
+    left: calc(var(--u) * 41.8);
+    opacity: var(--pb-note-2);
+    translate: 0 calc((1 - var(--pb-note-2)) * 14px)
+}
+
+/* --- 右: 成果が見えない（縦組みで静かに強く） --- */
+.reference-problem-result strong {
+    letter-spacing: -.08em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--u) * 6);
+    line-height: 1.03;
+    top: calc(var(--u) * 5.9);
+    right: calc(var(--u) * 3.6);
+    opacity: var(--pb-result);
+    translate: calc((1 - var(--pb-result)) * 70px) 0
+}
+
+.reference-problem-result p {
+    top: calc(var(--u) * 24.3);
+    left: calc(var(--u) * 70.6);
+    opacity: var(--pb-note-3);
+    translate: 0 calc((1 - var(--pb-note-3)) * 14px)
+}
+
+.reference-problem-result i {
+    width: calc(var(--u) * 7);
+    top: calc(var(--u) * 23.3);
+    left: calc(var(--u) * 76.5);
+    rotate: -34deg;
+    scale: var(--pb-line-2) 1
+}
+
+/* --- 着地点。大きくしすぎず、左下に上品に --- */
+.reference-problems-statement {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    bottom: calc(var(--u) * 3.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--pb-closing);
+    translate: 0 calc((1 - var(--pb-closing)) * 12px)
+}
+
+.reference-problems-statement b {
+    color: var(--tone-coral);
+    letter-spacing: .1em;
+    margin-bottom: calc(var(--u) * .95);
+    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
+    display: block
+}
+
+.reference-problems-statement span {
+    color: #f7f4ee;
+    letter-spacing: .01em;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(26px, calc(var(--u) * 2.85), 42px);
+    font-weight: 500;
+    line-height: 1.2;
+    display: block
+}
+
+.reference-problems-statement i {
+    color: var(--tone-coral);
+    font-style: normal
+}
+
+/* --- 右下のSCROLL。主張させない --- */
+.reference-problems-scroll {
+    color: #f7f4ee8f;
+    letter-spacing: .24em;
+    writing-mode: vertical-rl;
+    font: 700 clamp(7px, calc(var(--u) * .62), 9.5px)/1 Arial, sans-serif;
+    position: absolute;
+    right: calc(var(--u) * 2.4);
+    bottom: calc(var(--u) * 6.6);
+    opacity: calc(var(--pb-closing) * .9)
+}
+
+.reference-problems-scroll i {
+    background: #f7f4ee45;
+    width: 1px;
+    height: calc(var(--u) * 4.2);
+    display: block;
+    position: absolute;
+    top: calc(100% + var(--u) * .9);
+    left: calc(50% - .5px)
+}
+
+/* --- SP: 縦に積む。巨大文字は残すが、線と縦組みは畳む --- */
+@media (max-width: 900px) {
+    .reference-problems {
+        --u: min(2.6vw, 11px);
+        height: auto;
+        min-height: 0;
+        padding: 88px 22px 40px
+    }
+
+    .reference-problems-label {
+        top: 34px;
+        left: 22px
+    }
+
+    .reference-problem,
+    .reference-problem strong,
+    .reference-problem p,
+    .reference-problems-statement,
+    .reference-problems-scroll {
+        position: static;
+        inset: auto
+    }
+
+    .reference-problem {
+        margin-bottom: 34px
+    }
+
+    .reference-problem strong {
+        font-size: 27vw;
+        margin-left: -.06em
+    }
+
+    .reference-problem-late strong {
+        font-size: 30vw
+    }
+
+    /* 縦組みは幅を食うので、SPでは横組みに戻す */
+    .reference-problem-result strong {
+        writing-mode: horizontal-tb;
+        font-size: 15vw;
+        line-height: 1.14
+    }
+
+    .reference-problem p {
+        margin-top: 12px;
+        font-size: 13px
+    }
+
+    .reference-problem i {
+        display: none
+    }
+
+    .reference-problems-statement {
+        margin-top: 44px
+    }
+
+    .reference-problems-scroll {
+        display: none
+    }
+}
+
+/* ── 03 AFTER 「曖昧な相談が、採用サイトになる。」 ──────────────────
+   役割は**感動体験の着地点**。BEFOREの散らばった相談が、
+   ひとつの採用ブランド体験として立ち上がる瞬間を見せる。
+
+   旧版の弱点（社長の指摘）:
+     ・コピーが枠に収まらず「ここまでつく／る。」で割れていた
+     ・完成サイトが横長の1枚で、FVしか見えず「続きも設計されている」が伝わらない
+     ・枠が丸ボタン3つのブラウザUIで、作品に見えなかった
+   ------------------------------------------------------------------ */
+
+/* 版面を分ける縦罫。コピーと完成サイトのあいだに置く */
+.process-stage:before {
+    left: 40%
+}
+
+/* ⚠️ コピーは**必ず指定した位置で改行させる**。
+   幅が足りないと勝手に折り返して「ここまでつく／る。」になる（旧版がそれ）。
+
+   🔴 2026-09-04: afterの見出しを「曖昧な相談が、／採用サイトになる。」から
+      「「なんとなく」から、／まとめます。」へ変えたとき、**1行目が折れた**。
+      いちばん長い行が9文字→**10文字**になり、必要幅が 9.5×font-size に増えたため。
+        font-size = clamp(34px,3.85vw,60px) なので 必要幅 ≒ 36.6vw（clampが効く883〜1558px）
+        画面の端（60px止まり・34px止まり）でも足りるように **38vw** を取る。
+      ⚠️ 文字数を変えたら、この幅も計算し直すこと（必要幅 ≒ 9.5 × 見出しの文字サイズ）。 */
+.process-copy {
+    width: 38vw
+}
+
+.process-copy-after h2 {
+    letter-spacing: -.05em;
+    font-size: clamp(34px, 3.85vw, 60px);
+    line-height: 1.36
+}
+
+.process-copy-after p {
+    color: #111111c4;
+    margin-top: clamp(22px, 3.6vh, 38px)
+}
+
+/* --- 完成サイトの見せ方 --- */
+
+/* ⚠️ 高さを vh で決めない。幅とアスペクトで決める。
+   見本画像は 1229×1280。枠の窓（=枠の高さ - 上帯30px）に
+   FVが約72%・下の節が約28%見えるようにしたい。
+     窓 ÷ 幅 = 839 ÷ 1229 = 0.6827
+     枠の高さ = 幅 × 0.6827 + 30px  →  縦横比おおよそ 1.387
+   vh で決めると画面の高さ次第でこの比率が崩れ、FVだけ／出しすぎになる */
+.process-site-assembly {
+    width: 54vw;
+    height: auto;
+    margin: 0;
+    top: 12vh;
+    right: 3.6vw;
+    transform-origin: 100% 50%;
+    transform: translateY(calc((1 - var(--process-reveal)) * 30px)) scale(calc(.97 + var(--process-reveal) * .03))
+}
+
+.process-site-frame {
+    aspect-ratio: 1.387;
+    height: auto;
+    /* 作品として置いた1枚に見せる。平らな影＋墨の細罫 */
+    box-shadow: 18px 20px #11111114
+}
+
+/* ⚠️ 丸ボタン3つはブラウザUIに見えるのでやめた。
+   コーラルの細い罫と小さなラベルだけの、展示キャプションに近い帯にする */
+.process-site-chrome {
+    border-bottom: 1px solid #11111f2e;
+    gap: 10px;
+    height: 30px;
+    padding: 0 13px
+}
+
+.process-site-chrome i {
+    background: var(--tone-coral);
+    border-radius: 0;
+    width: 17px;
+    height: 1px
+}
+
+.process-site-chrome span {
+    color: #111111a8;
+    letter-spacing: .17em;
+    margin-left: auto;
+    font: 700 6.5px/1 Arial, sans-serif
+}
+
+/* 見本画像は幅いっぱい。切らずに全幅を見せて、縦だけ窓で切る */
+.process-final-image {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    top: 0;
+    right: 0
+}
+
+.process-site-assembly figcaption {
+    color: #111111a8;
+    text-align: right;
+    letter-spacing: .17em;
+    margin-top: 11px;
+    font: 700 6.5px/1 Arial, sans-serif
+}
+
+@media (max-width: 900px) {
+    .process-copy {
+        width: calc(100vw - 40px)
+    }
+
+    .process-copy-after h2 {
+        font-size: clamp(28px, 8.2vw, 44px);
+        line-height: 1.4
+    }
+
+    .process-site-assembly {
+        width: calc(100vw - 40px);
+        height: auto;
+        min-height: 0;
+        top: 46%;
+        right: 20px
+    }
+
+    /* 上帯の30pxは固定なので、幅が小さいほど窓に占める割合が増える。
+       SPでもFVが約72%になるよう、縦横比だけ詰める */
+    .process-site-frame {
+        aspect-ratio: 1.3
+    }
+
+    .process-final-image {
+        width: 100%;
+        top: 0
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .process-site-assembly {
+        transform: none
+    }
+}
+
+/* ── SP版の総点検で直した分（2026-08-31・375pxで全節を実測） ──────────
+   直したもの:
+     01 見出しの事故折り／極小文字／下の余り
+     03 読めない装飾文字（6px）と極小ラベル
+     04 流れるタイルがリード文に重なっていた／見出しの事故折り
+     06 「0」が主役の27,000より倍近く大きく、310pxを1文字で食っていた
+     07 住所と©が9px/8px
+   05の設計図の中の微細文字（5〜7px）は触っていない。あれは「図面」という
+   表現で、読ませる文字ではなく絵の一部（PCでも同じ大きさ）。
+   ------------------------------------------------------------------ */
+
+/* SPだけで効かせる改行。PCでは無いのと同じ */
+.sp-only { display: none }
+
+@media (max-width: 900px) {
+    .sp-only { display: inline }
+
+    /* --- 01 ABOUT ---
+       「つくる。だけじゃない。」11文字が幅298pxに入らず、text-wrap:balance が
+       「つくる。だけじゃ/ない。」と事故折りしていた。SP用brで4行に割り、
+       1行の最大を7文字にして文字を大きくできるようにした（35.6px→38px） */
+    .reference-about-copy h2 {
+        text-wrap: initial;
+        font-size: 38px;
+        line-height: 1.42
+    }
+
+    /* 仕様リストの右側（dd）が8pxで読めなかった */
+    .reference-about-facts dd {
+        font-size: 10px
+    }
+
+    .reference-about-facts dt {
+        font-size: 11px
+    }
+
+    /* 補助文とリストの間19px・下の余り88pxと釣り合いが崩れていたので、
+       リストを下げて 53px / 54px に配分し直す */
+    .reference-about-facts {
+        top: 500px
+    }
+
+    /* --- 03 体験 --- */
+    /* 節の小見出しが8px。9.5pxへ */
+    .process-label small {
+        font-size: 9.5px
+    }
+
+    /* 「対話する→選び取る→構造にする」が6px。読めない装飾なのでSPでは畳む */
+    .process-edit-words {
+        display: none
+    }
+
+    /* 下端の 01/LISTEN … が5px */
+    .process-progress {
+        font-size: 7px
+    }
+
+    /* 作品フレームの帯とキャプションが6.5px */
+    .process-site-chrome span,
+    .process-site-assembly figcaption {
+        font-size: 8px
+    }
+
+    /* --- 04 表現ショールーム ---
+       🔴 タイルのレーンが y421 から始まり、リード文（y451〜510）と
+          「7 INDUSTRIES…」（y530〜561）の**上に重なっていた**。
+          見出しも「振れ幅そのものが、」9文字が48.75pxで入らず事故折り。 */
+    .works-intro h3 {
+        /* 9文字 × 36px = 324px < 335px。2行で収まる */
+        font-size: clamp(30px, 9.6vw, 36px)
+    }
+
+    .works-showroom {
+        height: 1140px;
+        min-height: 1140px
+    }
+
+    /* リード文の下（実測 y393）から。節ラベルを消して中身が90px上がったぶん詰めた */
+    .works-lane-1 { top: 440px }
+    .works-lane-2 { top: 645px }
+    .works-lane-3 { top: 850px }
+
+    /* タイルの業種ラベル。PCと同じ9px（下の文字サイズ統一の節を見る） */
+    .works-tile span small {
+        font-size: 9px
+    }
+
+    /* --- 06 PRICE ---
+       「0」が220px（高さ310pxを1文字で占有）で、主役の27,000（116px）より
+       倍近く大きかった。PC版の「0の方が大きい」意図は残しつつ、常識的な比に */
+    .reference-initial-cost {
+        height: 200px;
+        margin: 44px 0
+    }
+
+    .reference-initial-cost strong {
+        margin-top: 34px;
+        font-size: 150px
+    }
+
+    .reference-initial-cost b {
+        margin-bottom: 28px
+    }
+
+    /* --- 07 CONTACT --- 住所9px・©8pxを一段上げる */
+    .reference-contact-bottom address {
+        font-size: 10px
+    }
+
+    .reference-contact-bottom > small {
+        font-size: 9px
+    }
+}
+
+/* ── 07 フッターの直し（2026-08-31・社長指示） ──────────────────────
+   1. CTAのぎざぎざを外して四角に戻す。
+      🔴 原因: 移植元の汎用 `.contact-cta`（FV用の「破れ紙」演出。ぎざぎざの
+         clip-path・傾き・茶色い文字）が、フッターの黒い箱にまで当たっていた。
+   2. 左下の Tilto° を、FVヘッダーのロゴ（.brand）と同じ字に揃える。
+   ------------------------------------------------------------------ */
+.reference-contact > .contact-cta {
+    clip-path: none;
+    transform: none;
+    box-shadow: none;
+    margin: 0;
+    transition: background .25s, color .25s
+}
+
+.reference-contact > .contact-cta:hover {
+    transform: none
+}
+
+/* 文字色と大きさも破れ紙用（茶色・20px固定）が効いていた。箱の指定に戻す */
+.reference-contact > .contact-cta span {
+    color: inherit;
+    font-size: inherit
+}
+
+/* ヘッダーのロゴと同じ: Didot系・字間-.045em・°は上付き.65em */
+.reference-contact-brand {
+    letter-spacing: -.045em;
+    font-family: Didot, "Bodoni 72", Times New Roman, serif;
+    font-weight: 500
+}
+
+.reference-contact-brand span {
+    vertical-align: top;
+    margin-left: .06em;
+    font-size: .65em
+}
+
+/* ── 05 左側を3層に分解（2026-08-31・社長指示） ──────────────────────
+   旧: 左下に 大見出し＋サブ＋本文5行 が全部積まれ、重心が左下に落ちていた。
+   新: A 上部ラベル（そのまま）
+       B 左中段の小さな思想文（.bp-note・作品注釈のように）
+       C 左下の大コピー＋直下のサブだけ
+   本文は3行に短縮。「Tilto°は、成果にこだわり、設計から、やりきる。」は削った
+   （右のブループリント自体が「つくって終わらない。成果まで、設計する。」と語っている）。
+   ------------------------------------------------------------------ */
+
+/* 見出し・サブ・思想文を**ひとつの塊**にして、セクションの上下中央・左寄せに置く。
+   ⚠️ 別々に絶対配置していたときは、見出しが左上に張り付いて**左下に大きな余白**が残った
+      （社長の指摘）。塊にすれば、中身が増えても中央に居続ける。 */
+.bp-lead {
+    z-index: 22;
+    width: 31vw;
+    opacity: var(--bp-intro);
+    transform: translateY(calc(-50% + (1 - var(--bp-intro)) * 16px));
+    position: absolute;
+    top: 50%;
+    left: 2.45vw
+}
+
+/* 塊の中では、絶対配置をやめて素直に縦へ積む */
+.bp-lead .bp-copy,
+.bp-lead .bp-principle {
+    opacity: 1;
+    width: auto;
+    transform: none;
+    position: static;
+    inset: auto
+}
+
+/* B. 思想文。読み物ではなく、図面に添えたキャプション
+   🔴 クラス名を .bp-note にしない。移植元が「RESEARCH / LANGUAGE / …」の
+      注釈8個で使っているクラスで、同名にすると8個ぜんぶがこの位置指定を食って
+      1か所に重なる（2026-08-31に一度やった） */
+.bp-principle {
+    margin-top: clamp(28px, 3.4vw, 54px)
+}
+
+/* C. 大見出し。塊の先頭 */
+
+.bp-copy h2 {
+    /* 8文字が x35〜443 に収まる大きさ。これ以上大きいと図面の左端（x441）と
+       RESEARCH の注釈（x491）に食い込む */
+    font-size: clamp(46px, 3.6vw, 56px);
+    line-height: 1.42
+}
+
+.bp-copy h3 {
+    opacity: .95;
+    margin-top: 30px
+}
+
+@media (max-width: 900px) {
+    /* SPは旧版どおり見出し＋サブのみ（思想文は畳む） */
+    .bp-principle {
+        display: none
+    }
+
+    .bp-lead {
+        width: calc(100vw - 44px);
+        top: 9vh;
+        left: 22px;
+        transform: none
+    }
+
+    .bp-copy h2 {
+        font-size: clamp(30px, 9.5vw, 48px);
+        line-height: 1.32
+    }
+
+    .bp-principle::after {
+        display: none
+    }
+}
+
+/* ── SP実機のスクショ指摘の直し（2026-08-31・iPhoneの5枚） ──────────── */
+@media (max-width: 900px) {
+    /* 02: 「採用サイトの常識を、更新す／る。」の事故折り
+       → sp-onlyのbrで「〜常識を、／更新する。」の2行に（brはマークアップ側） */
+
+    /* 04: レーン3行だと1画面を超える → 2行に。3行目は畳む */
+    .works-showroom {
+        height: 860px;
+        min-height: 860px
+    }
+
+    .works-lane-3 {
+        display: none
+    }
+
+    /* 05: サブ（y269）と図面（y479）の間に210pxの黒い空白
+       → 図面を上げて96pxに。下端も画面内に収まる（実測 y365〜788 / 812） */
+    .bp-board {
+        top: 17vh
+    }
+
+    /* 06: 27,000が右端いっぱいまで達して窮屈（116px）→ 105pxで息をつくらせる */
+    .reference-price-main h2 strong {
+        font-size: clamp(96px, 28vw, 120px)
+    }
+
+    /* 07: 62pxで「らしさを、／採用の力／に。」と「に。」だけの行ができていた
+       → 49px。「採用の力に。」6文字が幅305pxに収まって2行になる */
+    .reference-contact > h2 {
+        font-size: clamp(42px, 13vw, 49px)
+    }
+}
+
+/* ── 04 タイルをカラーに戻し、額装する（2026-08-31・社長判断） ────────
+   移植元は「コーラルの壁に白黒のタイル → 押すと色が咲く」設計だった。
+   だがこの節の主張は「振れ幅そのものが、商品です。」。
+   白黒フィルタは**売りにしている振れ幅そのもの（各社の色の方向性）を消す**ので外した。
+
+   ⚠️ 地がコーラル#FF4D4Fで彩度が高い。フルカラーの写真をそのまま置くと
+      地と画像が振動する。**紙白のマット＋やわらかい影**で額装して浮かせている。
+   ------------------------------------------------------------------ */
+.works-tile {
+    /* 額縁。紙白のマットで、コーラルの地から画像を切り離す */
+    border: 3px solid #f7f4ee;
+    /* ほんのり薄い影。作品として置いてある感じ */
+    box-shadow: 0 9px 20px #11111133, 0 2px 5px #1111111f
+}
+
+.works-tile img,
+.works-tile[data-tone="paper"] img,
+.works-tile[data-tone="sumi"] img,
+.works-tile[data-tone="coral"] img {
+    /* 🔴 grayscale を外す。ここがこの節の主役。
+       彩度をほんの少しだけ落として、コーラルの地とけんかしないようにする */
+    filter: saturate(.94) contrast(1.03)
+}
+
+/* コーラルの乗算オーバーレイは、カラー画像を赤く濁らせるので消す */
+.works-tile:after,
+.works-tile[data-tone="coral"]:after {
+    opacity: 0
+}
+
+.works-tile:hover,
+.works-tile:focus-visible {
+    border-color: #fff;
+    box-shadow: 0 20px 38px #11111159, 0 4px 10px #1111112e
+}
+
+/* 触れたときは彩度を上げて前に出す（白黒に戻さない） */
+.works-tile:hover img,
+.works-tile:focus-visible img,
+.works-tile[data-selected="true"] img {
+    filter: saturate(1.06) contrast(1.05)
+}
+
+.works-tile:hover:after,
+.works-tile:focus-visible:after,
+.works-tile[data-selected="true"]:after {
+    opacity: 0
+}
+
+/* ドロワーの大きい絵も最初からカラー。
+   ⚠️ 移植元は grayscale から色が咲くアニメだったが、
+      壁がもうカラーなので、灰色から始まると一瞬濁って見えるだけ */
+.works-selected-preview img,
+.works-inner-pages img {
+    animation: none;
+    filter: none
+}
+
+@media (max-width: 900px) {
+    /* 小さいのでマットは細く、影も浅く */
+    .works-tile {
+        border-width: 2px;
+        box-shadow: 0 6px 14px #1111112e, 0 1px 3px #1111111a
+    }
+}
+
+/* ── 見出しの幕（FVと同じ演出を下の5本にも・2026-08-31・社長指示） ────
+   FVのしくみ: 1行ぶんの箱に幕を4枚重ね、右から左へ scaleX(1)→scaleX(0) で剥がす。
+   薄い色から順に剥がれ、最後に地の色（＝文字色）の幕が抜けて文字が現れる。
+
+   ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
+      中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.4098324a.css）。bands.4098324a.js が動かなくても文字は読める。
+   ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
+      文字がその色から立ち上がって見える。
+   ------------------------------------------------------------------ */
+.hl-line {
+    position: relative
+}
+
+/* 紙地・墨文字の節（01 ABOUT / 03 体験） */
+.reference-about .hl-b1,
+.process-section .hl-b1 { background: #111 }
+.reference-about .hl-b2,
+.process-section .hl-b2 { background: #c9352f }
+.reference-about .hl-b3,
+.process-section .hl-b3 { background: var(--tone-coral) }
+.reference-about .hl-b4,
+.process-section .hl-b4 { background: #e9e3d6 }
+
+/* 黒地・紙文字の節（02 ハードルの締め / 05 成果にこだわる）
+   ⚠️ 一番下の hl-b1 は**その節の文字色**。02の締めは #fff なのでここだけ紙色ではなく白 */
+.reference-problems .hl-b1,
+.blueprint-trust .hl-b1 { background: #f7f4ee }
+.reference-hurdles .hl-b1 { background: #fff }
+.reference-problems .hl-b2,
+.reference-hurdles .hl-b2,
+.blueprint-trust .hl-b2 { background: var(--tone-coral, #ff4d4f) }
+.reference-problems .hl-b3,
+.reference-hurdles .hl-b3,
+.blueprint-trust .hl-b3 { background: #c9352f }
+.reference-problems .hl-b4,
+.reference-hurdles .hl-b4,
+.blueprint-trust .hl-b4 { background: #2c2a27 }
+
+/* 見えたときに1回だけ。0.11秒ずつずらすのはFVと同じ間合い */
+.hl-line.hl-in .hl-band {
+    animation: hlWipe .9s cubic-bezier(.19, 1, .22, 1) both
+}
+
+.hl-line.hl-in .hl-b4 { animation-delay: 0s }
+.hl-line.hl-in .hl-b3 { animation-delay: .11s }
+.hl-line.hl-in .hl-b2 { animation-delay: .22s }
+.hl-line.hl-in .hl-b1 { animation-delay: .33s }
+
+/* 2行目はさらに0.1秒遅らせて、上の行から順に開く */
+.hl-line:nth-of-type(2).hl-in .hl-b4 { animation-delay: .1s }
+.hl-line:nth-of-type(2).hl-in .hl-b3 { animation-delay: .21s }
+.hl-line:nth-of-type(2).hl-in .hl-b2 { animation-delay: .32s }
+.hl-line:nth-of-type(2).hl-in .hl-b1 { animation-delay: .43s }
+
+@media (prefers-reduced-motion: reduce) {
+    /* ⚠️ .hl-line.hl-in .hl-band と同じ強さで書く。
+       `.hl-line .hl-band`（弱い）だと、クラスが付いた瞬間に負けて動いてしまう */
+    .hl-line.hl-in .hl-band,
+    .hl-line .hl-band { animation: none }
+}
+
+/* ── 節ラベルを削除したあとの調整（2026-08-31・社長指示） ──────────────
+   01/02/03/05/07 のラベルと 04 の TILTO° を削除。06 は「PRICE / FAQ」→「PRICE」。
+   ⚠️ 04 の見出し `04 表現ショールーム` だけは**消さず読み上げ専用にした**。
+      `.works-showroom` が `aria-labelledby="showroom-title"` で参照していて、
+      消すと節の見出しが無くなる（02が既にこの形）。
+   ------------------------------------------------------------------ */
+
+/* 🔴 `.sr-only` は移植元CSSで `@layer utilities` に入っている。
+   レイヤー無しの `.works-intro h2` のほうが強く、1pxに畳まれなかった。ここで上書きする */
+.works-intro h2.sr-only {
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden
+}
+
+/* ── さらに削除（2026-08-31・社長指示） ──────────────────────────────
+   ・01「RECRUITMENT CONSULTING / DESIGN / AI-ASSISTED PRODUCTION」（マークアップから削除）
+   ・04「EVERY COMPANY / AN ORIGINAL VOICE」
+     ⚠️ これは要素ではなく `.works-intro::after` の content。CSSで消すしかない
+   ------------------------------------------------------------------ */
+.works-intro:after {
+    content: none
+}
+
+/* ── 05 スクロール前に図面が薄く見えていたのを止める（2026-08-31・社長指摘） ──
+   🔴 図面の面（.bp-plane など）は rest でも opacity .06〜.08 を持っていて、
+      節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
+      `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
+
+   ⚠️ 既定値は 1。motion.4098324a.js が動かないとき（JS無効・prefers-reduced-motion）は
+      最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
+   ------------------------------------------------------------------ */
+.blueprint-trust {
+    --bp-arrive: 1
+}
+
+.bp-board,
+.bp-annotations {
+    opacity: var(--bp-arrive)
+}
+
+/* ── ヘッダーを追従させる（2026-08-31・社長指示） ────────────────────
+   🔴 いままで `.site-header` は `.hero-canvas` の中にあった。あそこは
+      `container-type: inline-size` なので、**position:fixed が画面ではなく
+      FVを基準にしてしまう**（実測: FVの中に置いたfixedは 0,-7 に落ちた）。
+      マークアップごと `.site-shell` の直下へ移した（`.site-shell` の
+      `overflow: clip visible` は fixed を閉じ込めない。実測で 0,0）。
+
+   ⚠️ 元は `top:1.9% / left:2.35% / height:6.1%`（FVの高さ基準）と
+      `2.65cqw`（FVの幅基準）で組まれていた。FVの外に出ると基準が消えるので、
+      画面幅（vw）で組み直す。1440pxのFVでは 1cqw = 1vw なので、
+      **ページ最上部での見え方は今までと同じ**。
+   ------------------------------------------------------------------ */
+.site-header {
+    z-index: 60;
+    justify-content: space-between;
+    /* ⚠️ flex-start だとロゴが帯の上に寄る（社長の指摘）。上下中央に揃える */
+    align-items: center;
+    height: auto;
+    padding: 1.04vw 2.15vw 1.04vw 1.81vw;
+    transition: background-color .3s, padding .3s, box-shadow .3s, transform .38s cubic-bezier(.22, 1, .36, 1);
+    position: fixed;
+    inset: 0 0 auto
+}
+
+/* 🔴 下へ読み進めている間は引っ込める。
+   出しっぱなしだと、節の頭がヘッダーの帯にいつも隠れる（社長の指摘）。
+   上へスクロールすればすぐ戻るので、追従の役目は失われない */
+html.hd-away .site-header {
+    transform: translateY(-101%)
+}
+
+.brand { font-size: 2.65vw }
+.site-nav { gap: 3.08vw; font-size: .76vw }
+
+/* FVを抜けたら紙の板を敷く。黒い節（02・05）の上で文字が消えないように */
+html.hd-stuck .site-header {
+    background: #f7f4eef2;
+    box-shadow: 0 1px #11111f1a, 0 8px 22px #1111110d;
+    padding: .5vw 2.15vw .5vw 1.81vw;
+    -webkit-backdrop-filter: saturate(1.4) blur(6px);
+            backdrop-filter: saturate(1.4) blur(6px)
+}
+
+html.hd-stuck .brand { font-size: 1.95vw }
+html.hd-stuck .site-nav { font-size: .72vw }
+
+@media (max-width: 700px) {
+    /* SPも追従。ヘッダーがFVの流れから抜けたぶん、FVの頭に余白を足して埋める */
+    .site-header {
+        padding: 14px 20px;
+        transition: background-color .3s, box-shadow .3s
+    }
+
+    .hero-canvas {
+        padding-top: 56px
+    }
+
+    html.hd-stuck .site-header {
+        padding: 10px 20px
+    }
+
+    /* ⚠️ SPメニューのパネルは z-index 31、三本線は 32。
+       ヘッダーを60のままにすると、開いたコーラルの面より前に出てしまう。
+       パネルは自前のロゴを持っているので、開いている間は引っ込める */
+    .site-header {
+        z-index: 28
+    }
+
+    html.sp-menu-open .site-header {
+        opacity: 0;
+        pointer-events: none
+    }
+
+    .brand,
+    html.hd-stuck .brand { font-size: 30px }
+}
+
+/* ── 06 PRICE / FAQ を組み直し（2026-08-31・社長のカンプ） ────────────
+   左右2段。あいだに縦罫。各段の頭に見出し＋横罫。
+   左: 月額（小）→ 27,000（特大）→ 円 → / MONTH（右下）→ 横罫 → ※注記 ｜ 初期費用 0 円
+   右: Q. + 設問 + ＋/−。**開いている行はコーラル**。A. は設問の頭に揃える
+
+   ⚠️ 旧CSS（.reference-price-main / .reference-initial-cost / .reference-faq）は
+      cssx.py の REWRITTEN で抜かないようにしてある。ここが唯一の指定。
+   ------------------------------------------------------------------ */
+.reference-price-faq {
+    color: #111;
+    background: #f7f4ee;
+    /* 🔴 左段を1.08frにすると、**縦罫（left:50%）より右段側へ3px はみ出す**。
+       右端に寄せている「初期費用 0 円」が縦罫を越えて見えていた（社長の指摘）。
+       月額を数字の上へ積んで数字の幅に余裕ができたので、半々に戻す。
+       これで左段の右端＝縦罫−(段間/2) になり、初期費用に実測46pxの逃げができる */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(36px, 6.4vw, 100px);
+    height: auto;
+    min-height: 0;
+    padding: clamp(56px, 6.2vw, 96px) clamp(22px, 4.6vw, 72px) clamp(48px, 5.4vw, 84px);
+    display: grid;
+    position: relative
+}
+
+/* 2段を分ける縦罫。カンプでは見出しの少し上から最後の行の下まで通る */
+.reference-price-faq:after {
+    content: "";
+    background: #11111f2b;
+    width: 1px;
+    position: absolute;
+    top: clamp(40px, 4.6vw, 72px);
+    bottom: clamp(34px, 4vw, 62px);
+    left: 50%
+}
+
+/* PRICE / FAQ の見出し。下に横罫を敷く */
+.pf-label {
+    color: #111;
+    letter-spacing: .2em;
+    border-bottom: 1px solid #111;
+    margin: 0;
+    padding-bottom: clamp(12px, 1.15vw, 19px);
+    font: 500 clamp(12px, 1.06vw, 17px)/1 Arial, sans-serif
+}
+
+/* --- 左: 金額 --- */
+.pf-fig {
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: clamp(26px, 3vw, 48px) 0 0;
+    display: flex
+}
+
+/* 🔴 月額を数字の左に置くと、数字の頭が48px右から始まり、円・/MONTHが
+      縦罫ぎわまで届いて**塊ぜんぶが右寄りに見えた**（2026-08-31社長の指摘）。
+      PCも月額を上の行に積んで（SPと同じ形）、数字を左端から立てる。
+      月額そのものも「ちっちゃい」と言われたので 1.12→1.5vw に */
+.pf-fig .pf-cap {
+    margin: 0 0 clamp(8px, .9vw, 15px);
+    font-size: clamp(15px, 1.5vw, 23px);
+    font-weight: 500
+}
+
+.pf-fig strong {
+    letter-spacing: -.012em;
+    /* 数字は左段の主役。ただし**同じ行に「円」が残る大きさ**が上限。
+       🔴 12.4vw にしたら幅が足りず、円が次の行に落ちて左端に来た（社長の指摘）。
+       月額を上の行へ移して左端から立つようになったぶん、少し落として
+       右側に息をつくらせる（11.8→11.2vw。円の右と縦罫のあいだ実測89px） */
+    font: 400 clamp(92px, 11.2vw, 182px)/.9 Helvetica Neue, Arial, sans-serif
+}
+
+.pf-fig b {
+    align-self: end;
+    margin: 0 0 clamp(6px, .8vw, 13px) clamp(6px, .7vw, 11px);
+    font-size: clamp(24px, 2.7vw, 42px);
+    font-weight: 500
+}
+
+/* / MONTH は数字の右下。**列の右端（=縦罫ぎわ）でなく円の右端**に揃える。
+   🔴 flex+wrap+fit-content では畳まれない（wrap前の1行合計で幅が決まり、
+      列幅いっぱいに張り付く。実測664pxのまま）。gridなら
+      塊の幅＝いちばん広い行（数字+円）になるので、こちらで組む */
+.pf-fig {
+    grid-template-columns: auto auto;
+    justify-content: start;
+    display: inline-grid
+}
+
+.pf-fig .pf-cap,
+.pf-fig small { grid-column: 1 / -1 }
+
+.pf-fig small {
+    text-align: right;
+    letter-spacing: .04em;
+    margin-top: clamp(4px, .55vw, 9px);
+    font: 400 clamp(14px, 1.5vw, 23px)/1 Helvetica Neue, Arial, sans-serif
+}
+
+/* --- 左下: ※注記 ｜ 初期費用 --- */
+.pf-foot {
+    border-top: 1px solid #11111f2b;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 40px);
+    margin-top: clamp(22px, 2.4vw, 38px);
+    padding-top: clamp(22px, 2.4vw, 38px);
+    display: flex
+}
+
+.pf-note {
+    flex: 1;
+    margin: 0;
+    font-size: clamp(11px, .96vw, 15px);
+    font-weight: 500;
+    line-height: 2
+}
+
+.pf-note span {
+    margin-right: .6em
+}
+
+.pf-init {
+    border-left: 1px solid #11111f2b;
+    align-items: baseline;
+    gap: clamp(10px, 1.1vw, 18px);
+    margin: 0;
+    padding-left: clamp(18px, 2.4vw, 40px);
+    display: flex
+}
+
+/* ⚠️ 「初期費用 0 円」が小さすぎて、※印とのあいだに余白が残っていた（社長の指摘）。
+   ここを大きくすることで、その余白ごと埋める */
+.pf-init span {
+    font-size: clamp(16px, 1.6vw, 25px);
+    font-weight: 500
+}
+
+.pf-init strong {
+    letter-spacing: -.02em;
+    font: 400 clamp(52px, 5.6vw, 88px)/1 Helvetica Neue, Arial, sans-serif
+}
+
+.pf-init b {
+    font-size: clamp(17px, 1.7vw, 26px);
+    font-weight: 500
+}
+
+/* --- 右: FAQ --- */
+.pf-list details {
+    border-bottom: 1px solid #11111f26
+}
+
+.pf-list summary {
+    cursor: pointer;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 clamp(12px, 1.5vw, 26px);
+    padding: clamp(14px, 1.55vw, 25px) 0;
+    list-style: none;
+    display: grid
+}
+
+.pf-list summary::-webkit-details-marker { display: none }
+
+.pf-list summary b {
+    font: 700 clamp(11px, .95vw, 15px)/1.75 Arial, sans-serif
+}
+
+.pf-list summary span {
+    font-size: clamp(12.5px, 1.12vw, 17px);
+    font-weight: 500;
+    line-height: 1.75
+}
+
+/* ＋ と −。
+   🔴 記号をマークアップに直接書かない。書くと**別の行を開いても＋のまま**になる
+      （最初の実装でそうなっていた）。開閉はCSSで出し分ける */
+.pf-list summary i {
+    justify-self: end;
+    font-size: clamp(14px, 1.25vw, 19px);
+    font-style: normal;
+    line-height: 1
+}
+
+.pf-list summary i:before { content: "＋" }
+.pf-list details[open] summary i:before { content: "−" }
+
+/* 開いている行はコーラル。カンプの見どころ */
+.pf-list details[open] summary b,
+.pf-list details[open] summary span,
+.pf-list details[open] summary i {
+    color: var(--tone-coral)
+}
+
+/* 答えは設問の頭に揃える（A. の列を作る） */
+.pf-list details p {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0 clamp(12px, 1.5vw, 26px);
+    margin: 0 0 clamp(18px, 1.95vw, 32px);
+    display: grid
+}
+
+.pf-list details p b {
+    font: 700 clamp(11px, .95vw, 15px)/1.9 Arial, sans-serif
+}
+
+.pf-list details p span {
+    color: #111111d6;
+    font-size: clamp(12px, 1.05vw, 16px);
+    font-weight: 500;
+    line-height: 1.9
+}
+
+
+@media (max-width: 900px) {
+    /* SPは縦積み。縦罫は畳む */
+    .reference-price-faq {
+        grid-template-columns: 1fr;
+        row-gap: 52px;
+        padding: 78px 22px 46px
+    }
+
+    .reference-price-faq:after { display: none }
+
+    /* ⚠️ 月額を数字と同じ行に置くと、幅が足りず「円」が次の行へ落ちる（実測）。
+       SPでは月額を独立した行にして、数字と円を1行に収める */
+    .pf-fig .pf-cap {
+        margin: 0 0 6px;
+        font-size: 17px
+    }
+
+    .pf-fig strong { font-size: 26vw }
+    .pf-fig b { font-size: 22px; margin-bottom: 4px }
+    .pf-fig small { font-size: 14px }
+
+    /* 幅が足りないので注記と初期費用を縦に積む */
+    .pf-foot {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px
+    }
+
+    .pf-init {
+        border-top: 1px solid #11111f2b;
+        border-left: 0;
+        justify-content: flex-end;
+        padding: 20px 0 0
+    }
+
+    .pf-init strong { font-size: 56px }
+}
+
+/* ── 07 CTAを少し縦長に、コピーとCTAの高さをずらす（2026-08-31・社長指示） ──
+   左右がほぼ同じ高さで整いすぎていたので、非対称に振る。
+     ・コピー  … 現在より約35px 上（5.8vw → 3.4vw）
+     ・CTA     … 現在より約25px 下（9.75vw → 11.5vw）
+     ・CTAの高さ … 約13%増（9.55vw → 10.8vw / 最低125→140px）
+   ⚠️ SPは縦積みで左右の対称も余白の関係も無いので触らない。
+   ------------------------------------------------------------------ */
+.reference-contact > h2 {
+    top: 3.4vw
+}
+
+.reference-contact > .contact-cta {
+    top: 11.5vw;
+    height: 10.8vw;
+    min-height: 140px
+}
+
+@media (max-width: 900px) {
+    /* SPは従来どおりの位置と高さに戻す */
+    .reference-contact > h2 {
+        top: 105px
+    }
+
+    .reference-contact > .contact-cta {
+        top: 355px;
+        height: 105px;
+        min-height: 0
+    }
+}
+
+/* ── 04 ビューアを画面いっぱいに（2026-08-31・社長判断） ──────────────
+   移植元は右端の細いパネル（PCで428px / SPで345px）だった。
+   そこにサイトを入れても**小さすぎて何も伝わらない**ので、画面いっぱいの窓に作り直す。
+
+   「中身も見れるカタログ」の方針:
+     ・**縦長のサイト全体画像がある作品だけ**、FVから下までスクロールできる枠を出す
+     ・その作品のタイルには小さなコーラルの点を付けて、中身まで見られると分かるようにする
+     ・無い作品はFV1枚＋説明（いままでどおり）
+   ⚠️ 35点そろうのを待たない。増やすときは images/works-full/ に縦長を1枚置いて
+      page-*.js の SR_INSIDE に1行足すだけ。
+   ------------------------------------------------------------------ */
+.works-drawer {
+    z-index: 200;
+    background: #f7f4ee;
+    width: auto;
+    padding: 0;
+    transition: transform .55s cubic-bezier(.22, 1, .36, 1), visibility .55s;
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* 下からせり上がる。閉じているあいだは触れない */
+    transform: translateY(100%);
+    visibility: hidden
+}
+
+.works-showroom[data-drawer-open="true"] .works-drawer {
+    transform: none;
+    visibility: visible
+}
+
+.works-drawer-close {
+    z-index: 3;
+    color: #111;
+    background: none;
+    border: 0;
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+    line-height: 1;
+    position: fixed;
+    top: clamp(14px, 1.8vw, 30px);
+    right: clamp(14px, 2.4vw, 40px)
+}
+
+.works-drawer-content {
+    width: min(960px, 92vw);
+    margin-inline: auto;
+    padding: clamp(48px, 5vw, 84px) 0 clamp(44px, 5vw, 80px)
+}
+
+/* サイト全体を、枠の中でスクロールして見る */
+.works-site {
+    margin: clamp(20px, 2.4vw, 40px) 0 0
+}
+
+.works-site-frame {
+    background: #fff;
+    border: 1px solid #11111f2e;
+    height: clamp(320px, 56vh, 660px);
+    overflow-y: auto;
+    overscroll-behavior: contain
+}
+
+.works-site-frame img {
+    width: 100%;
+    display: block
+}
+
+.works-site > small {
+    color: #11111f8c;
+    letter-spacing: .14em;
+    margin-top: 10px;
+    font: 700 8px/1 Arial, sans-serif;
+    display: block
+}
+
+/* 中身まで見られる作品の印。小さなコーラルの点 */
+.works-tile[data-inside="true"]:before {
+    content: "";
+    z-index: 3;
+    background: var(--tone-coral);
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    box-shadow: 0 0 0 2px #f7f4ee
+}
+
+@media (max-width: 900px) {
+    .works-drawer-content {
+        width: calc(100% - 40px);
+        padding: 64px 0 40px
+    }
+
+    /* ⚠️ SPは枠が335px幅しかなく、縦長のサイトが枠の中に収まってしまって
+       スクロールする余地が無かった（実測: 画像349px < 枠422px）。
+       枠をやめて縦に全部流し、**窓そのもの**をスクロールさせる */
+    .works-site-frame {
+        height: auto;
+        overflow: visible
+    }
+}
+
+/* ── 04 ビューアを「一画面で切り替えられる」形に（2026-08-31・社長指示） ──
+   🔴 閉じられなかった原因: `.works-showroom` に `isolation: isolate` があり、
+      ビューアの `z-index: 200` が**節の中に閉じ込められていた**。
+      ヘッダー（z-index 60・節の兄弟）が上に来て、×がCTAの下敷きになっていた
+      （実測: ×の座標に居たのはヘッダーのSPAN）。開いている間だけ節を持ち上げる。
+   ------------------------------------------------------------------ */
+.works-showroom[data-drawer-open="true"] {
+    z-index: 300
+}
+
+/* 左に「上から下まで見られるサイト」、右に関連するFV4点 */
+.works-viewer {
+    grid-template-columns: minmax(0, 1fr) clamp(120px, 13vw, 210px);
+    align-items: start;
+    height: 100%;
+    display: grid
+}
+
+.works-viewer .works-drawer-content {
+    height: 100%;
+    padding-right: clamp(20px, 2.4vw, 40px);
+    overflow-y: auto
+}
+
+/* 右の列。**参照するだけ**なので押せる見た目にしない */
+.works-rail {
+    border-left: 1px solid #11111f1f;
+    height: 100%;
+    padding: clamp(48px, 5vw, 84px) clamp(12px, 1.3vw, 22px) 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain
+}
+
+.works-rail-head {
+    color: #11111f8c;
+    letter-spacing: .16em;
+    margin-bottom: 14px;
+    font: 700 8px/1 Arial, sans-serif;
+    display: block
+}
+
+.works-rail-item {
+    margin: 0 0 clamp(14px, 1.5vw, 24px)
+}
+
+.works-rail-item img {
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+    border: 1px solid #11111f1f;
+    width: 100%;
+    display: block
+}
+
+.works-rail-item figcaption {
+    color: #11111fa6;
+    letter-spacing: .04em;
+    margin-top: 5px;
+    font: 700 8.5px/1.3 Arial, sans-serif
+}
+
+/* 閉じるボタンは右の列の左どなり */
+.works-drawer-close {
+    right: calc(clamp(120px, 13vw, 210px) + clamp(10px, 1.4vw, 24px))
+}
+
+@media (max-width: 900px) {
+    /* SPは横一列の帯にして下に敷く */
+    .works-viewer {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto
+    }
+
+    .works-rail {
+        border-top: 1px solid #11111f1f;
+        border-left: 0;
+        gap: 10px;
+        height: auto;
+        padding: clamp(48px, 5vw, 84px) clamp(10px, 1vw, 16px) 24px /* 列の内側も少し詰める 2026-09-09 */;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden
+    }
+
+    .works-rail-item {
+        flex: 0 0 96px;
+        margin: 0
+    }
+
+    .works-rail-item figcaption,
+    button.works-rail-item span { display: none }
+
+    /* 横一列の帯では、区切りは縦の線にする */
+    .works-rail-split {
+        border-top: 0;
+        border-left: 1px solid #11111f2e;
+        flex: none;
+        align-self: stretch;
+        margin: 4px 2px
+    }
+    .works-rail-head { display: none }
+
+    .works-drawer-close {
+        top: 12px;
+        right: 14px
+    }
+}
+
+/* ── 01 の仕様リストを後ろへ下げる（2026-08-31・社長指示） ────────────
+   OWN / GROW / CONTINUOUS UPDATE … は**飾り**なので、主役の見出しより前に出さない。
+   いままでは墨色の太字＋濃い罫（#1a1a1a）で、見出しと同じくらい強かった。
+   ------------------------------------------------------------------ */
+.reference-about-facts dt {
+    color: #11111f70;
+    font-weight: 700
+}
+
+.reference-about-facts dd {
+    color: #11111f52
+}
+
+/* 罫は細く、うんと薄く */
+.reference-about-facts > div,
+.reference-about-facts > div:nth-child(n+3) {
+    border-bottom-color: #11111f1a
+}
+
+@media (max-width: 900px) {
+    /* SPは幅が狭く、飾りが本文と競るのでさらに落とす */
+    .reference-about-facts dt { color: #11111f61 }
+    .reference-about-facts dd { color: #11111f47 }
+}
+
+/* ── 04 帯のホバーがカクつく問題（2026-08-31・社長の指摘） ────────────
+   🔴 移植元は、ホバー時と窓を開いたときに **animation-duration を書き換えて**
+      帯を遅くしていた。だが**再生中に長さを変えると、経過時間が別の進捗に対応し直す**
+      ので、帯が一瞬で飛ぶ＝「カクカクする」「別の画像が急に現れる」。
+
+   長さは変えず、**その場で止める**。止めるだけなら飛ばない。
+   ------------------------------------------------------------------ */
+.works-lane-1:has(.works-tile:hover) .works-track,
+.works-lane-2:has(.works-tile:hover) .works-track,
+.works-lane-3:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-1 .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-2 .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-3 .works-track {
+    animation-duration: var(--lane-duration);
+    animation-play-state: paused
+}
+
+/* 右の一覧で「押した作品」が分かるように */
+.works-rail-item[data-current="true"] img {
+    border-color: var(--tone-coral);
+    border-width: 2px
+}
+
+.works-rail-item[data-current="true"] figcaption,
+.works-rail-item[data-current="true"] span {
+    color: var(--tone-coral)
+}
+
+/* ── 右の一覧を2つに分ける（2026-09-09 社長 → 2026-09-10 に見出しを外した）────
+   上＝実際に動くサイト（押すと左が切り替わる）／下＝ファーストビューの絵だけ。
+   🔴 2026-09-10 社長「『実際に動くサイト』『ファーストビューのみ』はいらない。
+      押せるものと押せないものは**薄く線引きする程度**に」。
+      区別は、この細い線と、押せるものだけに付くホバーの反応で伝える。 */
+.works-rail-split {
+    border-top: 1px solid #11111f1f;
+    margin: 2px 0 clamp(14px, 1.5vw, 24px);
+    display: block
+}
+
+/* 動くサイトは押せる。ボタンの地を消して、図版と同じ見た目に戻す */
+button.works-rail-item {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    text-align: left;
+    background: none;
+    border: 0;
+    width: 100%;
+    padding: 0;
+    display: block
+}
+
+button.works-rail-item span {
+    color: #11111fa6;
+    letter-spacing: .04em;
+    margin-top: 5px;
+    font: 700 8.5px/1.3 Arial, sans-serif;
+    display: block
+}
+
+/* 押せることの合図。コーラルの細い線を左に足す（丸や影は使わない） */
+.works-rail-item--live img {
+    transition: border-color .2s
+}
+
+button.works-rail-item:hover img,
+button.works-rail-item:focus-visible img { border-color: var(--tone-coral) }
+
+button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); outline-offset: 3px }
+
+/* ⚠️ SPで作品名を畳む指定は上（1400行あたり）にもあるが、
+   ここで新しく足した `button.works-rail-item span` のほうが**後ろ**なので勝ってしまう。
+   同じことをこの位置でもう一度書いて、横一列の帯を詰まらせない */
+@media (max-width: 900px) {
+    .works-rail-item figcaption,
+    button.works-rail-item span { display: none }
+}
+
+/* ── FVの「弱」を大きく（2026-08-31・定例メモ） ──────────────────────
+   主コピー74.6px に対してリードが14px＝**5.3:1**。弱が小さすぎた（社長の指摘）。
+   ⚠️ リードは `white-space: nowrap` の1行組み。`.hero-copy` は幅494px（34.3%）なので、
+      28文字が収まる上限がある。大きくしすぎると1行から溢れる。
+   ------------------------------------------------------------------ */
+.lead {
+    font-size: calc(1.16 * var(--fv-u))
+}
+
+/* 小見出しも一段上げる（10.1px は1440pxでは読みづらい） */
+.eyebrow {
+    font-size: calc(.78 * var(--fv-u))
+}
+
+@media (max-width: 700px) {
+    .lead {
+        font-size: 15.5px
+    }
+}
+
+/* ── FVの「弱い」文字が小さすぎた（2026-08-31・定例メモ①） ────────────
+   料金帯の補助文字が 8〜9px しかなく、本文のリード（14px）の半分だった。
+   ⚠️ FVは cqw（＝FVの幅の1/100）で組まれている。px直書きにしない。
+      画面幅で伸縮するFVの中で、ここだけ固定pxにすると釣り合いが崩れる。
+   ⚠️ 札の余白は26〜38pxしかない。上げすぎると帯からはみ出す（実測して決めた）。
+   ------------------------------------------------------------------ */
+/* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
+   .81cqw = 3px になってしまう（一度これでSPを壊した）。
+   SPは coral.4098324a.css が px で指定していて、そちらはすでに12px あり十分。 */
+@media (min-width: 701px) {
+    .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
+    .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
+    .price-note { font-size: calc(.72 * var(--fv-u)) }           /* 8.1 → 10.4px */
+    .price-value small { font-size: calc(.62 * var(--fv-u)) }    /* 6.9 → 8.9px（税別） */
+    .pricing-cta-sub { font-size: calc(.87 * var(--fv-u)) }      /* 11.2 → 12.5px */
+}
+
+/* ── 03 プレビュー枠を一回り大きく、送りをゆっくりに（2026-08-31・社長指示） ──
+   ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
+   ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
+   ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.4098324a.js 側で .74 と .80 に分けた）。
+   ------------------------------------------------------------------ */
+.process-section {
+    height: 240vh;
+    min-height: 1620px
+}
+
+.process-site-assembly {
+    width: 57vw;
+    right: 3vw
+}
+
+@media (max-width: 900px) {
+    /* SPは縦積みなので、長くしすぎると間延びする */
+    .process-section {
+        height: 225vh;
+        min-height: 1500px
+    }
+
+    .process-site-assembly {
+        width: calc(100vw - 40px);
+        right: 20px
+    }
+}
+
+/* サンプルがまだ無い業種で絞ったときの一言。
+   ⚠️ 出さないと、タイルが全部薄くなるだけで「壊れた」ように見える */
+.works-empty {
+    z-index: 6;
+    color: #f7f4ee;
+    text-align: center;
+    letter-spacing: .06em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(14px, 1.25vw, 19px);
+    font-weight: 500;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%)
+}
+
+@media (max-width: 900px) {
+    /* 絞り込みが11個に増えたので、SPは行が増える。節を少し伸ばす */
+    .works-showroom {
+        height: 910px;
+        min-height: 910px
+    }
+
+    .works-lane-1 { top: 490px }
+    .works-lane-2 { top: 695px }
+
+    .works-empty {
+        top: 620px;
+        transform: none;
+        padding: 0 22px
+    }
+}
+
+/* 🔴 絞り込みが8個→11個に増えて、イントロの枠（650px）を527pxはみ出し、
+   流れるタイルの上に乗っていた。PCも折り返させる（SPは元から wrap）。
+   ⚠️ 増えたぶん2行になるので、下のリードとレーンの位置も測り直した */
+.works-filters {
+    flex-wrap: wrap;
+    row-gap: 9px
+}
+
+/* ── 文字サイズと書体の統一（2026-08-31・社長指示で全ページ棚卸し） ──────
+   ページの慣例はこの3つ。外れていた箇所をここで寄せる:
+     ・感情のコピー・読ませるリード → Yu Mincho 500
+     ・機能的な説明（注記・FAQ・フォーム）→ Hiragino
+     ・英字ラベル → Arial 700 ＋ 字間
+   あわせて **読ませる字の下限は10px**（1456px幅の実測で判定）。
+   ⚠️ 敢えて残した「ばらばら」は README の同名の節に一覧がある。
+   ------------------------------------------------------------------ */
+
+/* 03 リード。11.4px の Hiragino 600 だった。
+   感情のコピー（「言葉にならなかった想いを整理し…」）なので明朝に寄せ、
+   04のリード（14px Yu Mincho）と同じ大きさ帯へ */
+.process-copy p {
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(12px, .95vw, 15px);
+    font-weight: 500
+}
+
+/* 05 思想文（DESIGN PRINCIPLE）。書体の指定が無く、素のHiragino 400 16px で
+   浮いていた。ラベルは英字ラベルの慣例（Arial 700＋字間）、本文は明朝へ。
+   「お飾りだから目立たせない」（社長指示）とも同じ向き */
+.bp-principle small {
+    color: #11111f8c;
+    letter-spacing: .14em;
+    font: 700 10px/1 Arial, sans-serif;
+    display: block;
+    margin-bottom: 10px
+}
+
+.bp-principle p {
+    color: #111111b8;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(12px, .9vw, 14px);
+    font-weight: 500;
+    line-height: 1.95
+}
+
+/* 04 タイルのホバー帯。業種7px・VIEW7px は帯を出しても読めなかった */
+.works-tile > span small,
+.works-tile > span i {
+    font-size: 9px
+}
+
+.works-tile > span b {
+    font-size: 13px
+}
+
+/* 04 ビューア。「SCROLL — 下まで見られます」は操作の案内（機能的な字）なのに
+   8px だった。日本語が読める大きさへ */
+.works-site > small {
+    letter-spacing: .1em;
+    font-size: 11px
+}
+
+/* ビューア右列のラベルと業種名（8/8.5px → 10px） */
+.works-rail-head {
+    font-size: 10px
+}
+
+.works-rail-item figcaption {
+    font-size: 10px
+}
+
+/* ビューアの説明文。読ませる本文なので一段上げる */
+.works-drawer-description {
+    font-size: 13px
+}
+
+@media (max-width: 900px) {
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.4098324a.css の断片）。下限を守る */
+    .process-copy p {
+        font-size: 12px
+    }
+}
+
+/* 「初期費用 0 円」を左へ寄せる（2026-08-31・社長の指摘）。
+   段を半々に戻して縦罫は越えなくなったが、まだ右端に張り付いて見えるので
+   もう一段内側へ。⚠️ 動かせる量は**左の注記の余り**が上限で、これは幅で変わる:
+     950px→余り7px（動かせない） / 1200px→62px / 1456px→79px
+   注記が3行に折り返したら負けなので、余りを20px残す量だけ寄せる。
+   ⚠️ border-top（横罫）は列いっぱいのまま。padding なので罫は縮まない */
+.pf-foot {
+    padding-right: clamp(0px, 11vw - 105px, 150px)
+}
+
+/* ── 04 ビューアを作品優先に組み直す（2026-09-01・社長指示） ───────────
+   「画像で説明、テキストで説明するんじゃなくて、作品で説明したいから、
+     もっと左も右も画面いっぱいに使ってほしい」
+
+   前: `.works-drawer-content` が min(960px, 92vw) で中央寄せ。
+       2000px幅の画面では左右に大きな余白が残り、作品が画面の半分しか使えていなかった。
+       さらに見出し3行＋説明文1行で、縦も文字に取られていた。
+   後: 段の幅いっぱいを作品に使い、見出しは1本のバーに畳む。説明文は削除
+       （3種を使い回しているだけの一般論で、その作品について何も言っていなかった）。
+
+   ⚠️ ビューアは `work` があるときだけ描かれる**クライアント専用要素**。
+      SSR（index.html）には出ないので、ここはJSXだけ直せばよい
+   ------------------------------------------------------------------ */
+
+/* 右の関連列も広げる（120〜210px → 170〜300px）。FVが小さすぎて何か分からなかった。
+   🔴 列幅は**変数1本**にする。閉じるボタンの逃げ幅がこれと同じ値を持っていて、
+      片方だけ変えたら×が右列に重なった（2026-09-01に踏んだ） */
+.works-drawer {
+    --sr-rail: clamp(168px, calc(100vw - (100vh - 150px) * 1.6 - 60px), 320px);
+      /* 🔴 右の列の幅は「画面幅 − ノートパソコン枠の幅 − 余白」で決める（2026-09-09）。
+         枠は 16:10 で高さ側に頭打ちになるため横に余りが出る。その余りを丸ごと列に回すので、
+         枠を縮めずに列だけ広がる。1440x900: 122→180px ／ 1920x1080: 150→320px。
+         下限168は枠が幅で頭打ちの画面（1512x982など）用。小さすぎるという指摘（2026-09-08）への対応 */
+}
+
+.works-viewer {
+    grid-template-columns: minmax(0, 1fr) var(--sr-rail)
+}
+
+/* 閉じるボタンは右列の左どなり。上の変数から引く */
+.works-drawer-close {
+    right: calc(var(--sr-rail) + clamp(10px, 1.4vw, 24px))
+}
+
+/* 左段: 960pxの上限をやめて段いっぱい。中身は縦に詰めて、作品に余った高さを全部渡す */
+.works-viewer .works-drawer-content {
+    flex-direction: column;
+    width: auto;
+    margin-inline: 0;
+    padding: clamp(22px, 2.4vw, 40px) clamp(20px, 2.2vw, 38px) clamp(18px, 2vw, 32px) clamp(24px, 3.2vw, 60px);
+    display: flex;
+    overflow: hidden
+}
+
+/* 見出しは1行のバー。作品名を主、業種を従にして、縦は1行ぶんしか使わない */
+.works-drawer-head {
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px clamp(12px, 1.4vw, 24px);
+    margin-bottom: clamp(14px, 1.5vw, 24px);
+    display: flex
+}
+
+.works-drawer-head h3 {
+    letter-spacing: -.02em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, serif;
+    font-size: clamp(19px, 1.85vw, 30px);
+    font-weight: 500;
+    line-height: 1.3
+}
+
+.works-drawer-head .works-drawer-kicker {
+    flex-basis: 100%
+}
+
+.works-drawer-head .works-drawer-industry {
+    color: #11111fa6;
+    margin: 0
+}
+
+/* 作品の枠に、余った高さを全部渡す */
+.works-viewer .works-site {
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    display: flex
+}
+
+.works-viewer .works-site-frame {
+    flex: 1;
+    min-height: 0;
+    height: auto
+}
+
+/* FV1枚しかない作品も、同じ枠いっぱいに見せる（16/9固定をやめる） */
+.works-viewer .works-selected-preview {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 0;
+    margin: 0
+}
+
+@media (max-width: 900px) {
+    /* 🔴 上のPC指定はこのファイルの**後ろ**にあるので、前半のSP指定に勝ってしまう。
+       ここで縦積みに戻す（戻さないと左段が205pxになり、右列が縦に居座った） */
+    .works-viewer {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto
+    }
+
+    .works-drawer-close {
+        top: 12px;
+        right: 14px
+    }
+
+    /* SPは縦積みのまま。作品は枠を外して全部流す（既存の方針を維持）。
+       ⚠️ 左右の余白をゼロにして**画面幅いっぱい**に。20pxずつ空けていたぶん、
+          作品が横335px→375pxになり、そのぶん縦にも大きく見える（社長指示） */
+    .works-viewer .works-drawer-content {
+        padding: clamp(22px, 2.4vw, 40px) 16px clamp(18px, 2vw, 32px) clamp(16px, 1.6vw, 28px) /* 左右を詰めて右の列へ回す 2026-09-09 */;
+        overflow-y: auto
+    }
+
+    /* 文字だけは端に付かないよう内側へ戻す */
+    .works-drawer-head,
+    .works-viewer .works-site > small {
+        padding-inline: 20px
+    }
+
+    /* この作品は縦横比が1:1に近く、幅いっぱいにしても画面の高さが余る。
+       下に空きを寄せず、余りを上下で分ける */
+    .works-viewer .works-site {
+        margin-block: auto
+    }
+
+    .works-viewer .works-site,
+    .works-viewer .works-site-frame,
+    .works-viewer .works-selected-preview {
+        flex: none
+    }
+
+    .works-viewer .works-selected-preview {
+        aspect-ratio: 16 / 9
+    }
+
+    .works-drawer-head h3 {
+        font-size: 19px
+    }
+}
+
+/* ── ヘッダーのナビを買い手の問いに合わせる（2026-09-01・社長判断/案A） ────
+   前: サービス概要 ／ カタログ ／ 成果にこだわる ＋ CTA
+   後: サービス概要 ／ カタログ ／ 料金 ＋ CTA（PC・SP同じ3つ）
+
+   直した中身:
+   🔴 「カタログ」が**押しても移動しなかった**。3Dリボンの停止トグルで、
+      押すとラベルが「再生する」に変わり、読み上げ名は「3Dリボンの動きを停止」だった。
+      → `#expression` への普通のリンクにし、停止は下の `.ribbon-toggle` へ移した
+   🔴 ヘッダーのCTAだけ `#contact`（フッターへスクロール）だった。
+      → `./contact.html`。これで相談CTAの4箇所が全部そろった
+   ・「料金」を足した。月額27,000円・初期費用0円が最大の武器なのにナビから飛べなかった
+   ・「成果にこだわる」はナビから外した（節は残る）。他2つが名詞なのにここだけ動詞句で、
+     かつ社内の節名。買い手が探す言葉ではない
+   ------------------------------------------------------------------ */
+
+/* 🔴 追従ヘッダー（79px）のぶん、飛び先の節の頭が隠れていた。
+   hd-away で下スクロール中は引っ込むので実害は小さいが、
+   ハッシュ直打ち・リロード時は隠れたままになる */
+.site-shell section[id],
+.site-shell [id="top"] {
+    scroll-margin-top: clamp(64px, 6vw, 96px)
+}
+
+/* FVの隅の停止/再生。ナビから移したもの。
+   ⚠️ 見えている文字と読み上げ名を一致させる（前は別物だった）ので aria-label を持たせない。
+   紙色の下地に溶けこむ控えめな見た目。主役はリボンなので目立たせない */
+.ribbon-toggle {
+    z-index: 4;
+    color: #11111f8c;
+    cursor: pointer;
+    letter-spacing: .1em;
+    background: #f7f4eeb8;
+    border: 1px solid #11111f26;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font: 700 10px/1 Arial, sans-serif;
+    transition: color .25s, border-color .25s, background-color .25s;
+    position: absolute;
+    right: clamp(14px, 1.9vw, 30px);
+    bottom: clamp(14px, 1.9vw, 30px);
+    -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px)
+}
+
+.ribbon-toggle:hover,
+.ribbon-toggle:focus-visible {
+    color: #111;
+    border-color: #11111f6b
+}
+
+/* 動きを止めている間は、止まっていることが分かる色に */
+.ribbon-toggle[aria-pressed="true"] {
+    color: var(--tone-coral);
+    border-color: #ff4d4f5c
+}
+
+@media (max-width: 700px) {
+    /* 🔴 SPのFVは1409pxもあり、下端に置くと**画面外（実測 y1374）**で押せなかった。
+       1画面目の下端に来るよう、ヘッダーからでなく**表示領域の高さ**から逆算して置く。
+       リボンの上に重なるが、そのリボンを止めるボタンなので位置として正しい */
+    .ribbon-toggle {
+        top: calc(100svh - 58px);
+        bottom: auto;
+        right: 14px;
+        padding: 8px 13px;
+        font-size: 9.5px
+    }
+}
+
+/* 🔴 スクロールが「固定される」不具合の修正（2026-09-01・社長報告） ────────
+   症状: 下へスクロールしても画面が変わらず、止まったように見える。
+
+   原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
+     ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
+       その間の見た目は motion.4098324a.js が動かしている
+     ・motion.4098324a.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+     ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
+       を持っていた（1画面に畳んで完成形を見せる）
+     ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
+       **coral-sections.4098324a.css（最後に読む）へ無条件で**書いた。
+       メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
+       結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
+     ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
+
+   ⚠️ **後ろのファイルに無条件の指定を書くときは、前のファイルの
+      `@media (prefers-reduced-motion)` を潰していないか確かめる。**
+      確かめ方は README「reduced-motion の総点検」に置いた
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .process-section {
+        height: 100svh;
+        min-height: 720px
+    }
+}
+
+/* ── 05 注釈まわりの直し（2026-09-01・社長指摘「テキストの重なりと矢印の位置」）──
+   実測で出た4つを直す。
+   ------------------------------------------------------------------ */
+
+/* 🔴 ① 黒い節に黒い文字を置いていた（8/31の文字統一で私が入れた事故）。
+   `.bp-principle` の色を #11111f8c / #111111b8 にしたが、この節の地は #111。
+   実測 rgba(17,17,17,.72) on rgb(17,17,17) ＝ ほぼ見えない。紙色に直す */
+.bp-principle small {
+    color: #f7f4ee73
+}
+
+.bp-principle p {
+    color: #f7f4eecc
+}
+
+/* 🔴 ② 左の注釈3つが、左の文章（.bp-lead / 右端x487）に重なっていた
+   （実測 LANGUAGE 56×38 / STRUCTURE 89×54 / INFORMATION ARCHITECTURE 62×69px）。
+   注釈の器（.bp-board）は x446 から始まるのに、負の left で外へ出していたのが原因。
+   ⚠️ 左の帯は「文章の右端(487)」と「白いシートの左端」に挟まれていて余裕がない。
+      暗いシートの上は白文字が読めるので重ねてよい。**白いシートの上には出さない** */
+/* ⚠️ 「文章の上へ逃がす」では直らない。文章の高さは見出しの折り返しで変わり、
+   上端は器の27.9%(1456px)〜19.3%(1100px)まで動く。**横に逃がす**しかない。
+   左の帯は「文章の右端」と「白いシートの左端」に挟まれていて 18.2%幅では入らない。
+   **4つとも13.5%に絞って**帯の中に収める */
+.bp-note-research,
+.bp-note-language,
+.bp-note-structure,
+.bp-note-architecture {
+    width: 13.5%;
+    left: 5.2%
+}
+
+.bp-note-research     { top: 11.392% }
+.bp-note-language     { top: 22.5% }
+.bp-note-structure    { top: 40.253% }
+.bp-note-architecture { top: 52.152% }
+
+/* 🔴 ③ USER FLOW が画面右端から25pxはみ出していた（実測 右端1481 / 画面1456）。
+   ⚠️ 寄せすぎない。7%寄せたら注釈が引き出し先の点を追い越して線がジグザグになり、
+      4%でも点に近づきすぎて線が11pxの切れ端になった。
+      **画面に収まらない上2つだけ**動かし、下2つは元のまま（斜めの並びは保たれる） */
+.bp-note-flow    { left: 85.02% }   /* 右端 1481 → 1444 */
+.bp-note-visual  { left: 84%    }   /* 右端 1449 → 1434 */
+/* .bp-note-measure / .bp-note-improve は動かさない（線の長さが足りなくなる） */
+
+/* ── 04「7 INDUSTRIES / 35 RECRUITMENT SITES」を削除し、箱を短く（2026-09-01・社長指示）──
+   ⚠️ レーンは**絶対配置の固定px**なので、節を縮めるだけだと3本目が切れるだけで
+      「短くなった」ようには見えない。**レーンも一緒に上げる**こと。
+   前（1456px）: 節819 / レーン 79・356・621（3本目が72px見切れ）
+   後（1456px）: 節783 / レーン 60・330・585（見切れは72pxのまま＝流れ続ける感じは保つ）
+   ------------------------------------------------------------------ */
+.works-showroom {
+    height: clamp(700px, 53.8vw, 880px);
+    min-height: 700px
+}
+
+.works-lane-1 { top: 60px }
+.works-lane-2 { top: 330px }
+.works-lane-3 { top: 585px }
+
+@media (max-width: 900px) {
+    /* SPはキャプションが消えて、リード下端(346)からレーンまで144px空いた。詰める */
+    .works-showroom {
+        height: 820px;
+        min-height: 820px
+    }
+
+    .works-lane-1 { top: 400px }
+    .works-lane-2 { top: 605px }
+
+    .works-empty { top: 530px }
+}
+
+/* 🔴 コーラルのパネルが中身より長く余っていた（2026-09-01・社長指摘「余白まだ短くなってない」）。
+   正体は `.works-intro::before` の**高さベタ書き**（PC 570px / SP 450px）。
+   キャプションを消して中身が短くなっても、パネルだけ元の長さのまま残っていた。
+   実測（1456px）: 中身は y27〜404 なのにパネルは y15〜585 ＝ **下に181pxの空き**。
+   ⚠️ 高さを別の固定値に置き換えない。中身の高さは絞り込みの行数と
+      見出しの折り返しで変わる。**inset で中身に貼り付けて自動で伸縮させる。** */
+.works-intro:before {
+    inset: -12px -18px -30px;
+    width: auto;
+    height: auto
+}
+
+@media (max-width: 900px) {
+    .works-intro:before {
+        inset: -12px -8px -24px;
+        width: auto;
+        height: auto
+    }
+}
+
+/* ── 04 奥行き 2回目（2026-09-01・お試し / 戻すなら before-depth-04b）────────
+   1回目（視差だけ）は「わかりにくい」で戻した。原因は
+   ①振れ幅が小さい（205〜420px）②レーンが離れていて**重ならない**こと。
+   奥行きの最強の手がかりは **occlusion（手前が奥を隠す）**。今回はそこを使う。
+
+     ① 大きさ … 奥130〜174px / 中262〜300px / 手前470〜580px（JSXのSR_LANE_TILES）
+     ② 重なり … レーンを縦に**わざと重ねる**。DOM順で手前(lane3)が最後に描かれる
+     ③ 速さ  … 奥ほど遅い（近いものほど速く見える）
+     ④ 沈み  … 奥ほど暗く、影も浅く。手前だけしっかり浮かせる
+     ⑤ 位置  … 遠いものほど画面の上。手前は下へはみ出して「続く」
+   ------------------------------------------------------------------ */
+
+/* ② 重なり。奥→手前の順に下へずらしつつ、各レーンを前のレーンに食い込ませる。
+   3回目でタイルが大きくなった（手前700px＝高さ394px）ので、枠も取り直した */
+.works-lane-1 { top: 50px;  height: 92px }
+.works-lane-2 { top: 124px; height: 178px }   /* 奥に18px 食い込む */
+.works-lane-3 { top: 248px; height: 420px }   /* 中に54px 食い込む */
+
+/* ③ 向き。**真ん中だけ逆へ流す**（2026-09-01・社長案）。
+   🔴 1回目に「逆流と奥行きは両立しない」と書いたが、あれは奥行きを
+      **速さの差だけ**で作っていたときの話。いまは奥行きを担っているのは
+      **大きさ（6.5倍）と重なり（occlusion）**で、この2つは向きと無関係。
+      だから真ん中を逆へ流しても奥行きは崩れない。
+   ⚠️ 重さは変わらない。向きは同じ transform アニメの keyframe 違いで、
+      動かす性質も枚数も同じ（GPUの合成レイヤー数も同じ） */
+.works-lane-1 .works-track,
+.works-lane-3 .works-track { animation-name: works-flow-right }
+
+.works-lane-2 .works-track { animation-name: works-flow-left }
+
+.works-lane-1 .works-track { animation-duration: 300s }
+.works-lane-2 .works-track { animation-duration: 195s }
+.works-lane-3 .works-track { animation-duration: 120s }
+
+.works-lane-1:has(.works-tile:hover) .works-track { animation-duration: 300s }
+.works-lane-2:has(.works-tile:hover) .works-track { animation-duration: 195s }
+.works-lane-3:has(.works-tile:hover) .works-track { animation-duration: 120s }
+
+/* ④ 沈み。1回目より差を強くする */
+.works-lane-1 .works-tile {
+    filter: brightness(.7) contrast(.92) saturate(.85);
+    box-shadow: 0 4px 8px #11111124
+}
+
+.works-lane-2 .works-tile {
+    filter: brightness(.88) saturate(.94);
+    box-shadow: 0 10px 18px #11111138
+}
+
+.works-lane-3 .works-tile {
+    box-shadow: 0 22px 44px #1111115c
+}
+
+/* 触ったタイルは奥でも元の明るさに戻す（見に来た人の邪魔をしない） */
+.works-lane-1 .works-tile:hover,
+.works-lane-1 .works-tile:focus-visible,
+.works-lane-2 .works-tile:hover,
+.works-lane-2 .works-tile:focus-visible { filter: none }
+
+/* 節の高さ。
+   🔴 「下へ少しはみ出して続く感じ」を狙って645pxにしていたが、
+      手前のタイルが**31px見切れ**、上に54pxの余白があるのに下は0という
+      非対称になっていた（社長の指摘）。**上と同じ54pxを下にも作る**。
+      タイル下端676px + 54px = 730px。
+   ⚠️ レーンの位置も高さも**固定px**なので、節も固定にする。
+      vwで伸縮させると、狭い画面で手前のレーンが半分切れる。
+   ⚠️ タイルの寸法（SR_TILES）を変えたら、ここも計算し直すこと。
+      必要な高さ ＝ いちばん下のタイルの下端 ＋ 上の余白と同じ値 */
+.works-showroom {
+    height: 730px;
+    min-height: 730px
+}
+
+@media (max-width: 900px) {
+    /* SPも同じ考え方。タイルはSPで縮むので、重なり量も控えめに */
+    /* ⚠️ 手前のタイルはSPで185〜213px幅＝高さ104〜120pxしかない。
+       210pxの枠だと上に42px空いた（実測）。中身に合わせる */
+    .works-lane-1 { top: 388px; height: 92px }
+    .works-lane-2 { top: 452px; height: 150px }   /* 奥に28px 食い込む */
+
+    /* PCと同じ考え方。SPも下がぴったり0（実測 -1px）で、
+       リードとタイルの間が57pxあるのに下だけ詰まっていた。下にも同じだけ空ける。
+       タイル下端597px + 57px = 654px */
+    .works-showroom {
+        height: 654px;
+        min-height: 654px
+    }
+
+    .works-empty { top: 470px }
+}
+
+/* ── 07 CTA / フッターのレイアウトを磨く（2026-09-01・社長の指示書）────────
+   配色・文言・コンセプトは触らない。数十px単位で余白の意味を整えるだけ。
+   狙い: 左の大コピー →（呼吸する余白）→ 右下のCTA → フッターへ静かに着地、
+         という斜めの視線。左右を同じ高さに揃えない。
+   ⚠️ SP（≤900px）は縦積みで左右の関係が無いので触らない。min-widthで囲う。
+   ------------------------------------------------------------------ */
+@media (min-width: 901px) {
+
+    /* ── 2回目の調整（2026-09-01）。斜めの導線をやめ、**水平の構図**へ。
+       コピー＝主（ブランドメッセージ）／CTA＝従（行動の着地点）の主従をはっきりさせる。
+       上段は2カラムの考え方: 左58〜60% ／ 右40〜42%。
+       ⚠️ CTAは右余白（4.55vw）でフッターの右端と**縦に揃える**。
+          著作権表示と同じ線に乗るので、位置がずれて見えなくなる */
+
+    /* 01 コピー: 大きさは主役のまま（99px）。25px下げるだけ */
+    .reference-contact > h2 {
+        font-size: clamp(64px, 6.8vw, 104px);
+        top: clamp(46px, 4.7vw, 76px);   /* 2.9vw → 約25px下。広い画面で開きすぎないよう上限 */
+        left: 9.4vw
+    }
+
+    /* 02 CTA: 黒の面積を減らして従に回す。高さを27%縮め、
+       **縦中央が2行目「採用の力に。」の中央に来る**位置へ上げる（下端は約70px上がる）。
+
+       🔴 位置と高さを**素のvwにしない**。コピーは font-size が clamp で
+          1456px以降は104pxで頭打ちになるのに、CTAだけvwで伸び続けるため、
+          1920pxで2行目とのズレが47pxに開き、**罫線を25px越えた**（実測）。
+          コピーと同じように上限を持たせて、伸びを止める */
+    .reference-contact > .contact-cta {
+        width: clamp(380px, 32vw, 500px);   /* 幅はほぼ維持 */
+        right: 4.55vw;          /* フッターの右端に揃える */
+        left: auto;
+        top: clamp(140px, 12.8vw, 196px);
+        height: clamp(104px, 7.85vw, 120px);   /* 10.8vw → 約27%縮小 */
+        min-height: 0;
+        /* ⚠️ 幅を詰めて文字と矢印を大きくすると、**間の余白が先に消える**。
+           元は113pxあった間が、一度29pxまで潰れた（実測）。
+           間の余白 ≒ 左右padding になる値を保つ */
+        padding: 0 3.15vw;
+        font-size: clamp(19px, 1.75vw, 27px)
+    }
+
+    /* 矢印: 高さが下がったぶん、少し抑える（52px。前は67px） */
+    .reference-contact > .contact-cta b {
+        font-size: clamp(32px, 3.6vw, 56px)
+    }
+
+    /* 03 コピー/CTAの塊とフッター罫線の間を詰める（実測115px → 約55px）。
+       上の余白は詰めない。上に大きな呼吸 → 本体 → 適度な余白 → フッター。
+       ⚠️ 下限を470pxにすると、1100pxで下の余白が114pxに開いた（実測）。
+          中身の高さは1456px以降ほぼ止まるので、上限も抑える */
+    .reference-contact {
+        height: clamp(412px, 33.9vw, 560px)
+    }
+
+    /* 04 フッター: 均等4カラムをやめる。
+       Tilto° → NAV → 会社情報 を**ひとつの情報群**として左に寄せ、
+       著作権表示だけを右端へ離す */
+    .reference-contact-bottom {
+        grid-template-columns: auto auto auto 1fr;
+        /* Tilto° と NAV は近づけて**ひとつの左グループ**に */
+        column-gap: clamp(20px, 2.2vw, 32px)
+    }
+
+    /* 会社情報は少し離して**中央寄りの第2グループ**に。
+       ⚠️ grid の column-gap は全部同じ値になるので、
+          ここだけ margin で足して「近い／少し離れる」を作る */
+    .reference-contact-bottom address {
+        margin-left: clamp(40px, 4.2vw, 64px)
+    }
+
+    /* 上に1pxの細い罫線。ここから下がフッターだと分かる一本 */
+    .reference-contact-bottom:before {
+        content: "";
+        background: var(--tone-sumi);
+        opacity: .22;
+        height: 1px;
+        position: absolute;
+        top: -26px;
+        left: 0;
+        right: 0
+    }
+}
+
+/* ── 01 の仕様リストをさらに飾りへ寄せる（2026-09-01・社長指示）────────
+   8/31に色は落としたが、まだ目立っていた。実測すると
+   **dt 14px / weight 700**、dd も **700**。色（比2.88）より太さが効いていた。
+
+   🔴 色をこれ以上落とすと単に読めなくなる（すでに比2.88で本文17.20の1/6）。
+      **太さと字間で弱める。**太字をやめて字間を開くと、同じ濃さでも
+      「見出し」ではなく「ラベル」に見える。色はむしろ据え置き〜わずかに戻す。
+   ------------------------------------------------------------------ */
+.reference-about-facts dt {
+    font-size: clamp(9px, .82vw, 12px);
+    font-weight: 500;
+    letter-spacing: .18em;
+    color: #11111f6b
+}
+
+.reference-about-facts dd {
+    font-size: clamp(8px, .64vw, 10px);
+    font-weight: 400;
+    letter-spacing: .12em;
+    color: #11111f57
+}
+
+/* ⚠️ いちばん長い「BUILD / MEASURE / IMPROVE」だけ、字間を開いたぶん
+   枠（234px）を7px超えた（実測）。**字間を戻さず、その行だけ小さくする**。
+   字間は「飾りに見せる」ための主役なので、ここを削ると効果が消える */
+.reference-about-facts > div:last-child dt {
+    font-size: clamp(8px, .72vw, 10.5px)
+}
+
+/* 罫もさらに引く。構造は残すが、線として主張させない */
+.reference-about-facts > div,
+.reference-about-facts > div:nth-child(n+3) {
+    border-bottom-color: #11111f12
+}
+
+@media (max-width: 900px) {
+    .reference-about-facts dt {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .14em;
+        color: #11111f5e
+    }
+
+    .reference-about-facts dd {
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: .1em;
+        color: #11111f4a
+    }
+}
+
+/* ── 05 ブループリント: スクロール前の「薄ら残り」を消し、罫線を主役にする
+      （2026-09-01・社長指摘）────────────────────────────────────────
+   スクロール前、6枚のパネルが **opacity の下限 .06** で薄く残っていて、
+   「幽霊みたいに何かある」状態だった（`calc(.06 + var(--bp-xxx) * .94)`）。
+
+   かといって真っ黒から始めたくない。**最初は方眼の罫線だけを見せる。**
+   紙（設計図）があって、そこにこれから図が描かれていく、という始まり方にする。
+
+     ・パネル6枚 … 下限 .06 → **0**（完全に消す）
+     ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
+
+   ⚠️ 方眼の濃さは motion.4098324a.js が `(.08 + foundation * .2)` で上書きするので、
+      **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
+   ------------------------------------------------------------------ */
+.blueprint-trust .bp-base {
+    opacity: calc(var(--bp-foundation) * .55)
+}
+
+.blueprint-trust .bp-information {
+    opacity: var(--bp-information)
+}
+
+.blueprint-trust .bp-ui {
+    opacity: calc(var(--bp-ui) * .9)
+}
+
+.blueprint-trust .bp-wireframe {
+    opacity: var(--bp-wire)
+}
+
+.blueprint-trust .bp-content {
+    opacity: var(--bp-content)
+}
+
+.blueprint-trust .bp-visual {
+    opacity: var(--bp-visual)
+}
+
+/* 罫線の初期値。JS側と同じ値にしておく（JSが動く前の一瞬もズレないように） */
+.blueprint-trust {
+    --bp-grid-opacity: .19
+}
+
+/* ── FV: WebGL2が無い環境の静止フォールバック（2026-09-01）────────────
+   WebGL2が使えないと、バンドルは `if (!e || !i) return;` で黙って抜ける。
+   結果、FVの右側は**赤い帯の先端だけ**になり、画面の6割が空く（実機確認済み）。
+   古いiOS Safari、GPUを止めている端末、社内PCなどで起きる。
+   商談で見せるサイトなので、そこだけ別物になるのは避ける。
+
+   🔴 **画像は `html.no-webgl2` の中でしか指定しない。**
+      `display:none` の中の background-image は取りに行かないので、
+      WebGLが動く大多数には**1バイトも増えない**。
+      （<img> で置くと display:none でも読み込まれるので使わない）
+
+   ⚠️ 判定は index.html の <head> でやっている（バンドルより前。ちらつき防止）。
+   ⚠️ マークアップはSSRとJSXの両方にある。片方だけ触ると hydration がズレる。
+   ------------------------------------------------------------------ */
+.hero-film-still { display: none }
+
+html.no-webgl2 .hero-film-still {
+    z-index: 1;
+    display: flex;
+    gap: 1.2vw;
+    align-items: center;
+    position: absolute;
+    top: 6%;
+    left: 33%;
+    right: -14%;
+    height: 66%;
+    rotate: -7deg;
+    pointer-events: none
+}
+
+html.no-webgl2 .hero-film-still i {
+    flex: 1;
+    height: 100%;
+    background: var(--tone-paper) 50% / cover no-repeat;
+    box-shadow: 0 16px 34px #1111111f
+}
+
+/* 高さを1枚ずつ変えて、真横一列に見えないようにする */
+html.no-webgl2 .hero-film-still i:nth-child(1) { background-image: url(../images/film-03.webp); height: 72% }
+html.no-webgl2 .hero-film-still i:nth-child(2) { background-image: url(../images/film-06.webp); height: 92% }
+html.no-webgl2 .hero-film-still i:nth-child(3) { background-image: url(../images/film-02.webp); height: 100% }
+html.no-webgl2 .hero-film-still i:nth-child(4) { background-image: url(../images/film-09.webp); height: 86% }
+html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images/film-11.webp); height: 66% }
+
+@media (max-width: 900px) {
+    /* SPは帯が縦に短いので、3枚だけ見せる */
+    html.no-webgl2 .hero-film-still {
+        top: 30%;
+        left: 8%;
+        right: -20%;
+        height: 30%;
+        gap: 2.4vw
+    }
+
+    html.no-webgl2 .hero-film-still i:nth-child(n+4) { display: none }
+}
+
+/* ── 04 を3段→4段に（2026-09-01・社長指示）─────────────────────────
+   絞り込んだとき、画面に出る該当タイルが少なすぎた。段を増やして密度を上げる。
+   重なり（occlusion）は維持: 各レーンを前のレーンへ食い込ませ、DOM順で手前が上。
+   大きさは 112〜600px（5.4倍）の4階調。SR_LANE_TILES と対で見る。 */
+.works-lane-1 { top: 48px;  height: 84px }
+.works-lane-2 { top: 108px; height: 150px }   /* 奥に24px 食い込む */
+.works-lane-3 { top: 218px; height: 236px }   /* 40px 食い込む */
+.works-lane-4 { top: 400px; height: 400px }   /* 54px 食い込む。+10%後の371px+振れに合わせた */
+
+/* 向き: 2段目だけ逆流（承認済みの構図）。速さは奥ほど遅い */
+.works-lane-1 .works-track,
+.works-lane-3 .works-track,
+.works-lane-4 .works-track { animation-name: works-flow-right }
+
+.works-lane-2 .works-track { animation-name: works-flow-left }
+
+.works-lane-1 .works-track { animation-duration: 392s }
+.works-lane-2 .works-track { animation-duration: 281s }
+.works-lane-3 .works-track { animation-duration: 202s }
+.works-lane-4 .works-track { animation-duration: 156s }
+
+/* 沈み: 4階調に振り直す */
+.works-lane-1 .works-tile {
+    filter: brightness(.66) contrast(.92) saturate(.85);
+    box-shadow: 0 3px 7px #11111120
+}
+
+.works-lane-2 .works-tile {
+    filter: brightness(.8) saturate(.92);
+    box-shadow: 0 7px 14px #11111130
+}
+
+.works-lane-3 .works-tile {
+    filter: brightness(.92);
+    box-shadow: 0 12px 22px #11111140
+}
+
+.works-lane-4 .works-tile {
+    filter: none;
+    box-shadow: 0 22px 44px #1111115c
+}
+
+.works-lane-3 .works-tile:hover,
+.works-lane-3 .works-tile:focus-visible { filter: none }
+
+/* ホバーと窓開き中の停止に4段目を加える（止め方は既存と同じ＝durationを触らない） */
+.works-lane-4:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-4 .works-track {
+    animation-play-state: paused
+}
+
+.works-lane-4:has(.works-tile:hover) .works-track { animation-duration: 156s }
+
+/* 節の高さ ＝ いちばん下のタイルの下端 ＋ 上の余白と同じ47px（+10%後に実測830） */
+.works-showroom {
+    height: 830px;
+    min-height: 830px
+}
+
+@media (max-width: 900px) {
+    /* SPは3段見せる（前は2段24作品→今は27作品）。4段目は600×0.7=420pxで画面幅を超えるので出さない */
+    .works-lane-4 { display: none }
+    .works-lane-3 { display: block }
+
+    .works-lane-1 { top: 392px; height: 62px }
+    .works-lane-2 { top: 452px; height: 110px }   /* 食い込み */
+    .works-lane-3 { top: 540px; height: 168px }
+
+    /* リード→タイルの間45pxに合わせ、下も45px（実測: タイル下端702px） */
+    .works-showroom {
+        height: 747px;
+        min-height: 747px
+    }
+
+    .works-empty { top: 500px }
+}
+
+/* ── 02 大きい文字と注釈が近すぎる（2026-09-01・社長指摘）────────────
+   「高い」「遅い」の**字面のインクは行ボックスの外まで垂れる**（明朝の「い」のハネ）。
+   ボックス同士は28px離れていても、見た目は注釈に触りそうだった（遅いは4px重なり）。
+   注釈を約25〜28px下へ。赤入れの線も一緒に下げて、glyph→注釈の橋のまま保つ。
+   ⚠️ SPは静的フロー（margin-top:12px）なので触らない。PCの絶対配置だけ。 */
+.reference-problem-high p { top: calc(var(--u) * 22.9) }
+
+.reference-problem-high i { top: calc(var(--u) * 22.5) }
+
+.reference-problem-late p { top: calc(var(--u) * 24.5) }
+
+/* ── 01 仕様リストを削除（2026-09-02・社長指示「これいらないよ」）────────
+   つくる/そだてる/きりかえる/わたす の4行を削除。
+   ⚠️ .reference-about-facts は**空のまま残してある**。::before/::after の
+      英字ラベル（RECRUITMENT CHANGES. / SO DOES THE SITE.）の錨だから。
+      要素ごと消すとA案のラベルも一緒に消える。 */
+
+@media (max-width: 900px) {
+    /* SPは右カラムという構図自体が無く、錨が空になった今はラベルが
+       本文に食い込む（実測y100）。SPではラベルごと出さない */
+    .reference-about-facts { display: none }
+}
+
+/* ── 02 真ん中（遅い）にも赤入れの線を（2026-09-02・社長指摘）────────────
+   元は「2本だけ」の設計だったが、3枚並ぶと真ん中だけ無いのが欠けて見える。
+   注釈（left 41.8u / top 24.5u）の右肩から、遅いの「い」へ向けて上がる線。
+   出るタイミングは左(.58)と右(.66)の間＝.62。左→中→右の順に引かれる */
+.reference-problem-late i {
+    width: calc(var(--u) * 7.6);
+    top: calc(var(--u) * 24.1);
+    left: calc(var(--u) * 51.6);
+    rotate: -31deg;
+    scale: var(--pb-line-mid, 0) 1
+}
+
+/* ── 04 ホバーで他のFVに飛ぶ・カクつく（2026-09-02・社長指摘。再発）────────
+   🔴 原因は8/31に直したのと同じ型: **再生中に animation-duration を変えると、
+      経過時間が別の進捗に対応し直して帯が一瞬で飛ぶ**。
+      3段時代のホバー規則（300/195/120s）がファイルに残っていて、
+      4段化で基本を 320/230/165s に変えたとき食い違いが生まれた。
+      4段目だけ飛ばなかったのは、偶然どちらも115sだったから。
+
+   🔴 恒久対策: ホバー・窓開き・通常の**全状態で同じ値**を、最後に勝つ位置で宣言する。
+      止めるのは animation-play-state（8/31の規則が生きている）。長さは絶対に変えない。
+   ⚠️ 速さを変えるときは、この4行だけを書き換えること（上の古い規則は触らず負けさせる） */
+/* 🔴 レーンの尺は**この末尾のブロックが正**（2017行あたりの指定は上書きされて効かない）。
+   枚数を変えたら、**流れる距離が変わるので尺も同率で変える**こと。変えないと速さが上がる。
+   2026-09-04: 実サイト3本を足して 9/9/9/8 → 10/10/9/9 枚、
+     さらに公開URLの5本を足して 10/10/9/9 → **11/11/11/10 枚**。
+     lane1 320→359→392s ／ lane2 230→257→281s ／ lane3 165→202s ／ lane4 115→128→143s
+     2026-09-05: 建設の実サイト(45)を足して lane1 11→12枚。392×12/11 → **428s**（12/11/11/10 枚）
+     lane3 変化なし → 165s   ／ lane4 ×1.116 → 115→128s
+     2026-09-08: 実績2件（46 フリコネ→lane2、47 ベビレンタ→lane3）で 12/12/12/10 枚。
+       lane2 281×12/11 → **307s** ／ lane3 202×12/11 → **220s**
+   ⚠️ 3か所（通常・hover・ドロワー中）で**同じ値**にする。再生中に尺が変わると帯が飛ぶ。 */
+.works-lane-1 .works-track,
+.works-lane-1:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-1 .works-track { animation-duration: 428s }
+
+.works-lane-2 .works-track,
+.works-lane-2:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-2 .works-track { animation-duration: 307s }
+
+.works-lane-3 .works-track,
+.works-lane-3:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-3 .works-track { animation-duration: 220s }
+
+.works-lane-4 .works-track,
+.works-lane-4:has(.works-tile:hover) .works-track,
+.works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
+
+/* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
+   gpt-sections.4098324a.css の初期位置（before -6.92vw / after -3.52vw）だと
+   節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
+   見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
+.reference-about-facts:before { top: -2.62vw }
+
+.reference-about-facts:after { top: .78vw }
+
+/* ── SP点検2回目（2026-09-02・社長のiPhone実機スクショより）────────────
+   ① ABOUT: 仕様リストをSPで消したとき（9/2）、節の高さ720pxを置き去りにして
+      **下に273pxの空白**ができていた。中身の下端447px＋余白に合わせて詰める。
+      🔴 SPで要素を消したら、その節の高さも必ず測り直す（今回の取りこぼし） */
+@media (max-width: 900px) {
+    .reference-about { height: 540px }
+
+    /* ② 05の図面: right:-37vw の右ハミ出し設計で、主役のFVパネルが
+       画面外に139px切れていた（実測 x112〜514/375）。ほぼ画面内へ引き戻す。
+       注釈もリード線も図面（.bp-board）の中にあるので、一緒に付いてくる */
+    .bp-board { right: -4vw }
+}
+
+/* ── 05 SP: サブコピーと図面の間をさらに詰める（2026-09-02・社長指示）──────
+   8/31に210px→96pxへ詰めたが、その後の調整で実測116pxまで開いていた。
+   68px上げて48pxに。図面の下端は789→721で画面内（812）に収まる */
+@media (max-width: 900px) {
+    .bp-board { top: calc(17vh - 68px) }
+}
+
+/* ── 01 SP: FV直下と見出しの間も詰める（2026-09-02・社長指示）────────────
+   見出しが節の上端から160pxも下にいた。70pxへ（-90px）。
+   中身が上がったぶん節も 540→450px（下の空き70pxは維持） */
+@media (max-width: 900px) {
+    .reference-about-copy { top: 70px }
+
+    .reference-about { height: 700px }
+}
+
+/* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
+   🔴 padding-left:5.6vw（coral.4098324a.css・700px以下）は**約物の光学調整で、正しい**。
+      行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
+      （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
+      一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
+      約物の**空き半角ぶんまで含む**ので、Rangeで測ると中心がずれて見える。
+      光学中心は「インクの中心」で見ること。
+
+   本当の原因は**帯だけ**。帯は文字と違って約物の空きが無い純粋な四角なので、
+   行末の半角ぶん（約 .5em）が右に余り、面としてズレが見えてしまう。
+   実測（前）: インク x51〜323 に対し 帯 x42〜354（右へ31px余り／左は9px）
+   → 帯の右端を .5em 詰めて、インクを左右9pxずつで挟む形にする */
+@media (max-width: 700px) {
+    #top h1 span .hl-band { inset: -.06em .48em -.06em -.02em }
+}
+
+/* ── 03 SP: コピーと背景カードの文字が重なる（2026-09-03・社長指摘）──────────
+   実測（前）: コピーの帯 y171〜350 に対し
+     ・process-paper-photo  y112〜204（INTERVIEW/01 が y199〜216）
+     ・process-paper-note ×2 y234〜326（若い人に／仕事の意味を が y257〜302）
+     ・process-before-reference y318〜（手書きメモが写り込んだ写真）
+   が入り込み、しかも canvas(z:3)＋紙(z:7) が **コピーより上**で、コピーが隠れていた。
+   PCでは起きない（左にコピー・右に絵で棲み分けている）。SPだけの事故。
+
+   🔴 紙の `top` は **JSXのインラインstyle（%）**なので、CSSからは !important でしか
+      勝てない。ここは position の上書きだけで、動き（transform）には触らない。
+   ⚠️ 相対的な間隔は保ったまま、帯ごと下へ移して 43%〜78% に収めた
+      （元 14/29/48/59% → 43/55/69/78%。scale .78）。
+      紙どうしが重なるのはコラージュの意匠なので、そこは許容する。 */
+@media (max-width: 900px) {
+    /* コピーを最前面に。紙(z:7)・SVG(z:8)より上へ */
+    #fusion .process-copy { z-index: 20 }
+
+    /* 写真つきの1枚（INTERVIEW/01）*/
+    #fusion .process-paper-photo { top: 43% !important }
+
+    /* 付箋2枚（若い人に／仕事の意味を）*/
+    #fusion .process-paper-note { top: 55% !important }
+
+    /* 下の2枚も、間隔を保ったまま繰り下げる */
+    #fusion .process-paper-question { top: 67% !important }
+
+    /* ⚠️ 78%だと下端795で、進捗バー（y779〜797・z40）の裏に潜って読みにくい。
+       74%に留めて、紙の下端を進捗の上（762）で止める */
+    #fusion .process-paper-wire { top: 74% !important }
+
+    /* 手書きメモが写り込んだ写真も、コピーの下端(350)より下から始める */
+    #fusion .process-before-reference { top: 46%; height: 50% }
+}
+
+/* ── 05 STRUCTURE / INFORMATION ARCHITECTURE が図面の紙に乗る（2026-09-03・社長指摘）
+   実測: 注釈の帯（x486〜616）に、白い紙が board比 **47%以降**で入り込んでくる
+   （bp-base 47.1%〜 / bp-information 49.8%〜 / bp-content 47.7%〜）。
+   一方 STRUCTURE は 40.3%、INFORMATION ARCHITECTURE は 52.2% に置いていたため、
+   IA が bp-base と 106×85px、bp-information と 51×85px 重なって読めなくなっていた。
+
+   🔴 **横には逃がせない**（前回の記録どおり、左は文章の右端と紙の左端に挟まれて余裕なし）。
+      **4つとも紙の来ない上側（〜47%）に収め直す**。等間隔で 8 / 20 / 30.5 / 41%。
+   ⚠️ IAは見出しが2行で背が高い（85px）ので、下限は41%まで。これ以上下げると紙に触る */
+.bp-note-research     { top: 6% }
+.bp-note-language     { top: 17% }
+.bp-note-structure    { top: 27% }
+.bp-note-architecture { top: 37% }
+
+/* ── 01 サービス説明を右上に（2026-09-04・社長指示で構成を戻した）────────
+   9/3に「見出しを大きく＋説明文をリードの下」に振ったが、**元の構成に戻す**。
+     ・見出しは元のまま（サイズも重さも触らない。99pxが既に上限だった）
+     ・英字ラベルは**元の右上**（top 11.62vw / right 4.95vw）へ
+     ・説明文は改行しすぎない
+
+   🔴 **右カラムの幅は見出しが決めている。**見出しの右端は x1121（実測）で、
+      右余白4.95vw=72px を引くと**使えるのは263pxしかない**。
+      255px幅では2段落目が6行に折れ、字を10pxまで落としても改善しなかった。
+
+   → **説明文はラベルの下ではなく、見出しの2行目より下から始める。**
+      y360以降は見出しが無いので、幅を 430px まで広げられる（6行→4行）。
+      ラベルは右上のまま。ラベルと説明文が離れるが、
+      ラベルは「節の見出し」、説明文は「本文」なので役割が違う。 */
+@media (min-width: 901px) {
+    /* 🔴 2026-09-04・社長の選択で「説明文も左カラムに流す」へ。
+       右上に置いていたときは、見出しの右端(x1121)と右余白に挟まれて幅263pxしか取れず、
+       2段落目が6行に折れていた。左カラムなら幅を自由に決められる。
+
+       縦位置は **12.18vw（見出しの上端）+ 16.2vw（見出し2行＋リードの高さ）+ 3.4vw（間）**。
+       ⚠️ 16.2vwは実測から。見出し clamp(48px,4.98vw,76px) とリード clamp(12px,1.25vw,19px) は
+          901〜1520px の間はどちらも vw に比例するので、この帯では比例式が成り立つ
+          （1280px→207px / 1456px→236px、どちらも16.2vw）。 */
+    .reference-about-facts {
+        top: 31.78vw;
+        left: 10.88vw;        /* .reference-about-copy と同じ左端 */
+        right: auto;
+        bottom: auto;
+        /* 🔴 社長指示（2026-09-04）「幅をとって改行されないようにして」。
+           文の**途中**で折れるのが気になる、という指摘。**1文＝1行**にする。
+
+           実測（1456px幅・文字11.94px。Rangeで文字そのものを測った値）:
+             p1 全体 ………………… 552px  → 1行
+             p2 前半（〜解消。）…… 727px  ← ここで折りたい
+             p2 前半+1字 ………… 739px  ← ここを超えると次の字まで入って途中で折れる
+             p2 後半 ……………… 709px  → 2行目
+             p3 全体 ………………… 393px  → 1行
+           → 器は **727〜739px の間**でなければならない。広すぎても狭すぎても崩れる。
+
+           ⚠️ 文字は clamp(11px,.82vw,13px) なので、必要な幅も画面幅で動く:
+              ・1341〜1585px … 文字が.82vw＝画面比例 → 必要幅も比例（50.3vw が範囲の中央）
+              ・1341px未満 …… 文字が11pxで止まる → 必要幅も 675px で止まる
+              ・1585px超 …… 文字が13pxで止まる → 必要幅も 800px で止まる
+           ⚠️ 最初 1080px にしたら「企業ごとの特/色や」と**語の途中**で割れた。
+              広ければ良いのではなく、**1文ぴったりに合わせる**のが正解。 */
+        width: min(84.17vw, clamp(675px, 50.3vw, 800px));
+        min-width: 300px
+    }
+
+    /* 英字ラベルは**右上のまま**動かさない。説明文が左へ移ったぶん、器の左端(10.88vw)から
+       右へ送り返す。⚠️ vw一本の近似（81.64vw）にしたら1100pxで x898 まで行き、
+       画面右端(1100)まで200pxしかなくラベルが切れかけた。
+       元の置き方は `right:4.95vw` ＋ 器幅 `max(224px, 16.05vw)` なので、その式のまま引き算する:
+         ラベルの絶対x = 100vw - 4.95vw - max(224px,16.05vw)
+       → 1456px:x1150 / 1280px:x992 / 1100px:x822。どの幅でも元どおりになる。
+       縦は元の y＝4.84vw から器の上端(31.78vw)を引く */
+    .reference-about-facts:before,
+    .reference-about-facts:after {
+        left: calc(84.17vw - max(224px, 16.05vw));
+        /* 🔴 これが無いと1語ずつ折れる（2026-09-04・社長のスクショ）。
+           絶対配置で `left` だけ指定した箱の幅は「器の幅 - left」までしか取れない。
+           器は説明文（幅553px）なのに left が 992px なので、取り分がマイナス＝
+           最小幅まで潰れ、「RECRUITMENT / CHANGES.」「SO / DOES / THE / SITE.」に割れていた。
+           ラベルは元から1行なので nowrap で固定する。 */
+        white-space: nowrap
+    }
+
+    /* ⚠️ 2026-09-04にリード下の余白を半分にしたとき（器の top 31.78→30.08vw）、
+       器基準で置いているこのラベルも一緒に 1.7vw 上がり、FVから降りてくるコーラルの帯
+       （.reference-about:before・高さ56px）の真下に詰まった。社長「もう少し下に」。
+       → 2.5vw 下げる。絶対位置は 30.08-24.44 = 5.64vw（1456pxで82px。元の71pxより少し下） */
+    /* 2026-09-05・社長「あと20px下げて」。1456pxで20px＝1.374vw ぶん下へ。
+       絶対位置は 30.08-23.07 = 7.01vw（1456pxで102px。帯の下端から46px） */
+    .reference-about-facts:before { top: -23.07vw }
+    .reference-about-facts:after { top: -19.67vw }
+
+    .reference-about-facts p {
+        color: #111111c4;
+        margin: 0 0 1.05em;
+        font-size: clamp(11px, .82vw, 13px);
+        line-height: 1.95;
+        letter-spacing: .01em
+    }
+
+    .reference-about-facts p:last-child { margin-bottom: 0 }
+
+    /* 🔴 2026-09-09、本文を3段→2段に減らした（社長）。節の高さは固定なので、
+       減った1段ぶん（実測 1440幅で39px / 1100幅で34px）がそのまま下の空きになる。
+       その分だけ縮めて、前と同じ足元の余白に戻す（46→43.2vw、600→560px、700→660px）。
+       ⚠️ 本文の段数を増減したら、ここも実測して合わせ直すこと */
+    .reference-about { height: clamp(560px, 43.2vw, 660px) }
+}
+
+@media (max-width: 900px) {
+    /* SPは右カラムが無い構図。説明文だけ本文の下に流す（ラベルは引き続き出さない）。
+       ⚠️ static にすると **DOM順（copyより後ろ）ではなく節の先頭**に出てしまう
+       （copy自体が absolute で浮いているため）。absoluteのまま下へ置く */
+    .reference-about-facts {
+        display: block;
+        position: absolute;
+        top: 404px;
+        left: 35px;
+        right: 22px;
+        width: auto;
+        margin: 0
+    }
+
+    .reference-about-facts:before,
+    .reference-about-facts:after { content: none }
+
+    .reference-about-facts p {
+        color: #111111c4;
+        margin: 0 0 .9em;
+        font-size: 12px;
+        line-height: 1.9
+    }
+}
+
+/* ── FVの料金帯: 27,000 が見づらい（2026-09-03・社長指摘）────────────────
+   🔴 実測すると **主役の27,000だけが一番小さかった**（67px）。
+      02/03 の `--ink`（1 / 1）は 4.92cqw = 72px で、月額は 4.62cqw = 67px。
+      桁数が多いぶん1文字が小さく見えるのに、指定まで小さかった。
+   月額を 5.35cqw（約78px）に上げる。02/03 は据え置きで、主役が一番大きくなる。 */
+.price-card--monthly .price-value strong { font-size: calc(5.35 * var(--fv-u)) }
+
+/* 単位「円〜（税別）」も少し上げて、数字とのバランスを保つ */
+.price-card--monthly .price-value span { font-size: calc(1.3 * var(--fv-u)) }
+
+@media (max-width: 900px) {
+    .price-card--monthly .price-value strong { font-size: 50px }
+    .price-card--monthly .price-value span { font-size: 15px }
+}
+
+/* ── 03 背景の左端がぶつ切りに見える（2026-09-04・社長指摘）────────────
+   実測: 背景画像は x0〜1456 の全幅に敷かれ、マスクは一切かかっていなかった
+   （opacity .82 / grayscale.18 のみ）。左のコピー欄には地色が無いので、
+   **画像の左端の直線がそのまま境界として見えていた**。
+
+   🔴 直し方は「画像を小さくする」ではなく **端をぼかして地色へ溶かす**。
+      左は特に長く（32%）取る。コピーが乗る側なので、
+      文字の背後が紙の地色に近いほど読みやすくなる。
+   ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
+.process-before-reference {
+    /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
+       この画像には gpt-sections.4098324a.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
+       残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
+       → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
+
+       左は段階的に上げる。単純な 0→64% の直線だと、コピーの右端（41%）で
+       まだ濃すぎて文字が読みにくい。3点に折って、コピーの上では薄いまま保つ:
+         30% … 6%   （コピーの真下。ほぼ地色）
+         46% … 34%  （コピーを抜けたあたりから見え始める）
+         64% … 100% （ここから写真として立つ）
+       ⚠️ clip-path を復活させるなら、切り口とフェード開始を必ず一致させること。
+          片方だけ動かすと、また硬い縁ができる。 */
+    clip-path: none;
+    -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, #0000000f 30%, #00000057 46%, #000 64%, #000 88%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
+    mask-image:
+        linear-gradient(to right, transparent 0%, #0000000f 30%, #00000057 46%, #000 64%, #000 88%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect
+}
+
+@media (max-width: 900px) {
+    /* SPはコピーが上、背景が下の縦並び。左右は切らず、上下だけ溶かす */
+    .process-before-reference {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%)
+    }
+}
+
+/* ── 05 左の注釈4つが読みにくい（2026-09-04・社長指摘、8/31から未解決）────
+   実測: 器の幅が **131px しかなく**、11pxの本文が1行8〜9字で折れ、
+   「INFORMATION ARCHITECTURE」も2語で改行していた。
+   8/31に「13.5%に絞って帯の中に収める」で幅を犠牲にしたのが原因。
+
+   🔴 幅は左右どちらにも伸ばせる:
+     ・左 … 文章の**実際の文字**は x447 で終わる（枠は487だが中身は短い）。39px空き
+     ・右 … いちばん左の紙は x510。注釈の右端616 は既に紙に重なっているが、
+            紙は暗く注釈は白文字なので**重なってよい**（8/31の記録どおり）
+   → 幅 131 → 178px（左を24px、右を23px）。本文が1行12字前後になる。
+   ⚠️ IAの見出しは178pxでも2行のまま。**見出しだけ字間を詰めて1行に収める**。 */
+/* ⚠️ %は器（.bp-board）基準。12.25%にしたら118pxで**逆に狭くなった**。
+   幅は px で決める。左端は文章の実右端(447)より右、右端は紙に重ねてよい */
+.bp-note-research,
+.bp-note-language,
+.bp-note-structure,
+.bp-note-architecture {
+    /* ⚠️ %で縮めると1100pxで幅114pxになり、かえって読みにくくなった（本文3行）。
+       **幅は保ったまま、狭い画面では左位置を右へ送る**のが正解。
+       左の文章の実右端は画面幅に比例して動くので、leftもvw連動にする。 */
+    /* 🔴 leftをvw連動にしたら1456pxで右へ行きすぎ、白い紙(bp-visual)の上に
+       186×60px 完全に乗った。**白い紙に白文字は読めない**。
+       左の文章の実右端(447)と、いちばん左の紙(510)の**間に置く**のが唯一の解。
+       幅186pxは 460〜646 になり右端が紙に33px掛かるが、
+       掛かるのは紙の左端の余白部分なので実害なし（8/31の記録と同じ判断）。 */
+    /* ⚠️ 186pxだと右端6pxが白い紙(bp-visual)に掛かり、白文字が読めなくなる。6px引いて180pxに。
+
+       🔴 幅を固定pxにすると狭い画面で破綻する。実測から出た置き場の式:
+         ・注釈の左端  = 図面左(30.64vw) + 2.55%×図面幅
+         ・白い紙の左端 = 図面左 + 20%×図面幅（図面幅 ≒ 63.1vw）
+         → 紙まで使える幅 = 17.45% × 63.1vw = 11vw。文字は箱の右20pxを使い切らないので +20px。
+       1456px→180px / 1300px→163px / 1100px→141px。どの幅でも紙に文字が乗らない */
+    width: min(180px, calc(11vw + 20px));
+    left: 2.55%
+}
+
+/* 🔴 1160px以下では左の文章（.bp-lead 幅31vw）の**文字が枠いっぱいまで届く**ので、
+   注釈の左端(0.3225vw)が文章に7〜12px食い込む。幅を削ると本文が3行に戻るだけなので、
+   この帯だけ**文章のほうを細くして場所を空ける**。
+   ⚠️ 分かれ目は **1380px**。計算上は1280px（見出しのclampが46px固定に切り替わる幅）だが、
+      実測は 1200px→13px重なる / 1300px→1pxしか空かない / 1456px→14px空く。
+      1300pxの1pxは詰まりすぎなので、余裕が8px以上つく1380pxまで細くする側に入れる */
+@media (min-width: 1001px) and (max-width: 1379px) {
+    .bp-lead {
+        width: 27.5vw
+    }
+}
+
+/* ⚠️ 「INFORMATION ARCHITECTURE」は186pxでも2行になる（1語が長い）。
+   この見出しだけ小さくして1行に収める。他3つは触らない */
+.bp-note-architecture b {
+    font-size: clamp(9px, .74vw, 11.5px);
+    letter-spacing: -.01em
+}
+
+/* 本文をわずかに大きく・行間を詰める（折り返しが増えたぶんの読みやすさを戻す） */
+.bp-note-research p,
+.bp-note-language p,
+.bp-note-structure p,
+.bp-note-architecture p {
+    font-size: clamp(10px, .79vw, 11.5px);
+    line-height: 1.72
+}
+
+/* ── FVの見出し下を2行に（2026-09-04・社長の赤入れ）────────────────────
+   経緯（同じ日に2回外している）:
+     1回目 … 「採用コンサルタント × AI × Web制作」を丸ごと
+             「プロと作る、新しい採用サイト」へ置き換えた → 違う
+     2回目 … チップ（AI削除）を左、添え文を右の**横並び**にした → 違う
+   確定した形:
+     ・リード「つくって終わりにしない。月額で持ち、育てつづける採用サイト。」は**削除**
+     ・上に「プロと作る新しい採用サイト」（読点なし）
+     ・下に黒いチップ「採用コンサルタント × Web制作」
+   ⚠️ 横並びにしない。**この順番で縦に積む**。 */
+.service-tag {
+    display: block;
+    width: max-content;
+    margin: 2.1cqw 0 0;
+    color: #282623;
+    letter-spacing: .04em;
+    font-size: calc(1.06 * var(--fv-u));
+    font-weight: 800;
+    white-space: nowrap
+}
+
+/* チップは添え文の下。リードが無くなったぶん、見出しとの間を詰めすぎない */
+.service-chip {
+    display: block;
+    margin-top: 1.15cqw
+}
+
+@media (max-width: 900px) {
+    /* 🔴 `width: max-content` の塊なので、`text-align: center` だけでは中央に来ない
+       （箱の中で中央そろえになるだけで、箱そのものが左に寄っている）。
+       下のチップは `margin: 18px auto` で中央に来ていたが、こちらは 0 のままだった。
+       実測（390px）: 文字の中心 110px（画面の中心は195px）→ 2026-09-09 社長「左寄せで違和感」 */
+    .service-tag { margin-top: 22px; margin-inline: auto; font-size: 13px }
+    .service-chip { margin-top: 12px }
+}
+
+/* ── ヘッダーCTAが窮屈（2026-09-04・社長のスクショ）────────────────────
+   実測（1456px）: 箱137px に対して 文字108＋間6＋矢印15＝129px。
+   **左右の余りが4pxずつしかなく**、矢印が縁に触れて見えていた。
+   → 箱を 9.4cqw → 11.6cqw（137→169px）、文字と矢印の間も .38→.9cqw に広げる。
+   ⚠️ ナビは右端から31px空いているので、32px広げても収まる（実測で確認）。 */
+.site-nav .header-cta {
+    width: 11.6cqw;
+    gap: .9cqw
+}
+
+/* ── 01 リードの下の余白を半分に（2026-09-04・社長指示）──────────────
+   説明文の縦位置 31.78vw ＝ 12.18（見出し上端）＋16.2（見出し2行＋リード）＋**3.4（間）**。
+   この「間」を半分の1.7vwにする → 12.18 + 16.2 + 1.7 = 30.08vw */
+@media (min-width: 901px) {
+    .reference-about-facts { top: 30.08vw }
+}
+
+/* ── 03の見出し2行目を字下げ（2026-09-04・社長指示）──────────────────
+   「「なんとなく」」の1文字目は **開き括弧** で、游明朝では**インクが字面の右寄り**にある。
+   実測（100px相当）: 「 のインク左＝0.65em ／ か のインク左＝0.079em。
+   そのままだと2行目だけ左へ飛び出して見えるので、差の **0.571em** ぶん2行目を下げる。
+   ⚠️ 幕（.hl-band）は行の箱に貼りつくので動かない。字だけが右へずれる。 */
+/* 🔴 2026-09-08 やり方を逆にした。
+   これまでは**2行目を右へ押して**1行目の「に合わせていたが、その結果
+   見出しぜんぶが下のリード文より右に寄って見えていた（社長の指摘）。
+   正しくは、行頭の「を**左へぶら下げて**、字の左端をリード文に揃える。
+
+   ⚠️ 「text-indent は .hl-line が display:inline なので効かない」と前に書いたが、
+      それは span に当てた場合の話。**text-indent はブロック（h2）に当てれば効く**。
+      h2 に当てると1行目だけが動くので、行頭の「のぶら下げにちょうど合う。
+
+   実測（インクの左端、em）: 「=.65 ／ か=.08 ／ 更=.04 ／ 言=.045
+   ぶら下げ量 = 「のインク − その行の頭の字のインク */
+.process-copy-after h2 .hl-line:nth-of-type(2) {
+    padding-left: 0
+}
+
+/* 03「なんとなく」からまとめます。 見出し55.44px / リード13.68px
+   1行目: .65em → .0686em ぶんだけ残す（リードの言 .045em×13.68px 相当）
+   2行目: か .08em を同じ位置へ ＝ ブロックごと -.069em */
+.process-copy-after h2 {
+    margin-left: -.069em;
+    text-indent: -.57em
+}
+
+/* 01「つくる」をゴールにしない。 見出し71.712px / リード18px
+   1行目の頭は「（かぎかっこ）で、見た目が右へ寄る。その分だけ左へ吊るす。
+   ⚠️ text-indent は**最初の1行にしか効かない**。 */
+.reference-about-copy h2 {
+    text-indent: -.611em
+}
+
+/* 🔴 2026-09-09、2行目を「更新しながら「育てる」採用サイト。」から
+   「「育てる」採用サイト。」に短くした（社長）。2行目も「で始まるようになったので、
+   1行目と**同じだけ**左へ吊るす。書かないと2行目だけ .611em 右へずれる */
+.reference-about-copy h2 .hl-line:nth-of-type(2) {
+    margin-left: -.611em
+}
+
+/* 🔴 コーラルにするのは「育てる」と最後の句点だけ。
+   ほかまで赤くすると、この面の静かさが崩れる（2026-09-09 社長）。
+   ⚠️ 幕（.hl-band）も同じ <i> だが background で描くので色は関係しない。
+      句点を <b>、強調を <em> にしてあるのは、幕の <i> と取り違えないため */
+.reference-about-copy h2 em,
+.reference-about-copy h2 b {
+    color: var(--tone-coral);
+    font-style: normal;
+    font-weight: inherit
+}
+
+/* ── 05の左の注釈を3つに（2026-09-04・社長指示「1つか2つ右へ」）────────
+   4つ縦積みで窮屈だったので、いちばん背の高い INFORMATION ARCHITECTURE を
+   **右上の空きへ移す**。残り3つは左で間隔を広げ直す。
+   🔴 引き出し線と点も一緒に動かす必要がある（SSRとJSXのSVG）。
+      点を左半分に置いたままだと、線が**白い紙（bp-visual / bp-wireframe）の上**を
+      横断する。線の色は紙色なので**白地では消える**＝注釈が宙に浮いて見える。
+      → 点も右上の暗い地（bp-visualの右端 x779 より右）へ移す。 */
+.bp-note-architecture {
+    /* ⚠️ top:10% だと1100pxで白い紙（bp-visual）の左上角に6px触れた。
+       紙の上端は 1456px→14.3% / 1100px→15.5%。注釈の高さは約8.6%なので、
+       4% から始めれば下端12.6%で、どの幅でも紙に入らない */
+    top: 4%;
+    left: 82.745%;
+    right: auto;
+    width: 18.2%
+}
+
+/* 右へ移したので幅が戻る。見出しを小さくしていた指定を解除 */
+.bp-note-architecture b {
+    font-size: clamp(13px, .977vw, 18px);
+    letter-spacing: normal
+}
+
+/* 左に残る3つの間隔を広げ直す（4つを37%に押し込んでいたのを解く） */
+.bp-note-research  { top: 8% }
+.bp-note-language  { top: 26% }
+.bp-note-structure { top: 44% }
+
+/* ── ビューアで実サイトをそのまま見せる（2026-09-04・社長指示）──────────
+   画像だと動きが伝わらないので、URLがあるものは iframe を入れる。
+   ⚠️ 画像のときは枠の側がスクロールする（overflow-y:auto）が、
+      iframe は**中身が自分でスクロールする**ので枠側は切る。 */
+.works-site-frame[data-live="true"] {
+    overflow: hidden
+}
+
+.works-site-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff
+}
+
+/* ── FVの料金帯の補足をもっと大きく（2026-09-04の定例）────────────────
+   8/31に一度上げたが「今よりももっと大きく」。1456px幅での実測を併記する。
+     円〜        1.08 → 1.34cqw （15.7 → 19.5px）※月額は別途1.3→1.55cqw
+     （税別）    .62 → .80cqw   （ 9.0 → 11.6px）
+     ラベル      .81 → .95cqw   （11.8 → 13.8px）
+     注記        .72 → .86cqw   （10.5 → 12.5px）
+   ⚠️ すべて cqw（FVの幅基準）。px直書きにしないこと。
+   ⚠️ 注記は white-space:nowrap なので、大きくすると横にはみ出す。実測で確認する。 */
+@media (min-width: 701px) {
+    .price-label { font-size: calc(.95 * var(--fv-u)) }
+    .price-label span { font-size: calc(.98 * var(--fv-u)) }
+    .price-note { font-size: calc(.86 * var(--fv-u)) }
+    .price-value span { font-size: calc(1.34 * var(--fv-u)) }
+    .price-value small { font-size: calc(.80 * var(--fv-u)) }
+}
+
+.price-card--monthly .price-value span { font-size: calc(1.55 * var(--fv-u)) }
+
+/* ── ビューアの「読み込み中」（2026-09-04 に入れ、2026-09-09 に作り直し）────────
+   実サイトをiframeで開くので、回線しだいで数秒かかる。
+
+   🔴 **前の作りは効いていなかった。**覆いを枠の裏に置いて「iframeが載ったら隠れる」形に
+      していたが、iframe は中身が来る前から**自分の白い地を塗る**。つまり読み込み中こそ
+      白い板が上に乗り、下の「読み込んでいます」は最初から見えていなかった
+      （2026-09-09 社長のスクショ＝真っ白な枠）。
+   → **覆いを iframe より前に出し、読み終わったら消す**形に変えた。
+     消すのは motion.4098324a.js（`data-loaded="true"` を付ける）。
+     ⚠️ reduced-motion でも消えないと困るので、あちらでは早期returnより前に置いてある。
+
+   🔴 色はコーラル（2026-09-09 社長「真っ白じゃなくて色もつけて。コーラル?」）。
+      白い枠のままだと「壊れている」に見えるが、コーラルなら「いま用意している」に見える。
+   ------------------------------------------------------------------ */
+.works-site-frame[data-live="true"] {
+    /* 帯とその下地を同じ高さに置くための1か所 */
+    --wl-y: clamp(22px, 2.4vw, 34px);
+    position: relative;
+    background: var(--tone-coral, #ff4d4f)
+}
+
+/* 覆い本体。コーラルの地と、真ん中の文字 */
+.works-site-frame[data-live="true"]::before {
+    content: 'サイトを読み込んでいます';
+    z-index: 3;
+    pointer-events: none;
+    color: #fff;
+    /* コーラルの地 ＋ 帯の下地（白の薄い線）。帯だけだと何が動いているか分かりにくい */
+    background:
+        linear-gradient(#ffffff2e, #ffffff2e) 0 calc(50% + var(--wl-y)) / 100% 2px no-repeat,
+        var(--tone-coral, #ff4d4f);
+    letter-spacing: .22em;
+    text-indent: .22em;
+    font: 700 clamp(11px, 1.05vw, 15px)/1 var(--font-ui, Arial), sans-serif;
+    place-items: center;
+    display: grid;
+    position: absolute;
+    inset: 0
+}
+
+/* 白い帯が左から右へ何度も走る。回る輪より「動いている」ことが遠目に分かる */
+.works-site-frame[data-live="true"]::after {
+    content: '';
+    z-index: 4;
+    pointer-events: none;
+    background: #fff;
+    width: 34%;
+    height: 2px;
+    position: absolute;
+    top: calc(50% + var(--wl-y));
+    left: 0;
+    animation: works-loading 1.15s cubic-bezier(.65, 0, .35, 1) infinite
+}
+
+/* ⚠️ translateX の % は**自分の幅**に対して効く。帯は枠の34%なので、
+   枠を渡り切るには 100/34 ＝ 約294% 動かす */
+@keyframes works-loading {
+    0%   { transform: translateX(-100%) }
+    100% { transform: translateX(294%) }
+}
+
+/* 読み終わったら覆いを外す。付けるのは motion.4098324a.js。
+   ⚠️ 地もコーラルから紙色に戻す。読み込んだサイトに透ける所があると、
+      コーラルのままでは相手のデザインに赤が混ざる */
+.works-site-frame[data-loaded="true"] { background: #f7f4ee }
+
+.works-site-frame[data-loaded="true"]::before,
+.works-site-frame[data-loaded="true"]::after { display: none }
+
+.works-site-frame[data-live="true"] iframe {
+    position: relative;
+    z-index: 1
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* 帯は止めるが、**覆いは消さない**（読み込み中であることは伝える必要がある）。
+       止めた帯が真ん中に見えるように、左端ではなく中央へ置く */
+    .works-site-frame[data-live="true"]::after {
+        animation: none;
+        left: 33%;
+        transform: none
+    }
+}
+
+/* ── 横長の画面でFVの左右に地が出る（2026-09-05・社長指摘「右端と左端が開いた」）──
+   FVは `aspect-ratio: 1674/943`（≒1.775:1）を保つので、
+   **画面がそれより横長だと画面幅より狭くなる**。1728×860（2.009:1）で**左右101pxずつ**。
+   上の77%は `.site-shell` の地がFVとほぼ同じ薄い色なので目立たないが、
+   下の23%＝**コーラルの料金帯だけが画面の端に届かず、切れて見える**。
+
+   🔴 帯そのものを伸ばすことはできない。帯は `.hero-canvas`（overflow:hidden）の中にあり、
+      はみ出させると切り落とされる。
+   → **地の側に、同じ色・同じ高さの帯を画面幅いっぱいで敷く。**FVは自分の地を持っているので、
+      重なる部分はFVが上に描かれ、**両脇の空きだけがこの帯で埋まる**。
+
+   ⚠️ 使うのは `body::before`。`.site-shell` の ::before/::after はイントロの幕、
+      `body::after` もイントロで埋まっている。ここが唯一空いていた。
+   ⚠️ z-index は 0（負にしない）。負にすると `.site-shell` の地より下に回り込んで隠れる。
+   ⚠️ 高さの式はFVと同じものを書く。FV側（`width: min(100vw, 177.519svh)` /
+      `height: min(100svh, 56.3321vw)`）を変えたら、ここも一緒に変えること。
+   ⚠️ 帯の位置はFVの高さの77%〜100%（`.pricing-strip { height: 23% }` に対応）。 */
+@media (min-width: 901px) {
+    body::before {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        right: 0;
+        top: calc(min(100svh, 56.3321vw) * .77);
+        height: calc(min(100svh, 56.3321vw) * .23);
+        background: rgba(255, 77, 79, .93);
+        pointer-events: none
+    }
+}
+
+/* ── 05 図面を「このページ自身」に揃えた（2026-09-05・社長指示）──────────────
+   「あ、このサイトのことじゃん」と分かるように、最上層をFVの実スクショにし、
+   IA・UI・ワイヤー・メッセージマップ・注釈・計測・トークンを全部このページの実物に合わせた。
+   🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
+      面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
+      下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
+   🔴 環の割合は 5/7＝71.4%。motion.4098324a.js の数字（05 / 07）と一致させる。 */
+.bp-visual {
+    overflow: hidden
+}
+
+.bp-site-shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0;
+    display: block
+}
+
+.bp-visual .bp-site-foot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 23px;
+    background: var(--bp-paper);
+    border-top: 1px solid #11111766
+}
+
+.bp-score-value {
+    stroke-dasharray: 71.4 100;
+    stroke-dashoffset: calc(var(--bp-chart-offset) * 71.4)
+}
+
+/* 「00 / 07」は7字。前の「0.0%」より長いので、環の中で折れないように詰める */
+.bp-score strong {
+    letter-spacing: -.02em;
+    white-space: nowrap
+}
+
+/* ── 01 見出しをかずさん案に差し替え（2026-09-05）────────────────────────
+   「つくる」をゴールにしない。／更新しながら「育てる」採用サイト。
+   PCは1行ずつで収まる（1456pxで2行目の幅1170px・右余白128px）。
+   🔴 SPは2行目が10文字で1行に入らず「採用サイ／ト。」と割れたので、
+      sp-only の br をもう1つ足して 更新しながら／「育てる」／採用サイト。 の3行に。
+      見出しが4→5行になったぶん、リード（3行）の下に来る説明文と節の高さを下げる。
+      実測（375px）: 見出し y71〜341（5行）、リード y366〜434 → 説明文は 460 から（間26px）。
+      説明文は約240px なので節は 740px（下に約40px残る）。 */
+/* 🔴 2026-09-09 に見出しを「「育てる」採用サイト。」へ短くし（5行→4行）、
+   本文も3段→2段にした。上の値は5行＋3段のときのものなので、実測して置き直す。
+   実測（390px）: 見出し 71〜287（4行）／リード 312〜357（701px以上でだけ出る）
+     ・本文の上 390 … リードが出る幅で間30px（前の26pxとほぼ同じ）。
+       リードが出ない幅（700px以下）では見出しから100px。節の変わり目として妥当
+     ・節の高さ 625 … 390px幅で本文の下に120px残る（前と同じ足元の余白）
+   ⚠️ 見出しの行数か本文の段数を変えたら、この2つを実測して合わせ直すこと */
+@media (max-width: 900px) {
+    .reference-about-facts { top: 390px }
+    .reference-about { height: 625px }
+}
+
+/* ── FVを画面幅いっぱいに。文字の大きさは今のまま（2026-09-05・社長が案2を選択）──
+   FVは `width: min(100vw, 177.519svh)` で 1674:943 を保っていたため、
+   画面がそれより横長だと**画面幅より狭くなり、左右に地が残る**（1512×818で30pxずつ）。
+   前回コーラルの帯は塞いだが、その上はリボン（写真）が端の手前で止まって見えていた。
+
+   🔴 幅だけ広げると、**文字が cqw（＝枠の幅の1%）基準なので一緒に大きくなり**、
+      料金帯の注記とCTAが帯の下へはみ出す（1512×818で+3px、1920×900で+35px。実測）。
+   → 文字の基準を**枠の幅から切り離す**。`--fv-u` は「広げる前の枠の1%」で、
+      `min(1vw, 1.77519svh)` ＝ 元の `min(100vw, 177.519svh)` の1%と完全に一致する。
+      FV内の font-size は全部この単位に置き換えた（33ルール）。
+
+   ⚠️ ヘッダー（.brand / .site-nav / .header-cta）は**枠の外**にあり、
+      cqw が画面基準にフォールバックしていた。ここは元から画面幅に追従するので触っていない。
+   ⚠️ **横**の余白の cqw はそのまま（画面に合わせて伸びてほしい側）。
+      ただし**縦**の余白は別。料金帯は高さが「枠の高さの23%」で固定なのに、
+      中の縦padding が cqw だと枠幅で伸びて、1920×900で注記が22pxはみ出した。
+      次の6つだけ `--fv-u` に寄せてある（横の値は cqw のまま残す）:
+        .price-card padding-top 1.8 ／ .price-value height 5.6・6.1 ／ margin-top .58
+        ／ .pricing-cta gap .75・padding上下 1.15
+   ⚠️ 高さは従来どおり。縦長の画面では width も height も元の式と同じ値になる。 */
+.hero-canvas {
+    --fv-u: min(1vw, 1.77519svh);
+    width: 100vw
+}
+
+/* ── 05 中間の4面を「このページで見た部品」で組み直した（2026-09-05・社長指示「既視感」）───
+   図面の文言は前回このページに揃えたが、絵は汎用の設計図（箱に×・Aa・木構造）のままだった。
+   読者が05に着くまでに**すでに見ているもの**——斜めの帯、コーラルの料金帯、黒いチップ、
+   3つの数字（27,000 / 1 / 1）、04の絞り込みチップ、幕の4色——を各面の絵にする。
+   🔴 SSRとJSXは**同じHTMLから機械生成**している（手で2重に書かない。hydrationのズレ防止）。
+   ⚠️ 面は小さい（1456pxで WF 436×177 / CT 474×188 / UI 531×229 / IA 626×260、頭23px込み）。
+      文字は 4.5〜9px。これ以上盛らない。 */
+
+/* IA / 02 ── 一本道。いまここ */
+.bp-spine { position: absolute; inset: 23px 22px 0; display: grid; grid-template-columns: repeat(8, 1fr);
+            align-content: center; padding-top: 18px }
+.bp-spine-line { position: absolute; left: 6%; right: 6%; top: calc(50% - 6px); height: 1px; background: #f7f4ee66 }
+.bp-spine span { position: relative; display: grid; justify-items: center; gap: 4px; padding-top: 16px; text-align: center }
+.bp-spine span::before { content: ''; position: absolute; top: 0; left: calc(50% - 3px); width: 7px; height: 7px;
+                         border-radius: 50%; border: 1px solid var(--bp-paper); background: var(--bp-black) }
+.bp-spine b { font: 700 7px/1 Arial, sans-serif; letter-spacing: .1em; color: var(--bp-coral) }
+.bp-spine .is-root b { color: var(--bp-paper) }
+.bp-spine small { font: 700 5px/1 Arial, sans-serif; letter-spacing: .12em; color: #f7f4eeb3 }
+.bp-spine em { font: 700 5px/1 Arial, sans-serif; letter-spacing: .08em; color: var(--bp-coral); font-style: normal }
+.bp-spine .is-here::before { background: var(--bp-coral); border-color: var(--bp-coral); box-shadow: 0 0 0 3px #ff4d4f33 }
+.bp-spine .is-here small { color: var(--bp-paper) }
+
+/* UI / 03 ── 実物のボタン・幕の4色・絞り込みチップ */
+.bp-ui-buttons span { border: 1px solid #f7f4ee8c; margin: 5px 0; padding: 5px 6px; font: 700 5.5px/1 Arial, sans-serif; display: block; letter-spacing: .04em }
+.bp-ui-buttons .is-fill { background: var(--bp-coral); border-color: var(--bp-coral); color: var(--bp-paper) }
+.bp-ui-buttons .is-ink  { background: #000; border-color: #f7f4ee55; color: var(--bp-paper) }
+.bp-ui-buttons .is-line { color: var(--bp-paper) }
+/* 幕の4色（hl-band の抜ける順: 淡い→鮮やか→深い→黒） */
+.bp-ui-color i { border: 1px solid var(--bp-paper); height: 14px; margin-bottom: 5px; display: block }
+.bp-ui-color i:nth-of-type(1) { background: #ffe6e8 }
+.bp-ui-color i:nth-of-type(2) { background: var(--bp-coral); border-color: var(--bp-coral) }
+.bp-ui-color i:nth-of-type(3) { background: #e23c3f; border-color: #e23c3f }
+.bp-ui-color i:nth-of-type(4) { background: #111317 }
+.bp-ui-chips b { display: inline-block; margin: 0 3px 4px 0; padding: 3px 6px; border: 1px solid #f7f4ee66; border-radius: 999px;
+                 font: 700 5px/1 Arial, sans-serif; letter-spacing: .06em; color: var(--bp-paper) }
+.bp-ui-chips .is-on { background: var(--bp-paper); border-color: var(--bp-paper); color: var(--bp-black) }
+
+/* WF / 04 ── このページのFVの縮図 */
+.bp-wire-fv { position: absolute; inset: 23px 0 0; overflow: hidden; color: #111317 }
+.bp-wire-head { display: flex; align-items: center; gap: 6px; height: 15px; padding: 0 8px; border-bottom: 1px solid #11131733 }
+.bp-wire-head b { font: 700 6px/1 Arial, sans-serif; letter-spacing: -.02em; margin-right: auto }
+.bp-wire-head i { width: 14px; height: 1px; background: #11131755 }
+.bp-wire-head em { margin-left: 4px; padding: 3px 5px; background: var(--bp-coral); color: var(--bp-paper);
+                   font: 700 4.5px/1 Arial, sans-serif; font-style: normal; letter-spacing: .04em }
+.bp-wire-copy2 { position: absolute; left: 8px; top: 24px; width: 44% }
+.bp-wire-copy2 small { display: block; font: 700 4px/1 Arial, sans-serif; letter-spacing: .12em; color: #111317b3; padding-left: 12px; position: relative }
+.bp-wire-copy2 small::before { content: ''; position: absolute; left: 0; top: 1.5px; width: 9px; height: 1px; background: var(--bp-coral) }
+.bp-wire-copy2 strong { display: block; margin-top: 6px; font: 500 clamp(9px, .72vw, 11px)/1.22 Yu Mincho, Hiragino Mincho ProN, serif; letter-spacing: -.05em }
+.bp-wire-copy2 strong span { color: var(--bp-coral) }
+.bp-wire-copy2 p { margin: 5px 0 0; font: 700 4.5px/1 Arial, sans-serif; letter-spacing: .04em }
+.bp-wire-copy2 b { display: inline-block; margin-top: 4px; padding: 2.5px 4px; background: #10100f; color: var(--bp-paper);
+                   font: 700 4.5px/1 Arial, sans-serif; letter-spacing: .02em }
+.bp-wire-copy2 b i { color: var(--bp-coral); font-style: normal; margin: 0 3px }
+.bp-wire-ribbon { position: absolute; left: 46%; right: -8%; top: 22%; height: 34%; display: flex; gap: 3px; align-items: center;
+                  rotate: -7deg; transform-origin: 0 50% }
+.bp-wire-ribbon i { flex: 1; height: 100%; border: 1px solid #11131766; background: #11131714 }
+.bp-wire-ribbon i:nth-child(2n) { height: 82% }
+.bp-wire-ribbon i:nth-child(3n) { background: #ff4d4f22; border-color: #ff4d4f88 }
+.bp-wire-strip { position: absolute; left: 0; right: 0; bottom: 0; height: 33%; background: rgba(255, 77, 79, .93); color: var(--bp-paper);
+                 display: grid; grid-template-columns: 30% 21% 23% 26%; align-items: center; padding: 0 8px }
+.bp-wire-strip small { display: block; font: 700 4px/1 Arial, sans-serif; letter-spacing: .1em; opacity: .9 }
+.bp-wire-strip b { display: block; margin-top: 3px; font: 700 9px/1 Arial, sans-serif; letter-spacing: -.02em }
+.bp-wire-strip b i { font: 700 4.5px/1 Arial, sans-serif; font-style: normal; margin-left: 2px }
+.bp-wire-strip em { justify-self: end; padding: 5px 6px; background: #10100f; color: var(--bp-paper);
+                    font: 700 5px/1 Arial, sans-serif; font-style: normal; letter-spacing: .04em; white-space: nowrap }
+
+/* CT / 05 ── 見出しの2行目はコーラル・数字は料金帯の顔・導線は実ボタン */
+.bp-content-map strong span { color: var(--bp-coral) }
+.bp-ct-nums { display: grid; gap: 5px; margin: 9px 0 0 }
+.bp-ct-nums b { font: 700 clamp(11px, 1.05vw, 16px)/1 Arial, sans-serif; letter-spacing: -.02em; color: var(--bp-paper) }
+.bp-ct-nums b i { font: 700 5.5px/1 Arial, sans-serif; font-style: normal; margin-left: 3px; color: #f7f4eeb3 }
+.bp-ct-flow { display: grid; gap: 7px; margin: 9px 0 0; justify-items: start }
+.bp-ct-flow span, .bp-ct-flow em { position: relative; padding: 3px 6px; border: 1px solid #f7f4ee66; font: 700 5.5px/1 Arial, sans-serif;
+                                   font-style: normal; letter-spacing: .04em; color: var(--bp-paper); white-space: nowrap }
+.bp-ct-flow span::after { content: '↓'; position: absolute; left: 4px; bottom: -8px; font: 700 6px/1 Arial, sans-serif; color: var(--bp-coral) }
+.bp-ct-flow em { background: var(--bp-coral); border-color: var(--bp-coral) }
+
+/* ── 02 BEFORE の見出し／02b AFTER の節（2026-09-05・0904定例 かずさん）────
+   メモ: 「このページが『私たちが解決する課題』に該当する。before⇒after形式で
+   コピー『採用サイトは、ハードルが高い。』／具体的な悩み4つ／Tiltoならできること4つ を入れたい」
+
+   組み方:
+   ・BEFORE(02) は黒い紙に巨大明朝。ここは触らず、左上に見出しだけ足した
+   ・AFTER は**同じ版面・同じ単位(--u)・同じ明朝で、色を反転**（黒→紙）。
+     悩み→解決 の切り替わりを、色の反転ひとつで見せる
+   ・4つの悩みは AFTER 側の各項目の上に小さく置き、赤線で消す（02の「赤入れ」の続き）。
+     その下に大きな答え（27,000円〜／1週間／伴走／オリジナルデザイン）。
+     BEFOREの3語と1対1にせず、4つの悩みを4つの答えに対応させている
+   ⚠️ 金額はメモの「月2万円〜」ではなく、サイト全体に合わせて 27,000円〜 にした
+   ------------------------------------------------------------------ */
+.reference-problems-head {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    top: calc(var(--u) * 2.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--pb-black);
+    translate: 0 calc((1 - var(--pb-black)) * 10px)
+}
+
+.reference-problems-head b,
+.reference-after-head b {
+    color: var(--tone-coral);
+    letter-spacing: .24em;
+    margin-bottom: calc(var(--u) * .75);
+    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
+    display: block
+}
+
+.reference-problems-head span,
+.reference-after-head span {
+    color: #f7f4ee;
+    letter-spacing: .01em;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(18px, calc(var(--u) * 2.1), 31px);
+    font-weight: 500;
+    line-height: 1.2;
+    display: block
+}
+
+.reference-after {
+    /* 🔴 親(main)はグリッド。gpt-sections.4098324a.css は節名を列挙して stretch している
+       (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
+       新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
+    justify-self: stretch;
+    width: auto;
+    /* 🔴 --tone-* も gpt-sections.4098324a.css が節名を列挙して定義している。ここに無いと
+       var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
+    --tone-coral: #ff4d4f;
+    --tone-paper: #f7f4ee;
+    --tone-sumi: #111;
+    --tone-rule: #1111113d;
+    --u: min(1vw, 14.87px);
+    /* 🔴 既定値は「着地後」。JS無効・reduced-motion でもそのまま読める */
+    --af-head: 1;
+    --af-1: 1;
+    --af-2: 1;
+    --af-3: 1;
+    --af-4: 1;
+    /* 2026-09-06 社長: AFTERが紙色だと03と「白白」で続く。BEFOREと同じ黒地にして、問題→解決を一つの暗転の章として読ませる */
+    color: #f7f4ee;
+    background: #111;
+    border-top: 0;
+    border-bottom: 1px solid #111;
+    height: clamp(560px, 41.7vw, 620px);
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    font-feature-settings: "palt";
+    position: relative;
+    overflow: hidden;
+    isolation: isolate
+}
+
+.reference-after-head {
+    z-index: 5;
+    margin: 0;
+    position: absolute;
+    top: calc(var(--u) * 2.4);
+    left: calc(var(--u) * 5.02);
+    opacity: var(--af-head);
+    translate: 0 calc((1 - var(--af-head)) * 10px)
+}
+
+.reference-after-head span { color: #f7f4ee }
+
+.after-item {
+    margin: 0;
+    position: absolute;
+    opacity: var(--af);
+    translate: 0 calc((1 - var(--af)) * 18px)
+}
+
+.after-item-cost   { --af: var(--af-1); top: calc(var(--u) * 9.2); left: calc(var(--u) * 5.02) }
+.after-item-cost strong { font-size: calc(var(--u) * 8.4) }
+.after-item-speed  { --af: var(--af-2); top: calc(var(--u) * 9.2); left: calc(var(--u) * 40.5) }
+.after-item-speed strong { font-size: calc(var(--u) * 10.8) }
+.after-item-pro    { --af: var(--af-3); top: calc(var(--u) * 6); right: calc(var(--u) * 3.6); display: block; text-align: right }
+/* 🔴 基本の .after-item strong（line-height .9・6.4u）が後ろで効くので、縦組みは詳細度を上げて上書きする */
+.reference-after .after-item-pro q { margin-left: auto }
+.reference-after .after-item-pro strong { display: inline-block; letter-spacing: -.08em; writing-mode: vertical-rl; font-size: calc(var(--u) * 6); line-height: 1.1; height: auto; margin-top: calc(var(--u) * .4) }
+.reference-after .after-item-pro p { margin-top: calc(var(--u) * 1.1) }
+
+/* --- 締め（2026-09-06 社長 案A）。BEFOREの着地点と同じ左下・同じ寸法 --- */
+.reference-after-statement { z-index: 5; margin: 0; position: absolute; bottom: calc(var(--u) * 3.4); left: calc(var(--u) * 5.02); opacity: var(--af-3); translate: 0 calc((1 - var(--af-3)) * 12px) }
+.reference-after-statement b { color: var(--tone-coral); letter-spacing: .1em; margin-bottom: calc(var(--u) * .95); font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif; display: block }
+.reference-after-statement span { color: #f7f4ee; letter-spacing: .01em; font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif; font-size: clamp(26px, calc(var(--u) * 2.85), 42px); font-weight: 500; line-height: 1.2; display: block }
+.reference-after-statement i { color: var(--tone-coral); font-style: normal }
+.after-item-design { --af: var(--af-4); top: calc(var(--u) * 6);   right: calc(var(--u) * 3.6); display: grid; justify-items: end; text-align: right }
+
+/* 悩みの声。小さく、赤線で消す */
+.after-item q {
+    quotes: "「" "」";
+    color: #f7f4ee80;
+    margin: 0 0 calc(var(--u) * .9);
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    font-weight: 500;
+    line-height: 1.7;
+    white-space: nowrap;
+    width: fit-content;
+    display: block;
+    position: relative
+}
+
+/* 赤線は背景で引く。⚠️ q::after を使うと閉じ括弧「」」（close-quote）が消える。
+   ⚠️ background ショートハンドの `位置 / calc(var()*…)` は落ちたので、ロングハンドで書く */
+.after-item q {
+    background-image: linear-gradient(var(--tone-coral), var(--tone-coral));
+    background-repeat: no-repeat;
+    background-position: 0 54%;
+    background-size: calc(var(--af) * 100%) 1px
+}
+
+/* 答え。02の巨大文字と同じ明朝・同じ詰め */
+.after-item strong {
+    color: #f7f4ee;
+    letter-spacing: -.06em;
+    white-space: nowrap;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: calc(var(--u) * 6.4);
+    font-weight: 500;
+    line-height: .9;
+    display: block
+}
+
+.after-item strong em {
+    letter-spacing: 0;
+    margin-right: .22em;
+    font-size: .36em;
+    font-style: normal
+}
+
+.after-item strong span {
+    letter-spacing: 0;
+    margin-left: .06em;
+    font-size: .42em
+}
+
+.after-item-design strong {
+    letter-spacing: -.08em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--u) * 5);
+    line-height: 1.03;
+    height: calc(var(--u) * 26)
+}
+
+.after-item p {
+    color: #f7f4eee6;
+    margin: calc(var(--u) * 1) 0 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
+    font-weight: 500;
+    line-height: 1.7
+}
+
+.after-item-design p { margin-top: calc(var(--u) * 1.1) }
+
+@media (max-width: 900px) {
+    .reference-problems-head {
+        position: static;
+        margin: 0 0 30px;
+        translate: none
+    }
+
+    .reference-after {
+        height: auto;
+        padding: 72px 22px 40px
+    }
+
+    .reference-after-head,
+    .after-item {
+        position: static;
+        inset: auto;
+        translate: none
+    }
+    .reference-after-statement { position: static; inset: auto; translate: none; margin-top: 10px }
+
+    .reference-after-head { margin-bottom: 36px }
+
+    .after-item { margin-bottom: 34px }
+
+    /* ⚠️ Chromeは block の子にも justify-self を効かせる。end のままだと
+       SPで子が右寄せ＋縮んで右にはみ出す */
+    .after-item-design, .reference-after .after-item-pro {
+        display: block;
+        justify-items: start;
+        text-align: left
+    }
+    .reference-after .after-item-pro q { margin-left: 0 }
+
+    .after-item q,
+    .after-item p {
+        white-space: normal;
+        font-size: 13px
+    }
+
+    .after-item strong { font-size: 15vw }
+
+    .after-item-design strong, .reference-after .after-item-pro strong {
+        display: block;
+        writing-mode: horizontal-tb;
+        font-size: 15vw;
+        line-height: 1.14;
+        height: auto;
+        margin-top: 0
+    }
+}
+
+/* ── 左右バランスの点検（2026-09-08・社長「SPもPCも左右が整うように」）──────
+   PC 1440 / SP 390 で、節ごとの本文の左端・右端を実測して揃えた。
+   PC: 左端が 35(05)・41(04)・48(FV)・49(03)・64(01)・72(02) とばらけていた。
+       FV系（FV 48・03 49）に 04・05 を寄せる。参照系（01・02・06・07: 64〜72）はそのまま。
+   ⚠️ PCで hero / pricing-strip が -7px にずれるのは 100vw がスクロールバー込みなだけ（左右対称・overflow hidden）。直さない */
+@media (min-width: 901px) {
+    .works-intro { left: clamp(32px, 3.33vw, 48px) }
+    /* .bp-copy は .bp-lead の中で static。位置は器の .bp-lead が持っている（left: 2.45vw） */
+    .bp-lead { left: 3.33vw }
+}
+@media (min-width: 1001px) {
+    .bp-section-head { left: 3.33vw }
+}
+
+@media (max-width: 900px) {
+    /* 01: 説明文の左端 35px が、見出し（55px）とも節ラベル（22px）とも揃っていなかった → 見出しに揃える */
+    .reference-about-facts { left: 55px }
+
+    /* 03: 付箋2枚目（left:78%）が右に54pxはみ出し、問いの紙（63%）は右端5pxまで来ていた。
+       2枚を右余白14pxで止め、1枚目を少し左へ（50%→32%）ずらして重なりを保つ */
+    #fusion .process-paper[data-paper="1"] { left: 32% !important }
+    #fusion .process-paper[data-paper="2"],
+    #fusion .process-paper[data-paper="3"] { left: auto !important; right: 14px }
+
+    /* 06: 1fr の最小値が中身（27,000円〜）の幅になり、段が 346→353px に膨らんで右余白が 22→15px に。
+       minmax(0,1fr) で器の幅に収める */
+    .reference-price-faq { grid-template-columns: minmax(0, 1fr) }
+
+    /* 07: 見出しとCTAだけ左右35px、ラベルと下段は22px → 22pxに統一 */
+    .reference-contact > h2 { left: 22px }
+    .reference-contact > .contact-cta { left: 22px; right: 22px }
+}
+
+@media (max-width: 680px) {
+    /* 05: 図面のはみ出しを左右対称に（-13/-16 → -14/-14）。
+       注釈8つは幅41pxで読めない（9/5実測）ので SP では畳む。リード線も一緒に。
+       図面そのものが主役で、注釈の中身は「05 デザインの前に、設計がある。」の本文が担う */
+    .bp-board { right: -14px }
+    .bp-note, .bp-leaders { display: none }
+}
+
+
+/* ============================================================
+   05 図面 — 2026-09-08 の直し（社長: 「もっと奥行きを。後ろに倒れて細くなる感じ」）
+
+   (1) 面に**本物の遠近**を入れた。
+       これまでは rotate(6deg) skewX(-4deg) の2Dのせん断だけで、
+       平べったい紙が並んでいるようにしか見えなかった。
+       .bp-board には最初から perspective:1200px が入っていたのに、
+       子が2D変形しかしていないので**一度も効いていなかった**。
+       rotateX で奥へ倒し、rotateY で横にも振ると、遠い辺が短くなって奥行きが出る。
+       🔴 translateY の calc はスクロール連動なので**1文字も触っていない**。
+          入れ替えたのは rotate/skew の2つだけ（機械置換）。
+       ⚠️ 引き出し線（.bp-leaders）は固定座標で面を指しているので、
+          倒す角度を大きくすると線の先が面から外れる。14deg / -10deg はその手前。
+
+   (2) FVの縮図の見出しを大きく太く。5.5px相当では何と書いてあるか読めなかった。
+
+   (3) 帯を「縦長の四角の行列」から**曲がった帯**に変えた。
+       実物のFVは写真が曲線の帯になって流れているのに、縮図は細長い長方形が
+       横一列に並んでいるだけで、別物になっていた。
+       SVGで中心線を3次ベジェにし、半幅を手前15→奥4.5と細めて遠近を付けてある。
+       中心線 P=(-16,36)(70,14)(160,40)(283,14) / 半幅 15→4.5 / タイル8枚。
+       作り直すときは scratchpad の band.py と同じ式で座標を焼き直す。
+   ============================================================ */
+
+/* (2) FVの縮図の見出し */
+/* 面の上下はFVの面とCONTENTの面に挟まれていて、見えるのは斜め72pxの窓だけ。
+   見出しはその窓に収まるところまで下げる（24px → 34px。実測で決めた） */
+.bp-wire-copy2 { width: 50%; top: 34px }
+.bp-wire-copy2 strong { margin-top: 7px;
+    font: 700 clamp(11px, .96vw, 16px)/1.18 Yu Mincho, Hiragino Mincho ProN, serif;
+    letter-spacing: -.045em }
+.bp-wire-copy2 p { margin-top: 6px }
+
+/* (3) 曲がった帯。見出しを広げたぶん右へ寄せ、面の中で上へ上げて背を高くした
+   （下は CONTENT の面に隠れるので、隠れない上半分に置く） */
+.bp-wire-ribbon { display: block; overflow: visible;
+    left: 54%; right: -10%; top: 32%; height: 42% }
+.bp-band-cell { fill: #11131714; stroke: #11131766; stroke-width: .7; vector-effect: non-scaling-stroke }
+.bp-band-cell.is-on { fill: #ff4d4f26; stroke: #ff4d4f8c }
+.bp-band-edge { fill: none; stroke: #111317; stroke-width: 1.1; vector-effect: non-scaling-stroke }
+
+/* 🔴 注釈は面より手前に出し、暗い下地を敷く。
+   面を大きくすると、注釈を逃がす余白が左右どちらにも無くなる（実測: 本文コピーの右端494 と
+   面の左の縁526 のあいだは32px しかなく、注釈の幅165px は入らない）。
+   逃がせない以上、**面の上に載せて読ませる**しかない。白い面の上では白い字が消えるので、
+   下地なしの重ね置きは不可。下地は黒地の上ではほぼ見えず、白い面の上でだけ効く。
+   ⚠️ 内側の余白ぶんを負のマージンで戻してある。戻さないと注釈の字だけが右下へずれる。 */
+.bp-note {
+    z-index: 20;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    background: #0b0b0be6;
+    margin-top: -10px;
+    margin-left: -14px;
+    padding: 10px 14px
+}
+
+/* 図面の倒し込み。3つの数字だけで決まるようにしてある。
+   --bp-rx … 奥へ倒す角。大きいほど後ろへ寝る
+   --bp-ry … 縦軸まわりの回し。マイナスで**左へ回る**（右側が手前に出て、左側が奥へ引く）
+   --bp-rz … 画面の中での傾き。0 にすると面の辺が水平になる
+   --bp-blow … 倒すと縮むぶんを取り返す拡大率。**倒す＝小さくする、にしない**のが要点
+   ⚠️ 触ったら必ず、引き出し線8本の先が面に乗っているかを測り直す
+      （固定座標なので、面が動くと空中を指す）。 */
+.blueprint-trust { --bp-rz: 4deg; --bp-ry: -29deg; --bp-rx: 29deg; --bp-blow: 1.45 }
+
+@media (min-width: 1001px) {
+    /* (1) 奥行き。置換したのは rotate/skew だけで、translateY の calc は原文のまま */
+    .bp-base { transform: translateY(calc((1 - var(--bp-foundation)) * 35px - var(--bp-foundation) * 4px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-foundation) * .03) * var(--bp-blow))) }
+    .bp-information { transform: translateY(calc((1 - var(--bp-information)) * 45px - var(--bp-information) * 10px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-information) * .03) * var(--bp-blow))) }
+    .bp-ui { transform: translateY(calc((1 - var(--bp-ui)) * 50px - var(--bp-ui) * 12px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-ui) * .03) * var(--bp-blow))) }
+    .bp-wireframe { transform: translateY(calc((1 - var(--bp-wire)) * 60px - var(--bp-wire) * 16px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-wire) * .03) * var(--bp-blow))) }
+    .bp-content { transform: translateY(calc((1 - var(--bp-content)) * 60px - var(--bp-content) * 23px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-content) * .03) * var(--bp-blow))) }
+    .bp-visual { transform: translateY(calc((1 - var(--bp-visual)) * 75px - var(--bp-visual) * 32px + var(--bp-parallax-front))) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(calc((.97 + var(--bp-visual) * .03) * var(--bp-blow))) }
+    .bp-kpi { transform: translateY(calc((1 - var(--bp-kpi)) * 18px)) rotateZ(var(--bp-rz)) rotateY(var(--bp-ry)) rotateX(var(--bp-rx)) scale(var(--bp-blow)) }
+    .bp-kpi { transform-origin: 50% 100% }
+
+    /* 奥へ倒したぶん面が縦に縮んで、WFの面が CONTENT の面にほぼ隠れた。
+       WFだけ 31.5% → 25% へ上げて、帯と見出しが見えるところまで出す */
+    .bp-wireframe { top: 25% }
+
+    /* 🔴 2026-09-08 一番上の面（FV）が節の上端で切れていたので、下へ逃がした。
+       実測: 絵は節の 0〜862px に描かれていて、**下に37pxしか余っていない**。
+       そこで全体を26px下げ（板の top）、さらにFVの面だけを板の中で 6.835%→10% 下げて、
+       2番目の面（WF）との間を詰めている。
+       ⚠️ これ以上下げると下がはみ出す。動かす前に必ず絵の上下の余りを測り直すこと。 */
+    .bp-board { top: calc(4.861vh + 26px) }
+    .bp-visual { top: 7.5% }
+    /* 2番目（WF）との間の「すき間」を 24px → 4px に詰める。
+       ⚠️ すき間の正体は**WFの面が見えている帯**なので、詰めるほどWFは隠れる。
+          40% より上げると WF の見出しが 0% になる（実測）。ここが限界。 */
+    .bp-content { top: 40% }
+
+    /* 🔴 2026-09-08 もう一段倒した（社長の指定＝添付の分解図と同じくらい後ろへ）。
+       **倒すぶん小さくする、ではなく倒して大きくする**。18deg→32deg で寝かせ、
+       縮むぶんを --bp-blow 1.24 で取り返して、FVの面は 542px 幅 → 653px 幅になった。
+       遠近は 1200px → 900px。近くから見るほど、遠い辺が短くなって奥行きが立つ。
+
+       🔴 2026-09-08 最終的に**社長が _tune.html のつまみで直接決めた値**が入っている。
+       言葉（「左に30度」「横軸で」）では何度やっても噛み合わなかったので、
+       動かして選べる道具を作り、そこで出た1行をそのまま貼った。
+       ⚠️ 次に向きを変えるときも、言葉で詰めずに site-v4/_tune.html を開いてもらう。
+          そのほうが速いし、決まった値がそのままCSSになる。
+
+       ⚠️ 一度 46deg / 1.55倍（遠近800px）まで振ったが「倒しすぎ・少し大きすぎ」で戻した
+       （2026-09-08 社長）。そのときの実測を残しておく:
+         46deg 1.55 rz6 ry-8 … FV面 818x195 ／ 右の余白 54px ／ WFの見出しが見えるのは 55%
+         32deg 1.24 rz6 ry-8 … FV面 653x222 ／ 右の余白 179px ／ WFの見出しが見えるのは 88%
+         32deg 1.14 rz0 ry-30 … FV面 567x256 ／ 右の余白 172px ／ WFの見出しが見えるのは 92%
+         27deg 1.22 rz0 ry0   … FV面 652x198 ／ 右の余白 204px ／ WFの見出しが見えるのは 86%
+         29deg 1.45 rz4 ry-29 … ← いまの値（社長がつまみで決めた）
+       倒すほど面は横に伸びて縦に潰れ、上の面が下の面を食う。**WFの見出しが読めるかが上限の目安**。
+       ⚠️ 引き出し線8本の先が面に乗っているのは実測で確認済み。角度を触ったら測り直す。 */
+    .bp-board { perspective: 900px }
+}
+
+/* ============================================================
+   03 融合 — 紙から文字がはみ出るのを直す（2026-09-08）
+
+   🔴 原因: 紙の幅が clamp(148px,16vw,280px) の固定で、中の行は white-space:nowrap。
+      いちばん長い「でも、軽くしたくない。」は11字 × 20.88px ＝ 230px あるのに、
+      紙の内側は 230 − 余白29×2 ＝ 172px しかなく、**左右に29pxずつ溢れていた**。
+      赤い下線が文字と一緒に伸びるので、はみ出しがはっきり見えていた。
+
+   直し方: 幅を「中身なり（max-content）」にして、**下限だけ今までの値に留める**。
+      短い紙（うちの魅力って／動画？ SNS？／WIREFRAME / 03）は下限に当たるので今までどおり。
+      長い紙だけが必要なぶん広がる。字を小さくして解く手もあるが、
+      この紙は手書きのメモの見立てなので、**字の大きさを揃えるほうを優先**した。
+
+   ⚠️ 写真の紙は中身が絶対配置の img なので max-content が潰れる。除いてある。
+   ⚠️ 900px以下は別の指定（width:138px）が効く幅なので、そこには入れない。
+   ============================================================ */
+@media (min-width: 901px) {
+    .process-paper:not(.process-paper-photo) {
+        width: max-content;
+        min-width: clamp(148px, 16vw, 280px);
+        max-width: min(88vw, 420px)
+    }
+}
+
+/* ============================================================
+   05 図面 — CT/05 と DATA/08 を作り込む（2026-09-08）
+
+   狙い: この2枚は「読ませる」ためではなく、**緻密に考えて作った気配**を出す面。
+   細かい字・実物のコード・複数のグラフを敷き詰めて、密度そのものを見せる。
+
+   🔴 出す数字は**このページに実在するものだけ**。
+      07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
+      05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
+      コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
+      ⚠️ motion.4098324a.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+         ここに数字を足すときも同じ線を守ること。
+   ============================================================ */
+
+/* ── CT / 05 ───────────────────────────────────────────── */
+/* 4列に増やしたぶん1列目が痩せて「採用サイトの、」が4行に折れた。
+   列の配分を戻し、見出しも一段落として2行に収める（実測で 15.84px → 12.6px） */
+.bp-content-map { grid-template-columns: 1.32fr .72fr .78fr 1.18fr; gap: 8px }
+.bp-content-map strong { margin-top: 9px; font-size: clamp(9px, .86vw, 15px) }
+
+.bp-ct-spec { display: flex; flex-direction: column; min-width: 0 }
+
+.bp-ct-code {
+    flex: 1;
+    margin: 8px 0 0;
+    overflow: hidden;
+    color: #f7f4ee8f;
+    font: 400 clamp(4.2px, .33vw, 6.2px)/1.55 ui-monospace, Menlo, Consolas, monospace;
+    white-space: pre;
+    letter-spacing: .01em
+}
+.bp-ct-code b { color: var(--bp-coral); font-weight: 700 }
+.bp-ct-code em { color: var(--bp-paper); font-style: normal }
+
+.bp-ct-facts {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 8px;
+    margin: 8px 0 0;
+    padding: 7px 0 0;
+    border-top: 1px solid #f7f4ee29;
+    list-style: none;
+    display: grid
+}
+.bp-ct-facts li { align-items: baseline; gap: 4px; display: flex }
+.bp-ct-facts b { color: var(--bp-paper); font: 700 clamp(8px, .62vw, 11px)/1 Arial, sans-serif }
+.bp-ct-facts span { color: #f7f4ee8c; letter-spacing: .08em; font: 700 4.2px/1 Arial, sans-serif }
+
+/* ── DATA / 08 ─────────────────────────────────────────── */
+/* 🔴 中身を増やしたので面が足りない。実測: 中身123px に対し器は 107px しかなかった。
+   面を 15.8% → 20.5% に伸ばし、それでも溢れたぶんは切る（切らないと下の面に字が散る）。 */
+.bp-kpi { overflow: hidden }
+/* ⚠️ 1920x1080 で下に46px、1600x900 で27px はみ出していた（1440x900 では25px余っていて気づけない）。
+   面を 73.5% → 67% へ上げる。**幅と高さの組み合わせを変えて測ること** */
+@media (min-width: 1001px) { .bp-kpi { height: 20.5%; top: 67% } }
+.bp-score svg { width: min(52px, 3.6vw) }
+.bp-score strong { top: 30% }
+/* 「THIS PAGE PROGRESS」がリングに27px重なっていた。絶対配置をやめて、リングの下の行へ流す */
+.bp-score small { position: static; margin-top: 9px }
+.bp-kpi-body { grid-template-columns: 1fr 1.15fr .62fr; gap: 10px }
+
+.bp-kpi-col { display: flex; flex-direction: column; min-width: 0 }
+.bp-kpi-col--side { justify-content: space-between; align-items: center }
+
+.bp-kpi-cap {
+    color: #f7f4ee8c;
+    letter-spacing: .12em;
+    margin: 0 0 6px;
+    font: 700 4.4px/1 Arial, sans-serif
+}
+.bp-kpi-cap b { color: var(--bp-coral) }
+
+.bp-kpi-funnel { flex: none }
+
+/* 走り続けるログ。中身は**このページの実際の状態**の書式に寄せてある */
+.bp-kpi-log {
+    flex: 1;
+    min-height: 0;
+    margin-top: 7px;
+    padding-top: 6px;
+    border-top: 1px solid #f7f4ee1f;
+    overflow: hidden
+}
+.bp-kpi-log i {
+    animation: bpLogRoll 11s steps(6) infinite;
+    font-style: normal;
+    display: block
+}
+.bp-kpi-log span {
+    color: #f7f4ee6b;
+    white-space: nowrap;
+    font: 400 4.1px/1.9 ui-monospace, Menlo, monospace;
+    display: block
+}
+@keyframes bpLogRoll { to { transform: translateY(-100%) } }
+
+/* 節ごとの到達。棒はスクロールに連れて立ち上がる（--bp-kpi 0→1） */
+.bp-kpi-bars {
+    grid-template-columns: repeat(7, 1fr);
+    align-items: end;
+    gap: 3px;
+    height: 26px;
+    margin-bottom: 6px;
+    display: grid
+}
+.bp-kpi-bars span { grid-template-rows: 1fr auto; height: 100%; display: grid }
+.bp-kpi-bars i {
+    background: #f7f4eea3;
+    align-self: end;
+    height: var(--v);
+    transform: scaleY(var(--bp-kpi));
+    transform-origin: 50% 100%;
+    display: block
+}
+.bp-kpi-bars span:nth-child(5) i { background: var(--bp-coral) }
+.bp-kpi-bars em {
+    color: #f7f4ee6b;
+    text-align: center;
+    margin-top: 2px;
+    font: 700 3.8px/1 Arial, sans-serif;
+    font-style: normal
+}
+
+.bp-kpi-axis {
+    justify-content: space-between;
+    margin: 3px 0 0;
+    display: flex
+}
+.bp-kpi-axis span { color: #f7f4ee52; font: 700 3.8px/1 Arial, sans-serif }
+
+/* 2本目の折れ線。1本目より薄くして、追っている線が複数あることだけを見せる */
+.bp-chart-line2 {
+    fill: none;
+    stroke: #f7f4ee6b;
+    stroke-width: 1px;
+    stroke-dasharray: 1;
+    stroke-dashoffset: var(--bp-chart-offset)
+}
+
+.bp-kpi-facts {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 7px;
+    width: 100%;
+    margin: 0;
+    display: grid
+}
+.bp-kpi-facts div { justify-content: space-between; align-items: baseline; gap: 3px; display: flex }
+.bp-kpi-facts dt { color: #f7f4ee7a; letter-spacing: .06em; font: 700 3.8px/1 Arial, sans-serif }
+.bp-kpi-facts dd { color: var(--bp-paper); margin: 0; font: 700 6px/1 Arial, sans-serif }
+
+@media (prefers-reduced-motion: reduce) {
+    .bp-kpi-log i { animation: none }
+}
+
+/* 狭い画面では図面ごと畳んでいるので、ここは触らない */
+@media (max-width: 900px) {
+    .bp-content-map { grid-template-columns: 1fr }
+    .bp-ct-spec, .bp-kpi-log, .bp-kpi-bars, .bp-kpi-axis, .bp-kpi-facts { display: none }
+}
+
+/* ============================================================
+   ショールームの「実績」表示（2026-09-08）
+   46 フリコネ／47 ベビレンタ は実在の受託案件。両社から掲載承認あり（かずさん Slack 2026-09-08）。
+   表現サンプルと**見た目で区別する**ために、タイルに小さな札、ドロワーに社名と制作時期を出す。
+   数字は SR_BASE の client にだけ持たせ、それ以外の作品には出ない。
+   ============================================================ */
+.works-tile .works-badge {
+    color: var(--coral, #ff4d4f);
+    letter-spacing: .16em;
+    margin-bottom: 4px;
+    font: 700 7px/1 Arial, sans-serif;
+    font-style: normal;
+    display: block
+}
+/* 帯の中でも見つかるように、実績のタイルだけ縁を1本足す */
+.works-tile[data-client="true"] { box-shadow: inset 0 0 0 1.5px var(--coral, #ff4d4f) }
+
+.works-drawer-client {
+    color: #111111d9;
+    letter-spacing: .04em;
+    margin: 4px 0 0;
+    font: 700 clamp(10px, .78vw, 12px)/1.6 Arial, sans-serif
+}
+
+/* ============================================================
+   ビューアの枠を「ノートパソコンの画面」にする（2026-09-08）
+
+   🔴 それまで枠は空いた幅いっぱい（1440px画面で1132px）で、中の実サイトは
+      1130px幅として組まれていた。ノートパソコン（1440px）より狭いので、
+      チップが折れたり見出しの改行位置がずれたりして「崩れて」見えた（社長の指摘）。
+
+   直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
+      中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
+      縮小率は motion.4098324a.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+   右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
+   ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
+   ============================================================ */
+/* ⚠️ 700px以下（スマホ）には当てない。390px幅で 1440 を縮めると 0.27倍の豆画面になる。
+   スマホの枠は別の宿題（TODO「SPのショールームで実サイトの枠が152pxしかない」）。 */
+@media (min-width: 701px) {
+.works-viewer .works-site-frame[data-live="true"] {
+    flex: none;
+    aspect-ratio: 16 / 10;
+    /* 幅いっぱい。ただし高さが足りない大画面では、縦に収まる幅まで縮める
+       （150px ≒ 見出し行＋余白＋注記。1440x900 の実測から） */
+    width: min(100%, calc((100vh - 150px) * 1.6));
+    height: auto;
+    margin-inline: auto
+}
+.works-viewer .works-site-frame[data-live="true"] iframe {
+    width: 1440px;
+    height: 900px;
+    transform: scale(var(--sf, 1));
+    transform-origin: 0 0
+}
+}
+
+/* ============================================================
+   スマホの直し（2026-09-08 社長の実機確認・6点）
+   実機（iPhone）で見た指摘。ヘッドレスの390pxでは出ない差もあるので、
+   数値は「収まる」ではなく**余裕をもって収まる**側に振ってある。
+   ============================================================ */
+@media (max-width: 700px) {
+
+    /* ① 01 ABOUT: 見出しの下のリード文が詰まって見えるので、スマホでは出さない */
+    .reference-about-copy p { display: none }
+
+    /* 🔴 リードを出さないぶん、見出しと説明文のあいだが 104px も空いていた（2026-09-09 社長）。
+       半分の約53pxに詰める。節の高さも同じだけ縮めて、足元の余白を120pxに保つ。
+       ⚠️ **375px以上で見出しが4行**（下端287）のときの値。374px以下は見出しが5行に
+          折れて下端341になるので、この値だと重なる。下の 374px のクエリで戻している。 */
+    .reference-about-facts { top: 340px }
+    .reference-about { height: 573px }
+
+    /* ② 02 AFTER: 全部が左に積まれて縦に長い。
+          ・「プロが伴走」は1行に（<br> を殺す）
+          ・大きい数字の下の説明も、指定の改行をやめて成り行きに
+          ・段と段の間、上下の余白を詰めて高さを縮める */
+    .after-item strong br, .after-item p br { display: none }
+    .reference-after { padding: 52px 22px 28px }
+    .reference-after-head { margin-bottom: 22px }
+    .after-item { margin-bottom: 20px }
+    .after-item p { margin-top: 6px; line-height: 1.7 }
+    .reference-after-statement { margin-top: 4px }
+
+    /* ③ 03 まだ、うまく言えなくていい: 下のリード文が紙の写真に重なって読みづらい。出さない */
+    .process-copy-before p { display: none }
+
+    /* ④ 04 ビューア: 実サイトの枠が152pxしかなかった（iframe の既定の高さ）。
+          「スマホの中のスマホ」として、画面の高さいっぱい近くまで縦に伸ばす。
+          幅はそのまま（=スマホ幅）なので、中のサイトはスマホの組みで表示される */
+    .works-viewer .works-site-frame[data-live="true"] {
+        flex: none;
+        height: max(380px, calc(100svh - 290px));
+        overflow: hidden
+    }
+    .works-viewer .works-site-frame[data-live="true"] iframe { width: 100%; height: 100%; transform: none }
+
+    /* ⑤ 05 図面: 一番上の面（FV）が右で見切れる。
+          元は板を右下を軸に縮めていて（origin 100% 100%・right:-37vw）、軸が画面の外にあるため
+          縮めても右端が引っ込まなかった。左下を軸にして、板を左から置き直す。
+          FVの右端は画面幅の 78% あたりに来る（375/390/430 で実測） */
+    .bp-board { left: -10vw; right: auto; transform-origin: 0 100%; transform: scale(.6) }
+
+    /* ⑥ 05 図面の注釈は、**1000px以下ぜんぶ**を同じ扱いにした（2026-09-09）。
+          → このファイルの末尾「05 注釈は1000px以下ぜんぶ畳む」へ移した。ここには置かない */
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   02 採用サイトのハードルを、ひとつずつなくす。（2026-09-09 全面刷新）
+
+   これまで「BEFORE（.reference-problems）」と「AFTER（.reference-after）」の
+   2つの節に分かれていたものを、**1つのピン留めした節**に畳んだ。
+   社長のリファレンス画像は、その最終フレーム。
+
+   ── この節が伝えること ─────────────────────────────────
+   最初に課題を主役として読ませ、スクロールに合わせて課題を背景へ沈め、
+   その**手前に**解決策を立ち上げる。主役が入れ替わったことを、
+   説明文ではなく **明度・大きさ・前後関係・出てくる順番** だけで伝える。
+   🔴 「BEFORE」「AFTER」の文字は使わない。ラベルで説明したら負け。
+
+   ── 色の決まり（守る）─────────────────────────────────
+   ・地は墨 #111317（サイトの墨。25箇所で使っている値）
+   ・紙白 #fff
+   ・コーラル #ff4d4f は **細線・短い斜線・句点・Tilto° だけ**。
+     見出しにも数字にも使わない（赤い巨大数字は禁止）
+   ・沈んだあとの課題は、画面上で #303236 前後に見えること
+     🔴 色と不透明度の**両方**を動かすので、色だけを #303236 にすると
+        不透明度をかけた後に真っ黒になる。色は #8f9297 まで、
+        不透明度は .26 まで動かして、掛け合わせで #323438 に着地させている
+        （地 #111317 との合成を実測して決めた値。どちらか片方を変えたら計算し直す）
+
+   ── 寸法の単位 ────────────────────────────────────
+   `--hu-u`。`min(1vw, 1.75svh)` で**幅と高さの小さいほう**に付いていく。
+   ⚠️ 素の vw だけで組むと、背の低い画面（ノートPC）で文字が縦にはみ出す。
+   位置は % で置く（舞台が 100svh なので、高さに追従させる必要がある）。
+
+   ── 動き ────────────────────────────────────────
+   節を 200vh にして、中の舞台を 100svh で sticky。
+   スクロール量を 0〜1 の progress にして motion.4098324a.js が `--hu-*` を書く（scrub）。
+   🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
+   ────────────────────────────────────────────────── */
+.reference-hurdles {
+    /* 🔴 親(main)はグリッド。gpt-sections.4098324a.css は節名を列挙して stretch しているが、
+       新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
+    justify-self: stretch;
+    width: auto;
+
+    --hu-u: min(1vw, 1.75svh);
+    --hu-coral: #ff4d4f;
+    --hu-paper: #fff;
+    --hu-sumi: #111317;
+
+    /* 動きの既定値＝着地後 */
+    --hu-e1: 1;
+    --hu-e2: 1;
+    --hu-e3: 1;
+    --hu-sink: 1;
+    --hu-line: 1;
+    --hu-brand: 1;
+    --hu-1: 1;
+    --hu-2: 1;
+    --hu-3: 1;
+    --hu-note-1: 1;
+    --hu-note-2: 1;
+    --hu-note-3: 1;
+    --hu-closing: 1;
+
+    background: var(--hu-sumi);
+    height: 200vh;
+    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
+    font-feature-settings: "palt";
+    letter-spacing: .025em;
+    position: relative
+}
+
+.reference-hurdles * { box-sizing: border-box }
+
+/* 舞台。ここがピン留めされる。
+   ⚠️ 地の色は節と舞台の**両方**に置く。舞台だけだと、ピンが外れた
+      下端の 100vh が地なしになって次の白が透ける */
+.hu-stage {
+    background: var(--hu-sumi);
+    height: 100svh;
+    min-height: 560px;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    isolation: isolate
+}
+
+/* ── 見出し。小さく、左上に置くだけ ── */
+.hu-head {
+    z-index: 6;
+    color: var(--hu-paper);
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(14px, calc(var(--hu-u) * 1.55), 24px);
+    font-weight: 500;
+    letter-spacing: .02em;
+    line-height: 1.5;
+    /* 🔴 中央そろえ（2026-09-09 社長）。左端に置くと、すぐ下の「高い。」の
+       字の頭とくっついて読みにくかった（実測で7〜21pxしか離れていない）。
+       中央へ寄せると、左に立つ「高い。」から横に逃げられる。
+       ⚠️ 左右の padding は、狭いPC幅で端に触らないための逃げ。消さない */
+    text-align: center;
+    padding: 0 3.8%;
+    position: absolute;
+    top: 3.2%;
+    left: 0;
+    right: 0
+}
+
+.hu-head i {
+    color: var(--hu-coral);
+    font-style: normal
+}
+
+/* ── 課題。最初は紙白の主役、やがて背景の残像になる ──────────────
+   🔴 色は rgb() の各成分を calc で動かしている。--hu-sink 0→1 で
+      (255,255,255) → (143,146,151)。不透明度は 1 → .26。
+      掛け合わせで、地 #111317 の上に #323438 として見える。 */
+.hu-issue {
+    z-index: 2;
+    color: rgb(calc(255 - 112 * var(--hu-sink))
+               calc(255 - 109 * var(--hu-sink))
+               calc(255 - 104 * var(--hu-sink)));
+    /* --hu-e = ひとつずつ出てくるぶん ／ --hu-sink = 背景へ沈むぶん。掛け合わせる */
+    opacity: calc(var(--hu-e) * (1 - var(--hu-sink) * .74));
+    margin: 0;
+    position: absolute
+}
+
+.hu-issue strong {
+    letter-spacing: -.11em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .84;
+    display: block;
+    transform-origin: 0 50%;
+    /* 出てくるときの持ち上がり ＋ 沈むときの小さな移動。派手にしない */
+    translate: 0 calc(var(--hu-sink) * -8px + (1 - var(--hu-e)) * 20px);
+    scale: calc(1 - var(--hu-sink) * .02)
+}
+
+/* 課題の補足。小さいので、沈むとほぼ見えなくなる。それでよい */
+/* 🔴 補足は沈んだら**消える**まで落とす。大見出しと違って残像として効かず、
+   同じあたりに立つ解決策の補足と重なって読めなくなるだけだった（実測で確認） */
+/* ⚠️ **直接の子だけ**に効かせる。`.hu-issue span` と書くと、
+   `strong` の中に入れた列の span（つくって／終わり。）まで拾って、
+   巨大文字が 14.7px に縮む（2026-09-09 実際にそうなった） */
+.hu-issue > span {
+    opacity: calc(1 - var(--hu-sink) * .96);
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, calc(var(--hu-u) * 1.02), 15px);
+    font-weight: 500;
+    line-height: 1.75;
+    display: block;
+    margin-top: calc(var(--hu-u) * 1.1)
+}
+
+/* 高い。 — 左端で断ち切る */
+/* 🔴 器は見出しと同じ左端（3.8%）に置き、**巨大文字だけ**を負のマージンで左へ食み出させる。
+   器ごと左へ出すと、下にぶら下がる補足文まで一緒に画面外へ切れる
+   （2026-09-09 社長の画面で「制作費が大きく」の「制」「踏」が切れていた） */
+.hu-issue-cost { --hu-e: var(--hu-e1); top: 8%; left: 3.8% }
+.hu-issue-cost strong { font-size: calc(var(--hu-u) * 14.6); margin-left: calc(var(--hu-u) * -5.6) }
+
+/* 遅い。 — 中央。コーラルの細線の手前まで */
+.hu-issue-slow { --hu-e: var(--hu-e2); top: 15.5%; left: 35.2% }
+.hu-issue-slow strong { font-size: calc(var(--hu-u) * 13.2) }
+.hu-issue-slow span { margin-left: calc(var(--hu-u) * .4) }
+
+/* つくって終わり。 — 縦組みで右端を断ち切る */
+/* 🔴 右端で断ち切りすぎていた（2026-09-09 社長「あまりにも見えなさすぎる」）。
+   端から離して、ほぼ全部が読める位置に寄せた */
+/* 🔴 右端に寄せすぎて「あまりにも右端」と言われたので、2026-09-09 にさらに 3.4% 左へ。
+   ⚠️ 白い縦組み（.hu-answer-grow）と**同じ量**だけ動かすこと。
+      片方だけ動かすと、課題の縦組みと解決の縦組みの間隔が変わって重なる */
+.hu-issue-end { --hu-e: var(--hu-e3); top: 1.5%; right: 6% }
+
+.hu-issue-end strong {
+    letter-spacing: -.07em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--hu-u) * 5.4);
+    line-height: 1.04;
+    /* 8文字ぶんの高さと、段差ぶんを足した列の幅 */
+    width: calc(var(--hu-u) * 7.4);
+    height: calc(var(--hu-u) * 41);
+    position: relative;
+    translate: calc(var(--hu-sink) * 8px + (1 - var(--hu-e3)) * 26px) 0
+}
+
+/* 🔴 「つくって」と「終わり。」は**列をずらす**（リファレンス画像の再現）。
+   読みは上から下へ続くが、後半だけ列が少し左にずれて段差になる。
+   ⚠️ 縦書きの素の block 積みでは、2つ目が**横に並んで**しまって「続き」に見えない。
+      だから2つとも絶対配置にして、下へ続けつつ左へ .62u ずらしている。
+   ⚠️ 送り幅は「字の大きさ × (1 + 字間)」。字間 -.07em なので1文字 5.022u。
+      4文字ぶん＝20.2u が段差の位置。**字の大きさか字間を変えたらここも計算し直す** */
+.hu-issue-end strong > span {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+.hu-issue-end strong > span + span {
+    top: calc(var(--hu-u) * 20.2);
+    right: calc(var(--hu-u) * 1.8)
+}
+
+/* ── 切り替えの合図。細いコーラル線と Tilto° ────────────────
+   線は上から下へ伸びる。transform-origin: top ＋ scaleY */
+/* ⚠️ 線の上端は、中央そろえにした見出しの**下**から始める。
+   6% だと 1440幅で見出しの文字（下端57px）に 3px 食い込んでいた（2026-09-09 実測） */
+.hu-switch {
+    z-index: 4;
+    position: absolute;
+    top: 8.2%;
+    bottom: 9%;
+    left: 49.8%
+}
+
+.hu-switch i {
+    background: var(--hu-coral);
+    transform-origin: 50% 0;
+    width: 1px;
+    display: block;
+    height: 100%;
+    scale: 1 var(--hu-line)
+}
+
+/* 🔴 Arial・コーラル・字間広め。大きな見出しにはしない。
+   これは主役ではなく、**主語が変わった合図**の札 */
+.hu-switch b {
+    color: var(--hu-coral);
+    letter-spacing: .22em;
+    white-space: nowrap;
+    font: 400 clamp(10px, calc(var(--hu-u) * 1.12), 16px)/1 Arial, sans-serif;
+    position: absolute;
+    top: 11%;
+    left: calc(var(--hu-u) * 1.2);
+    opacity: var(--hu-brand);
+    translate: 0 calc((1 - var(--hu-brand)) * 8px)
+}
+
+/* ⚠️ b に字間 .22em が付いているので、sup の前にも隙間が入って
+   「Tilto  °」と離れて見えた。sup 側で字間を戻し、少し引き寄せる */
+.hu-switch b sup {
+    vertical-align: top;
+    letter-spacing: 0;
+    margin-left: -.16em;
+    font-size: .86em
+}
+
+/* ── 解決策。課題の手前に立ち上がる ────────────────────────
+   🔴 下から立ち上がるのは clip-path ではなく **入れ物の overflow: hidden**。
+      clip-path はSafariで transform と合わせると描画が飛ぶことがある */
+.hu-answer {
+    z-index: 7;
+    color: var(--hu-paper);
+    margin: 0;
+    position: absolute
+}
+
+.hu-answer strong {
+    letter-spacing: -.05em;
+    white-space: nowrap;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-weight: 500;
+    line-height: .92;
+    display: block;
+    overflow: hidden
+}
+
+.hu-answer strong > span {
+    display: block;
+    opacity: var(--hu-in);
+    translate: 0 calc((1 - var(--hu-in)) * 32px)
+}
+
+/* 「月額」「最短」は数字より小さく。同じ行に置く */
+.hu-answer em {
+    font-size: .42em;
+    font-style: normal;
+    letter-spacing: -.02em;
+    margin-right: .18em
+}
+
+/* 「円〜」 */
+.hu-answer u {
+    font-size: .52em;
+    text-decoration: none;
+    letter-spacing: -.04em
+}
+
+/* 補足。短い斜線と一緒に、静かに出す */
+.hu-answer small {
+    color: #ffffffd1;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(11px, calc(var(--hu-u) * 1.02), 15px);
+    font-weight: 500;
+    line-height: 1.75;
+    display: block;
+    position: absolute;
+    opacity: var(--hu-note);
+    translate: 0 calc((1 - var(--hu-note)) * 10px)
+}
+
+/* 短い斜線。コーラルを使ってよい数少ない場所 */
+.hu-answer i {
+    background: var(--hu-coral);
+    transform-origin: 0 50%;
+    height: 1px;
+    width: calc(var(--hu-u) * 3.4);
+    position: absolute;
+    rotate: -52deg;
+    scale: var(--hu-note) 1
+}
+
+/* 月額 27,000円〜 — 左。いちばん強い視線の入口 */
+.hu-answer-price {
+    --hu-in: var(--hu-1);
+    --hu-note: var(--hu-note-1);
+    top: 33%;
+    left: 3.2%
+}
+
+.hu-answer-price strong { font-size: calc(var(--hu-u) * 8.6) }
+.hu-answer-price small { top: calc(100% + var(--hu-u) * 1.4); left: calc(var(--hu-u) * 7.4) }
+.hu-answer-price i { top: calc(100% + var(--hu-u) * 2.2); left: calc(var(--hu-u) * 4.4) }
+
+/* 最短 1週間 — 中央。料金と横並びにせず、少し下へずらす */
+/* 🔴 左端は「1」の字がコーラルの縦線に噛まないところまで。
+   2026-09-09 実測（1440幅）: 縦線 x=717 に対して「1」の右端が 742 で 25px 噛んでいた。
+   2.4% ＝ 34px 左へ寄せて、8px の逃げを作っている。
+   ⚠️ 字の大きさ（8.6u）か縦線の位置（49.8%）を変えたら、噛み具合を測り直すこと */
+.hu-answer-speed {
+    --hu-in: var(--hu-2);
+    --hu-note: var(--hu-note-2);
+    top: 53%;
+    left: 36.8%
+}
+
+.hu-answer-speed strong { font-size: calc(var(--hu-u) * 8.6) }
+.hu-answer-speed small { top: calc(100% + var(--hu-u) * 1.4); left: calc(var(--hu-u) * 7.6) }
+.hu-answer-speed i { top: calc(100% + var(--hu-u) * 2.2); left: calc(var(--hu-u) * 4.6) }
+
+/* 公開後も、改善しつづける。 — 右。縦組みで、右端を断ち切る。
+   🔴 課題の縦組み（つくって終わり。）の**手前**に重ねる。これが
+      「課題が沈み、その手前に解決が立つ」の一番はっきり出る所 */
+/* 🔴 見出しを下げて、下の注記とのすき間を半分にした（2026-09-09 社長指摘）。
+   実測（1440幅）: 句点の下端 544 / 注記の上 640 ＝ すき間96px あった。
+   内訳は「箱の余り73px ＋ 注記の逃げ23px」。箱の高さを字数ぶん（35.4u）に詰めて
+   余りを無くし、見出しを 4.5%→9.9%（48px）下げて、すき間を48pxにしている。
+   ⚠️ 送り幅は「字の大きさ × (1 + 字間)」。4.7u × .93 = 4.371u ／ 8文字で 34.97u。
+      字の大きさか字間を変えたら、箱の高さも計算し直すこと */
+.hu-answer-grow {
+    --hu-in: var(--hu-3);
+    --hu-note: var(--hu-note-3);
+    top: 9.9%;
+    right: 16.9%
+}
+
+/* ⚠️ 27,000 より強くしない。3つ目の焦点であって、視線の入口ではない
+   （5.6u だと料金より目立って主役が入れ替わった。実測して 4.7u に下げた） */
+.hu-answer-grow strong {
+    letter-spacing: -.07em;
+    writing-mode: vertical-rl;
+    font-size: calc(var(--hu-u) * 4.7);
+    line-height: 1.1;
+    height: calc(var(--hu-u) * 35.4)
+}
+
+.hu-answer-grow strong > span { translate: calc((1 - var(--hu-in)) * 28px) 0 }
+
+/* 句点だけコーラル */
+.hu-answer-grow b {
+    color: var(--hu-coral);
+    font-weight: inherit
+}
+
+.hu-answer-grow small { top: calc(100% + var(--hu-u) * 3); right: 0; width: max-content; text-align: left }
+.hu-answer-grow i { top: calc(100% + var(--hu-u) * 3.8); right: calc(var(--hu-u) * 9.6) }
+
+/* ── 締め。左下に小さく ── */
+.hu-closing {
+    z-index: 8;
+    color: var(--hu-paper);
+    letter-spacing: .01em;
+    margin: 0;
+    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
+    font-size: clamp(19px, calc(var(--hu-u) * 2.45), 38px);
+    font-weight: 500;
+    line-height: 1.35;
+    position: absolute;
+    bottom: 6.5%;
+    left: 3.8%;
+    opacity: var(--hu-closing);
+    translate: 0 calc((1 - var(--hu-closing)) * 12px)
+}
+
+/* 🔴 幕は**行ごと**に掛ける。1つの .hl-line が折り返すと、幕は最初の断片にしか
+   掛からない（絶対配置の親が最初のインライン箱になるため）。
+   なので「つくって終わりにしない。」と「育てる採用サイト。」を別の .hl-line にして、
+   PCでは同じ行に並べ、SPだけ <br class="sp-only"> で分ける */
+.hu-closing .hl-line { display: inline-block }
+
+/* 句点だけコーラル。⚠️ 幕の <i> も同じ要素名なので、色ではなく
+   「幕でないもの」に効かせる（幕は background で描くので実害は無いが、明示しておく） */
+.hu-closing i:not(.hl-band) {
+    color: var(--hu-coral);
+    font-style: normal
+}
+
+/* ── SP: 長いピン留めはしない。ふつうの縦スクロールで成立させる ──────
+   課題は最初から沈んだ色。Tilto° と細線を挟んで、解決策を紙白で縦に並べる */
+@media (max-width: 900px) {
+    .reference-hurdles {
+        --hu-u: min(3.1vw, 12px);
+        height: auto
+    }
+
+    .hu-stage {
+        height: auto;
+        min-height: 0;
+        padding: 84px 22px 52px;
+        position: static
+    }
+
+    .hu-head,
+    .hu-issue,
+    .hu-answer,
+    .hu-closing {
+        position: static;
+        inset: auto
+    }
+
+    /* SPは縦に流し込むので、他の要素と同じ左そろえに戻す（重なりも起きない） */
+    .hu-head {
+        text-align: left;
+        margin-bottom: 40px;
+        padding: 0;
+        font-size: clamp(15px, 4.4vw, 21px)
+    }
+
+    /* 🔴 沈む演出はSPでも残す（2026-09-09 社長「白くなってグレーになる演出は
+       スマホでも維持して」）。以前は最初から沈んだ色（--hu-sink: 1）で置いていたが、
+       それだと課題が主役だった瞬間が無く、ただ薄い字が並んでいるだけに見えていた。
+       ⚠️ --hu-sink は motion.4098324a.js が入れる。SPはピン留めしないので、
+          **最後の課題（つくって終わり。）が画面の上へ抜けるあいだ**を進み具合にしている。
+       ⚠️ JS無効・reduced-motion では既定の 1（沈んだ色）のまま。読めるので問題ない */
+    .hu-issue { margin-bottom: 26px }
+
+    /* ⚠️ 動きは切って**色だけ**変える。縦に積むSPでは、字が上下に動くと
+       隣の行とぶつかって落ち着かない */
+    .hu-issue strong {
+        font-size: 17vw;
+        translate: none;
+        scale: none
+    }
+
+    /* ⚠️ PCで「高い。」を左へ食み出させている負のマージンを、SPでは戻す。
+       戻さないと画面の左端で「高」が切れる（2026-09-09 実測） */
+    .hu-issue-cost strong { margin-left: -.06em }
+
+    /* 縦組みは幅を食うので横組みに戻す。
+       ⚠️ PCで2列の段差を作るために span を絶対配置にしてあるので、
+          ここで**必ず流し込みに戻す**。戻さないと2つの列が重なって読めない */
+    .hu-issue-end strong {
+        writing-mode: horizontal-tb;
+        font-size: 13vw;
+        width: auto;
+        height: auto;
+        position: static;
+        translate: none
+    }
+
+    .hu-issue-end strong > span,
+    .hu-issue-end strong > span + span {
+        margin: 0;
+        display: inline;
+        position: static;
+        inset: auto
+    }
+
+    .hu-issue > span { display: none }
+
+    /* 合図。線は横に1本引く */
+    .hu-switch {
+        align-items: center;
+        gap: 14px;
+        margin: 30px 0 34px;
+        display: flex;
+        position: static
+    }
+
+    .hu-switch b {
+        position: static;
+        opacity: 1;
+        translate: none
+    }
+
+    .hu-switch i {
+        flex: 1;
+        height: 1px;
+        width: auto;
+        scale: none
+    }
+
+    .hu-answer {
+        border-top: 1px solid #ffffff1f;
+        margin-bottom: 30px;
+        padding-top: 26px
+    }
+
+    .hu-answer strong { font-size: 13vw }
+    .hu-answer strong > span { translate: none; opacity: 1 }
+
+    /* 右の縦組みも横組みに。読みづらさを作らない */
+    .hu-answer-grow strong {
+        writing-mode: horizontal-tb;
+        height: auto;
+        font-size: 10.4vw;
+        line-height: 1.3
+    }
+
+    .hu-answer-grow strong > span { translate: none }
+
+    .hu-answer small {
+        margin-top: 14px;
+        position: static;
+        opacity: 1;
+        translate: none;
+        width: auto;
+        text-align: left
+    }
+
+    .hu-answer i { display: none }
+
+    .hu-closing {
+        margin-top: 8px;
+        font-size: clamp(21px, 6.6vw, 30px)
+    }
+}
+
+/* 🔴 reduced-motion のフォールバック。
+   ここは**この節の高さ指定より後ろ**に置くこと。前に置くと、
+   メディアクエリは詳細度を上げないので後ろの無条件指定に負ける
+   （2026-09-01に03で実際に起きた事故。上の注記を読む） */
+@media (prefers-reduced-motion: reduce) {
+    .reference-hurdles { height: auto }
+
+    .hu-stage {
+        height: auto;
+        min-height: 100svh;
+        position: static
+    }
+}
+
+/* ── 01 いちばん狭い幅では見出しが5行に折れる（2026-09-09 実測）────────────
+   **363px以下**で見出しが1行増えて、下端が 287→341 になる（364pxまでは4行。実測で境目を確認）。
+   700px以下用に詰めた説明文の位置（top:340）だと**重なる**ので、ここだけ戻す。
+   戻した状態でも見出しとの間は53pxで、詰めたあとの幅と同じ間合いになっている。 */
+@media (max-width: 363px) {
+    .reference-about-facts { top: 394px }
+    .reference-about { height: 625px }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   05 注釈は1000px以下ぜんぶ畳む（2026-09-09 社長「右足と左足が切れているのが気になる」）
+
+   🔴 これまで畳んでいたのは **700px以下だけ**だった。
+      701〜1000px（タブレット）では、注釈が**パソコン用の座標のまま**出ていて、
+      右の4つ（INFORMATION ARCHITECTURE / USER FLOW / VISUAL / MEASURE / IMPROVE）が
+      画面の右へ 27〜34px はみ出して文字が切れていた（789px で実測）。
+   ⚠️ 傾けて重ねるパソコンの組みは **1001px以上だけ**。
+      それ未満は同じ「畳んだ札」で扱いをそろえる。
+   ────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+    /* 注釈8つは畳むが、「一つひとつ見ている」ことは分かるように、「一つひとつ見ている」ことは分かるように、
+       見出し（RESEARCH…）だけを小さく出し、図面へ向く薄い線を添える。
+       ⚠️ パソコン用の引き出し線（SVG）は面の位置がパソコンの座標なので、
+          畳んだ札とは別の場所を指してしまう。SVGは使わず、札に短い線を持たせる */
+    .bp-note {
+        display: block;
+        width: auto;
+        margin: 0;
+        padding: 3px 6px;
+        background: #0b0b0bcc;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        transform: none;
+        opacity: 1
+    }
+    .bp-note p { display: none }
+    .bp-note b {
+        white-space: nowrap;
+        letter-spacing: .1em;
+        font-size: 6.5px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px
+    }
+    .bp-note b::after {
+        content: '';
+        width: 22px;
+        height: 1px;
+        background: #f7f4ee;
+        opacity: .38;
+        flex: none
+    }
+    /* 右側の札は線を左へ */
+    .bp-note-flow b, .bp-note-visual b, .bp-note-measure b, .bp-note-improve b { flex-direction: row-reverse }
+    /* 位置は板の左右の縁に沿って上から並べる（板は画面より広いので、画面内に入る値） */
+    /* ⚠️ 板は layout 上 165vw 幅で、それを .6 に縮めて見せている。left/right の % は
+          縮める前の幅に対して効くので、右の札は left を 100% 超えにして translateX で戻す */
+    /* ⚠️ %は板の幅に効く。板は幅も倍率も画面幅で変わるので、**両端に余裕を持たせた値**にする。
+       13% / 104% だと 700px で左が11px、701〜1000px で右が27〜36px はみ出していた。
+       96%でもまだ3〜4px 残ったので 94%（実測で追い込んだ値）。 */
+    .bp-note-research     { left: 20%; right: auto; top: 10% }
+    .bp-note-language     { left: 20%; right: auto; top: 26% }
+    .bp-note-structure    { left: 20%; right: auto; top: 42% }
+    .bp-note-architecture { left: 20%; right: auto; top: 58% }
+    .bp-note-flow         { left: 94%; right: auto; top: 18%; transform: translateX(-100%) }
+    .bp-note-visual       { left: 94%; right: auto; top: 34%; transform: translateX(-100%) }
+    .bp-note-measure      { left: 94%; right: auto; top: 50%; transform: translateX(-100%) }
+    .bp-note-improve      { left: 94%; right: auto; top: 66%; transform: translateX(-100%) }
+    .bp-leaders { display: none }
+
+    /* 書体・色の見本（Aa 游明朝／COLOR）は板の左端にある。
+       🔴 1000px以下では**リード文「デザインの前に、設計がある。」に 180px 重なる**（実測）。
+          縮んでいて読める大きさでもないので、この帯では出さない（削ぎ落とす側に倒す）。
+       ⚠️ 1001px以上（傾けて重ねる組み）では出す。あちらは重ならない */
+    .bp-design-system { display: none }
+}
+
+/* 🔴 901〜1000px だけ、板が右へ 12vw も出ていて面（レイヤー）の右が切れていた。
+   ≤900px には `right: -4vw` の直しが入っていたが、この帯だけ素の値のままだった。
+   実測（1000px）: いちばん下の面の右端が 1031px で、画面より31px 外。
+   ⚠️ 700px以下は `left: -10vw / right: auto` で置いているので、**この帯だけ**に効かせる。 */
+@media (min-width: 701px) and (max-width: 1000px) {
+    .bp-board { right: -4vw }
+}
+
+/* ── site-web（採用サイトに限らない版・2026-09-10 カズさんのテキスト修正） ──
+   ① 紙2（「何を一番伝えるべきだろう？」「このサービスの強みってなんだろう？」）は
+      1行が長いので、リスト紙と同じ小さい字にする（大きい字だと紙からはみ出る）
+   ② 05の思想文は2段落になったので、段落の間を1行ぶん空ける */
+.process-paper-small b {
+    font-size: clamp(12px, 1vw, 17px)
+}
+
+.bp-principle p + p {
+    margin-top: 1em
+}
+
+/* ③ 紙6は3行・1行13字になり、大きい字のままだと右の写真（INTERVIEW / 02）の下に隠れた。
+      字を一段小さくする（位置も 62%→60% に寄せた・マークアップ側） */
+.process-paper-mid b {
+    font-size: clamp(13px, 1.2vw, 21px)
+}
+
+/* ④ 05の見出しの2行目が「採用は動かない。」8字 →「サイトは機能しない。」10字になり、
+      元の大きさ（8字が x35〜443 に収まる値）では「しな／い。」で折れた。10字が同じ幅に収まる大きさへ */
+.bp-copy h2 {
+    font-size: clamp(36px, 2.8vw, 46px)
+}
+
+@media (max-width: 900px) {
+    .bp-copy h2 {
+        font-size: clamp(26px, 8.2vw, 40px)
+    }
+}
+
+/* ⑤ 900px以下は紙の幅が138px固定（上の max-content は901px以上だけ）。
+      紙1「構成・デザイン・写真？」と紙2の長い問い2つが、1行のままだと紙の外へはみ出して切れた。
+      この2枚だけ折り返しを許して、紙の中で改行させる */
+@media (max-width: 900px) {
+    #fusion .process-paper[data-paper="1"] b span,
+    #fusion .process-paper-small b span {
+        white-space: normal
+    }
+
+    #fusion .process-paper-small b {
+        font-size: 11px;
+        line-height: 1.6
+    }
+
+    #fusion .process-paper-small b span + span {
+        margin-top: 4px
+    }
+}
