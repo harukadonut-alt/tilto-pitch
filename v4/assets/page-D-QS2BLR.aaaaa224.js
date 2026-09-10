@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.6a464381.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.6a464381.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.aaaaa224.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.aaaaa224.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,239 +899,239 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.6a464381.js / rolldown-runtime-S-ySWqyJ.6a464381.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.aaaaa224.js / rolldown-runtime-S-ySWqyJ.aaaaa224.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
    ⚠️ index.html 側のSSRは、このコンポーネントの初期描画（絞り込み=ALL・未選択）を
       そのまま貼っている。**片方だけ直すとhydrationが壊れる**ので必ず両方直すこと。
    ============================================================ */
-/* 絞り込みの業種。⚠️ **まだ表現サンプルが1点も無い業種**（製造・小売／士業・コンサル／教育）も
-   ここに入れている。押しても何も残らないので、その場合は「準備中」を出す（下の hasMatch）。 */
+/* 絞り込みの業種。2026-09-10 時点で9業種すべてに作品がある（少ない業種: 士業・コンサル3／教育2）。
+   万一0件の業種ができたときは「準備中」を出す（下の hasMatch）。 */
 var SR_FILTERS = [`ALL`, `IT・テック`, `建設・不動産`, `製造・小売`, `物流・運輸`, `医療・福祉`, `飲食・サービス`, `エンタメ`, `士業・コンサル`, `教育`];
 
-/* うちが実際に作った35枚（images/works/）。業種・見出し・絵は1対1で対応している。
-   🔴 これは**表現サンプル**であって、実在企業の採用サイトではない。
+/* うちが実際に作った表現サンプル44枚と、制作実績2本（images/works/）。業種・見出し・絵は1対1で対応している。
+   🔴 表現サンプルは、実在企業の採用サイトではない。
       「実例」「実績」と書かないこと（旧ショールームからの約束）。
-   ⚠️ 並び順を変えるとレーンへの配り方（k % 3）が変わり、業種の散り方が崩れる。
-      いまは7業種を順ぐりに並べて、3レーンに業種がばらけるようにしてある。 */
+
+   🔴 2026-09-10 組み直し（社長「★を付けたFVを足して、多すぎる業種のFVは外していい」）
+      ・画像ラボで★が付いたFV10枚を足した（48〜57）。製造・小売 2→6、士業・コンサル 1→3、教育 1→2
+      ・1業種6枚までにして、医療・福祉（13→6）・IT（8→6）・建設（7→6）・物流（7→6）から11枚外した
+        外したもの: 02・04・08・11・12・15・18・19・25・31・32
+        選び方: 同じ業種の中で絵が被るもの（例: 18は36と同じ病室の窓辺）と、
+                小さいタイルだと白く見えるだけのもの（15・25）を先に外した
+        ⚠️ 絵は images/works/ に残してある。戻すときは git の 2026-09-10 より前の SR_BASE から行を戻す
+      ・並びは k % 4 でレーンが決まる。**手前の2レーン（大きいタイル）に実サイト・実績・★を、
+        奥の2レーンにFVだけの作品を**置き、同じレーンで同じ業種が続かないように編んである
+      ⚠️ 作品を足すとき、末尾に足すとレーンが偏る。並びを決め直したら
+         resize-showroom.py（絵の大きさ）→ ssr-showroom.py（index.html の初期表示）の順に流す */
+
+/* ── 作品ごとの注意（2026-09-10 に並べ替えたので、ここにまとめた）── */
+/* ── 36〜38: 実際に1枚のサイトとして組んだ3本（2026-09-04・社長指示）─────
+   他の35点は「FVの絵」だが、この3本は**動くサイトを作ってからFVを撮った**もの。
+   ⚠️ それでも**架空の会社**であることは同じ。「実例」「実績」と書かないこと。 */
+/* ── 39〜43: 公開URLから取り込んだ5本（2026-09-04）──────────────────
+   ファイルで受け取れなかったので、社長の公開サイトを直接撮っている。
+   ⚠️ これも**架空の会社**。「実例」「実績」と書かないこと。 */
+/* 44: 士業・コンサル（2026-09-05）。**これで9業種すべてが埋まった**。
+   押しても0件になる業種は無くなった。 */
+/* 45: 建設・不動産の実サイト（2026-09-05 公開URLをもらった）。
+   ⚠️ これで「画像だけ」だった建設(23)の役目は終わり。23のタイルは残すが SR_INSIDE から外した */
+/* 🔴 46・47 は**実在の受託案件**。2026-09-08 にかずさん経由で両社から掲載承認（Slack）。
+   client を持つ作品だけ「CLIENT WORK」として社名と制作時期を出し、表現サンプルと区別する。
+   🔴 date は**年.月まで**で揃える（2026-09-09 社長）。日まで書けるのはフリコネだけで、
+      ベビレンタは先方FB待ちで納品日が未確定。粗い側に合わせないと粒度が揃わない。
+      「納品」「制作」の語も落とした。ベビレンタはまだ納品前で、語を残すと結局揃わないため。
+   🔴 社名に「様」は付けない。ここは宛名ではなく実績の掲載欄で、読み手は第三者。
+      同じ画面に並ぶ表現サンプルとの扱いの差が、敬意の差に見えるのも避ける。
+   ⚠️ client の無い作品に「実績」と書かない（SR_BASE 冒頭の約束はそのまま生きている） */
 var SR_BASE = [
-    { id: `01`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
-      title: `超える。`,
-      image: `./images/works/showroom-it-01.webp`,
-      alt: `透明なクリスタルと流体の3DグラフィックにHELLOの文字を重ねたIT企業の採用サイトFV` },
-    { id: `02`, industry: `建設・不動産`, world: `ENGINEERING`, tone: `paper`,
-      title: `まだ、ここにない景色を。`,
-      image: `./images/works/showroom-construction-01.webp`,
-      alt: `巨大な高架橋の下に立つ人と、100年後。の文字を重ねた建設企業の採用サイトFV` },
     { id: `03`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
       title: `未来のインフラを、支えるんだ。`,
       image: `./images/works/showroom-logistics-01.webp`,
       alt: `夜の高速道路を走るトラックと365/24/7の大きな数字を組んだ物流企業の採用サイトFV` },
-    { id: `04`, industry: `医療・福祉`, world: `CLINICAL`, tone: `coral`,
-      title: `本質を見抜き、価値をつくる。`,
-      image: `./images/works/showroom-medical-01.webp`,
-      alt: `37.0℃という体温の数字を大きく置き、看護師と患者の手を重ねた医療機関の採用サイトFV` },
-    { id: `05`, industry: `医療・福祉`, world: `WELLBEING`, tone: `sumi`,
-      title: `個性が、つながる力に。`,
-      image: `./images/works/showroom-care-01.webp`,
-      alt: `80歳の女性を主役に人生を前向きに表現した介護福祉の採用サイトFV` },
     { id: `06`, industry: `飲食・サービス`, world: `FOOD / CRAFT`, tone: `paper`,
       title: `Design Your Career.`,
       image: `./images/works/showroom-food-01.webp`,
       alt: `炎と調理風景を大きく見せた飲食店の採用サイトFV` },
-    { id: `07`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
-      title: `挑むほど、面白くなる。`,
-      image: `./images/works/showroom-entertainment-01.webp`,
-      alt: `開演5分前の暗い舞台袖を切り取り、幕と照明だけを見せたエンタメ企業の採用サイトFV` },
-    { id: `08`, industry: `IT・テック`, world: `PRODUCT DESIGN`, tone: `paper`,
-      title: `静かな革命。`,
-      image: `./images/works/showroom-it-02.webp`,
-      alt: `静かな人が深く変える、というコピーを据えたIT企業の採用サイトFV` },
-    { id: `09`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
-      title: `街を、未来を、つくっている。`,
-      image: `./images/works/showroom-construction-02.webp`,
-      alt: `白い建築模型と図面を俯瞰し、橋を、つくる。と置いた建設企業の採用サイトFV` },
-    { id: `10`, industry: `物流・運輸`, world: `REGIONAL / CITY`, tone: `sumi`,
-      title: `働くを、もっと自由に。`,
-      image: `./images/works/showroom-logistics-02.webp`,
-      alt: `蛍光グリーンの地に矢印と日本地図の物流網を描いた物流企業の採用サイトFV` },
-    { id: `11`, industry: `医療・福祉`, world: `EDITORIAL`, tone: `coral`,
-      title: `誰かの明日を、近くする。`,
-      image: `./images/works/showroom-medical-02.webp`,
-      alt: `医療データとチームの写真を精密に構成した医療機関の採用サイトFV` },
-    { id: `12`, industry: `医療・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
-      title: `人の可能性を、ひらく。`,
-      image: `./images/works/showroom-care-02.webp`,
-      alt: `きょう、何する？の手書き文字と、利用者と職員が庭で過ごす写真を組んだ介護福祉の採用サイトFV` },
-    { id: `13`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `coral`,
-      title: `ワクワクする方へ、進め。`,
-      image: `./images/works/showroom-food-02.webp`,
-      alt: `開店前の静かな店内と、AM 5:42という時刻を組んだ飲食店の採用サイトFV` },
-    { id: `14`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `paper`,
-      title: `旅を仕事にするという生き方。`,
-      image: `./images/works/showroom-entertainment-02.webp`,
-      alt: `鮮やかなピンクとコラージュで熱狂を表現したエンタメ企業の採用サイトFV` },
-    { id: `15`, industry: `IT・テック`, world: `DIGITAL CULTURE`, tone: `sumi`,
-      title: `つくるのは、仕組みか、ミライか。`,
-      image: `./images/works/showroom-it-03.webp`,
-      alt: `NOT YETの大きな空白と線画のワイヤーフレームで余白を活かしたIT企業の採用サイトFV` },
-    { id: `16`, industry: `建設・不動産`, world: `URBAN DESIGN`, tone: `paper`,
-      title: `現場から、未来を変える。`,
-      image: `./images/works/showroom-construction-03.webp`,
-      alt: `図面から現場、街へつながる仕事をグラフィカルに表現した建設企業の採用サイトFV` },
-    { id: `17`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `coral`,
-      title: `変化の真ん中へ。`,
-      image: `./images/works/showroom-logistics-03.webp`,
-      alt: `トラックの運転席から夕暮れの街を望む写真に、「いってきます」から、仕事です。と添えた物流企業の採用サイトFV` },
-    { id: `18`, industry: `医療・福祉`, world: `CLINICAL`, tone: `sumi`,
-      title: `地域医療の、新しい輪郭。`,
-      image: `./images/works/showroom-medical-03.webp`,
-      alt: `病室の窓辺に立つ看護師と患者の写真に、あなたがいて、よかった。と縦書きで添えた医療機関の採用サイトFV` },
-    { id: `19`, industry: `医療・福祉`, world: `WELLBEING`, tone: `paper`,
-      title: `仕事の意味を、見つけよう。`,
-      image: `./images/works/showroom-care-03.webp`,
-      alt: `暮らす・笑う・食べる・生きるの4語を太い文字で積み、日常の写真を挟んだ介護福祉の採用サイトFV` },
-    { id: `20`, industry: `飲食・サービス`, world: `ILLUSTRATION`, tone: `sumi`,
-      title: `選ばれる理由を、つくる。`,
-      image: `./images/works/showroom-food-03.webp`,
-      alt: `黒い地に一皿だけを置き、一皿一生。と縦書きで添えた飲食店の採用サイトFV` },
-    { id: `21`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
-      title: `想像を、創造に変える。`,
-      image: `./images/works/showroom-entertainment-03.webp`,
-      alt: `つまらないなら、つくれば？という問いを漫画のコマのように構成したエンタメ企業の採用サイトFV` },
-    { id: `22`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
-      title: `テクノロジーに、温度を。`,
-      image: `./images/works/showroom-it-04.webp`,
-      alt: `コードと手書きメモを机の上に広げたようにコラージュしたIT企業の採用サイトFV` },
-    { id: `23`, industry: `建設・不動産`, world: `INFRASTRUCTURE`, tone: `paper`,
-      title: `この街は、誰かの仕事でできている。`,
-      image: `./images/works/showroom-shindo-fv.webp`,
-      alt: `高架下の柱に立つ作業員を見上げ、「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイトFV` },
-    { id: `24`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
-      title: `くらしを支える、その先へ。`,
-      image: `./images/works/showroom-logistics-04.webp`,
-      alt: `黄色いシャッターとフォークリフトを背に、運ぶ。以上。と大書した物流企業の採用サイトFV` },
-    { id: `25`, industry: `医療・福祉`, world: `EDITORIAL`, tone: `coral`,
-      title: `誠実さを、強さに。`,
-      image: `./images/works/showroom-medical-04.webp`,
-      alt: `大きな余白の中に、そばに。の一言と病室の小さな写真だけを置いた医療機関の採用サイトFV` },
-    { id: `26`, industry: `医療・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
-      title: `ケアの景色を、更新する。`,
-      image: `./images/works/showroom-care-04.webp`,
-      alt: `鮮やかな青地に介護職、かっこよくないですか。と問いかけ、職員の横顔を置いた介護福祉の採用サイトFV` },
-    { id: `27`, industry: `飲食・サービス`, world: `FOOD / CRAFT`, tone: `paper`,
-      title: `余白から、発想する。`,
-      image: `./images/works/showroom-food-04.webp`,
-      alt: `雑誌の見開きのように畑から厨房までの写真を並べ、おいしい、の裏側へ。と置いた飲食店の採用サイトFV` },
-    { id: `28`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `coral`,
-      title: `学ぶ人から、つくる人へ。`,
-      image: `./images/works/showroom-entertainment-04.webp`,
-      alt: `誰もいない暗いスタジオに、監督椅子と照明だけを置いたエンタメ企業の採用サイトFV` },
-    { id: `29`, industry: `IT・テック`, world: `PRODUCT DESIGN`, tone: `paper`,
-      title: `好奇心を、仕事に。`,
-      image: `./images/works/showroom-it-05.webp`,
-      alt: `バグの世界をネオンカラーの壮大なイラストで描いたIT企業の採用サイトFV` },
-    { id: `30`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
-      title: `技術で、まだ見ぬ当たり前を。`,
-      image: `./images/works/showroom-construction-05.webp`,
-      alt: `図面から街が立ち上がる瞬間を繊細な青いイラストで表現した建設企業の採用サイトFV` },
-    { id: `31`, industry: `物流・運輸`, world: `REGIONAL / CITY`, tone: `sumi`,
-      title: `まちの記憶を、次へ。`,
-      image: `./images/works/showroom-logistics-05.webp`,
-      alt: `物流拠点と街を線で結び、見えない物流網を緻密に描いた採用サイトFV` },
-    { id: `32`, industry: `医療・福祉`, world: `WELLBEING`, tone: `coral`,
-      title: `らしさが、採用を動かす。`,
-      image: `./images/works/showroom-care-05.webp`,
-      alt: `人生のカラフルさを手描きイラストでにぎやかに表現した介護福祉の採用サイトFV` },
-    { id: `33`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `sumi`,
-      title: `売るより、出会いをつくる。`,
-      image: `./images/works/showroom-food-05.webp`,
-      alt: `食のつながりを大勢の人物と食材の温かなイラストで描いた採用サイトFV` },
-    { id: `34`, industry: `IT・テック`, world: `DIGITAL CULTURE`, tone: `coral`,
-      title: `小さな違和感から、世界を変える。`,
-      image: `./images/works/showroom-it-06.webp`,
-      alt: `エラーや発見を親しみやすい手描きモチーフで構成したIT企業の採用サイトFV` },
-    { id: `35`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `paper`,
-      title: `つながりが、未来を運ぶ。`,
-      image: `./images/works/showroom-logistics-06.webp`,
-      alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` },
-
-    /* ── 36〜38: 実際に1枚のサイトとして組んだ3本（2026-09-04・社長指示）─────
-       他の35点は「FVの絵」だが、この3本は**動くサイトを作ってからFVを撮った**もの。
-       ⚠️ それでも**架空の会社**であることは同じ。「実例」「実績」と書かないこと。
-       ⚠️ 末尾に足すこと。SR_LANES は k % 4 で配るので、途中に入れると
-          既存34枚のレーンが全部ずれて、業種の散り方が崩れる。 */
-    { id: `36`, industry: `医療・福祉`, world: `NURSING`, tone: `paper`,
-      title: `看護は、強さよりも、まなざしだと思う。`,
-      image: `./images/works/showroom-medical-real.webp`,
-      alt: `白いカーテン越しの病室で、看護師と入院患者が笑顔で向き合う医療機関の採用サイトFV` },
-    { id: `37`, industry: `飲食・サービス`, world: `LOCAL DINING`, tone: `sumi`,
-      title: `灯りのように、人の心をあたためる食をつくる。`,
-      image: `./images/works/showroom-food-real.webp`,
-      alt: `暗い厨房で銅の照明の下、料理人が一皿を仕上げている飲食店の採用サイトFV` },
-    { id: `38`, industry: `教育`, world: `EDUCATION`, tone: `paper`,
-      title: `人の可能性に、火をつける仕事。`,
-      image: `./images/works/showroom-education-real.webp`,
-      alt: `明るい教室で講師が生徒の手元をのぞき込み、笑顔で教えている教育企業の採用サイトFV` },
-
-    /* ── 39〜43: 公開URLから取り込んだ5本（2026-09-04）──────────────────
-       ファイルで受け取れなかったので、社長の公開サイトを直接撮っている。
-       ⚠️ これも**架空の会社**。「実例」「実績」と書かないこと。
-       ⚠️ 士業・コンサルはまだ作品が無い（フィルターを押しても0件）。 */
-    { id: `39`, industry: `IT・テック`, world: `SYSTEMS`, tone: `sumi`,
-      title: `そのコードは、誰かの未来を静かに変えていく。`,
-      image: `./images/works/showroom-it-real.webp`,
-      alt: `夜のオフィスで3画面のコードに向かうエンジニアの背中を撮ったIT企業の採用サイトFV` },
     { id: `40`, industry: `製造・小売`, world: `FURNITURE / CRAFT`, tone: `sumi`,
       title: `受け継ぐだけじゃない。次の百年を、この手でつくる。`,
       image: `./images/works/showroom-mfg-real.webp`,
       alt: `工房で木を削る職人の手元を大きく捉えた家具製作所の採用サイトFV` },
-    { id: `41`, industry: `物流・運輸`, world: `WAYBILL`, tone: `paper`,
-      title: `届くまでを、仕事にする。`,
-      image: `./images/works/showroom-logi-real.webp`,
-      alt: `送り状を模した紙面に大きな001とWAYBILLの文字を組んだ物流企業の採用サイトFV` },
-    { id: `42`, industry: `エンタメ`, world: `LIVE PRODUCTION`, tone: `sumi`,
-      title: `現場で、ぶっ壊れろ。`,
-      image: `./images/works/showroom-ent-real.webp`,
-      alt: `ライブでマイクを握るボーカルと蛍光色の見出しを重ねたライブ制作会社の採用サイトFV` },
+    { id: `47`, industry: `製造・小売`, world: `BABY GOODS RENTAL`, tone: `sumi`,
+      title: `子育てを、もっと軽やかに。`,
+      image: `./images/works/showroom-babyrenta-real.webp`,
+      alt: `明るいオフィスでテーブルを囲んで話す3人の写真に、白い明朝の見出しを重ねた採用サイトFV`,
+      client: { name: `株式会社ベビレンタ`, date: `2026.08` } },
+    { id: `13`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `coral`,
+      title: `ワクワクする方へ、進め。`,
+      image: `./images/works/showroom-food-02.webp`,
+      alt: `開店前の静かな店内と、AM 5:42という時刻を組んだ飲食店の採用サイトFV` },
+    { id: `10`, industry: `物流・運輸`, world: `REGIONAL / CITY`, tone: `sumi`,
+      title: `働くを、もっと自由に。`,
+      image: `./images/works/showroom-logistics-02.webp`,
+      alt: `蛍光グリーンの地に矢印と日本地図の物流網を描いた物流企業の採用サイトFV` },
+    { id: `36`, industry: `医療・福祉`, world: `NURSING`, tone: `paper`,
+      title: `看護は、強さよりも、まなざしだと思う。`,
+      image: `./images/works/showroom-medical-real.webp`,
+      alt: `白いカーテン越しの病室で、看護師と入院患者が笑顔で向き合う医療機関の採用サイトFV` },
     { id: `43`, industry: `医療・福祉`, world: `CARE`, tone: `paper`,
       title: `いろんな人の暮らしが、重なってできている。`,
       image: `./images/works/showroom-care-real.webp`,
       alt: `切り絵のような質感で介護職と利用者の暮らしを描いた介護事業所の採用サイトFV` },
-
-    /* 44: 士業・コンサル（2026-09-05）。**これで9業種すべてが埋まった**。
-       押しても0件になる業種は無くなった。 */
+    { id: `17`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `coral`,
+      title: `変化の真ん中へ。`,
+      image: `./images/works/showroom-logistics-03.webp`,
+      alt: `トラックの運転席から夕暮れの街を望む写真に、「いってきます」から、仕事です。と添えた物流企業の採用サイトFV` },
+    { id: `20`, industry: `飲食・サービス`, world: `ILLUSTRATION`, tone: `sumi`,
+      title: `選ばれる理由を、つくる。`,
+      image: `./images/works/showroom-food-03.webp`,
+      alt: `黒い地に一皿だけを置き、一皿一生。と縦書きで添えた飲食店の採用サイトFV` },
+    { id: `48`, industry: `製造・小売`, world: `SEMICONDUCTOR`, tone: `sumi`,
+      title: `見えない精度を、つくる。`,
+      image: `./images/works/showroom-mfg-semicon.webp`,
+      alt: `ウェハーの虹色とクリーンルームの技術者を大きく写し、見えない精度を、つくる。と置いた半導体製造装置メーカーの採用サイトFV` },
+    { id: `53`, industry: `製造・小売`, world: `FLOWER ATELIER`, tone: `sumi`,
+      title: `季節を束ねる仕事。`,
+      image: `./images/works/showroom-retail-flower.webp`,
+      alt: `黒地に水滴をまとったモノクロの花を大きく置き、季節を束ねる仕事。の2字だけを黄緑にした花屋の採用サイトFV` },
+    { id: `01`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
+      title: `超える。`,
+      image: `./images/works/showroom-it-01.webp`,
+      alt: `透明なクリスタルと流体の3DグラフィックにHELLOの文字を重ねたIT企業の採用サイトFV` },
+    { id: `22`, industry: `IT・テック`, world: `DARK TECH`, tone: `sumi`,
+      title: `テクノロジーに、温度を。`,
+      image: `./images/works/showroom-it-04.webp`,
+      alt: `コードと手書きメモを机の上に広げたようにコラージュしたIT企業の採用サイトFV` },
     { id: `44`, industry: `士業・コンサル`, world: `PROFESSIONALS`, tone: `paper`,
       title: `専門性は、誰かの人生を動かす力になる。`,
       image: `./images/works/showroom-law-real.webp`,
       alt: `白いカーテンを背に横顔を捉えた人物と、縦組みの明朝の見出しを組んだ士業・コンサルの採用サイトFV` },
-
-    /* 45: 建設・不動産の実サイト（2026-09-05 公開URLをもらった）。
-       ⚠️ これで「画像だけ」だった建設(23)の役目は終わり。23のタイルは残すが SR_INSIDE から外した */
-    { id: `45`, industry: `建設・不動産`, world: `URBAN DEVELOPMENT`, tone: `sumi`,
-      title: `まだ、地図にない景色を。`,
-      image: `./images/works/showroom-city-real.webp`,
-      alt: `夜の高層ビル群と低層の商業施設を見上げる写真に白いゴシックの見出しを重ねた都市開発会社の採用サイトFV` },
-
-    /* 🔴 46・47 は**実在の受託案件**。2026-09-08 にかずさん経由で両社から掲載承認（Slack）。
-       client を持つ作品だけ「CLIENT WORK」として社名と制作時期を出し、表現サンプルと区別する。
-       🔴 date は**年.月まで**で揃える（2026-09-09 社長）。日まで書けるのはフリコネだけで、
-          ベビレンタは先方FB待ちで納品日が未確定。粗い側に合わせないと粒度が揃わない。
-          「納品」「制作」の語も落とした。ベビレンタはまだ納品前で、語を残すと結局揃わないため。
-       🔴 社名に「様」は付けない。ここは宛名ではなく実績の掲載欄で、読み手は第三者。
-          同じ画面に並ぶ45の表現サンプルとの扱いの差が、敬意の差に見えるのも避ける。
-       ⚠️ client の無い作品に「実績」と書かない（SR_BASE 冒頭の約束はそのまま生きている） */
     { id: `46`, industry: `IT・テック`, world: `CONNECT YOUR CAREER`, tone: `paper`,
       title: `エンジニアのキャリアを、会社都合で決めない。`,
       image: `./images/works/showroom-fricone-real.webp`,
       alt: `白と水色の背景にノートPCで作業する若手エンジニアの写真と、太いゴシックの見出しを組んだ採用サイトFV`,
       client: { name: `フリーランスコネクト株式会社`, date: `2026.07` } },
-    { id: `47`, industry: `製造・小売`, world: `BABY GOODS RENTAL`, tone: `sumi`,
-      title: `子育てを、もっと軽やかに。`,
-      image: `./images/works/showroom-babyrenta-real.webp`,
-      alt: `明るいオフィスでテーブルを囲んで話す3人の写真に、白い明朝の見出しを重ねた採用サイトFV`,
-      client: { name: `株式会社ベビレンタ`, date: `2026.08` } }
+    { id: `07`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
+      title: `挑むほど、面白くなる。`,
+      image: `./images/works/showroom-entertainment-01.webp`,
+      alt: `開演5分前の暗い舞台袖を切り取り、幕と照明だけを見せたエンタメ企業の採用サイトFV` },
+    { id: `14`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `paper`,
+      title: `旅を仕事にするという生き方。`,
+      image: `./images/works/showroom-entertainment-02.webp`,
+      alt: `鮮やかなピンクとコラージュで熱狂を表現したエンタメ企業の採用サイトFV` },
+    { id: `54`, industry: `製造・小売`, world: `LIFESTYLE GOODS`, tone: `paper`,
+      title: `色を選ぶ毎日に、働く楽しさを。`,
+      image: `./images/works/showroom-retail-goods.webp`,
+      alt: `赤・青・黄の生活雑貨を色ごとに俯瞰で並べ、中央に見出しを置いた雑貨セレクトショップの採用サイトFV` },
+    { id: `55`, industry: `製造・小売`, world: `METAL WORKS`, tone: `sumi`,
+      title: `熱と精度の、いちばん近くへ。`,
+      image: `./images/works/showroom-mfg-metal.webp`,
+      alt: `暗い工場で金属を削る刃先から火花が散る瞬間を大きく捉えた金属加工会社の採用サイトFV` },
+    { id: `09`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
+      title: `街を、未来を、つくっている。`,
+      image: `./images/works/showroom-construction-02.webp`,
+      alt: `白い建築模型と図面を俯瞰し、橋を、つくる。と置いた建設企業の採用サイトFV` },
+    { id: `16`, industry: `建設・不動産`, world: `URBAN DESIGN`, tone: `paper`,
+      title: `現場から、未来を変える。`,
+      image: `./images/works/showroom-construction-03.webp`,
+      alt: `図面から現場、街へつながる仕事をグラフィカルに表現した建設企業の採用サイトFV` },
+    { id: `50`, industry: `医療・福祉`, world: `CARE`, tone: `paper`,
+      title: `はじめての介護に、安心して踏み出せる場所。`,
+      image: `./images/works/showroom-care-hidamari.webp`,
+      alt: `明るい窓辺で職員と利用者が手を取り笑い合う写真に、はじめての介護に、安心して踏み出せる場所。と置いた介護施設の採用サイトFV` },
+    { id: `52`, industry: `医療・福祉`, world: `VETERINARY`, tone: `sumi`,
+      title: `夜のいのちを、支える人がいる。`,
+      image: `./images/works/showroom-medical-vet.webp`,
+      alt: `夜の診察室で獣医師と看護師が動物を処置する場面を映画のように切り取った動物病院の採用サイトFV` },
+    { id: `35`, industry: `物流・運輸`, world: `LOGISTICS`, tone: `paper`,
+      title: `つながりが、未来を運ぶ。`,
+      image: `./images/works/showroom-logistics-06.webp`,
+      alt: `街を運ぶトラックを大胆な青とオレンジのイラストで表現した物流企業の採用サイトFV` },
+    { id: `24`, industry: `物流・運輸`, world: `INFRASTRUCTURE`, tone: `paper`,
+      title: `くらしを支える、その先へ。`,
+      image: `./images/works/showroom-logistics-04.webp`,
+      alt: `黄色いシャッターとフォークリフトを背に、運ぶ。以上。と大書した物流企業の採用サイトFV` },
+    { id: `57`, industry: `士業・コンサル`, world: `TAX ACCOUNTING`, tone: `sumi`,
+      title: `数字の先に、責任がある。`,
+      image: `./images/works/showroom-pro-tax.webp`,
+      alt: `夜景の見える暗いオフィスで机に向かう後ろ姿に、数字の先に、責任がある。と置いた税理士法人の採用サイトFV` },
+    { id: `49`, industry: `士業・コンサル`, world: `INSURANCE`, tone: `paper`,
+      title: `売るより、寄り添う。`,
+      image: `./images/works/showroom-pro-insurance.webp`,
+      alt: `テラコッタ色の曲線のオブジェ越しに家族の後ろ姿を見せ、売るより、寄り添う。と置いた保険代理店の採用サイトFV` },
+    { id: `27`, industry: `飲食・サービス`, world: `FOOD / CRAFT`, tone: `paper`,
+      title: `余白から、発想する。`,
+      image: `./images/works/showroom-food-04.webp`,
+      alt: `雑誌の見開きのように畑から厨房までの写真を並べ、おいしい、の裏側へ。と置いた飲食店の採用サイトFV` },
+    { id: `33`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `sumi`,
+      title: `売るより、出会いをつくる。`,
+      image: `./images/works/showroom-food-05.webp`,
+      alt: `食のつながりを大勢の人物と食材の温かなイラストで描いた採用サイトFV` },
+    { id: `38`, industry: `教育`, world: `EDUCATION`, tone: `paper`,
+      title: `人の可能性に、火をつける仕事。`,
+      image: `./images/works/showroom-education-real.webp`,
+      alt: `明るい教室で講師が生徒の手元をのぞき込み、笑顔で教えている教育企業の採用サイトFV` },
+    { id: `56`, industry: `教育`, world: `CRAM SCHOOL`, tone: `coral`,
+      title: `誰かの「できた！」が、未来を変えていく。`,
+      image: `./images/works/showroom-education-juku.webp`,
+      alt: `ノートや付箋が散らばる机を俯瞰し、手書き風の見出しを重ねた学習塾の採用サイトFV` },
+    { id: `29`, industry: `IT・テック`, world: `PRODUCT DESIGN`, tone: `paper`,
+      title: `好奇心を、仕事に。`,
+      image: `./images/works/showroom-it-05.webp`,
+      alt: `バグの世界をネオンカラーの壮大なイラストで描いたIT企業の採用サイトFV` },
+    { id: `34`, industry: `IT・テック`, world: `DIGITAL CULTURE`, tone: `coral`,
+      title: `小さな違和感から、世界を変える。`,
+      image: `./images/works/showroom-it-06.webp`,
+      alt: `エラーや発見を親しみやすい手描きモチーフで構成したIT企業の採用サイトFV` },
+    { id: `45`, industry: `建設・不動産`, world: `URBAN DEVELOPMENT`, tone: `sumi`,
+      title: `まだ、地図にない景色を。`,
+      image: `./images/works/showroom-city-real.webp`,
+      alt: `夜の高層ビル群と低層の商業施設を見上げる写真に白いゴシックの見出しを重ねた都市開発会社の採用サイトFV` },
+    { id: `51`, industry: `建設・不動産`, world: `WIND ENERGY`, tone: `paper`,
+      title: `風の上で、守る。`,
+      image: `./images/works/showroom-construction-wind.webp`,
+      alt: `風車の塔をはしごで登る作業員を見上げ、風の上で、守る。と大きく置いた風力発電保守会社の採用サイトFV` },
+    { id: `21`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
+      title: `想像を、創造に変える。`,
+      image: `./images/works/showroom-entertainment-03.webp`,
+      alt: `つまらないなら、つくれば？という問いを漫画のコマのように構成したエンタメ企業の採用サイトFV` },
+    { id: `28`, industry: `エンタメ`, world: `POP / CULTURE`, tone: `coral`,
+      title: `学ぶ人から、つくる人へ。`,
+      image: `./images/works/showroom-entertainment-04.webp`,
+      alt: `誰もいない暗いスタジオに、監督椅子と照明だけを置いたエンタメ企業の採用サイトFV` },
+    { id: `37`, industry: `飲食・サービス`, world: `LOCAL DINING`, tone: `sumi`,
+      title: `灯りのように、人の心をあたためる食をつくる。`,
+      image: `./images/works/showroom-food-real.webp`,
+      alt: `暗い厨房で銅の照明の下、料理人が一皿を仕上げている飲食店の採用サイトFV` },
+    { id: `41`, industry: `物流・運輸`, world: `WAYBILL`, tone: `paper`,
+      title: `届くまでを、仕事にする。`,
+      image: `./images/works/showroom-logi-real.webp`,
+      alt: `送り状を模した紙面に大きな001とWAYBILLの文字を組んだ物流企業の採用サイトFV` },
+    { id: `23`, industry: `建設・不動産`, world: `INFRASTRUCTURE`, tone: `paper`,
+      title: `この街は、誰かの仕事でできている。`,
+      image: `./images/works/showroom-shindo-fv.webp`,
+      alt: `高架下の柱に立つ作業員を見上げ、「この街は、誰かの仕事でできている。」を重ねたインフラ企業の採用サイトFV` },
+    { id: `30`, industry: `建設・不動産`, world: `FIELD / CRAFT`, tone: `paper`,
+      title: `技術で、まだ見ぬ当たり前を。`,
+      image: `./images/works/showroom-construction-05.webp`,
+      alt: `図面から街が立ち上がる瞬間を繊細な青いイラストで表現した建設企業の採用サイトFV` },
+    { id: `39`, industry: `IT・テック`, world: `SYSTEMS`, tone: `sumi`,
+      title: `そのコードは、誰かの未来を静かに変えていく。`,
+      image: `./images/works/showroom-it-real.webp`,
+      alt: `夜のオフィスで3画面のコードに向かうエンジニアの背中を撮ったIT企業の採用サイトFV` },
+    { id: `42`, industry: `エンタメ`, world: `LIVE PRODUCTION`, tone: `sumi`,
+      title: `現場で、ぶっ壊れろ。`,
+      image: `./images/works/showroom-ent-real.webp`,
+      alt: `ライブでマイクを握るボーカルと蛍光色の見出しを重ねたライブ制作会社の採用サイトFV` },
+    { id: `05`, industry: `医療・福祉`, world: `WELLBEING`, tone: `sumi`,
+      title: `個性が、つながる力に。`,
+      image: `./images/works/showroom-care-01.webp`,
+      alt: `80歳の女性を主役に人生を前向きに表現した介護福祉の採用サイトFV` },
+    { id: `26`, industry: `医療・福祉`, world: `CARE / DAILY LIFE`, tone: `sumi`,
+      title: `ケアの景色を、更新する。`,
+      image: `./images/works/showroom-care-04.webp`,
+      alt: `鮮やかな青地に介護職、かっこよくないですか。と問いかけ、職員の横顔を置いた介護福祉の採用サイトFV` }
 ];
 
 /* 中身（FVから下まで）を見せられる作品。**縦長のサイト全体画像がある作品だけ**書く。
@@ -1181,7 +1181,7 @@ var SR_WORKS = SR_BASE.map((w, k) => ({
 }));
 
 /* 4レーンに1枚ずつ配る（2026-09-01・社長指示で3→4段に）。
-       絞り込んだとき画面に出る該当タイルが少なすぎたため。9/9/9/8枚 */
+       絞り込んだとき画面に出る該当タイルが少なすぎたため。12/12/11/11枚（2026-09-10） */
     var SR_LANES = [SR_WORKS.filter((e, k) => k % 4 === 0),
                 SR_WORKS.filter((e, k) => k % 4 === 1),
                 SR_WORKS.filter((e, k) => k % 4 === 2),
@@ -1302,13 +1302,13 @@ function Showroom() {
                 }),
                 (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
-                    children: [`45の表現サンプルと、2つの制作実績を、業種別に。`, (0, i.jsx)(`br`, {}),
+                    children: [`44の表現サンプルと、2つの制作実績を、業種別に。`, (0, i.jsx)(`br`, {}),
                         `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
                         `採用サイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
-            "aria-label": `47の採用サイトが流れ続ける表現ショールーム`,
+            "aria-label": `46の採用サイトが流れ続ける表現ショールーム`,
             children: SR_LANES.map((lane, laneNo) => (0, i.jsx)(`div`, {
                 className: `works-lane works-lane-${laneNo + 1}`,
                 children: (0, i.jsx)(`div`, {
@@ -1823,7 +1823,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.6a464381.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.aaaaa224.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
