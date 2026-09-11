@@ -472,6 +472,25 @@ a { color: inherit }
     .cf-foot { flex-direction: column; align-items: flex-start }
     .cf-foot nav { gap: 18px }
 }
+
+/* ── 送信ボタンまでスクロールせずに届く高さ（2026-09-11 定例・かずさん）──────────
+   前（実測）: 送信ボタンの下端 1440×900で844px／1536×864で880px（はみ出す）。
+   ブラウザの上のバーを引くと、1440×900のノートPCで見える高さは約790px しかない。
+   → 縦の量を「画面の高さ（vh）」で縮むようにする。PCの幅だけに効かせる（SPは縦に流す前提のまま）。
+   ⚠️ 入力欄の文字の大きさは変えない（読みにくくなる）。削るのは余白と欄の高さだけ */
+@media (min-width: 901px) {
+    .cf-back { margin-bottom: clamp(14px, 3.2vh, 48px) }
+    .cf-fields { row-gap: clamp(12px, 2.2vh, 28px) }
+    .cf-field > label { margin-bottom: clamp(5px, .9vh, 9px) }
+    .cf-field input,
+    .cf-field select,
+    .cf-field textarea { padding-block: clamp(7px, 1.25vh, 15px) }
+    .cf-field textarea { min-height: clamp(76px, 12vh, 160px) }
+    .cf-send {
+        min-height: clamp(50px, 7vh, 76px);
+        margin-top: clamp(14px, 2.6vh, 36px)
+    }
+}
 </style>
 </head>
 <body>
@@ -496,7 +515,6 @@ a { color: inherit }
 
                 <ul class="cf-facts">
                     <li><b>MONTHLY</b><span>27,000<em> 円 / 月</em></span></li>
-                    <li><b>INITIAL COST</b><span>0<em> 円</em></span></li>
                     <li><b>PROPOSAL</b><span>最短 1<em> 週間</em></span></li>
                 </ul>
             </div>
@@ -585,9 +603,9 @@ a { color: inherit }
         </form>
 
         <footer class="cf-foot">
-            <small>© 2026 TILTO° All Rights Reserved.</small>
+            <small>© 2026 Tilto° All Rights Reserved.</small>
             <nav>
-                <small><a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></small>
+                <small><a href="https://savorflow.co.jp/privacy" target="_blank" rel="noopener">Privacy Policy</a></small>
                 <small><a href="https://savorflow.co.jp/" target="_blank" rel="noopener">株式会社Savor Flow</a></small>
             </nav>
         </footer>

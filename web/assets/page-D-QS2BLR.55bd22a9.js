@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.5adcd45f.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.5adcd45f.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.55bd22a9.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.55bd22a9.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.5adcd45f.js / rolldown-runtime-S-ySWqyJ.5adcd45f.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.55bd22a9.js / rolldown-runtime-S-ySWqyJ.55bd22a9.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -962,7 +962,9 @@ var SR_BASE = [
       title: `子育てを、もっと軽やかに。`,
       image: `./images/works/showroom-babyrenta-real.webp`,
       alt: `明るいオフィスでテーブルを囲んで話す3人の写真に、白い明朝の見出しを重ねた採用サイトFV`,
-      client: { name: `株式会社ベビレンタ`, date: `2026.08` } },
+      client: { name: `株式会社ベビレンタ`, date: `2026.08`, kind: `採用サイト`,
+                /* サービス内容は先方の採用サイトの説明文（meta description）から */
+                service: `国内最大級のベビー用品レンタル` } },
     { id: `13`, industry: `飲食・サービス`, world: `HOSPITALITY`, tone: `coral`,
       title: `ワクワクする方へ、進め。`,
       image: `./images/works/showroom-food-02.webp`,
@@ -1011,7 +1013,8 @@ var SR_BASE = [
       title: `エンジニアのキャリアを、会社都合で決めない。`,
       image: `./images/works/showroom-fricone-real.webp`,
       alt: `白と水色の背景にノートPCで作業する若手エンジニアの写真と、太いゴシックの見出しを組んだ採用サイトFV`,
-      client: { name: `フリーランスコネクト株式会社`, date: `2026.07` } },
+      client: { name: `フリーランスコネクト株式会社`, date: `2026.07`, kind: `採用LP`,
+                service: `正社員の安心と、フリーランスの自由を行き来できる働き方` } },
     { id: `07`, industry: `エンタメ`, world: `STAGE / CULTURE`, tone: `coral`,
       title: `挑むほど、面白くなる。`,
       image: `./images/works/showroom-entertainment-01.webp`,
@@ -1357,7 +1360,7 @@ function Showroom() {
             className: `works-drawer`,
             role: `dialog`,
             "aria-modal": work ? `true` : void 0,
-            "aria-label": shown ? `${shown.title}の詳細` : `選択した作品の詳細`,
+            "aria-label": shown ? `${shown.client ? shown.client.name : shown.title}の詳細` : `選択した作品の詳細`,
             "aria-hidden": !work,
             children: [(0, i.jsx)(`button`, {
                 ref: closeRef, type: `button`, className: `works-drawer-close`,
@@ -1369,20 +1372,25 @@ function Showroom() {
                 children: [/* 見出しは1本のバーに畳む。主役は下の作品なので、文字に高さを使わない */
                     (0, i.jsxs)(`div`, {
                         className: `works-drawer-head`,
-                        children: [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: shown.client ? `CLIENT WORK` : `EXPRESSION SAMPLE` }),
+                        /* 🔴 実績は「社名 → サービス内容 → サイト名（軽く）」の順（2026-09-11 定例・かずさん）。
+                              見出しにキャッチコピーを置くと表現サンプルと見分けがつかない。業種も出さない
+                              （ベビレンタが「製造・小売」と出るのは実態とずれる） */
+                        children: shown.client ? [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `CLIENT WORK` }),
+                            (0, i.jsx)(`h3`, { children: shown.client.name }),
+                            (0, i.jsx)(`p`, { className: `works-drawer-service`, children: shown.client.service }),
+                            (0, i.jsxs)(`p`, { className: `works-drawer-client`, children: [shown.client.kind, `「`, shown.title, `」 ／ `, shown.client.date] })]
+                        : [(0, i.jsx)(`small`, { className: `works-drawer-kicker`, children: `EXPRESSION SAMPLE` }),
                             (0, i.jsx)(`h3`, { children: shown.title }),
-                            (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] }),
-                            /* 実績だけ社名と制作時期を出す。表現サンプルには出ない（null） */
-                            shown.client ? (0, i.jsxs)(`p`, { className: `works-drawer-client`, children: [shown.client.name, ` ／ `, shown.client.date] }) : null]
+                            (0, i.jsxs)(`p`, { className: `works-drawer-industry`, children: [shown.industry, `　/　`, shown.world] })]
                     }),
                     /* 中身まで見られる作品は、スクロールできる枠でサイト全体を見せる。
                        それ以外はFV1枚。⚠️ 縦長画像が無い作品にこの枠を出さない（空になる） */
                     shown.inside ? (0, i.jsxs)(`div`, {
                         className: `works-site`,
-                        children: [(0, i.jsx)(`div`, {
+                        children: [(0, i.jsxs)(`div`, {
                                 className: `works-site-frame`,
                                 "data-live": shown.inside.url ? `true` : `false`,
-                                children: shown.inside.url
+                                children: [shown.inside.url
                                     ? (0, i.jsx)(`iframe`, {
                                         src: shown.inside.url,
                                         title: `${shown.title}（実際のサイト）`,
@@ -1391,7 +1399,12 @@ function Showroom() {
                                            始まらないまま白いまま**になる（実測で発生した） */
                                         referrerPolicy: `no-referrer`
                                     })
-                                    : (0, i.jsx)(`img`, { src: shown.inside.site, alt: shown.alt })
+                                    : (0, i.jsx)(`img`, { src: shown.inside.site, alt: shown.alt }),
+                                    /* 「中でスクロールできる」の合図（2026-09-11 定例・かずさん）。
+                                       枠の中は別サイト（別オリジン）で、中のスクロールは拾えない。
+                                       なので読み込み完了から数秒だけ出して消す。作品を替えるたびに出し直す（key） */
+                                    (0, i.jsxs)(`span`, { className: `works-scroll-hint`, "aria-hidden": `true`,
+                                        children: [(0, i.jsx)(`i`, {}), `SCROLL`] }, `hint-${shown.id}`)]
                             }),
                             (0, i.jsx)(`small`, {
                                 children: shown.inside.url
@@ -1409,7 +1422,8 @@ function Showroom() {
                    ⚠️ ここは work があるときだけ描く＝クライアント側だけの要素。
                       SSRには出ないので、index.html を触らなくてもhydrationはズレない */
                 className: `works-rail`,
-                children: [(0, i.jsxs)(`small`, { className: `works-rail-head`, children: [`RELATED — `, work.industry] }),
+                /* 実績を開いたときは業種を出さない（ベビレンタが「製造・小売」に見える。2026-09-11 定例） */
+                children: [(0, i.jsxs)(`small`, { className: `works-rail-head`, children: shown && shown.client ? [`RELATED`] : [`RELATED — `, work.industry] }),
                     /* ── 上：実際に動くサイト。押すと左の枠がそのサイトに切り替わる ── */
                     ...related.live.map(other => (0, i.jsxs)(`button`, {
                         type: `button`,
@@ -1419,7 +1433,7 @@ function Showroom() {
                         "data-current": shown && other.id === shown.id ? `true` : `false`,
                         onClick: () => setPicked(other.id),
                         children: [(0, i.jsx)(`img`, { src: railImg(other.image), alt: other.alt, loading: `lazy` }),
-                            (0, i.jsx)(`span`, { children: other.title })]
+                            (0, i.jsx)(`span`, { children: other.client ? other.client.name : other.title })]
                     }, other.id)),
                     /* ── 下：ファーストビューの絵だけのもの。参照するだけで押しても変わらない ──
                        🔴 見出しは付けない（2026-09-10 社長「ラベルはいらない。薄く線引きする程度に」）。
@@ -1433,7 +1447,7 @@ function Showroom() {
                         "data-current": other.id === work.id ? `true` : `false`,
                         children: [(0, i.jsx)(`img`, { src: railImg(other.image), alt: other.alt, loading: `lazy` }),
                             /* 業種は上の見出しに出したので、ここは作品名（全部違う） */
-                            (0, i.jsx)(`figcaption`, { children: other.title })]
+                            (0, i.jsx)(`figcaption`, { children: other.client ? other.client.name : other.title })]
                     }, other.id))]
             })]
             }) : null]
@@ -1823,7 +1837,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.5adcd45f.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.55bd22a9.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
