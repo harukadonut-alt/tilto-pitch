@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.4098324a.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.4098324a.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.5adcd45f.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.5adcd45f.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.4098324a.js / rolldown-runtime-S-ySWqyJ.4098324a.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.5adcd45f.js / rolldown-runtime-S-ySWqyJ.5adcd45f.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1721,7 +1721,7 @@ function x() {
                             })]
                         }),
                         (0, i.jsxs)(`p`, {
-                            children: [`採用の変化に合わせて、`, (0, i.jsx)(`br`, { className: `sp-only` }),
+                            children: [`事業の変化に合わせて、`, (0, i.jsx)(`br`, { className: `sp-only` }),
                                 `更新・改善しつづける。`]
                         })]
                 }),
@@ -1732,10 +1732,10 @@ function x() {
                        要素ごと消すとラベルも消えるので注意。
                        中身は 2026-09-03 に社長指示でサービス説明を入れた（元は空） */
                     children: [(0, i.jsx)(`p`, {
-                            children: `Tiltoは、採用マーケティング会社Savor Flowが提供する、採用ブランディングサービスです。`
+                            children: `Tiltoは、株式会社Savor Flowが提供する、Webサイトの制作・運用サービスです。`
                         }),
                         (0, i.jsx)(`p`, {
-                            children: `AIを制作プロセスに取り入れ、採用コンサルタントとデザイナーが、サイトの制作から公開後の改善まで伴走します。`
+                            children: `AIを制作プロセスに取り入れ、企画・設計からデザイン、公開後の改善まで伴走します。`
                         })]
                 })]
         }),
@@ -1823,7 +1823,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.4098324a.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.5adcd45f.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
