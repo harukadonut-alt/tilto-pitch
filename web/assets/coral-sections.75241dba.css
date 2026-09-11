@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.8a249e97.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.75241dba.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -27,7 +27,7 @@
     /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
     --u: min(1vw, 14.87px);
 
-    /* 🔴 動きの既定値は「着地後」。motion.8a249e97.js が動かない場合
+    /* 🔴 動きの既定値は「着地後」。motion.75241dba.js が動かない場合
        （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
     --pb-black: 1;
     --pb-high: 1;
@@ -763,7 +763,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.8a249e97.css）。bands.8a249e97.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.75241dba.css）。bands.75241dba.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -854,7 +854,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.8a249e97.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.75241dba.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1569,7 +1569,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.8a249e97.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.75241dba.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1582,7 +1582,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.8a249e97.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.75241dba.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1720,7 +1720,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.8a249e97.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.75241dba.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1952,12 +1952,12 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.8a249e97.js が動かしている
-     ・motion.8a249e97.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.75241dba.js が動かしている
+     ・motion.75241dba.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.8a249e97.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.75241dba.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2303,7 +2303,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.8a249e97.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.75241dba.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2541,7 +2541,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.8a249e97.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.75241dba.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2578,7 +2578,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.8a249e97.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.75241dba.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2785,7 +2785,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.8a249e97.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.75241dba.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3056,7 +3056,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       白い板が上に乗り、下の「読み込んでいます」は最初から見えていなかった
       （2026-09-09 社長のスクショ＝真っ白な枠）。
    → **覆いを iframe より前に出し、読み終わったら消す**形に変えた。
-     消すのは motion.8a249e97.js（`data-loaded="true"` を付ける）。
+     消すのは motion.75241dba.js（`data-loaded="true"` を付ける）。
      ⚠️ reduced-motion でも消えないと困るので、あちらでは早期returnより前に置いてある。
 
    🔴 色はコーラル（2026-09-09 社長「真っ白じゃなくて色もつけて。コーラル?」）。
@@ -3109,7 +3109,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     100% { transform: translateX(294%) }
 }
 
-/* 読み終わったら覆いを外す。付けるのは motion.8a249e97.js。
+/* 読み終わったら覆いを外す。付けるのは motion.75241dba.js。
    ⚠️ 地もコーラルから紙色に戻す。読み込んだサイトに透ける所があると、
       コーラルのままでは相手のデザインに赤が混ざる */
 .works-site-frame[data-loaded="true"] { background: #f7f4ee }
@@ -3169,7 +3169,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.8a249e97.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.75241dba.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3372,12 +3372,12 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 .reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.8a249e97.css は節名を列挙して stretch している
+    /* 🔴 親(main)はグリッド。gpt-sections.75241dba.css は節名を列挙して stretch している
        (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
        新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
     justify-self: stretch;
     width: auto;
-    /* 🔴 --tone-* も gpt-sections.8a249e97.css が節名を列挙して定義している。ここに無いと
+    /* 🔴 --tone-* も gpt-sections.75241dba.css が節名を列挙して定義している。ここに無いと
        var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
     --tone-coral: #ff4d4f;
     --tone-paper: #f7f4ee;
@@ -3751,7 +3751,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
       05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
       コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
-      ⚠️ motion.8a249e97.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+      ⚠️ motion.75241dba.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
          ここに数字を足すときも同じ線を守ること。
    ============================================================ */
 
@@ -3933,7 +3933,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
       中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
-      縮小率は motion.8a249e97.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+      縮小率は motion.75241dba.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
    右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
    ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
    ============================================================ */
@@ -4039,11 +4039,11 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    ── 動き ────────────────────────────────────────
    節を 200vh にして、中の舞台を 100svh で sticky。
-   スクロール量を 0〜1 の progress にして motion.8a249e97.js が `--hu-*` を書く（scrub）。
+   スクロール量を 0〜1 の progress にして motion.75241dba.js が `--hu-*` を書く（scrub）。
    🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
    ────────────────────────────────────────────────── */
 .reference-hurdles {
-    /* 🔴 親(main)はグリッド。gpt-sections.8a249e97.css は節名を列挙して stretch しているが、
+    /* 🔴 親(main)はグリッド。gpt-sections.75241dba.css は節名を列挙して stretch しているが、
        新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
     justify-self: stretch;
     width: auto;
@@ -4449,7 +4449,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     /* 🔴 沈む演出はSPでも残す（2026-09-09 社長「白くなってグレーになる演出は
        スマホでも維持して」）。以前は最初から沈んだ色（--hu-sink: 1）で置いていたが、
        それだと課題が主役だった瞬間が無く、ただ薄い字が並んでいるだけに見えていた。
-       ⚠️ --hu-sink は motion.8a249e97.js が入れる。SPはピン留めしないので、
+       ⚠️ --hu-sink は motion.75241dba.js が入れる。SPはピン留めしないので、
           **最後の課題（つくって終わり。）が画面の上へ抜けるあいだ**を進み具合にしている。
        ⚠️ JS無効・reduced-motion では既定の 1（沈んだ色）のまま。読めるので問題ない */
     .hu-issue { margin-bottom: 26px }
@@ -4646,6 +4646,55 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     .bp-board { right: -4vw }
 }
 
+/* ── site-web（採用サイトに限らない版・2026-09-10 カズさんのテキスト修正） ──
+   ① 紙2（「何を一番伝えるべきだろう？」「このサービスの強みってなんだろう？」）は
+      1行が長いので、リスト紙と同じ小さい字にする（大きい字だと紙からはみ出る）
+   ② 05の思想文は2段落になったので、段落の間を1行ぶん空ける */
+.process-paper-small b {
+    font-size: clamp(12px, 1vw, 17px)
+}
+
+.bp-principle p + p {
+    margin-top: 1em
+}
+
+/* ③ 紙6は3行・1行13字になり、大きい字のままだと右の写真（INTERVIEW / 02）の下に隠れた。
+      字を一段小さくする（位置も 62%→60% に寄せた・マークアップ側） */
+.process-paper-mid b {
+    font-size: clamp(13px, 1.2vw, 21px)
+}
+
+/* ④ 05の見出しの2行目が「採用は動かない。」8字 →「サイトは機能しない。」10字になり、
+      元の大きさ（8字が x35〜443 に収まる値）では「しな／い。」で折れた。10字が同じ幅に収まる大きさへ */
+.bp-copy h2 {
+    font-size: clamp(36px, 2.8vw, 46px)
+}
+
+@media (max-width: 900px) {
+    .bp-copy h2 {
+        font-size: clamp(26px, 8.2vw, 40px)
+    }
+}
+
+/* ⑤ 900px以下は紙の幅が138px固定（上の max-content は901px以上だけ）。
+      紙1「構成・デザイン・写真？」と紙2の長い問い2つが、1行のままだと紙の外へはみ出して切れた。
+      この2枚だけ折り返しを許して、紙の中で改行させる */
+@media (max-width: 900px) {
+    #fusion .process-paper[data-paper="1"] b span,
+    #fusion .process-paper-small b span {
+        white-space: normal
+    }
+
+    #fusion .process-paper-small b {
+        font-size: 11px;
+        line-height: 1.6
+    }
+
+    #fusion .process-paper-small b span + span {
+        margin-top: 4px
+    }
+}
+
 /* ── 04 実績の見出し（2026-09-11 定例・かずさん）──────────────────────
    実績は「社名 → サービス内容 → サイト名（軽く）」。サービス内容は社名のすぐ下に、
    本文と同じ明朝で。サイト名と制作時期は既存の .works-drawer-client（英字の細い行）に回す */
@@ -4746,13 +4795,24 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
        実測（1440×900）: 前は暗い面の上端から見出しまで約45pxで、すぐ下に「高い。」が詰まっていた
      ・04: 左の四角い塊（業種ボタン＋制作イメージ＋リード）を**節の上下中央**に置く（PCのみ）
    🔴 02の余白は節の border-top（舞台と同じ墨色）で作る。padding や高さを足すと、
-      motion.8a249e97.js の進み具合（節の高さ基準）がずれて締めが出きる前にピンが外れる。
+      motion.75241dba.js の進み具合（節の高さ基準）がずれて締めが出きる前にピンが外れる。
       border-top なら節の高さ（200vh）の中に収まり、ピンが外れる位置は変わらない
       （ピンが掛かるのが border の厚みぶん遅れるだけ。演出の前半は入場で動くので影響なし） */
-.reference-hurdles { border-top: clamp(48px, 6vw, 96px) solid var(--hu-sumi, #111317) }
+/* 🔴 2026-09-12 追記: border-top を足しただけだと、暗い面の始まりが厚みぶん下にずれ、
+      「伴走します。」の下の空きの後から黒い面が**下から重なってくる**感じ（それまでの見え方）が消えた（社長）。
+      → 同じ厚みだけ margin-top を負にして、暗い面を ABOUT の空き（約130px）の上へ引き上げる。
+        見出しの上の余白は残ったまま、紙色の空きのほうが詰まる。
+      ⚠️ 厚みと引き上げ量は必ず同じ変数で持つ（ずれると ABOUT の本文に黒が掛かる・または隙間が出る）
+      ⚠️ ABOUT の本文の下端から節の下端までは実測 129px（1440）/130px（390）。引き上げはそれ未満に留める */
+.reference-hurdles {
+    --hu-lift: clamp(40px, 5vw, 72px);
+    border-top: var(--hu-lift) solid var(--hu-sumi, #111317);
+    margin-top: calc(var(--hu-lift) * -1);
+    z-index: 2
+}
 
 @media (max-width: 900px) {
-    .reference-hurdles { border-top-width: clamp(28px, 8vw, 44px) }
+    .reference-hurdles { --hu-lift: clamp(28px, 8vw, 44px) }
     /* SPは塊の下にタイルが続く縦の構図なので中央寄せはしない。上端からの余白だけ取る（前日の値のまま） */
     .works-intro { top: 44px }
 }
