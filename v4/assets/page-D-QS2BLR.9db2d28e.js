@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.f57a309d.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.f57a309d.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.9db2d28e.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.9db2d28e.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.f57a309d.js / rolldown-runtime-S-ySWqyJ.f57a309d.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.9db2d28e.js / rolldown-runtime-S-ySWqyJ.9db2d28e.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1406,11 +1406,10 @@ function Showroom() {
                                     (0, i.jsxs)(`span`, { className: `works-scroll-hint`, "aria-hidden": `true`,
                                         children: [(0, i.jsx)(`i`, {}), `SCROLL`] }, `hint-${shown.id}`)]
                             }),
-                            (0, i.jsx)(`small`, {
-                                children: shown.inside.url
-                                    ? `実際に動くサイトです — 枠の中でスクロールできます`
-                                    : `SCROLL — 下まで見られます`
-                            })]
+                            /* 🔴 実サイトのときの「実際に動くサイトです — 枠の中でスクロールできます」は削除（2026-09-12 社長）。
+                                  スクロールできることは枠の中の合図（.works-scroll-hint）が受け持つ。
+                                  絵だけの作品（url無し）には合図が出ないので、こちらの一行は残す */
+                            shown.inside.url ? null : (0, i.jsx)(`small`, { children: `SCROLL — 下まで見られます` })]
                     }) : (0, i.jsxs)(`div`, {
                         className: `works-selected-preview`,
                         children: [(0, i.jsx)(`small`, { children: `ORIGINAL ART DIRECTION` }),
@@ -1837,7 +1836,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.f57a309d.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.9db2d28e.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
