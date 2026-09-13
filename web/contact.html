@@ -131,6 +131,13 @@ a { color: inherit }
     font: 700 clamp(7.5px, .62vw, 9.5px)/1.72 Arial, sans-serif
 }
 
+/* 左上のロゴ（2026-09-13）。トップのヘッダーと同じ支給SVG。高さは前の文字「Tilto°」の見かけに合わせる */
+.cf-brand .cf-logo {
+    height: clamp(27px, 2.4vw, 36px);
+    width: auto;
+    display: block
+}
+
 .cf-say { width: min(100%, 470px) }
 
 /* 🔴 トップページのFVの見出しと**同じ寸法・同じ太さ**に揃えてある。
@@ -500,7 +507,7 @@ a { color: inherit }
     <!-- 左：スクロールしても動かない。載せるのは見出しと3つの事実だけ -->
     <aside class="cf-visual">
         <a class="cf-brand" href="./index.html">
-            <i>Tilto<sup>°</sup></i>
+            <img class="cf-logo" src="./images/tilto-logo.svg" alt="Tilto°" width="1020" height="325"/>
             <small>WEB<br/>SITE<br/>STUDIO</small>
         </a>
 

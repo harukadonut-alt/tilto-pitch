@@ -160,6 +160,13 @@ a { color: inherit }
       中央そろえだと**その分だけ下に落ちる**。だから下に余白を持たせて持ち上げている。
    ⚠️ 中央そろえのまま margin-bottom を足すと、塊はその**半分**だけ上がる。
       写真を差し替えたら、コーラルの行のコントラストを測り直すこと。 */
+/* 左上のロゴ（2026-09-13）。トップのヘッダーと同じ支給SVG。高さは前の文字「Tilto°」の見かけに合わせる */
+.cf-brand .cf-logo {
+    height: clamp(27px, 2.4vw, 36px);
+    width: auto;
+    display: block
+}
+
 .cf-say {
     width: min(100%, 470px);
     margin-bottom: clamp(120px, 24vh, 260px)
@@ -444,7 +451,7 @@ a { color: inherit }
     <!-- 左：contact.html と同じ。送信の前後で画面が飛ばないようにしている -->
     <aside class="cf-visual">
         <a class="cf-brand" href="./index.html">
-            <i>Tilto<sup>°</sup></i>
+            <img class="cf-logo" src="./images/tilto-logo.svg" alt="Tilto°" width="1020" height="325"/>
             <small>RECRUITMENT<br/>CREATIVE<br/>STUDIO</small>
         </a>
 

@@ -34,12 +34,12 @@ body {
     grid-template-columns: minmax(0, 1fr)
 }
 
-.reference-about, .reference-problems, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
+.reference-about, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
     justify-self: stretch;
     width: auto
 }
 
-.reference-about, .reference-problems, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
+.reference-about, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
     --black:#111;
     --paper:#f7f4ee;
     --fog:#f7f4ee;
@@ -70,15 +70,15 @@ body {
     --tone-rule:#1111113d;
     --tone-gutter:clamp(22px, 2.2vw, 42px);
 }
-.reference-about, .reference-problems, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
+.reference-about, .process-section, .works-showroom, .blueprint-trust, .reference-price-faq, .reference-contact {
     color: var(--tone-sumi);
     font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
     font-feature-settings: "palt";
     letter-spacing: .025em
 }
-.reference-about *, .reference-problems *, .process-section *, .works-showroom *, .blueprint-trust *, .reference-price-faq *, .reference-contact * { box-sizing: border-box }
-.reference-about a, .reference-problems a, .process-section a, .works-showroom a, .blueprint-trust a, .reference-price-faq a, .reference-contact a { color: inherit; text-decoration: none }
-.reference-about img, .reference-problems img, .process-section img, .works-showroom img, .blueprint-trust img, .reference-price-faq img, .reference-contact img { width: 100%; display: block }
+.reference-about *, .process-section *, .works-showroom *, .blueprint-trust *, .reference-price-faq *, .reference-contact * { box-sizing: border-box }
+.reference-about a, .process-section a, .works-showroom a, .blueprint-trust a, .reference-price-faq a, .reference-contact a { color: inherit; text-decoration: none }
+.reference-about img, .process-section img, .works-showroom img, .blueprint-trust img, .reference-price-faq img, .reference-contact img { width: 100%; display: block }
 
 @keyframes works-flow-left{0%{transform:translate(0)}to{transform:translate(-50%)}}
 @keyframes works-flow-right{0%{transform:translate(-50%)}to{transform:translate(0)}}
@@ -156,7 +156,7 @@ body {
 @media (max-width: 900px){.process-section{height:205vh;min-height:1380px}.process-stage{min-height:650px}.process-stage:before{display:none}.process-label{grid-template-columns:55px 1fr;width:215px;top:86px;left:20px}.process-label b{font-size:29px}.process-label i{height:48px;left:55px}.process-label small{font-size:8px}.process-copy{width:calc(100vw - 40px);top:170px;left:20px}.process-copy h2{font-size:clamp(31px,9vw,48px);line-height:1.4}.process-copy p{margin-top:16px;font-size:9px;line-height:1.9}.process-canvas{inset:0}.process-before-reference{clip-path:inset(0);object-position:70% center;height:56%;top:39%}.process-paper{width:138px;min-height:86px;padding:14px}.process-paper b{font-size:12px}.process-paper:nth-child(n+6){display:none}.process-site-assembly{width:calc(100vw - 28px);height:47vh;min-height:305px;top:43%;right:14px}.process-final-image{width:170%;top:-7%}.process-edit-words{gap:6px;font-size:6px;bottom:11%;right:20px}.process-progress{font-size:5px;bottom:16px;left:20px;right:20px}}
 @media (prefers-reduced-motion:reduce){.process-section{height:100svh;min-height:720px}.process-before-reference,.process-paper-field,.process-guide,.process-edit-words,.process-copy-before,.process-label-before{display:none}.process-copy-after,.process-label-after,.process-site-assembly{opacity:1;transform:none}.process-site-scroll{clip-path:inset(0)}}
 .sr-only{clip:rect(0,0,0,0);white-space:nowrap;border:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}
-.reference-about,.reference-problems,.reference-price-faq,.reference-contact{box-sizing:border-box;position:relative;overflow:hidden}
+.reference-about,.reference-price-faq,.reference-contact{box-sizing:border-box;position:relative;overflow:hidden}
 .reference-about{color:#111;background:#f7f4ee;border-top:1px solid #05050514;height:clamp(430px,33.93vw,520px)}
 .reference-about:before{content:"";z-index:7;width:calc(100% - var(--hero-bridge-progress,0) * 78%);height:max(1px, calc(56px - var(--hero-bridge-progress,0) * 55px));transform-origin:0 0;background:#ff4d4f;position:absolute;top:0;left:0}
 .reference-about:after{content:"";z-index:8;left:calc(5.02vw + var(--hero-bridge-progress,0) * 5.86vw);width:calc(12vw + var(--hero-bridge-progress,0) * 20vw);height:1px;opacity:var(--hero-bridge-progress,0);background:#111;position:absolute;top:0}
@@ -167,7 +167,7 @@ body {
 .reference-about-copy{position:absolute;top:12.18vw;left:10.88vw}
 .reference-about-copy h2{letter-spacing:-.045em;margin:0;font:500 clamp(48px,4.98vw,76px)/1.18 Yu Mincho,Hiragino Mincho ProN,serif}
 .reference-about-copy p{letter-spacing:.015em;margin:2.28vw 0 0 .18vw;font:500 clamp(12px,1.25vw,19px)/1.7 Yu Mincho,Hiragino Mincho ProN,serif}
-.reference-about-facts{width:16.05vw;min-width:224px;margin:0;font-family:Arial,sans-serif;position:absolute;top:11.62vw;right:4.95vw}.reference-about-facts:before{content:'RECRUITMENT CHANGES.';color:#111;letter-spacing:.145em;background:radial-gradient(circle closest-side,#ff4d4f 100%,#0000 0) 0 24px/5px 5px no-repeat;padding-bottom:31px;font:700 clamp(9px,.77vw,11px)/1.45 var(--font-ui);position:absolute;top:-6.92vw;left:0}.reference-about-facts:after{content:'SO DOES THE SITE.';color:#111;letter-spacing:.145em;font:700 clamp(9px,.77vw,11px)/1.45 var(--font-ui);position:absolute;top:-3.52vw;left:0}
+.reference-about-facts{width:16.05vw;min-width:224px;margin:0;font-family:Arial,sans-serif;position:absolute;top:11.62vw;right:4.95vw}.reference-about-facts:before{content:'BUSINESS CHANGES.';color:#111;letter-spacing:.145em;background:radial-gradient(circle closest-side,#ff4d4f 100%,#0000 0) 0 24px/5px 5px no-repeat;padding-bottom:31px;font:700 clamp(9px,.77vw,11px)/1.45 var(--font-ui);position:absolute;top:-6.92vw;left:0}.reference-about-facts:after{content:'SO DOES THE SITE.';color:#111;letter-spacing:.145em;font:700 clamp(9px,.77vw,11px)/1.45 var(--font-ui);position:absolute;top:-3.52vw;left:0}
 .reference-about-facts>div{border-bottom:1px solid #1a1a1a;justify-content:space-between;align-items:flex-start;gap:18px;min-height:60px;margin-bottom:19px;padding:0 0 13px;display:flex}
 .reference-about-facts>div:nth-child(n+3){border-bottom:1px solid #1a1a1a;min-height:41px;margin-bottom:0}
 .reference-about-facts>div:last-child{border-bottom:0;padding-top:18px}
@@ -406,9 +406,9 @@ body {
 @media (max-width: 1000px){.blueprint-trust{height:240svh;min-height:1600px}.blueprint-stage{min-height:650px}.bp-copy{width:42vw;top:12vh;bottom:auto;left:5vw}.bp-copy h2{font-size:clamp(30px,4.8vw,48px)}.bp-description{display:none}.bp-board{transform-origin:100% 100%;width:108vw;height:76vh;top:19vh;right:-12vw;transform:scale(.83)}.bp-vertical{display:none}.bp-progress{left:5vw}}
 @media (max-width: 680px){.blueprint-trust{height:220svh;min-height:1480px}.blueprint-stage{min-height:680px}.bp-section-head{width:64vw;left:5vw}.bp-copy{width:85vw;top:9vh}.bp-copy .bp-phase{display:block}.bp-copy h2{font-size:clamp(30px,9.5vw,48px);line-height:1.32}.bp-copy h3{margin-top:13px;font-size:14px}.bp-board{width:165vw;height:66vh;top:31vh;right:-37vw;transform:scale(.65)}.bp-note p{display:none}.bp-progress{left:5vw;right:5vw}}
 @media (prefers-reduced-motion:reduce){.blueprint-trust{--bp-intro:1;--bp-foundation:1;--bp-information:1;--bp-ui:1;--bp-wire:1;--bp-content:1;--bp-visual:1;--bp-notes:1;--bp-kpi:1;--bp-settle:1;--bp-grid-opacity:.28;--bp-axis-offset:0;--bp-leader-offset:0;--bp-chart-offset:0;--bp-dimension-offset:0;--bp-note-1:1;--bp-note-2:1;--bp-note-3:1;--bp-note-4:1;--bp-note-5:1;--bp-note-6:1;--bp-note-7:1;--bp-note-8:1;--bp-progress:1;height:100svh;min-height:720px}}
-.reference-about,.reference-problems,.process-section,.works-showroom,.blueprint-trust,.reference-price-faq,.reference-contact{border-top:1px solid}
-.reference-about-copy h2,.reference-problems-statement,.process-copy h2,.works-intro h3,.bp-copy h2,.bp-copy h3,.reference-contact>h2{font-family:var(--font-mincho);font-weight:500}
-.reference-section-label,.reference-about-nav,.reference-about-discipline,.reference-about-facts,.reference-problems-label,.reference-problem small,.process-label,.process-progress,.works-brand,.works-intro h2,.works-filters,.works-intro>small,.bp-section-head,.bp-phase,.reference-price-label,.reference-faq,.reference-contact-label,.reference-contact-bottom{font-family:var(--font-ui)}
+.reference-about,.process-section,.works-showroom,.blueprint-trust,.reference-price-faq,.reference-contact{border-top:1px solid}
+.reference-about-copy h2,.process-copy h2,.works-intro h3,.bp-copy h2,.bp-copy h3,.reference-contact>h2{font-family:var(--font-mincho);font-weight:500}
+.reference-section-label,.reference-about-nav,.reference-about-discipline,.reference-about-facts,.process-label,.process-progress,.works-brand,.works-intro h2,.works-filters,.works-intro>small,.bp-section-head,.bp-phase,.reference-price-label,.reference-faq,.reference-contact-label,.reference-contact-bottom{font-family:var(--font-ui)}
 .reference-about-brand{z-index:12;left:var(--tone-gutter);color:var(--tone-sumi);letter-spacing:-.055em;font:800 clamp(20px,1.55vw,27px)/1 Arial,sans-serif;position:absolute;top:22px}
 .reference-about-brand span{vertical-align:top;font-size:.44em}
 .reference-about-nav{z-index:10;left:var(--tone-gutter);letter-spacing:.04em;gap:7px;font-size:7px;font-weight:700;display:grid;position:absolute;top:82px}

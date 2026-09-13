@@ -1,5 +1,5 @@
-import { r as e } from "./rolldown-runtime-S-ySWqyJ.025e67f2.js";
-import { i as t, r as n } from "./framework-DjPHiq1u.025e67f2.js";
+import { r as e } from "./rolldown-runtime-S-ySWqyJ.3babc214.js";
+import { i as t, r as n } from "./framework-DjPHiq1u.3babc214.js";
 var r = e(t(), 1),
     i = n(),
     a = {
@@ -899,7 +899,7 @@ function b({active: e, kind: t, shadowOnly: n=!1}) {
    04 表現ショールーム（GPT製サイトからの移植・2026-08-31）
 
    出どころ: https://tilto-recruiting.haruka-namasute.chatgpt.site
-   フレームワークのバンドル（framework-DjPHiq1u.025e67f2.js / rolldown-runtime-S-ySWqyJ.025e67f2.js）が
+   フレームワークのバンドル（framework-DjPHiq1u.3babc214.js / rolldown-runtime-S-ySWqyJ.3babc214.js）が
    うちのv4と**バイト単位で同一**だったので、Reactコンポーネントのまま持ってこられた。
    絞り込みと詳細ドロワーが動くのは、これが本物のコンポーネントだから。
 
@@ -1305,9 +1305,9 @@ function Showroom() {
                 }),
                 (0, i.jsx)(`h3`, { children: `制作イメージ` }),
                 (0, i.jsxs)(`p`, {
-                    children: [`44の表現サンプルと、2つの制作実績を、業種別に。`, (0, i.jsx)(`br`, {}),
-                        `業界も、職種も、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
-                        `採用サイトは、もっと自由でいい。`]
+                    children: [`多彩な表現サンプルと制作実績を、業種・目的別に。`, (0, i.jsx)(`br`, {}),
+                        `業界も、サービスも、伝え方も、設計も。`, (0, i.jsx)(`br`, {}),
+                        `Webサイトは、もっと自由でいい。`]
                 })]
         }), (0, i.jsx)(`div`, {
             className: `works-moving-field`,
@@ -1487,7 +1487,7 @@ function x() {
         })]
     }), (0, i.jsxs)(`section`, {
             className: `hero-canvas${e ? ` is-moving` : ` is-paused`}`,
-            "aria-label": `Tilto 採用サイト制作サービス`,
+            "aria-label": `Tilto Webサイト制作サービス`,
             onPointerMove: e => {
                 let t = n.current;
                 if (!t)
@@ -1511,7 +1511,7 @@ function x() {
                         className: `eyebrow-line`,
                         "aria-hidden": `true`
                     }), (0, i.jsx)(`strong`, {
-                        children: `RECRUITING SITE STUDIO`
+                        children: `WEB SITE STUDIO`
                     }), (0, i.jsx)(`span`, {
                         className: `eyebrow-dash`,
                         "aria-hidden": `true`
@@ -1524,7 +1524,7 @@ function x() {
                        load後に足したDOM（メニュー等）も巻き添えで消える
                        （2026-08-24に発覚） */
                     children: [(0, i.jsxs)(`span`, {
-                        children: [`採用サイトの、`, (0, i.jsx)(`i`, {
+                        children: [`Webサイトの、`, (0, i.jsx)(`i`, {
                             className: `hl-band`,
                             "aria-hidden": `true`
                         }), (0, i.jsx)(`i`, {
@@ -1555,10 +1555,10 @@ function x() {
                     })]
                 }), (0, i.jsx)(`p`, {
                     className: `service-tag`,
-                    children: `プロと作る新しい採用サイト`
+                    children: `プロとつくる、育てるWebサイト。`
                 }), (0, i.jsxs)(`p`, {
                     className: `service-chip`,
-                    children: [`採用コンサルタント `, (0, i.jsx)(`b`, { children: `×` }), ` Web制作`]
+                    children: [`企画・設計 `, (0, i.jsx)(`b`, { children: `×` }), ` Web制作`]
                 })]
             }), (0, i.jsxs)(`div`, {
                 className: `ribbon-cast-shadow-scene`,
@@ -1647,7 +1647,7 @@ function x() {
                         })]
                     }), (0, i.jsx)(`p`, {
                         className: `price-note`,
-                        children: `月額2.7万円から。必要な表現を足しながら、採用サイトを育てていけます。`
+                        children: `月額2.7万円から。必要な表現を足しながら、Webサイトを育てていけます。`
                     })]
                 }), (0, i.jsxs)(`article`, {
                     className: `price-card`,
@@ -1727,13 +1727,13 @@ function x() {
                                 (0, i.jsxs)(`span`, {
                                 className: `hl-line`,
                                 children: [(0, i.jsx)(`em`, { children: `「育てる」` }),
-                                    (0, i.jsx)(`br`, { className: `sp-only` }), `採用サイト`,
+                                    (0, i.jsx)(`br`, { className: `sp-only` }), `Webサイト`,
                                     (0, i.jsx)(`b`, { children: `。` }),
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                             })]
                         }),
                         (0, i.jsxs)(`p`, {
-                            children: [`採用の変化に合わせて、`, (0, i.jsx)(`br`, { className: `sp-only` }),
+                            children: [`事業の変化に合わせて、`, (0, i.jsx)(`br`, { className: `sp-only` }),
                                 `更新・改善しつづける。`]
                         })]
                 }),
@@ -1744,10 +1744,10 @@ function x() {
                        要素ごと消すとラベルも消えるので注意。
                        中身は 2026-09-03 に社長指示でサービス説明を入れた（元は空） */
                     children: [(0, i.jsx)(`p`, {
-                            children: `Tiltoは、採用マーケティング会社Savor Flowが提供する、採用ブランディングサービスです。`
+                            children: `Tiltoは、株式会社Savor Flowが提供する、Webサイトの制作・運用サービスです。`
                         }),
                         (0, i.jsx)(`p`, {
-                            children: `AIを制作プロセスに取り入れ、採用コンサルタントとデザイナーが、サイトの制作から公開後の改善まで伴走します。`
+                            children: `AIを制作プロセスに取り入れ、企画・設計からデザイン、公開後の改善まで伴走します。`
                         })]
                 })]
         }),
@@ -1761,7 +1761,7 @@ function x() {
                     (0, i.jsxs)(`h2`, {
                         id: `reference-hurdles-title`,
                         className: `hu-head`,
-                        children: [`採用サイトのハードルを、ひとつずつなくす`,
+                        children: [`Webサイト制作のハードルを、`, (0, i.jsx)(`br`, { className: `sp-only` }), `ひとつずつなくす`,
                             (0, i.jsx)(`i`, { children: `。` })]
                     }),
                     (0, i.jsxs)(`p`, {
@@ -1835,7 +1835,7 @@ function x() {
                         children: [
                             /* 🔴 他の節（01・03・05）と同じ「幕を剥がす」演出。
                                幕は4枚重ねで、薄い色から順に右→左へ抜け、最後に文字色の幕が
-                               抜けて文字が立ち上がる。動かすのは motion.025e67f2.js の wipe()。
+                               抜けて文字が立ち上がる。動かすのは motion.3babc214.js の wipe()。
                                ⚠️ 中に <i>。</i> があって :nth-child の数がずれるので、
                                   色は hl-b1〜hl-b4 の**明示クラス**で決めている */
                             (0, i.jsxs)(`span`, {
@@ -1849,7 +1849,7 @@ function x() {
                             (0, i.jsx)(`br`, { className: `sp-only` }),
                             (0, i.jsxs)(`span`, {
                                 className: `hl-line`,
-                                children: [`育てる採用サイト`,
+                                children: [`育てるWebサイト`,
                                     (0, i.jsx)(`i`, { children: `。` }),
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }),
                                     (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }),
@@ -1904,14 +1904,16 @@ function x() {
                                     })]
                                 }),
                                 (0, i.jsxs)(`p`, {
-                                    children: [`言葉にならなかった想いを整理し、`,
+                                    children: [`会社のこと。サービスのこと。届けたい相手のこと。`,
                                         (0, i.jsx)(`br`, {}),
-                                        `採用サイトという形で、未来へつなげます。`]
+                                        `まだ整理されていない想いを言葉にし、`,
+                                        (0, i.jsx)(`br`, {}),
+                                        `Webサイトという形へ落とし込みます。`]
                                 })]
                         }),
                         (0, i.jsxs)(`div`, {
                             className: `process-canvas`,
-                            "aria-label": `散らばった相談資料が整理され、完成した採用サイトへ変わる様子`,
+                            "aria-label": `散らばった相談資料が整理され、完成したWebサイトへ変わる様子`,
                             children: [(0, i.jsx)(`img`, {
                                     className: `process-before-reference`,
                                     loading: `lazy`,
@@ -1952,29 +1954,26 @@ function x() {
                                             style: { left: `50%`, top: `29%` },
                                             children: (0, i.jsxs)(`b`, {
                                                     children: [(0, i.jsx)(`span`, {
-                                                            children: `若い人に`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `届いてほしい`
-                                                        })]
+                                                        children: `構成・デザイン・写真？`
+                                                    })]
                                                 })
                                         }),
                                         (0, i.jsx)(`article`, {
-                                            className: `process-paper process-paper-note`,
+                                            className: `process-paper process-paper-note process-paper-small`,
                                             "data-paper": `2`,
                                             "data-dx": `-5`,
                                             "data-dy": `17`,
                                             "data-r": `2.7`,
                                             "data-end-r": `0`,
                                             "data-keep": `true`,
-                                            style: { left: `78%`, top: `29%` },
+                                            style: { left: `74%`, top: `29%` },
                                             children: (0, i.jsxs)(`b`, {
                                                     children: [(0, i.jsx)(`span`, {
-                                                            children: `仕事の意味を`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `伝えたい`
-                                                        })]
+                                                        children: `何を一番伝えるべきだろう？`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `このサービスの強みってなんだろう？`
+                                                    })]
                                                 })
                                         }),
                                         (0, i.jsx)(`article`, {
@@ -1988,11 +1987,11 @@ function x() {
                                             style: { left: `63%`, top: `48%` },
                                             children: (0, i.jsxs)(`b`, {
                                                     children: [(0, i.jsx)(`span`, {
-                                                            children: `うちの魅力って`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `なんだろう？`
-                                                        })]
+                                                        children: `自分たちらしさって`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `なんだろう？`
+                                                    })]
                                                 })
                                         }),
                                         (0, i.jsxs)(`article`, {
@@ -2028,32 +2027,35 @@ function x() {
                                             style: { left: `82%`, top: `51%` },
                                             children: (0, i.jsxs)(`b`, {
                                                     children: [(0, i.jsx)(`span`, {
-                                                            children: `採用サイト？`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `パンフレット？`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `動画？ SNS？`
-                                                        })]
+                                                        children: `コーポレートサイト？`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `サービスサイト？採用サイト？`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `何を、どこまで載せればいい？`
+                                                    })]
                                                 })
                                         }),
                                         (0, i.jsx)(`article`, {
-                                            className: `process-paper process-paper-note`,
+                                            className: `process-paper process-paper-note process-paper-mid`,
                                             "data-paper": `6`,
                                             "data-dx": `7`,
                                             "data-dy": `-15`,
                                             "data-r": `1.1`,
                                             "data-end-r": `0`,
                                             "data-keep": `false`,
-                                            style: { left: `62%`, top: `71%` },
+                                            style: { left: `60%`, top: `71%` },
                                             children: (0, i.jsxs)(`b`, {
                                                     children: [(0, i.jsx)(`span`, {
-                                                            children: `かっこよくしたい。`
-                                                        }),
-                                                        (0, i.jsx)(`span`, {
-                                                            children: `でも、軽くしたくない。`
-                                                        })]
+                                                        children: `ちゃんとして見せたい。`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `でも、堅くはしたくない。`
+                                                    }),
+                                                    (0, i.jsx)(`span`, {
+                                                        children: `他社と同じにはしたくない。`
+                                                    })]
                                                 })
                                         }),
                                         (0, i.jsxs)(`article`, {
@@ -2210,7 +2212,7 @@ function x() {
                                         (0, i.jsx)(`br`, {}),
                                         (0, i.jsxs)(`span`, {
                                         className: `hl-line`,
-                                        children: [`採用は動かない。`,
+                                        children: [`サイトは機能しない。`,
                                             (0, i.jsx)(`i`, { className: `hl-band hl-b1`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b2`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b3`, "aria-hidden": `true` }), (0, i.jsx)(`i`, { className: `hl-band hl-b4`, "aria-hidden": `true` })]
                                     })]
                                 }),
@@ -2224,9 +2226,12 @@ function x() {
                                     children: `DESIGN PRINCIPLE / 01`
                                 }),
                                 (0, i.jsxs)(`p`, {
-                                    children: [`Tiltoでは、デザインクオリティは大前提に、`, (0, i.jsx)(`br`, {}),
-                                        `採用コンサルタントがこれまでの採用支援で培ってきたノウハウを活用し、`, (0, i.jsx)(`br`, {}),
-                                        `「応募が集まる採用サイト」を設計します。`]
+                                    children: [`Tiltoでは、デザインクオリティは大前提。`, (0, i.jsx)(`br`, {}),
+                                        `そのうえで、誰に、何を伝え、どんな行動につなげるのかを整理します。`]
+                                }),
+                                (0, i.jsxs)(`p`, {
+                                    children: [`企業理解、サービス理解、ターゲット設計から入り、`, (0, i.jsx)(`br`, {}),
+                                        `目的から逆算したWebサイトを設計します。`]
                                 })]
                         })]
                             }), ,
@@ -2537,20 +2542,20 @@ function x() {
                                                 (0, i.jsxs)(`div`, {
                                                     className: `bp-wire-copy2`,
                                                     children: [(0, i.jsx)(`small`, {
-                                                            children: `RECRUITING SITE STUDIO — TILTO°`
+                                                            children: `WEB SITE STUDIO — TILTO°`
                                                         }),
                                                         (0, i.jsxs)(`strong`, {
-                                                            children: [`採用サイトの、`,
+                                                            children: [`Webサイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
                                                                 (0, i.jsx)(`span`, {
                                                                     children: `新しい持ち方。`
                                                                 })]
                                                         }),
                                                         (0, i.jsx)(`p`, {
-                                                            children: `プロと作る新しい採用サイト`
+                                                            children: `プロとつくる、育てるWebサイト。`
                                                         }),
                                                         (0, i.jsxs)(`b`, {
-                                                            children: [`採用コンサルタント`,
+                                                            children: [`企画・設計`,
                                                                 (0, i.jsx)(`i`, {
                                                                     children: `×`
                                                                 }),
@@ -2660,7 +2665,7 @@ function x() {
                                                             children: `CORE MESSAGE`
                                                         }),
                                                         (0, i.jsxs)(`strong`, {
-                                                            children: [`採用サイトの、`,
+                                                            children: [`Webサイトの、`,
                                                                 (0, i.jsx)(`br`, {}),
                                                                 (0, i.jsx)(`span`, {
                                                                     children: `新しい持ち方。`
@@ -3582,7 +3587,7 @@ function x() {
                                                     children: `A.`
                                                 }),
                                                 (0, i.jsx)(`span`, {
-                                                    children: `実際に応募が集まるサイトを、お手軽に制作可能です。`
+                                                    children: `制作して終わりではなく、月額制で公開後の更新・改善まで伴走することです。AIを活用することで、オリジナルデザインとスピード、価格の両立を実現しています。`
                                                 })]
                                         })]
                                 })]
@@ -3592,9 +3597,9 @@ function x() {
             className: `reference-contact`,
             id: `contact`,
             children: [                (0, i.jsxs)(`h2`, {
-                    children: [`らしさを、`,
+                    children: [`「らしさ」を、`,
                         (0, i.jsx)(`br`, {}),
-                        `採用の力に。`]
+                        `ちゃんと形に。`]
                 }),
                 (0, i.jsxs)(`a`, {
                     className: `contact-cta`,

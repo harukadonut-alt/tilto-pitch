@@ -1,7 +1,7 @@
 /* ============================================================
    うちで作り直した節（移植したGPT製のCSSより後に読む）
 
-   assets/gpt-sections.a1723e33.css は「向こうのサイトから機械で抜いたCSS」で、
+   assets/gpt-sections.3babc214.css は「向こうのサイトから機械で抜いたCSS」で、
    cssx.py / cssfin.py で作り直せる**生成物**。手で書いた指定はここに置く。
    ============================================================ */
 
@@ -23,271 +23,25 @@
    ⚠️ 寸法の単位は `--u`。`min(1vw, …)` で**節の高さと一緒に頭打ち**にしてある。
       素の vw だけで組むと、広い画面で高さだけ clamp されて文字がはみ出す（前版がそうだった）。
    ------------------------------------------------------------------ */
-.reference-problems {
-    /* 620px ÷ 41.7 = 14.87px。高さが頭打ちになる幅で、文字も一緒に止まる */
-    --u: min(1vw, 14.87px);
-
-    /* 🔴 動きの既定値は「着地後」。motion.a1723e33.js が動かない場合
-       （JS無効・prefers-reduced-motion）でも、そのまま読める状態で出る */
-    --pb-black: 1;
-    --pb-high: 1;
-    --pb-slow: 1;
-    --pb-result: 1;
-    --pb-note-1: 1;
-    --pb-note-2: 1;
-    --pb-note-3: 1;
-    --pb-line-1: 1;
-    --pb-line-2: 1;
-    --pb-closing: 1;
-
-    color: #f7f4ee;
-    background: #111;
-    border-bottom: 1px solid var(--tone-coral);
-    height: clamp(560px, 41.7vw, 620px);
-    position: relative;
-    overflow: hidden;
-    isolation: isolate
-}
 
 /* 黒い紙面が下からせり上がる。白い面が上へ抜けて、黒が下から出てくる。
    ⚠️ scaleY で畳むと文字が潰れて見えるので、translate で抜く */
-.reference-problems::before {
-    content: "";
-    z-index: 8;
-    pointer-events: none;
-    background: var(--tone-paper);
-    translate: 0 calc(var(--pb-black) * -100%);
-    position: absolute;
-    inset: 0
-}
-
-.reference-problems-label {
-    color: #f7f4ee;
-    top: calc(var(--u) * 2.6);
-    opacity: var(--pb-black)
-}
-
-.reference-problem {
-    position: absolute;
-    inset: 0
-}
-
-.reference-problem strong {
-    color: #f7f4ee;
-    letter-spacing: -.12em;
-    white-space: nowrap;
-    margin: 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-weight: 500;
-    line-height: .82;
-    display: block;
-    position: absolute
-}
 
 /* 補助説明。小さく散らす */
-.reference-problem p {
-    color: #f7f4eee6;
-    margin: 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-weight: 500;
-    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
-    line-height: 1.7;
-    position: absolute
-}
 
 /* 編集者の赤入れ。細く鋭く、2本だけ */
-.reference-problem i {
-    background: var(--tone-coral);
-    transform-origin: 0 50%;
-    height: 1px;
-    position: absolute
-}
 
 /* --- 左: 高い（少し小さめ・左端で切れたまま） --- */
-.reference-problem-high strong {
-    font-size: calc(var(--u) * 13.2);
-    top: calc(var(--u) * 9.4);
-    left: calc(var(--u) * -1.4);
-    opacity: var(--pb-high);
-    translate: calc((1 - var(--pb-high)) * -100px) 0
-}
-
-.reference-problem-high p {
-    top: calc(var(--u) * 21.2);
-    left: calc(var(--u) * 5.6);
-    opacity: var(--pb-note-1);
-    translate: 0 calc((1 - var(--pb-note-1)) * 14px)
-}
-
-.reference-problem-high i {
-    width: calc(var(--u) * 8.3);
-    top: calc(var(--u) * 20.8);
-    left: calc(var(--u) * 14.2);
-    rotate: -30deg;
-    scale: var(--pb-line-1) 1
-}
 
 /* --- 中央: 遅い（主役） --- */
-.reference-problem-late strong {
-    font-size: calc(var(--u) * 16.6);
-    top: calc(var(--u) * 8);
-    left: calc(var(--u) * 36.5);
-    transform-origin: 50% 100%;
-    opacity: var(--pb-slow);
-    scale: calc(.94 + var(--pb-slow) * .06);
-    translate: 0 calc((1 - var(--pb-slow)) * 32px)
-}
-
-.reference-problem-late p {
-    top: calc(var(--u) * 22.6);
-    left: calc(var(--u) * 41.8);
-    opacity: var(--pb-note-2);
-    translate: 0 calc((1 - var(--pb-note-2)) * 14px)
-}
 
 /* --- 右: 成果が見えない（縦組みで静かに強く） --- */
-.reference-problem-result strong {
-    letter-spacing: -.08em;
-    writing-mode: vertical-rl;
-    font-size: calc(var(--u) * 6);
-    line-height: 1.03;
-    top: calc(var(--u) * 5.9);
-    right: calc(var(--u) * 3.6);
-    opacity: var(--pb-result);
-    translate: calc((1 - var(--pb-result)) * 70px) 0
-}
-
-.reference-problem-result p {
-    top: calc(var(--u) * 24.3);
-    left: calc(var(--u) * 70.6);
-    opacity: var(--pb-note-3);
-    translate: 0 calc((1 - var(--pb-note-3)) * 14px)
-}
-
-.reference-problem-result i {
-    width: calc(var(--u) * 7);
-    top: calc(var(--u) * 23.3);
-    left: calc(var(--u) * 76.5);
-    rotate: -34deg;
-    scale: var(--pb-line-2) 1
-}
 
 /* --- 着地点。大きくしすぎず、左下に上品に --- */
-.reference-problems-statement {
-    z-index: 5;
-    margin: 0;
-    position: absolute;
-    bottom: calc(var(--u) * 3.4);
-    left: calc(var(--u) * 5.02);
-    opacity: var(--pb-closing);
-    translate: 0 calc((1 - var(--pb-closing)) * 12px)
-}
-
-.reference-problems-statement b {
-    color: var(--tone-coral);
-    letter-spacing: .1em;
-    margin-bottom: calc(var(--u) * .95);
-    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
-    display: block
-}
-
-.reference-problems-statement span {
-    color: #f7f4ee;
-    letter-spacing: .01em;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(26px, calc(var(--u) * 2.85), 42px);
-    font-weight: 500;
-    line-height: 1.2;
-    display: block
-}
-
-.reference-problems-statement i {
-    color: var(--tone-coral);
-    font-style: normal
-}
 
 /* --- 右下のSCROLL。主張させない --- */
-.reference-problems-scroll {
-    color: #f7f4ee8f;
-    letter-spacing: .24em;
-    writing-mode: vertical-rl;
-    font: 700 clamp(7px, calc(var(--u) * .62), 9.5px)/1 Arial, sans-serif;
-    position: absolute;
-    right: calc(var(--u) * 2.4);
-    bottom: calc(var(--u) * 6.6);
-    opacity: calc(var(--pb-closing) * .9)
-}
-
-.reference-problems-scroll i {
-    background: #f7f4ee45;
-    width: 1px;
-    height: calc(var(--u) * 4.2);
-    display: block;
-    position: absolute;
-    top: calc(100% + var(--u) * .9);
-    left: calc(50% - .5px)
-}
 
 /* --- SP: 縦に積む。巨大文字は残すが、線と縦組みは畳む --- */
-@media (max-width: 900px) {
-    .reference-problems {
-        --u: min(2.6vw, 11px);
-        height: auto;
-        min-height: 0;
-        padding: 88px 22px 40px
-    }
-
-    .reference-problems-label {
-        top: 34px;
-        left: 22px
-    }
-
-    .reference-problem,
-    .reference-problem strong,
-    .reference-problem p,
-    .reference-problems-statement,
-    .reference-problems-scroll {
-        position: static;
-        inset: auto
-    }
-
-    .reference-problem {
-        margin-bottom: 34px
-    }
-
-    .reference-problem strong {
-        font-size: 27vw;
-        margin-left: -.06em
-    }
-
-    .reference-problem-late strong {
-        font-size: 30vw
-    }
-
-    /* 縦組みは幅を食うので、SPでは横組みに戻す */
-    .reference-problem-result strong {
-        writing-mode: horizontal-tb;
-        font-size: 15vw;
-        line-height: 1.14
-    }
-
-    .reference-problem p {
-        margin-top: 12px;
-        font-size: 13px
-    }
-
-    .reference-problem i {
-        display: none
-    }
-
-    .reference-problems-statement {
-        margin-top: 44px
-    }
-
-    .reference-problems-scroll {
-        display: none
-    }
-}
 
 /* ── 03 AFTER 「曖昧な相談が、採用サイトになる。」 ──────────────────
    役割は**感動体験の着地点**。BEFOREの散らばった相談が、
@@ -763,7 +517,7 @@
 
    ⚠️ FVは `.hl-band:nth-child(N)` で色を決めているが、02の着地コピーは
       中に <i>。</i> があって数がずれる。ここは **hl-b1〜hl-b4 の明示クラス**で指定する。
-   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.a1723e33.css）。bands.a1723e33.js が動かなくても文字は読める。
+   ⚠️ 幕の既定は scaleX(0)＝見えない（coral.3babc214.css）。bands.3babc214.js が動かなくても文字は読める。
    ⚠️ 一番下に敷く hl-b1 は**その節の文字色**にする。これが最後に抜けるので、
       文字がその色から立ち上がって見える。
    ------------------------------------------------------------------ */
@@ -783,16 +537,16 @@
 
 /* 黒地・紙文字の節（02 ハードルの締め / 05 成果にこだわる）
    ⚠️ 一番下の hl-b1 は**その節の文字色**。02の締めは #fff なのでここだけ紙色ではなく白 */
-.reference-problems .hl-b1,
+
 .blueprint-trust .hl-b1 { background: #f7f4ee }
 .reference-hurdles .hl-b1 { background: #fff }
-.reference-problems .hl-b2,
+
 .reference-hurdles .hl-b2,
 .blueprint-trust .hl-b2 { background: var(--tone-coral, #ff4d4f) }
-.reference-problems .hl-b3,
+
 .reference-hurdles .hl-b3,
 .blueprint-trust .hl-b3 { background: #c9352f }
-.reference-problems .hl-b4,
+
 .reference-hurdles .hl-b4,
 .blueprint-trust .hl-b4 { background: #2c2a27 }
 
@@ -854,7 +608,7 @@
       節が画面に入ってきた瞬間から**幽霊のように薄く見えていた**。
       `--bp-arrive`（節が入ってくる間の進捗）で図面ぜんぶをゲートする。
 
-   ⚠️ 既定値は 1。motion.a1723e33.js が動かないとき（JS無効・prefers-reduced-motion）は
+   ⚠️ 既定値は 1。motion.3babc214.js が動かないとき（JS無効・prefers-reduced-motion）は
       最初から図面が見えている状態にする。0を既定にすると**図面が永遠に出ない**。
    ------------------------------------------------------------------ */
 .blueprint-trust {
@@ -1569,7 +1323,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
    ------------------------------------------------------------------ */
 /* 🔴 PC限定にする。cqw は**FVの幅**の1/100なので、SP（FV幅375px）だと
    .81cqw = 3px になってしまう（一度これでSPを壊した）。
-   SPは coral.a1723e33.css が px で指定していて、そちらはすでに12px あり十分。 */
+   SPは coral.3babc214.css が px で指定していて、そちらはすでに12px あり十分。 */
 @media (min-width: 701px) {
     .price-label { font-size: calc(.81 * var(--fv-u)) }          /* 9.1 → 11.7px */
     .price-label span { font-size: calc(.84 * var(--fv-u)) }     /* 9.5 → 12.1px */
@@ -1582,7 +1336,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
    ・枠 54vw → 57vw（右の余白を 3.6→3.0vw に詰めて、左のコピーとの間は37px残す）
    ・節を 205vh → 240vh。同じ物語を長いスクロールに割り当てる＝**送りがゆっくりになる**
    ⚠️ 枠の開き（--process-site-clip）は中身のスクロールより先に終わらせる。
-      重なっていると、サイトの上が切れたまま中身が動き出す（motion.a1723e33.js 側で .74 と .80 に分けた）。
+      重なっていると、サイトの上が切れたまま中身が動き出す（motion.3babc214.js 側で .74 と .80 に分けた）。
    ------------------------------------------------------------------ */
 .process-section {
     height: 240vh;
@@ -1720,7 +1474,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
 }
 
 @media (max-width: 900px) {
-    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.a1723e33.css の断片）。下限を守る */
+    /* 03 リードのSPが9pxまで落ちていた（gpt-sections.3babc214.css の断片）。下限を守る */
     .process-copy p {
         font-size: 12px
     }
@@ -1952,12 +1706,12 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
 
    原因: **私が後から書いた高さ指定が、reduced-motion のフォールバックを殺していた。**
      ・03（`.process-section`）は 240vh・sticky な舞台900px＝**約1400px ピン留め**される。
-       その間の見た目は motion.a1723e33.js が動かしている
-     ・motion.a1723e33.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
+       その間の見た目は motion.3babc214.js が動かしている
+     ・motion.3babc214.js は先頭で `prefers-reduced-motion: reduce` なら **early return** する
      ・移植元は保険として `@media (prefers-reduced-motion) .process-section { height:100svh }`
        を持っていた（1画面に畳んで完成形を見せる）
      ・ところが 2026-08-31 に「送りをゆっくりに」で `.process-section { height:240vh }` を
-       **coral-sections.a1723e33.css（最後に読む）へ無条件で**書いた。
+       **coral-sections.3babc214.css（最後に読む）へ無条件で**書いた。
        メディアクエリは詳細度を上げないので、**後ろの無条件ルールが勝つ**。
        結果、OSで「視差効果を減らす」がONの人は、動かない画面を1400px スクロールさせられていた
      ・05（`.blueprint-trust`）は後から高さを触っていないので無事だった
@@ -2303,7 +2057,7 @@ button.works-rail-item:focus-visible { outline: 2px solid var(--tone-coral); out
      ・パネル6枚 … 下限 .06 → **0**（完全に消す）
      ・方眼の罫  … .08 → **.19**（はっきり「罫線がある」と分かる濃さ）
 
-   ⚠️ 方眼の濃さは motion.a1723e33.js が `(.08 + foundation * .2)` で上書きするので、
+   ⚠️ 方眼の濃さは motion.3babc214.js が `(.08 + foundation * .2)` で上書きするので、
       **CSSだけ直しても効かない**。JS側の式も一緒に直すこと。
    ------------------------------------------------------------------ */
 .blueprint-trust .bp-base {
@@ -2474,11 +2228,6 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ボックス同士は28px離れていても、見た目は注釈に触りそうだった（遅いは4px重なり）。
    注釈を約25〜28px下へ。赤入れの線も一緒に下げて、glyph→注釈の橋のまま保つ。
    ⚠️ SPは静的フロー（margin-top:12px）なので触らない。PCの絶対配置だけ。 */
-.reference-problem-high p { top: calc(var(--u) * 22.9) }
-
-.reference-problem-high i { top: calc(var(--u) * 22.5) }
-
-.reference-problem-late p { top: calc(var(--u) * 24.5) }
 
 /* ── 01 仕様リストを削除（2026-09-02・社長指示「これいらないよ」）────────
    つくる/そだてる/きりかえる/わたす の4行を削除。
@@ -2496,13 +2245,6 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    元は「2本だけ」の設計だったが、3枚並ぶと真ん中だけ無いのが欠けて見える。
    注釈（left 41.8u / top 24.5u）の右肩から、遅いの「い」へ向けて上がる線。
    出るタイミングは左(.58)と右(.66)の間＝.62。左→中→右の順に引かれる */
-.reference-problem-late i {
-    width: calc(var(--u) * 7.6);
-    top: calc(var(--u) * 24.1);
-    left: calc(var(--u) * 51.6);
-    rotate: -31deg;
-    scale: var(--pb-line-mid, 0) 1
-}
 
 /* ── 04 ホバーで他のFVに飛ぶ・カクつく（2026-09-02・社長指摘。再発）────────
    🔴 原因は8/31に直したのと同じ型: **再生中に animation-duration を変えると、
@@ -2541,7 +2283,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .works-showroom[data-drawer-open="true"] .works-lane-4 .works-track { animation-duration: 156s }
 
 /* ── 01 A案ラベルをもう少し下へ（2026-09-02・社長指示）────────────────
-   gpt-sections.a1723e33.css の初期位置（before -6.92vw / after -3.52vw）だと
+   gpt-sections.3babc214.css の初期位置（before -6.92vw / after -3.52vw）だと
    節の最上部（y69）に浮いていた。+4.3vw（1456pxで約63px）下げて、
    見出し「つくる。だけじゃない。」の上端に寄せる。2行の間隔(3.4vw)は保つ */
 .reference-about-facts:before { top: -2.62vw }
@@ -2578,7 +2320,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 }
 
 /* ── FV SP: イントロ中のピンクの帯が右に寄って見える（2026-09-03・社長指摘）──
-   🔴 padding-left:5.6vw（coral.a1723e33.css・700px以下）は**約物の光学調整で、正しい**。
+   🔴 padding-left:5.6vw（coral.3babc214.css・700px以下）は**約物の光学調整で、正しい**。
       行末が「、」「。」なので、中央揃えだと文字が左に寄って見える分を右へ送っている
       （2026-08-24 社長の指摘で入れた）。**これは絶対に外さない。**
       一度 padding を0にして「直った」と誤判定しかけた。文字の矩形は
@@ -2785,7 +2527,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    ⚠️ mask は -webkit- も要る（Safari）。両方書く。 */
 .process-before-reference {
     /* 🔴 2026-09-05: 上のぼかしは**一度も効いていなかった**。
-       この画像には gpt-sections.a1723e33.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
+       この画像には gpt-sections.3babc214.css の `clip-path: inset(0 0 0 35.9%)` が掛かっていて、
        ぼかしの左フェード（0〜32% ＝ 1456px幅で x0〜466）は**丸ごと切り落とされる側**にある。
        残るのは x523 から不透明度82%でいきなり始まる面＝**あの縦の直線**。
        → 切り抜きをやめて、ぼかしだけで溶かす（社長の選択）。
@@ -3056,7 +2798,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       白い板が上に乗り、下の「読み込んでいます」は最初から見えていなかった
       （2026-09-09 社長のスクショ＝真っ白な枠）。
    → **覆いを iframe より前に出し、読み終わったら消す**形に変えた。
-     消すのは motion.a1723e33.js（`data-loaded="true"` を付ける）。
+     消すのは motion.3babc214.js（`data-loaded="true"` を付ける）。
      ⚠️ reduced-motion でも消えないと困るので、あちらでは早期returnより前に置いてある。
 
    🔴 色はコーラル（2026-09-09 社長「真っ白じゃなくて色もつけて。コーラル?」）。
@@ -3109,7 +2851,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     100% { transform: translateX(294%) }
 }
 
-/* 読み終わったら覆いを外す。付けるのは motion.a1723e33.js。
+/* 読み終わったら覆いを外す。付けるのは motion.3babc214.js。
    ⚠️ 地もコーラルから紙色に戻す。読み込んだサイトに透ける所があると、
       コーラルのままでは相手のデザインに赤が混ざる */
 .works-site-frame[data-loaded="true"] { background: #f7f4ee }
@@ -3169,7 +2911,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
    🔴 最上層は手組みのモック（.bp-site-nav/.bp-site-hero）を捨てて <img> 1枚。
       面の比（58.8%×29.1%＝約2.37:1）はFV（1.775:1）より横長なので、上端合わせで
       下の料金帯だけが切れる。見出しと帯が残れば十分に「このページ」と分かる。
-   🔴 環の割合は 5/7＝71.4%。motion.a1723e33.js の数字（05 / 07）と一致させる。 */
+   🔴 環の割合は 5/7＝71.4%。motion.3babc214.js の数字（05 / 07）と一致させる。 */
 .bp-visual {
     overflow: hidden
 }
@@ -3328,236 +3070,17 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 .bp-ct-flow span::after { content: '↓'; position: absolute; left: 4px; bottom: -8px; font: 700 6px/1 Arial, sans-serif; color: var(--bp-coral) }
 .bp-ct-flow em { background: var(--bp-coral); border-color: var(--bp-coral) }
 
-/* ── 02 BEFORE の見出し／02b AFTER の節（2026-09-05・0904定例 かずさん）────
-   メモ: 「このページが『私たちが解決する課題』に該当する。before⇒after形式で
-   コピー『採用サイトは、ハードルが高い。』／具体的な悩み4つ／Tiltoならできること4つ を入れたい」
 
-   組み方:
-   ・BEFORE(02) は黒い紙に巨大明朝。ここは触らず、左上に見出しだけ足した
-   ・AFTER は**同じ版面・同じ単位(--u)・同じ明朝で、色を反転**（黒→紙）。
-     悩み→解決 の切り替わりを、色の反転ひとつで見せる
-   ・4つの悩みは AFTER 側の各項目の上に小さく置き、赤線で消す（02の「赤入れ」の続き）。
-     その下に大きな答え（27,000円〜／1週間／伴走／オリジナルデザイン）。
-     BEFOREの3語と1対1にせず、4つの悩みを4つの答えに対応させている
-   ⚠️ 金額はメモの「月2万円〜」ではなく、サイト全体に合わせて 27,000円〜 にした
-   ------------------------------------------------------------------ */
-.reference-problems-head {
-    z-index: 5;
-    margin: 0;
-    position: absolute;
-    top: calc(var(--u) * 2.4);
-    left: calc(var(--u) * 5.02);
-    opacity: var(--pb-black);
-    translate: 0 calc((1 - var(--pb-black)) * 10px)
-}
 
-.reference-problems-head b,
-.reference-after-head b {
-    color: var(--tone-coral);
-    letter-spacing: .24em;
-    margin-bottom: calc(var(--u) * .75);
-    font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif;
-    display: block
-}
-
-.reference-problems-head span,
-.reference-after-head span {
-    color: #f7f4ee;
-    letter-spacing: .01em;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(18px, calc(var(--u) * 2.1), 31px);
-    font-weight: 500;
-    line-height: 1.2;
-    display: block
-}
-
-.reference-after {
-    /* 🔴 親(main)はグリッド。gpt-sections.a1723e33.css は節名を列挙して stretch している
-       (`.reference-about, .reference-problems, …{justify-self:stretch;width:auto}`)。
-       新しい節はその列挙に無いので、書かないと幅0で中央に潰れる（最初これで白紙になった） */
-    justify-self: stretch;
-    width: auto;
-    /* 🔴 --tone-* も gpt-sections.a1723e33.css が節名を列挙して定義している。ここに無いと
-       var(--tone-coral) が未定義 → 赤線の gradient が none、AFTERの英字が黒になる */
-    --tone-coral: #ff4d4f;
-    --tone-paper: #f7f4ee;
-    --tone-sumi: #111;
-    --tone-rule: #1111113d;
-    --u: min(1vw, 14.87px);
-    /* 🔴 既定値は「着地後」。JS無効・reduced-motion でもそのまま読める */
-    --af-head: 1;
-    --af-1: 1;
-    --af-2: 1;
-    --af-3: 1;
-    --af-4: 1;
-    /* 2026-09-06 社長: AFTERが紙色だと03と「白白」で続く。BEFOREと同じ黒地にして、問題→解決を一つの暗転の章として読ませる */
-    color: #f7f4ee;
-    background: #111;
-    border-top: 0;
-    border-bottom: 1px solid #111;
-    height: clamp(560px, 41.7vw, 620px);
-    font-family: Hiragino Kaku Gothic ProN, Yu Gothic, Noto Sans JP, sans-serif;
-    font-feature-settings: "palt";
-    position: relative;
-    overflow: hidden;
-    isolation: isolate
-}
-
-.reference-after-head {
-    z-index: 5;
-    margin: 0;
-    position: absolute;
-    top: calc(var(--u) * 2.4);
-    left: calc(var(--u) * 5.02);
-    opacity: var(--af-head);
-    translate: 0 calc((1 - var(--af-head)) * 10px)
-}
-
-.reference-after-head span { color: #f7f4ee }
-
-.after-item {
-    margin: 0;
-    position: absolute;
-    opacity: var(--af);
-    translate: 0 calc((1 - var(--af)) * 18px)
-}
-
-.after-item-cost   { --af: var(--af-1); top: calc(var(--u) * 9.2); left: calc(var(--u) * 5.02) }
-.after-item-cost strong { font-size: calc(var(--u) * 8.4) }
-.after-item-speed  { --af: var(--af-2); top: calc(var(--u) * 9.2); left: calc(var(--u) * 40.5) }
-.after-item-speed strong { font-size: calc(var(--u) * 10.8) }
-.after-item-pro    { --af: var(--af-3); top: calc(var(--u) * 6); right: calc(var(--u) * 3.6); display: block; text-align: right }
-/* 🔴 基本の .after-item strong（line-height .9・6.4u）が後ろで効くので、縦組みは詳細度を上げて上書きする */
-.reference-after .after-item-pro q { margin-left: auto }
-.reference-after .after-item-pro strong { display: inline-block; letter-spacing: -.08em; writing-mode: vertical-rl; font-size: calc(var(--u) * 6); line-height: 1.1; height: auto; margin-top: calc(var(--u) * .4) }
-.reference-after .after-item-pro p { margin-top: calc(var(--u) * 1.1) }
 
 /* --- 締め（2026-09-06 社長 案A）。BEFOREの着地点と同じ左下・同じ寸法 --- */
-.reference-after-statement { z-index: 5; margin: 0; position: absolute; bottom: calc(var(--u) * 3.4); left: calc(var(--u) * 5.02); opacity: var(--af-3); translate: 0 calc((1 - var(--af-3)) * 12px) }
-.reference-after-statement b { color: var(--tone-coral); letter-spacing: .1em; margin-bottom: calc(var(--u) * .95); font: 700 clamp(9px, calc(var(--u) * .8), 12px)/1 Arial, sans-serif; display: block }
-.reference-after-statement span { color: #f7f4ee; letter-spacing: .01em; font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif; font-size: clamp(26px, calc(var(--u) * 2.85), 42px); font-weight: 500; line-height: 1.2; display: block }
-.reference-after-statement i { color: var(--tone-coral); font-style: normal }
-.after-item-design { --af: var(--af-4); top: calc(var(--u) * 6);   right: calc(var(--u) * 3.6); display: grid; justify-items: end; text-align: right }
 
 /* 悩みの声。小さく、赤線で消す */
-.after-item q {
-    quotes: "「" "」";
-    color: #f7f4ee80;
-    margin: 0 0 calc(var(--u) * .9);
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
-    font-weight: 500;
-    line-height: 1.7;
-    white-space: nowrap;
-    width: fit-content;
-    display: block;
-    position: relative
-}
 
 /* 赤線は背景で引く。⚠️ q::after を使うと閉じ括弧「」」（close-quote）が消える。
    ⚠️ background ショートハンドの `位置 / calc(var()*…)` は落ちたので、ロングハンドで書く */
-.after-item q {
-    background-image: linear-gradient(var(--tone-coral), var(--tone-coral));
-    background-repeat: no-repeat;
-    background-position: 0 54%;
-    background-size: calc(var(--af) * 100%) 1px
-}
 
 /* 答え。02の巨大文字と同じ明朝・同じ詰め */
-.after-item strong {
-    color: #f7f4ee;
-    letter-spacing: -.06em;
-    white-space: nowrap;
-    margin: 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: calc(var(--u) * 6.4);
-    font-weight: 500;
-    line-height: .9;
-    display: block
-}
-
-.after-item strong em {
-    letter-spacing: 0;
-    margin-right: .22em;
-    font-size: .36em;
-    font-style: normal
-}
-
-.after-item strong span {
-    letter-spacing: 0;
-    margin-left: .06em;
-    font-size: .42em
-}
-
-.after-item-design strong {
-    letter-spacing: -.08em;
-    writing-mode: vertical-rl;
-    font-size: calc(var(--u) * 5);
-    line-height: 1.03;
-    height: calc(var(--u) * 26)
-}
-
-.after-item p {
-    color: #f7f4eee6;
-    margin: calc(var(--u) * 1) 0 0;
-    font-family: Yu Mincho, Hiragino Mincho ProN, Noto Serif JP, serif;
-    font-size: clamp(12px, calc(var(--u) * 1.05), 15.6px);
-    font-weight: 500;
-    line-height: 1.7
-}
-
-.after-item-design p { margin-top: calc(var(--u) * 1.1) }
-
-@media (max-width: 900px) {
-    .reference-problems-head {
-        position: static;
-        margin: 0 0 30px;
-        translate: none
-    }
-
-    .reference-after {
-        height: auto;
-        padding: 72px 22px 40px
-    }
-
-    .reference-after-head,
-    .after-item {
-        position: static;
-        inset: auto;
-        translate: none
-    }
-    .reference-after-statement { position: static; inset: auto; translate: none; margin-top: 10px }
-
-    .reference-after-head { margin-bottom: 36px }
-
-    .after-item { margin-bottom: 34px }
-
-    /* ⚠️ Chromeは block の子にも justify-self を効かせる。end のままだと
-       SPで子が右寄せ＋縮んで右にはみ出す */
-    .after-item-design, .reference-after .after-item-pro {
-        display: block;
-        justify-items: start;
-        text-align: left
-    }
-    .reference-after .after-item-pro q { margin-left: 0 }
-
-    .after-item q,
-    .after-item p {
-        white-space: normal;
-        font-size: 13px
-    }
-
-    .after-item strong { font-size: 15vw }
-
-    .after-item-design strong, .reference-after .after-item-pro strong {
-        display: block;
-        writing-mode: horizontal-tb;
-        font-size: 15vw;
-        line-height: 1.14;
-        height: auto;
-        margin-top: 0
-    }
-}
 
 /* ── 左右バランスの点検（2026-09-08・社長「SPもPCも左右が整うように」）──────
    PC 1440 / SP 390 で、節ごとの本文の左端・右端を実測して揃えた。
@@ -3751,7 +3274,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
       07=節の数（ABOUT〜CONTACT）／45=表現サンプルの数（実績2件を足した帯は47枚）／09=業種数
       05=ブレークポイントの数（680・700・900・1001・1379px）／06=図面の面の数／08=注釈の数
       コードも実物（--fv-u、h1のfont-size、.hl-band、@media 1001px）をそのまま載せている。
-      ⚠️ motion.a1723e33.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
+      ⚠️ motion.3babc214.js に「架空の72.5%をやめて実在する数字だけを出す」と決めた経緯がある。
          ここに数字を足すときも同じ線を守ること。
    ============================================================ */
 
@@ -3933,7 +3456,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    直し方: iframe を**常に 1440×900（16:10）**で描かせ、枠の幅に合わせて縮小する。
       中身は必ずノートパソコンと同じ組みになり、枠の見た目の比も 16:10 で固定される。
-      縮小率は motion.a1723e33.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
+      縮小率は motion.3babc214.js が枠の幅から計算して --sf に入れる（CSSだけでは幅÷幅ができない）。
    右の RELATED 列は画像だけなので思い切って細くした（170→104px〜）。
    ⚠️ 縦長画像の作品（url が無いもの）はこの対象外。従来どおり枠の中で画像をスクロールする。
    ============================================================ */
@@ -3974,16 +3497,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     .reference-about-facts { top: 340px }
     .reference-about { height: 573px }
 
-    /* ② 02 AFTER: 全部が左に積まれて縦に長い。
-          ・「プロが伴走」は1行に（<br> を殺す）
-          ・大きい数字の下の説明も、指定の改行をやめて成り行きに
-          ・段と段の間、上下の余白を詰めて高さを縮める */
-    .after-item strong br, .after-item p br { display: none }
-    .reference-after { padding: 52px 22px 28px }
-    .reference-after-head { margin-bottom: 22px }
-    .after-item { margin-bottom: 20px }
-    .after-item p { margin-top: 6px; line-height: 1.7 }
-    .reference-after-statement { margin-top: 4px }
+    
 
     /* ③ 03 まだ、うまく言えなくていい: 下のリード文が紙の写真に重なって読みづらい。出さない */
     .process-copy-before p { display: none }
@@ -4039,11 +3553,11 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
 
    ── 動き ────────────────────────────────────────
    節を 200vh にして、中の舞台を 100svh で sticky。
-   スクロール量を 0〜1 の progress にして motion.a1723e33.js が `--hu-*` を書く（scrub）。
+   スクロール量を 0〜1 の progress にして motion.3babc214.js が `--hu-*` を書く（scrub）。
    🔴 **CSSの既定値は「着地後」**。JS無効・reduced-motion でも解決策が読める。
    ────────────────────────────────────────────────── */
 .reference-hurdles {
-    /* 🔴 親(main)はグリッド。gpt-sections.a1723e33.css は節名を列挙して stretch しているが、
+    /* 🔴 親(main)はグリッド。gpt-sections.3babc214.css は節名を列挙して stretch しているが、
        新しい節はその列挙に無いので自分で書く（書かないと幅0で潰れる） */
     justify-self: stretch;
     width: auto;
@@ -4449,7 +3963,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
     /* 🔴 沈む演出はSPでも残す（2026-09-09 社長「白くなってグレーになる演出は
        スマホでも維持して」）。以前は最初から沈んだ色（--hu-sink: 1）で置いていたが、
        それだと課題が主役だった瞬間が無く、ただ薄い字が並んでいるだけに見えていた。
-       ⚠️ --hu-sink は motion.a1723e33.js が入れる。SPはピン留めしないので、
+       ⚠️ --hu-sink は motion.3babc214.js が入れる。SPはピン留めしないので、
           **最後の課題（つくって終わり。）が画面の上へ抜けるあいだ**を進み具合にしている。
        ⚠️ JS無効・reduced-motion では既定の 1（沈んだ色）のまま。読めるので問題ない */
     .hu-issue { margin-bottom: 26px }
@@ -4795,7 +4309,7 @@ html.no-webgl2 .hero-film-still i:nth-child(5) { background-image: url(../images
        実測（1440×900）: 前は暗い面の上端から見出しまで約45pxで、すぐ下に「高い。」が詰まっていた
      ・04: 左の四角い塊（業種ボタン＋制作イメージ＋リード）を**節の上下中央**に置く（PCのみ）
    🔴 02の余白は節の border-top（舞台と同じ墨色）で作る。padding や高さを足すと、
-      motion.a1723e33.js の進み具合（節の高さ基準）がずれて締めが出きる前にピンが外れる。
+      motion.3babc214.js の進み具合（節の高さ基準）がずれて締めが出きる前にピンが外れる。
       border-top なら節の高さ（200vh）の中に収まり、ピンが外れる位置は変わらない
       （ピンが掛かるのが border の厚みぶん遅れるだけ。演出の前半は入場で動くので影響なし） */
 /* 🔴 2026-09-12 追記: border-top を足しただけだと、暗い面の始まりが厚みぶん下にずれ、
