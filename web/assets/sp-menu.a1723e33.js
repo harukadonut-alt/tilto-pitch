@@ -1,7 +1,7 @@
 /* SPのメニュー（2026-08-24）。700px以下でだけ動く。
 
    🔴 DOMは load 後に足す。このページは React が hydrate するので、
-      SSRのHTMLに書き足すと消される恐れがある（cursor.6baa28e5.js と同じ方針）。
+      SSRのHTMLに書き足すと消される恐れがある（cursor.a1723e33.js と同じ方針）。
    🔴 既存の `.site-nav` は触らない。中の「カタログ」ボタンは React が
       onClick を持っている（帯の停止）ので、動かすと機能が壊れる。
       メニューは別物として新しく作り、SPでは元のナビをCSSで隠す。
@@ -38,7 +38,7 @@
        z-index をいくつにしても body 直下のパネルより前には来ない。
        なのでパネル側に自前のロゴを置く（地がコーラルなので白）。 */
     panel.innerHTML =
-      '<a class="sp-menu__brand" href="#top" data-to=".site-shell">Tilto<sup>°</sup></a>' +
+      '<a class="sp-menu__brand" href="#top" data-to=".site-shell"><img class="brand-mark" src="./images/tilto-logo-white.svg" alt="Tilto°" width="1020" height="325"></a>' +
       '<nav class="sp-menu__nav" aria-label="メニュー">' +
       ITEMS.map(
         ([label, sel], i) =>
